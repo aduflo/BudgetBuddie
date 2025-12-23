@@ -13,28 +13,40 @@ struct BudgetRundownView: View {
     var body: some View {
         VStack(
             alignment: .leading,
-            spacing: 16.0
+            spacing: 8.0
         ) {
             Text(viewModel.displayDate)
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Spend")
-                    Text(viewModel.displayCurrentSpend)
-                        .foregroundStyle(viewModel.dailySpendColor)
-                }
-                VStack(alignment: .leading) {
-                    Text("Max")
-                    Text(viewModel.displayMaxSpend)
-                }
+                .font(.title2)
+            
+            Text("Trends")
+                .font(.headline)
+            VStack(
+                alignment: .leading,
+                spacing: 8.0
+            ) {
+                BudgetTrendView(
+                    viewModel: viewModel.dailyTrendViewModel
+                )
+                Divider()
+                BudgetTrendView(
+                    viewModel: viewModel.mtdTrendViewModel
+                )
+                Divider()
+                BudgetTrendView(
+                    viewModel: viewModel.monthTrendViewModel
+                )
             }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(.white)
+            )
         }
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(.gray.opacity(0.25))
         )
-//        .foregroundStyle(.white)
-        .fontWeight(.bold)
     }
 }
 
