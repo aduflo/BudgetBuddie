@@ -23,11 +23,11 @@ extension BudgetRundownViewModel {
     }
     
     var displayDailySpend: String {
-        return currencyFormatter.stringDollarAmount(dailySpend)
+        return currencyFormatter.stringAmount(dailySpend)
     }
     
     var displayDailyMax: String {
-        return currencyFormatter.stringDollarAmount(dailyMax)
+        return currencyFormatter.stringAmount(dailyMax)
     }
     
     var dailySpendColor: Color {
@@ -49,7 +49,7 @@ extension BudgetRundownViewModel {
             dailySpend: 5453,
             dailyMax: 6500,
             tolerance: .mock(),
-            currencyFormatter: CurrencyFormatter.shared
+            currencyFormatter: USDCurrencyFormatter.shared
         )
     }
 }

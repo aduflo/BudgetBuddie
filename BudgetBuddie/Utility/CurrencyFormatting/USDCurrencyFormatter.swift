@@ -1,5 +1,5 @@
 //
-//  CurrencyFormatter.swift
+//  USDCurrencyFormatter.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -7,11 +7,7 @@
 
 import Foundation
 
-protocol CurrencyFormatting {
-    func stringDollarAmount(_ value: UInt) -> String
-}
-
-class CurrencyFormatter: CurrencyFormatting {
+class USDCurrencyFormatter {
     // Instance vars
     private lazy var formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -20,12 +16,11 @@ class CurrencyFormatter: CurrencyFormatting {
         return formatter
     }()
 }
-
-// MARK: Public interface
-extension CurrencyFormatter {
-    static let shared = CurrencyFormatter()
+ 
+extension USDCurrencyFormatter: CurrencyFormatting {
+    static let shared: CurrencyFormatting = USDCurrencyFormatter()
     
-    func stringDollarAmount(_ value: UInt) -> String {
+    func stringAmount(_ value: UInt) -> String {
         let dollarAmount = Decimal(value) / 100.0 // dividing by 100 to get dollar amount
         let decimalAmount = NSDecimalNumber(decimal: dollarAmount) // converting to formattable type
         return formatter.string(from: decimalAmount) ?? "N/A"
