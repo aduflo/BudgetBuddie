@@ -9,15 +9,20 @@ import Foundation
 
 struct BudgetRundownViewModel {
     // Instance vars
+    let selectedDate: Date
     let dailyTrendViewModel: BudgetTrendViewModel
     let mtdTrendViewModel: BudgetTrendViewModel
-    let monthTrendViewModel: BudgetTrendViewModel
+    let monthlyTrendViewModel: BudgetTrendViewModel
+    let onSettingsTapped: () -> ()
 }
 
 // MARK: Public interface
 extension BudgetRundownViewModel {
     var displayDate: String {
-        "Dec. 12th, 2025"
+        selectedDate.formatted(
+            date: .long,
+            time: .omitted
+        )
     }
 }
 
@@ -25,6 +30,7 @@ extension BudgetRundownViewModel {
 extension BudgetRundownViewModel {
     static func mock() -> Self {
         Self(
+            selectedDate: Date(),
             dailyTrendViewModel: BudgetTrendViewModel(
                 title: "Daily",
                 currentSpend: 4000,
@@ -34,18 +40,19 @@ extension BudgetRundownViewModel {
             ),
             mtdTrendViewModel: BudgetTrendViewModel(
                 title: "Month-To-Date (MTD)",
-                currentSpend: 20000,
+                currentSpend: 23000,
                 maxSpend: 25000,
                 tolerance: .mock(),
                 currencyFormatter: USDCurrencyFormatter.shared
             ),
-            monthTrendViewModel: BudgetTrendViewModel(
+            monthlyTrendViewModel: BudgetTrendViewModel(
                 title: "Monthly",
-                currentSpend: 20000,
+                currentSpend: 23000,
                 maxSpend: 150000,
                 tolerance: .mock(),
                 currencyFormatter: USDCurrencyFormatter.shared
-            )
+            ),
+            onSettingsTapped: { print("Settings tapped") }
         )
     }
 }

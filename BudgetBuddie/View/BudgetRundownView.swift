@@ -15,11 +15,23 @@ struct BudgetRundownView: View {
             alignment: .leading,
             spacing: 8.0
         ) {
-            Text(viewModel.displayDate)
-                .font(.title2)
+            HStack {
+                Text(viewModel.displayDate)
+                    .font(.title2)
+                Spacer()
+                Button("Settings", systemImage: "gear") {
+                    viewModel.onSettingsTapped()
+                }
+                .labelStyle(.iconOnly)
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.circle)
+                .tint(.white)
+                .foregroundStyle(.black)
+            }
             
-            Text("Trends")
+            Text("Spending Trends")
                 .font(.headline)
+            
             VStack(
                 alignment: .leading,
                 spacing: 8.0
@@ -33,7 +45,7 @@ struct BudgetRundownView: View {
                 )
                 Divider()
                 BudgetTrendView(
-                    viewModel: viewModel.monthTrendViewModel
+                    viewModel: viewModel.monthlyTrendViewModel
                 )
             }
             .padding()

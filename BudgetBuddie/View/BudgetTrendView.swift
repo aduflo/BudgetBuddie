@@ -16,7 +16,7 @@ struct BudgetTrendView: View {
                 .font(.headline)
             HStack(spacing: 16.0) {
                 VStack(alignment: .leading) {
-                    Text("Spend")
+                    Text("Current")
                     Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
                 }
