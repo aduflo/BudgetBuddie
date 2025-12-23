@@ -19,12 +19,12 @@ struct BudgetRundownView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Spend")
-                    Text(viewModel.displayDailySpend)
+                    Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
                 }
                 VStack(alignment: .leading) {
                     Text("Max")
-                    Text(viewModel.displayDailyMax)
+                    Text(viewModel.displayMaxSpend)
                 }
             }
         }
