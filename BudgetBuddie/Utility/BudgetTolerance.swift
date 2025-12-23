@@ -29,9 +29,9 @@ extension BudgetTolerance {
     }
 }
 
-// MARK: Stubs
+// MARK: Mocks
 extension BudgetTolerance {
-    static func stub() -> Self {
+    static func mock() -> Self {
         Self(threshold: 0.65)
     }
 }

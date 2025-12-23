@@ -12,12 +12,12 @@ struct BudgetViewModel {
     let listViewModel: BudgetListViewModel
 }
 
-// MARK: Stubs
+// MARK: Mocks
 extension BudgetViewModel {
-    static func stub() -> Self {
+    static func mock() -> Self {
         Self(
-            rundownViewModel: .stub(),
-            listViewModel: .stub()
+            rundownViewModel: .mock(),
+            listViewModel: .mock()
         )
     }
 }

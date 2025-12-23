@@ -20,9 +20,9 @@ extension BudgetListItemViewModel {
     }
 }
 
-// MARK: Stubs
+// MARK: Mocks
 extension BudgetListItemViewModel {
-    static func stub() -> Self {
+    static func mock() -> Self {
         Self(value: "123")
     }
 }

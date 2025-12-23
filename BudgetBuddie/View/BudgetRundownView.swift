@@ -39,5 +39,5 @@ struct BudgetRundownView: View {
 }
 
 #Preview {
-    BudgetRundownView(viewModel: .stub())
+    BudgetRundownView(viewModel: .mock())
 }

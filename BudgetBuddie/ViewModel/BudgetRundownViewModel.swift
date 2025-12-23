@@ -13,14 +13,7 @@ struct BudgetRundownViewModel {
     let dailySpend: UInt // amount in cents
     let dailyMax: UInt // amount in cents
     let tolerance: BudgetTolerance
-    
-    // Instance vars (utility)
-    private let dollarFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        return formatter
-    }()
+    let currencyFormatter: CurrencyFormatting
 }
 
 // MARK: Public interface
@@ -30,11 +23,11 @@ extension BudgetRundownViewModel {
     }
     
     var displayDailySpend: String {
-        return displayDollarAmount(dailySpend)
+        return currencyFormatter.stringDollarAmount(dailySpend)
     }
     
     var displayDailyMax: String {
-        return displayDollarAmount(dailyMax)
+        return currencyFormatter.stringDollarAmount(dailyMax)
     }
     
     var dailySpendColor: Color {
@@ -49,22 +42,14 @@ extension BudgetRundownViewModel {
     }
 }
 
-// MARK: Private interface
-private extension BudgetRundownViewModel {
-    func displayDollarAmount(_ value: UInt) -> String {
-        let dollarAmount = Decimal(value) / 100.0 // dividing by 100 to get dollar amount
-        let decimalAmount = NSDecimalNumber(decimal: dollarAmount) // converting to formattable type
-        return dollarFormatter.string(from: decimalAmount) ?? "N/A"
-    }
-}
-
-// MARK: Stubs
+// MARK: Mocks
 extension BudgetRundownViewModel {
-    static func stub() -> Self {
+    static func mock() -> Self {
         Self(
             dailySpend: 5453,
             dailyMax: 6500,
-            tolerance: .stub()
+            tolerance: .mock(),
+            currencyFormatter: CurrencyFormatter.shared
         )
     }
 }
