@@ -9,8 +9,12 @@ import Foundation
 import SwiftUI
 
 struct BudgetRundownViewModel {
+    // Instance vars
     let dailySpend: UInt // amount in cents
     let dailyMax: UInt // amount in cents
+    let tolerance: BudgetTolerance
+    
+    // Instance vars (utility)
     private let dollarFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -34,13 +38,13 @@ extension BudgetRundownViewModel {
     }
     
     var dailySpendColor: Color {
-        let decimalSpend = Decimal(dailySpend)
-        let decimalMax = Decimal(dailyMax)
-        let percentage = decimalSpend / decimalMax
-        return switch percentage {
-        case 1...: .red // we've exceeded daily limit
-        case 0.65..<1: .yellow // we're encroaching on daily limit
-        default: .green // we're comfortably below daily limit
+        return switch tolerance.evaluate(
+            spend: Decimal(dailySpend),
+            max: Decimal(dailyMax)
+        ) {
+        case .acceptable: .green
+        case .encroaching: .yellow
+        case .exceeded: .red
         }
     }
 }
@@ -59,7 +63,8 @@ extension BudgetRundownViewModel {
     static func stub() -> Self {
         Self(
             dailySpend: 5453,
-            dailyMax: 6500
+            dailyMax: 6500,
+            tolerance: .stub()
         )
     }
 }
