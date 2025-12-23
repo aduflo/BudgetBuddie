@@ -9,5 +9,6 @@ import Foundation
 
 protocol CurrencyFormatting {
     static var shared: CurrencyFormatting { get }
+    var code: String { get }
     func stringAmount(_ value: UInt) -> String
 }

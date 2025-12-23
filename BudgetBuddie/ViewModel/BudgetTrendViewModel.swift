@@ -14,7 +14,7 @@ struct BudgetTrendViewModel {
     let currentSpend: UInt // amount in cents
     let maxSpend: UInt // amount in cents
     let tolerance: BudgetTolerance
-    let currencyFormatter: CurrencyFormatting
+    let currencyFormatter: CurrencyFormatting = CurrencyFormatter.shared
 }
 
 // MARK: Public interface
@@ -39,15 +39,50 @@ extension BudgetTrendViewModel {
     }
 }
 
-// MARK: Mocks
+// MARK: - Mocks
 extension BudgetTrendViewModel {
-    static func mock() -> Self {
+    static func mockDailyAcceptable() -> Self {
+        Self(
+            title: "Daily",
+            currentSpend: 4000,
+            maxSpend: 5000,
+            tolerance: .mock()
+        )
+    }
+    
+    static func mockDailyEncroaching() -> Self {
+        Self(
+            title: "Daily",
+            currentSpend: 800000,
+            maxSpend: 900000,
+            tolerance: .mock()
+        )
+    }
+    
+    static func mockDailyExceeded() -> Self {
         Self(
             title: "Daily",
             currentSpend: 900001,
             maxSpend: 900000,
-            tolerance: .mock(),
-            currencyFormatter: USDCurrencyFormatter.shared
+            tolerance: .mock()
+        )
+    }
+    
+    static func mockMtd() -> Self {
+        Self(
+            title: "Month-To-Date (MTD)",
+            currentSpend: 23000,
+            maxSpend: 25000,
+            tolerance: .mock()
+        )
+    }
+    
+    static func mockMonthly() -> Self {
+        Self(
+            title: "Monthly",
+            currentSpend: 23000,
+            maxSpend: 150000,
+            tolerance: .mock()
         )
     }
 }

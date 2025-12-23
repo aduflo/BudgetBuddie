@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BudgetRundownView: View {
     let viewModel: BudgetRundownViewModel
+    @Environment(\.onSettingsTapped) var onSettingsChanged
     
     var body: some View {
         VStack(
@@ -20,7 +21,7 @@ struct BudgetRundownView: View {
                     .font(.title2)
                 Spacer()
                 Button("Settings", systemImage: "gear") {
-                    viewModel.onSettingsTapped()
+                    onSettingsChanged()
                 }
                 .labelStyle(.iconOnly)
                 .buttonStyle(.borderedProminent)

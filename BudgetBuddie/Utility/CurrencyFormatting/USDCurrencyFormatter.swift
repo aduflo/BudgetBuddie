@@ -7,18 +7,18 @@
 
 import Foundation
 
-class USDCurrencyFormatter {
+class USDCurrencyFormatter: CurrencyFormatting {
     // Instance vars
     private lazy var formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
+        formatter.currencyCode = code
         return formatter
     }()
-}
- 
-extension USDCurrencyFormatter: CurrencyFormatting {
+    
+    // CurrencyFormatting
     static let shared: CurrencyFormatting = USDCurrencyFormatter()
+    let code = "USD"
     
     func stringAmount(_ value: UInt) -> String {
         let dollarAmount = Decimal(value) / 100.0 // dividing by 100 to get dollar amount

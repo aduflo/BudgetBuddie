@@ -11,7 +11,7 @@ struct BudgetListViewModel {
     let items: [BudgetListItemViewModel]
 }
 
-// MARK: Mocks
+// MARK: - Mocks
 extension BudgetListViewModel {
     static func mock() -> Self {
         let items = (0..<25).map {

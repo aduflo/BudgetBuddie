@@ -29,7 +29,7 @@ extension BudgetTolerance {
     }
 }
 
-// MARK: Mocks
+// MARK: - Mocks
 extension BudgetTolerance {
     static func mock() -> Self {
         Self(threshold: 0.65)
