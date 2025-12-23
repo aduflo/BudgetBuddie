@@ -13,27 +13,21 @@ protocol CurrencyFormatting {
 
 class CurrencyFormatter: CurrencyFormatting {
     // Instance vars
-    let code: String
-    private lazy var dollarFormatter: NumberFormatter = {
+    private lazy var formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = code
+        formatter.currencyCode = "USD"
         return formatter
     }()
-    
-    // Constructor
-    init(code: String) {
-        self.code = code
-    }
 }
 
 // MARK: Public interface
 extension CurrencyFormatter {
-    static let shared = CurrencyFormatter(code: "USD")
+    static let shared = CurrencyFormatter()
     
     func stringDollarAmount(_ value: UInt) -> String {
         let dollarAmount = Decimal(value) / 100.0 // dividing by 100 to get dollar amount
         let decimalAmount = NSDecimalNumber(decimal: dollarAmount) // converting to formattable type
-        return dollarFormatter.string(from: decimalAmount) ?? "N/A"
+        return formatter.string(from: decimalAmount) ?? "N/A"
     }
 }
