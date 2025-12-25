@@ -19,16 +19,6 @@ struct BudgetView: View {
             BudgetRundownView(
                 viewModel: viewModel.rundownViewModel
             )
-            .onReceive(
-                NotificationCenter.default.publisher(for: .SettingsTapped),
-                perform: { _ in
-                    Task {
-                        await MainActor.run {
-                            presentSettings.toggle()
-                        }
-                    }
-                }
-            )
             .sheet(isPresented: $presentSettings) {
                 SettingsView(
                     viewModel: viewModel.settingsViewModel
@@ -40,6 +30,24 @@ struct BudgetView: View {
             )
         }
         .padding()
+        .onReceive(
+            NotificationCenter.default.publisher(for: .SettingsTapped),
+            perform: { _ in
+                Task { await MainActor.run {
+                    presentSettings.toggle()
+                }}
+            }
+        )
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: .SettingsUpdated
+            ),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.rundownViewModel.reloadData()
+                }}
+            }
+        )
     }
 }
 

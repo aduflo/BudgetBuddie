@@ -21,7 +21,7 @@ private extension SettingsRepo {
     }
 }
 
-// Public interface
+// MARK: Public interface
 extension SettingsRepo {
     var monthlyAllowance: Decimal {
         let monthlyAllowance = userDefaults.object(forKey: Key.monthlyAllowance) as? Double ?? 0.0

@@ -17,11 +17,19 @@ struct BudgetRundownViewModel {
 
 // MARK: Public interface
 extension BudgetRundownViewModel {
+    func reloadData() {
+        print("\(String(describing: Self.self))-\(#function)")
+    }
+    
     var displayDate: String {
         selectedDate.formatted(
             date: .long,
             time: .omitted
         )
+    }
+    
+    func postNotificationSettingsTapped() {
+        NotificationCenter.default.post(.SettingsTapped)
     }
 }
 

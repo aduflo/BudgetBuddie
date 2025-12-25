@@ -13,10 +13,10 @@ import SwiftUI
 struct BudgetTrendViewModelTests {
 
     // MARK: dailySpendColor
-    @Test func test_dailySpendColor_acceptable() async throws {
+    @Test func test_dailySpendColor_acceptable() async {
         // Setup
-        let vm1 = mockVM(currentSpend: 0, maxSpend: 100, toleranceThreshold: 0.50)
-        let vm2 = mockVM(currentSpend: 49, maxSpend: 100, toleranceThreshold: 0.50)
+        let vm1 = await mockVM(currentSpend: 0, maxSpend: 100, toleranceThreshold: 0.50)
+        let vm2 = await mockVM(currentSpend: 49, maxSpend: 100, toleranceThreshold: 0.50)
         
         // Scenarios
         let dailySpendColor1 = await vm1.dailySpendColor
@@ -27,10 +27,10 @@ struct BudgetTrendViewModelTests {
         #expect(dailySpendColor2 == .green)
     }
     
-    @Test func test_dailySpendColor_encroaching() async throws {
+    @Test func test_dailySpendColor_encroaching() async {
         // Setup
-        let vm1 = mockVM(currentSpend: 50, maxSpend: 100, toleranceThreshold: 0.50)
-        let vm2 = mockVM(currentSpend: 99, maxSpend: 100, toleranceThreshold: 0.50)
+        let vm1 = await mockVM(currentSpend: 50, maxSpend: 100, toleranceThreshold: 0.50)
+        let vm2 = await mockVM(currentSpend: 99, maxSpend: 100, toleranceThreshold: 0.50)
         
         // Scenarios
         let dailySpendColor1 = await vm1.dailySpendColor
@@ -41,9 +41,9 @@ struct BudgetTrendViewModelTests {
         #expect(dailySpendColor2 == .orange)
     }
     
-    @Test func test_dailySpendColor_exceeded() async throws {
+    @Test func test_dailySpendColor_exceeded() async {
         // Setup
-        let vm = mockVM(currentSpend: 100, maxSpend: 100, toleranceThreshold: 0.50)
+        let vm = await mockVM(currentSpend: 100, maxSpend: 100, toleranceThreshold: 0.50)
         
         // Scenarios
         let dailySpendColor = await vm.dailySpendColor
@@ -54,6 +54,7 @@ struct BudgetTrendViewModelTests {
 }
 
 fileprivate extension BudgetTrendViewModelTests {
+    @MainActor
     func mockVM(currentSpend: UInt, maxSpend: UInt, toleranceThreshold: Double) -> BudgetTrendViewModel {
         let mockSettingsRepo = MockSettingsRepo()
         mockSettingsRepo.setToleranceThreshold(toleranceThreshold)

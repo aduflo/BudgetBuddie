@@ -36,6 +36,7 @@ struct SettingsView: View {
             .keyboardType(.decimalPad)
             .onSubmit {
                 viewModel.setMonthlyAllowance(monthlyAllowance)
+                viewModel.postNotificationSettingsUpdated()
             }
             
             Slider(
@@ -51,11 +52,14 @@ struct SettingsView: View {
                 maximumValueLabel: {
                     Text("100%")
                 },
-                onEditingChanged: { _ in
-                    viewModel.setToleranceThreshold(toleranceThreshold)
+                onEditingChanged: { editing in
+                    if editing == false {
+                        viewModel.setToleranceThreshold(toleranceThreshold)
+                        viewModel.postNotificationSettingsUpdated()
+                    }
                 }
             )
-            Text(viewModel.displayToleranceThreshold)
+            Text(viewModel.displayToleranceThreshold) // FIXME: this is broken
         }
         .onAppear {
             monthlyAllowance = viewModel.monthlyAllowance

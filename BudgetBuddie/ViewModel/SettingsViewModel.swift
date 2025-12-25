@@ -22,7 +22,7 @@ class SettingsViewModel {
     }
 }
 
-// Public interface
+// MARK: Public interface
 extension SettingsViewModel {
     var monthlyAllowance: Decimal {
         settingsRepo.monthlyAllowance
@@ -42,6 +42,10 @@ extension SettingsViewModel {
     
     var displayToleranceThreshold: String {
         "Tolerance threshold: \(toleranceThreshold.formatted(.percent))"
+    }
+    
+    func postNotificationSettingsUpdated() {
+        NotificationCenter.default.post(.SettingsUpdated)
     }
 }
 

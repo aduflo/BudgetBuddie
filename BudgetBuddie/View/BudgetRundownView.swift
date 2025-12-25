@@ -19,9 +19,11 @@ struct BudgetRundownView: View {
                 Text(viewModel.displayDate)
                     .font(.title2)
                 Spacer()
-                Button("Settings", systemImage: "gear") {
-                    NotificationCenter.default.post(.SettingsTapped)
-                }
+                Button(
+                    "Settings",
+                    systemImage: "gear",
+                    action: { viewModel.postNotificationSettingsTapped() }
+                )
                 .labelStyle(.iconOnly)
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.circle)

@@ -9,10 +9,10 @@ import Foundation
 
 extension NSNotification.Name {
     static let SettingsTapped = NSNotification.Name("SettingsTapped")
-    static let ToleranceThresholdUpdated = NSNotification.Name("ToleranceThresholdUpdated")
+    static let SettingsUpdated = NSNotification.Name("SettingsUpdated")
 }
 
 extension Notification {
     static let SettingsTapped = Notification(name: .SettingsTapped)
-    static let ToleranceThresholdUpdated = Notification(name: .ToleranceThresholdUpdated)
+    static let SettingsUpdated = Notification(name: .SettingsUpdated)
 }
