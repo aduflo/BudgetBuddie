@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 extension EnvironmentValues {
-    @Entry var onSettingsTapped: () -> () = {}
+    @Entry var settingsRepo: SettingsRepoing = SettingsRepo()
 }
 
-extension View {
-    func onSettingsTapped(_ onSettingsTapped: @escaping () -> ()) -> some View {
-        environment(\.onSettingsTapped, onSettingsTapped)
-    }
-}
+//extension View {
+//    EG.
+//    func setMonthlyAllowance(_ monthlyAllowance: Decimal) -> some View {
+//        environment(\.monthlyAllowance, monthlyAllowance)
+//    }
+//}

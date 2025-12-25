@@ -9,13 +9,19 @@ import Foundation
 
 @Observable
 class BudgetViewModel {
+    // Instance vars
     let rundownViewModel: BudgetRundownViewModel
     let listViewModel: BudgetListViewModel
-    var presentSettings: Bool = false
+    let settingsViewModel: SettingsViewModel
     
-    init(rundownViewModel: BudgetRundownViewModel, listViewModel: BudgetListViewModel) {
+    init(
+        rundownViewModel: BudgetRundownViewModel,
+        listViewModel: BudgetListViewModel,
+        settingsViewModel: SettingsViewModel,
+    ) {
         self.rundownViewModel = rundownViewModel
         self.listViewModel = listViewModel
+        self.settingsViewModel = settingsViewModel
     }
 }
 
@@ -23,13 +29,9 @@ class BudgetViewModel {
 extension BudgetViewModel {
     static func mock() -> BudgetViewModel {
         BudgetViewModel(
-            rundownViewModel: BudgetRundownViewModel(
-                selectedDate: Date(),
-                dailyTrendViewModel: .mockDailyAcceptable(),
-                mtdTrendViewModel: .mockMtd(),
-                monthlyTrendViewModel: .mockMonthly()
-            ),
-            listViewModel: .mock()
+            rundownViewModel: .mock(),
+            listViewModel: .mock(),
+            settingsViewModel: .mock()
         )
     }
 }

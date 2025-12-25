@@ -9,17 +9,20 @@ import SwiftUI
 
 /** TODO:
  - settings for:
-   - Daily allowance field
-   - Monthly allowance field
+   - Daily allowance field / would update monthly too <-------------
+   - Monthly allowance field / would update daily too
    - Tolerance treshold
  */
 
 struct SettingsView: View {
-    @Binding var monthlyAllowance: Decimal
-    @Binding var toleranceTreshold: Double
+    // Instance vars
+    @State var monthlyAllowance: Decimal = 0.0
+    @State var toleranceThreshold: Double = 0.0
+    
+    let viewModel: SettingsViewModel
     
     private var currencyFormat: Decimal.FormatStyle.Currency {
-        .currency(code: CurrencyFormatter.shared.code)
+        .currency(code: viewModel.currencyFormatter.code)
     }
     
     var body: some View {
@@ -31,23 +34,40 @@ struct SettingsView: View {
             )
             .textFieldStyle(.roundedBorder)
             .keyboardType(.decimalPad)
-            Slider( // FIXME: slider has no intervals.. fix
-                value: $toleranceTreshold,
-                in: 0...100,
+            .onSubmit {
+                viewModel.setMonthlyAllowance(monthlyAllowance)
+            }
+            
+            Slider(
+                value: $toleranceThreshold,
+                in: 0.0...1.0,
+                step: 0.01,
                 label: {
                     Text("Tolerance threshold")
                 },
-                onEditingChanged: { yar in
-                    print("on tolerance changed: ")
+                minimumValueLabel: {
+                    Text("0%")
+                },
+                maximumValueLabel: {
+                    Text("100%")
+                },
+                onEditingChanged: { _ in
+                    viewModel.setToleranceThreshold(toleranceThreshold)
                 }
             )
+            Text(viewModel.displayToleranceThreshold)
+        }
+        .onAppear {
+            monthlyAllowance = viewModel.monthlyAllowance
+            toleranceThreshold = viewModel.toleranceThreshold
         }
     }
 }
 
 #Preview {
     SettingsView(
-        monthlyAllowance: .constant(2000),
-        toleranceTreshold: .constant(0.0)
+        monthlyAllowance: 0.0,
+        toleranceThreshold: 0.0,
+        viewModel: .mock()
     )
 }

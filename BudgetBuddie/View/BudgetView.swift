@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct BudgetView: View {
-    let viewModel: BudgetViewModel
-    
+    // Instance vars
     @State private var presentSettings = false
+    
+    let viewModel: BudgetViewModel
     
     var body: some View {
         VStack {
@@ -18,13 +19,19 @@ struct BudgetView: View {
             BudgetRundownView(
                 viewModel: viewModel.rundownViewModel
             )
-            .onSettingsTapped {
-                presentSettings.toggle()
-            }
+            .onReceive(
+                NotificationCenter.default.publisher(for: .SettingsTapped),
+                perform: { _ in
+                    Task {
+                        await MainActor.run {
+                            presentSettings.toggle()
+                        }
+                    }
+                }
+            )
             .sheet(isPresented: $presentSettings) {
                 SettingsView(
-                    monthlyAllowance: .constant(2000),
-                    toleranceTreshold: .constant(0.0)
+                    viewModel: viewModel.settingsViewModel
                 )
                 .presentationDetents([.height(200.0)])
             }
