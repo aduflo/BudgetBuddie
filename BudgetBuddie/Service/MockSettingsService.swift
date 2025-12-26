@@ -14,9 +14,9 @@ class MockSettingsService: SettingsServicing {
         self.monthlyAllowance = monthlyAllowance
     }
     
-    private(set) var toleranceThreshold: Double = 0.0
+    private(set) var warningThreshold: Double = 0.0
     
-    func setToleranceThreshold(_ toleranceThreshold: Double) {
-        self.toleranceThreshold = toleranceThreshold
+    func setWarningThreshold(_ warningThreshold: Double) {
+        self.warningThreshold = warningThreshold
     }
 }

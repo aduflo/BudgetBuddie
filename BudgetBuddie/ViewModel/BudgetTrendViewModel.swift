@@ -57,10 +57,10 @@ extension BudgetTrendViewModel {
 private extension BudgetTrendViewModel {
     func evaluateBudget(spend: Decimal, max: Decimal) -> BudgetEvaluation {
         let percentage = spend / max
-        let toleranceThreshold = Decimal(floatLiteral: settingsService.toleranceThreshold)
+        let warningThreshold = Decimal(floatLiteral: settingsService.warningThreshold)
         return switch percentage {
-        case 0.0..<toleranceThreshold: .acceptable
-        case toleranceThreshold..<1.0: .encroaching
+        case 0.0..<warningThreshold: .acceptable
+        case warningThreshold..<1.0: .encroaching
         default: .exceeded
         }
     }

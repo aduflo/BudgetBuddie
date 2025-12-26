@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     // Instance vars
     @State var monthlyAllowance: Decimal = 0.0
-    @State var toleranceThreshold: Double = 0.0
+    @State var warningThreshold: Double = 0.0
     let viewModel: SettingsViewModel
     
     private var currencyFormat: Decimal.FormatStyle.Currency {
@@ -31,11 +31,11 @@ struct SettingsView: View {
             }
             
             Slider(
-                value: $toleranceThreshold,
+                value: $warningThreshold,
                 in: 0.0...1.0,
                 step: 0.01,
                 label: {
-                    Text("Tolerance threshold")
+                    Text("Warning threshold")
                 },
                 minimumValueLabel: {
                     Text("0%")
@@ -45,15 +45,17 @@ struct SettingsView: View {
                 },
                 onEditingChanged: { editing in
                     if editing == false { // only set when editing finishes
-                        viewModel.setToleranceThreshold(toleranceThreshold)
+                        viewModel.setWarningThreshold(warningThreshold)
                     }
                 }
             )
-            Text("Tolerance threshold: \(toleranceThreshold.formatted(.percent))")
+            Text("Warning threshold: \(warningThreshold.formatted(.percent))")
+            Text("Determines when budget trend data shifts from 🟩 to 🟧.")
+                .font(.footnote)
         }
         .onAppear {
             monthlyAllowance = viewModel.monthlyAllowance
-            toleranceThreshold = viewModel.toleranceThreshold
+            warningThreshold = viewModel.warningThreshold
         }
     }
 }
@@ -61,7 +63,7 @@ struct SettingsView: View {
 #Preview {
     SettingsView(
         monthlyAllowance: 0.0,
-        toleranceThreshold: 0.0,
+        warningThreshold: 0.0,
         viewModel: .mock()
     )
 }

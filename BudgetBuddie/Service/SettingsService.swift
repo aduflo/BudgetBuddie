@@ -17,7 +17,7 @@ class SettingsService: SettingsServicing {
 private extension SettingsService {
     struct Key {
         static let monthlyAllowance = "monthlyAllowance"
-        static let toleranceThreshold = "toleranceThreshold"
+        static let warningThreshold = "warningThreshold"
     }
 }
 
@@ -32,10 +32,11 @@ extension SettingsService {
         userDefaults.set(monthlyAllowance, forKey: Key.monthlyAllowance)
     }
     
-    var toleranceThreshold: Double {
-        userDefaults.object(forKey: Key.toleranceThreshold) as? Double ?? 0.0
+    var warningThreshold: Double {
+        userDefaults.object(forKey: Key.warningThreshold) as? Double ?? 0.0
     }
-    func setToleranceThreshold(_ toleranceThreshold: Double) {
-        userDefaults.set(toleranceThreshold, forKey: Key.toleranceThreshold)
+    
+    func setWarningThreshold(_ warningThreshold: Double) {
+        userDefaults.set(warningThreshold, forKey: Key.warningThreshold)
     }
 }

@@ -32,12 +32,12 @@ extension SettingsViewModel {
         postNotificationSettingsUpdated()
     }
     
-    var toleranceThreshold: Double {
-        settingsService.toleranceThreshold
+    var warningThreshold: Double {
+        settingsService.warningThreshold
     }
     
-    func setToleranceThreshold(_ toleranceThreshold: Double) {
-        settingsService.setToleranceThreshold(toleranceThreshold)
+    func setWarningThreshold(_ warningThreshold: Double) {
+        settingsService.setWarningThreshold(warningThreshold)
         postNotificationSettingsUpdated()
     }
 }

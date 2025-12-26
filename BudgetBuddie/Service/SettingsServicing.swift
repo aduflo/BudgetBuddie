@@ -10,7 +10,6 @@ import Foundation
 protocol SettingsServicing {
     var monthlyAllowance: Decimal { get }
     func setMonthlyAllowance(_ monthlyAllowance: Decimal)
-    
-    var toleranceThreshold: Double { get }
-    func setToleranceThreshold(_ toleranceThreshold: Double)
+    var warningThreshold: Double { get }
+    func setWarningThreshold(_ warningThreshold: Double)
 }
