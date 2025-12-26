@@ -1,5 +1,5 @@
 //
-//  MockSettingsRepo.swift
+//  MockSettingsService.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/25/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockSettingsRepo: SettingsRepoing {
+class MockSettingsService: SettingsServicing {
     private(set) var monthlyAllowance: Decimal = 0.0
     
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {

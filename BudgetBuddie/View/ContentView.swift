@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     // Instance vars
-    @Environment(\.settingsRepo) var settingsRepo
+    @Environment(\.settingsService) var settingsService
     
     var body: some View {
         BudgetView(
@@ -20,23 +20,23 @@ struct ContentView: View {
                         title: "Daily",
                         currentSpend: 0,
                         maxSpend: 0,
-                        settingsRepo: settingsRepo
+                        settingsService: settingsService
                     ),
                     mtdTrendViewModel: BudgetTrendViewModel(
                         title: "Month-To-Date (MTD)",
                         currentSpend: 0,
                         maxSpend: 0,
-                        settingsRepo: settingsRepo
+                        settingsService: settingsService
                     ),
                     monthlyTrendViewModel: BudgetTrendViewModel(
                         title: "Monthly",
                         currentSpend: 0,
                         maxSpend: 0,
-                        settingsRepo: settingsRepo
+                        settingsService: settingsService
                     )
                 ),
                 listViewModel: BudgetListViewModel(items: []),
-                settingsViewModel: SettingsViewModel(settingsRepo: settingsRepo)
+                settingsViewModel: SettingsViewModel(settingsService: settingsService)
             )
         )
     }

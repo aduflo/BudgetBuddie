@@ -1,5 +1,5 @@
 //
-//  SettingsRepo.swift
+//  SettingsService.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/25/25.
@@ -9,12 +9,12 @@ import Foundation
 
 // TODO: use Mutexes for thread safety on set/get
 
-class SettingsRepo: SettingsRepoing {
+class SettingsService: SettingsServicing {
     // Instance vars
     private let userDefaults: UserDefaults = .standard
 }
 
-private extension SettingsRepo {
+private extension SettingsService {
     struct Key {
         static let monthlyAllowance = "monthlyAllowance"
         static let toleranceThreshold = "toleranceThreshold"
@@ -22,7 +22,7 @@ private extension SettingsRepo {
 }
 
 // MARK: Public interface
-extension SettingsRepo {
+extension SettingsService {
     var monthlyAllowance: Decimal {
         let monthlyAllowance = userDefaults.object(forKey: Key.monthlyAllowance) as? Double ?? 0.0
         return Decimal(floatLiteral: monthlyAllowance)

@@ -56,13 +56,13 @@ struct BudgetTrendViewModelTests {
 fileprivate extension BudgetTrendViewModelTests {
     @MainActor
     func mockVM(currentSpend: UInt, maxSpend: UInt, toleranceThreshold: Double) -> BudgetTrendViewModel {
-        let mockSettingsRepo = MockSettingsRepo()
-        mockSettingsRepo.setToleranceThreshold(toleranceThreshold)
+        let mockSettingsService = MockSettingsService()
+        mockSettingsService.setToleranceThreshold(toleranceThreshold)
         return BudgetTrendViewModel(
             title: "",
             currentSpend: currentSpend,
             maxSpend: maxSpend,
-            settingsRepo: mockSettingsRepo
+            settingsService: mockSettingsService
         )
     }
 }

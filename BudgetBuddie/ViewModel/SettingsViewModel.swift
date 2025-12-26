@@ -10,14 +10,14 @@ import Foundation
 @Observable
 class SettingsViewModel {
     // Instance vars
-    let settingsRepo: SettingsRepoing
+    let settingsService: SettingsServicing
     let currencyFormatter: CurrencyFormatting
     
     init(
-        settingsRepo: SettingsRepoing,
+        settingsService: SettingsServicing,
         currencyFormatter: CurrencyFormatting = CurrencyFormatter.shared
     ) {
-        self.settingsRepo = settingsRepo
+        self.settingsService = settingsService
         self.currencyFormatter = currencyFormatter
     }
 }
@@ -25,19 +25,19 @@ class SettingsViewModel {
 // MARK: Public interface
 extension SettingsViewModel {
     var monthlyAllowance: Decimal {
-        settingsRepo.monthlyAllowance
+        settingsService.monthlyAllowance
     }
     
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {
-        settingsRepo.setMonthlyAllowance(monthlyAllowance)
+        settingsService.setMonthlyAllowance(monthlyAllowance)
     }
     
     var toleranceThreshold: Double {
-        settingsRepo.toleranceThreshold
+        settingsService.toleranceThreshold
     }
     
     func setToleranceThreshold(_ toleranceThreshold: Double) {
-        settingsRepo.setToleranceThreshold(toleranceThreshold)
+        settingsService.setToleranceThreshold(toleranceThreshold)
     }
     
     var displayToleranceThreshold: String {
@@ -52,6 +52,6 @@ extension SettingsViewModel {
 // MARK: - Mocks
 extension SettingsViewModel {
     static func mock() -> SettingsViewModel {
-        SettingsViewModel(settingsRepo: MockSettingsRepo())
+        SettingsViewModel(settingsService: MockSettingsService())
     }
 }

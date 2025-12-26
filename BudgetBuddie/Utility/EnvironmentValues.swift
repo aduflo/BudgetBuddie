@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension EnvironmentValues {
-    @Entry var settingsRepo: SettingsRepoing = SettingsRepo()
+    @Entry var settingsService: SettingsServicing = SettingsService()
 }
 
 //extension View {
