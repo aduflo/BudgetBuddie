@@ -18,41 +18,63 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        VStack {
-            TextField( // FIXME: this is very broken
-                "Monthly allowance",
-                value: $monthlyAllowance,
-                format: currencyFormat
-            )
-            .textFieldStyle(.roundedBorder)
-            .keyboardType(.decimalPad)
-            .onSubmit {
-                viewModel.setMonthlyAllowance(monthlyAllowance)
+        VStack(
+            alignment: .leading,
+            spacing: 32.0
+        ) {
+            VStack(spacing: 8.0) {
+                Text("Settings")
+                    .font(.title)
+                Divider()
             }
             
-            Slider(
-                value: $warningThreshold,
-                in: 0.0...1.0,
-                step: 0.01,
-                label: {
-                    Text("Warning threshold")
-                },
-                minimumValueLabel: {
-                    Text("0%")
-                },
-                maximumValueLabel: {
-                    Text("100%")
-                },
-                onEditingChanged: { editing in
-                    if editing == false { // only set when editing finishes
-                        viewModel.setWarningThreshold(warningThreshold)
-                    }
+            VStack(
+                alignment: .leading,
+                spacing: 8.0
+            ) {
+                Text("Monthly allowance")
+                TextField(
+                    "Monthly allowance",
+                    value: $monthlyAllowance,
+                    format: currencyFormat
+                )
+                .textFieldStyle(.roundedBorder)
+                .keyboardType(.decimalPad)
+                .onSubmit {
+                    viewModel.setMonthlyAllowance(monthlyAllowance)
                 }
-            )
-            Text("Warning threshold: \(warningThreshold.formatted(.percent))")
-            Text("Determines when budget trend data shifts from 🟩 to 🟧.")
-                .font(.footnote)
+            }
+            
+            VStack(
+                alignment: .leading,
+                spacing: 8.0
+            ) {
+                Text("Warning threshold: \(warningThreshold.formatted(.percent))")
+                Slider(
+                    value: $warningThreshold,
+                    in: 0.0...1.0,
+                    step: 0.01,
+                    label: {
+                        Text("Warning threshold")
+                    },
+                    minimumValueLabel: {
+                        Text("0%")
+                    },
+                    maximumValueLabel: {
+                        Text("100%")
+                    },
+                    onEditingChanged: { editing in
+                        if editing == false { // only set when editing finishes
+                            viewModel.setWarningThreshold(warningThreshold)
+                        }
+                    }
+                )
+                Text("Assists in budget evaluation, determining if our budget is in a state of acceptable, encroaching, or exceeded.")
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+            }
         }
+        .padding()
         .onAppear {
             monthlyAllowance = viewModel.monthlyAllowance
             warningThreshold = viewModel.warningThreshold

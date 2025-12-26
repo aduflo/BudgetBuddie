@@ -22,7 +22,7 @@ struct BudgetView: View {
                 SettingsView(
                     viewModel: viewModel.settingsViewModel
                 )
-                .presentationDetents([.height(200.0)])
+                .presentationDetents([.height(300.0)])
             }
             BudgetListView(
                 viewModel: viewModel.listViewModel
