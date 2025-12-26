@@ -8,6 +8,7 @@
 import Foundation
 
 struct BudgetListViewModel {
+    // Instance vars
     let items: [BudgetListItemViewModel]
 }
 

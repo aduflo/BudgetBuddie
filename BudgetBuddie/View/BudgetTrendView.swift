@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BudgetTrendView: View {
+    // Instance vars
     let viewModel: BudgetTrendViewModel
     
     var body: some View {

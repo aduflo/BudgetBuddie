@@ -8,9 +8,11 @@
 import Foundation
 
 struct BudgetListItemViewModel: Identifiable {
-    let id = UUID()
-    
+    // Instance vars
     let value: String
+    
+    // Identifiable
+    let id = UUID()
 }
 
 // MARK: Public interface

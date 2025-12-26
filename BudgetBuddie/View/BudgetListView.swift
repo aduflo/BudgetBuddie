@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BudgetListView: View {
+    // Instance vars
     let viewModel: BudgetListViewModel
     
     var body: some View {

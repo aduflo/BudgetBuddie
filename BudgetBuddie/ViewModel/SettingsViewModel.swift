@@ -7,7 +7,6 @@
 
 import Foundation
 
-@Observable
 class SettingsViewModel {
     // Instance vars
     let settingsService: SettingsServicing
@@ -30,6 +29,7 @@ extension SettingsViewModel {
     
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {
         settingsService.setMonthlyAllowance(monthlyAllowance)
+        postNotificationSettingsUpdated()
     }
     
     var toleranceThreshold: Double {
@@ -38,12 +38,12 @@ extension SettingsViewModel {
     
     func setToleranceThreshold(_ toleranceThreshold: Double) {
         settingsService.setToleranceThreshold(toleranceThreshold)
+        postNotificationSettingsUpdated()
     }
-    
-    var displayToleranceThreshold: String {
-        "Tolerance threshold: \(toleranceThreshold.formatted(.percent))"
-    }
-    
+}
+
+// MARK: Private interface
+private extension SettingsViewModel {
     func postNotificationSettingsUpdated() {
         NotificationCenter.default.post(.SettingsUpdated)
     }

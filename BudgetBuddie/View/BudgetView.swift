@@ -10,7 +10,6 @@ import SwiftUI
 struct BudgetView: View {
     // Instance vars
     @State private var presentSettings = false
-    
     let viewModel: BudgetViewModel
     
     var body: some View {

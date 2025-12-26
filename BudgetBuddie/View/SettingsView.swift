@@ -7,18 +7,10 @@
 
 import SwiftUI
 
-/** TODO:
- - settings for:
-   - Daily allowance field / would update monthly too <-------------
-   - Monthly allowance field / would update daily too
-   - Tolerance treshold
- */
-
 struct SettingsView: View {
     // Instance vars
     @State var monthlyAllowance: Decimal = 0.0
     @State var toleranceThreshold: Double = 0.0
-    
     let viewModel: SettingsViewModel
     
     private var currencyFormat: Decimal.FormatStyle.Currency {
@@ -36,7 +28,6 @@ struct SettingsView: View {
             .keyboardType(.decimalPad)
             .onSubmit {
                 viewModel.setMonthlyAllowance(monthlyAllowance)
-                viewModel.postNotificationSettingsUpdated()
             }
             
             Slider(
@@ -53,13 +44,12 @@ struct SettingsView: View {
                     Text("100%")
                 },
                 onEditingChanged: { editing in
-                    if editing == false {
+                    if editing == false { // only set when editing finishes
                         viewModel.setToleranceThreshold(toleranceThreshold)
-                        viewModel.postNotificationSettingsUpdated()
                     }
                 }
             )
-            Text(viewModel.displayToleranceThreshold) // FIXME: this is broken
+            Text("Tolerance threshold: \(toleranceThreshold.formatted(.percent))")
         }
         .onAppear {
             monthlyAllowance = viewModel.monthlyAllowance
