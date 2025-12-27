@@ -7,17 +7,24 @@
 
 import Foundation
 
-struct BudgetListViewModel {
+@Observable
+class BudgetListViewModel {
     // Instance vars
     let items: [BudgetListItemViewModel]
+    
+    init(
+        items: [BudgetListItemViewModel]
+    ) {
+        self.items = items
+    }
 }
 
 // MARK: - Mocks
 extension BudgetListViewModel {
-    static func mock() -> Self {
+    static func mock() -> BudgetListViewModel {
         let items = (0..<25).map {
             BudgetListItemViewModel(value: String($0))
         }
-        return Self(items: items)
+        return BudgetListViewModel(items: items)
     }
 }

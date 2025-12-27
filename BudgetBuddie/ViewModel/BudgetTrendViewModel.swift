@@ -8,18 +8,24 @@
 import Foundation
 import SwiftUI
 
-struct BudgetTrendViewModel {
+@Observable
+class BudgetTrendViewModel {
     // Instance vars
     let title: String
-    let currentSpend: UInt // amount in cents
-    let maxSpend: UInt // amount in cents
+    /// Amount in dollars and cents
+    let currentSpend: Decimal
+    /// Amount in dollars and cents
+    let maxSpend: Decimal
     let settingsService: SettingsServicing
     let currencyFormatter: CurrencyFormatting
     
+    // Constructors
+    /// - `currentSpend` should be of dollar and cents value
+    /// - `maxSpend` should be of dollar and cents value
     init(
         title: String,
-        currentSpend: UInt,
-        maxSpend: UInt,
+        currentSpend: Decimal,
+        maxSpend: Decimal,
         settingsService: SettingsServicing,
         currencyFormatter: CurrencyFormatting = CurrencyFormatter.shared
     ) {
@@ -43,8 +49,8 @@ extension BudgetTrendViewModel {
     
     var dailySpendColor: Color {
         return switch evaluateBudget(
-            spend: Decimal(currentSpend),
-            max: Decimal(maxSpend)
+            spend: currentSpend,
+            max: maxSpend
         ) {
         case .acceptable: .green
         case .encroaching: .orange
@@ -68,47 +74,57 @@ private extension BudgetTrendViewModel {
 
 // MARK: - Mocks
 extension BudgetTrendViewModel {
-    static func mockDailyAcceptable() -> Self {
-        Self(
+    // TODO: make strings file since we've reused "Daily" "Month-To-Date (MTD)" and "Monthly"
+    static func mockDaily() -> BudgetTrendViewModel {
+        BudgetTrendViewModel(
             title: "Daily",
-            currentSpend: 4000,
-            maxSpend: 5000,
+            currentSpend: 0,
+            maxSpend: 0,
             settingsService: MockSettingsService()
         )
     }
     
-    static func mockDailyEncroaching() -> Self {
-        Self(
-            title: "Daily",
-            currentSpend: 800000,
-            maxSpend: 900000,
-            settingsService: MockSettingsService()
-        )
-    }
-    
-    static func mockDailyExceeded() -> Self {
-        Self(
-            title: "Daily",
-            currentSpend: 900001,
-            maxSpend: 900000,
-            settingsService: MockSettingsService()
-        )
-    }
-    
-    static func mockMtd() -> Self {
-        Self(
+    static func mockMtd() -> BudgetTrendViewModel {
+        BudgetTrendViewModel(
             title: "Month-To-Date (MTD)",
-            currentSpend: 23000,
-            maxSpend: 25000,
+            currentSpend: 0,
+            maxSpend: 0,
             settingsService: MockSettingsService()
         )
     }
     
-    static func mockMonthly() -> Self {
-        Self(
+    static func mockMonthly() -> BudgetTrendViewModel {
+        BudgetTrendViewModel(
             title: "Monthly",
-            currentSpend: 23000,
-            maxSpend: 150000,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: MockSettingsService()
+        )
+    }
+    
+    static func mockAcceptable() -> BudgetTrendViewModel {
+        BudgetTrendViewModel(
+            title: "Budget trend",
+            currentSpend: 40.00,
+            maxSpend: 50.00,
+            settingsService: MockSettingsService()
+        )
+    }
+    
+    static func mockEncroaching() -> BudgetTrendViewModel {
+        BudgetTrendViewModel(
+            title: "Budget trend",
+            currentSpend: 8000.00,
+            maxSpend: 9000.00,
+            settingsService: MockSettingsService()
+        )
+    }
+    
+    static func mockExceeded() -> BudgetTrendViewModel {
+        BudgetTrendViewModel(
+            title: "Budget trend",
+            currentSpend: 9000.01,
+            maxSpend: 9000.00,
             settingsService: MockSettingsService()
         )
     }

@@ -7,12 +7,14 @@
 
 import Foundation
 
+@Observable
 class BudgetViewModel {
     // Instance vars
-    let rundownViewModel: BudgetRundownViewModel
-    let listViewModel: BudgetListViewModel
-    let settingsViewModel: SettingsViewModel
+    private(set) var rundownViewModel: BudgetRundownViewModel
+    private(set) var listViewModel: BudgetListViewModel
+    private(set) var settingsViewModel: SettingsViewModel
     
+    // Constructors
     init(
         rundownViewModel: BudgetRundownViewModel,
         listViewModel: BudgetListViewModel,

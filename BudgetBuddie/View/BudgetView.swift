@@ -10,7 +10,16 @@ import SwiftUI
 struct BudgetView: View {
     // Instance vars
     @State private var presentSettings = false
-    let viewModel: BudgetViewModel
+    @State private var viewModel: BudgetViewModel
+    
+    // Constructors
+    init(
+        presentSettings: Bool = false,
+        viewModel: BudgetViewModel
+    ) {
+        self.presentSettings = presentSettings
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack {
@@ -22,7 +31,7 @@ struct BudgetView: View {
                 SettingsView(
                     viewModel: viewModel.settingsViewModel
                 )
-                .presentationDetents([.height(300.0)])
+                .presentationDetents([.height(312.0)])
             }
             BudgetListView(
                 viewModel: viewModel.listViewModel

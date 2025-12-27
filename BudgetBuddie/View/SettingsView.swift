@@ -13,14 +13,10 @@ struct SettingsView: View {
     @State var warningThreshold: Double = 0.0
     let viewModel: SettingsViewModel
     
-    private var currencyFormat: Decimal.FormatStyle.Currency {
-        .currency(code: viewModel.currencyFormatter.code)
-    }
-    
     var body: some View {
         VStack(
             alignment: .leading,
-            spacing: 32.0
+            spacing: 16.0
         ) {
             VStack(spacing: 8.0) {
                 Text("Settings")
@@ -36,7 +32,7 @@ struct SettingsView: View {
                 TextField(
                     "Monthly allowance",
                     value: $monthlyAllowance,
-                    format: currencyFormat
+                    format: viewModel.currencyFormatter.decimalFormatStyle
                 )
                 .textFieldStyle(.roundedBorder)
                 .keyboardType(.decimalPad)

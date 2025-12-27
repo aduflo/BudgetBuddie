@@ -16,24 +16,7 @@ struct ContentView: View {
             viewModel: BudgetViewModel(
                 rundownViewModel: BudgetRundownViewModel(
                     selectedDate: Date(),
-                    dailyTrendViewModel: BudgetTrendViewModel(
-                        title: "Daily",
-                        currentSpend: 0,
-                        maxSpend: 0,
-                        settingsService: settingsService
-                    ),
-                    mtdTrendViewModel: BudgetTrendViewModel(
-                        title: "Month-To-Date (MTD)",
-                        currentSpend: 0,
-                        maxSpend: 0,
-                        settingsService: settingsService
-                    ),
-                    monthlyTrendViewModel: BudgetTrendViewModel(
-                        title: "Monthly",
-                        currentSpend: 0,
-                        maxSpend: 0,
-                        settingsService: settingsService
-                    )
+                    settingsService: settingsService
                 ),
                 listViewModel: BudgetListViewModel(items: []),
                 settingsViewModel: SettingsViewModel(settingsService: settingsService)

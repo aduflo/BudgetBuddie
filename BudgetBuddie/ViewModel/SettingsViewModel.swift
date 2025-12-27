@@ -12,6 +12,7 @@ class SettingsViewModel {
     let settingsService: SettingsServicing
     let currencyFormatter: CurrencyFormatting
     
+    // Constructors
     init(
         settingsService: SettingsServicing,
         currencyFormatter: CurrencyFormatting = CurrencyFormatter.shared

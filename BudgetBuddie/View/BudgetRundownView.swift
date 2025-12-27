@@ -11,6 +11,13 @@ struct BudgetRundownView: View {
     // Instance vars
     let viewModel: BudgetRundownViewModel
     
+    // Constructors
+    init(
+        viewModel: BudgetRundownViewModel
+    ) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         VStack(
             alignment: .leading,
@@ -62,6 +69,9 @@ struct BudgetRundownView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.gray.opacity(0.25))
         )
+        .onAppear {
+            viewModel.reloadData()
+        }
     }
 }
 

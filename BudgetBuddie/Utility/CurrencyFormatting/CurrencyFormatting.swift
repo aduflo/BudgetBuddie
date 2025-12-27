@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CurrencyFormatting {
-    static var shared: CurrencyFormatting { get }
     var code: String { get }
-    func stringAmount(_ value: UInt) -> String
+    var decimalFormatStyle: Decimal.FormatStyle.Currency { get }
+    func stringAmount(_ amount: Decimal) -> String
 }

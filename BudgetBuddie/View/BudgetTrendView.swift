@@ -31,13 +31,13 @@ struct BudgetTrendView: View {
 }
 
 #Preview("Acceptable") {
-    BudgetTrendView(viewModel: .mockDailyAcceptable())
+    BudgetTrendView(viewModel: .mockAcceptable())
 }
 
 #Preview("Encroaching") {
-    BudgetTrendView(viewModel: .mockDailyEncroaching())
+    BudgetTrendView(viewModel: .mockEncroaching())
 }
 
 #Preview("Exceeded") {
-    BudgetTrendView(viewModel: .mockDailyExceeded())
+    BudgetTrendView(viewModel: .mockExceeded())
 }
