@@ -10,12 +10,15 @@ import Foundation
 @Observable
 class BudgetListViewModel {
     // Instance vars
-    let items: [BudgetListItemViewModel]
+    private(set) var items: [BudgetListItemViewModel]
+    let spendRepository: SpendRepository
     
     init(
-        items: [BudgetListItemViewModel]
+        items: [BudgetListItemViewModel] = [],
+        spendRepository: SpendRepository
     ) {
         self.items = items
+        self.spendRepository = spendRepository
     }
 }
 
@@ -25,6 +28,11 @@ extension BudgetListViewModel {
         let items = (0..<25).map {
             BudgetListItemViewModel(value: String($0))
         }
-        return BudgetListViewModel(items: items)
+        return BudgetListViewModel(
+            items: items,
+            spendRepository: SpendRepository(
+                spendService: MockSpendService()
+            )
+        )
     }
 }

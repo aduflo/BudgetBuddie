@@ -10,9 +10,9 @@ import Foundation
 @Observable
 class BudgetViewModel {
     // Instance vars
-    private(set) var rundownViewModel: BudgetRundownViewModel
-    private(set) var listViewModel: BudgetListViewModel
-    private(set) var settingsViewModel: SettingsViewModel
+    let rundownViewModel: BudgetRundownViewModel
+    let listViewModel: BudgetListViewModel
+    let settingsViewModel: SettingsViewModel
     
     // Constructors
     init(

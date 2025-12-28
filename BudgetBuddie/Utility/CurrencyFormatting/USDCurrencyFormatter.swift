@@ -7,8 +7,8 @@
 
 import Foundation
 
-class USDCurrencyFormatter: CurrencyFormatting {
-    // CurrencyFormatting
+class USDCurrencyFormatter: CurrencyFormattable {
+    // CurrencyFormattable
     let code = "USD"
     
     var decimalFormatStyle: Decimal.FormatStyle.Currency {
@@ -16,6 +16,6 @@ class USDCurrencyFormatter: CurrencyFormatting {
     }
     
     func stringAmount(_ amount: Decimal) -> String {
-        return amount.formatted(.currency(code: "USD"))
+        return amount.formatted(.currency(code: code))
     }
 }

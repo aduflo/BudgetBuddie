@@ -16,8 +16,8 @@ class BudgetTrendViewModel {
     let currentSpend: Decimal
     /// Amount in dollars and cents
     let maxSpend: Decimal
-    let settingsService: SettingsServicing
-    let currencyFormatter: CurrencyFormatting
+    let settingsService: SettingsServiceable
+    let currencyFormatter: CurrencyFormattable
     
     // Constructors
     /// - `currentSpend` should be of dollar and cents value
@@ -26,8 +26,8 @@ class BudgetTrendViewModel {
         title: String,
         currentSpend: Decimal,
         maxSpend: Decimal,
-        settingsService: SettingsServicing,
-        currencyFormatter: CurrencyFormatting = CurrencyFormatter.shared
+        settingsService: SettingsServiceable,
+        currencyFormatter: CurrencyFormattable
     ) {
         self.title = title
         self.currentSpend = currentSpend
@@ -80,7 +80,8 @@ extension BudgetTrendViewModel {
             title: "Daily",
             currentSpend: 0,
             maxSpend: 0,
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
         )
     }
     
@@ -89,7 +90,8 @@ extension BudgetTrendViewModel {
             title: "Month-To-Date (MTD)",
             currentSpend: 0,
             maxSpend: 0,
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
         )
     }
     
@@ -98,7 +100,8 @@ extension BudgetTrendViewModel {
             title: "Monthly",
             currentSpend: 0,
             maxSpend: 0,
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
         )
     }
     
@@ -107,7 +110,8 @@ extension BudgetTrendViewModel {
             title: "Budget trend",
             currentSpend: 40.00,
             maxSpend: 50.00,
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
         )
     }
     
@@ -116,7 +120,8 @@ extension BudgetTrendViewModel {
             title: "Budget trend",
             currentSpend: 8000.00,
             maxSpend: 9000.00,
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
         )
     }
     
@@ -125,7 +130,8 @@ extension BudgetTrendViewModel {
             title: "Budget trend",
             currentSpend: 9000.01,
             maxSpend: 9000.00,
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
         )
     }
 }

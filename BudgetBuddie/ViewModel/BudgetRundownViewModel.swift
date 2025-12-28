@@ -11,7 +11,9 @@ import Foundation
 class BudgetRundownViewModel {
     // Instance vars
     let selectedDate: Date
-    let settingsService: SettingsServicing
+    let settingsService: SettingsServiceable
+    let spendRepository: SpendRepository
+    let currencyFormatter: CurrencyFormattable
     private(set) var dailyTrendViewModel: BudgetTrendViewModel
     private(set) var mtdTrendViewModel: BudgetTrendViewModel
     private(set) var monthlyTrendViewModel: BudgetTrendViewModel
@@ -19,13 +21,17 @@ class BudgetRundownViewModel {
     // Constructors
     init(
         selectedDate: Date,
-        settingsService: SettingsServicing,
+        settingsService: SettingsServiceable,
+        spendRepository: SpendRepository,
+        currencyFormatter: CurrencyFormattable,
         dailyTrendViewModel: BudgetTrendViewModel = .mockDaily(),
         mtdTrendViewModel: BudgetTrendViewModel = .mockMtd(),
         monthlyTrendViewModel: BudgetTrendViewModel = .mockMonthly()
     ) {
         self.selectedDate = selectedDate
         self.settingsService = settingsService
+        self.spendRepository = spendRepository
+        self.currencyFormatter = currencyFormatter
         self.dailyTrendViewModel = dailyTrendViewModel
         self.mtdTrendViewModel = mtdTrendViewModel
         self.monthlyTrendViewModel = monthlyTrendViewModel
@@ -62,7 +68,8 @@ private extension BudgetRundownViewModel {
             title: "Daily",
             currentSpend: currentSpend,
             maxSpend: dailyMaxSpend,
-            settingsService: settingsService
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter
         )
     }
     
@@ -71,7 +78,8 @@ private extension BudgetRundownViewModel {
             title: "Month-To-Date (MTD)",
             currentSpend: currentSpend,
             maxSpend: mtdMaxSpend,
-            settingsService: settingsService
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter
         )
     }
     
@@ -80,7 +88,8 @@ private extension BudgetRundownViewModel {
             title: "Monthly",
             currentSpend: currentSpend,
             maxSpend: monthlyMaxSpend,
-            settingsService: settingsService
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter
         )
     }
     
@@ -115,7 +124,11 @@ extension BudgetRundownViewModel {
     static func mock() -> BudgetRundownViewModel {
         BudgetRundownViewModel(
             selectedDate: Date(),
-            settingsService: MockSettingsService()
+            settingsService: MockSettingsService(),
+            spendRepository: SpendRepository(
+                spendService: MockSpendService()
+            ),
+            currencyFormatter: CurrencyFormatter()
         )
     }
 }

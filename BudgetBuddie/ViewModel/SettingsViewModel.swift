@@ -9,13 +9,13 @@ import Foundation
 
 class SettingsViewModel {
     // Instance vars
-    let settingsService: SettingsServicing
-    let currencyFormatter: CurrencyFormatting
+    let settingsService: SettingsServiceable
+    let currencyFormatter: CurrencyFormattable
     
     // Constructors
     init(
-        settingsService: SettingsServicing,
-        currencyFormatter: CurrencyFormatting = CurrencyFormatter.shared
+        settingsService: SettingsServiceable,
+        currencyFormatter: CurrencyFormattable
     ) {
         self.settingsService = settingsService
         self.currencyFormatter = currencyFormatter
@@ -53,6 +53,9 @@ private extension SettingsViewModel {
 // MARK: - Mocks
 extension SettingsViewModel {
     static func mock() -> SettingsViewModel {
-        SettingsViewModel(settingsService: MockSettingsService())
+        SettingsViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
     }
 }

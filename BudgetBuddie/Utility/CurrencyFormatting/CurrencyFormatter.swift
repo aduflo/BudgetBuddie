@@ -7,14 +7,11 @@
 
 import Foundation
 
-class CurrencyFormatter: CurrencyFormatting {
+class CurrencyFormatter: CurrencyFormattable {
     // Instance vars
-    private var currentFormatter: CurrencyFormatting = USDCurrencyFormatter()
+    private(set) var currentFormatter: CurrencyFormattable = USDCurrencyFormatter()
     
-    // Static vars
-    static let shared: CurrencyFormatting = CurrencyFormatter()
-    
-    // CurrencyFormatting
+    // CurrencyFormattable
     var code: String {
         currentFormatter.code
     }
@@ -28,8 +25,9 @@ class CurrencyFormatter: CurrencyFormatting {
     }
 }
 
+// MARK: Public interface
 extension CurrencyFormatter {
-    func swapIn(formatter: CurrencyFormatting) {
+    func swapIn(formatter: CurrencyFormattable) {
         currentFormatter = formatter
     }
 }

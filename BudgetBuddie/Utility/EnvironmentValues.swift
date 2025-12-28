@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 extension EnvironmentValues {
-    @Entry var settingsService: SettingsServicing = SettingsService()
+    @Entry var settingsService: SettingsServiceable = SettingsService()
+    @Entry var spendRepository: SpendRepository = SpendRepository()
+    @Entry var currencyFormatter: CurrencyFormatter = CurrencyFormatter()
 }
 
 //extension View {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockSettingsService: SettingsServicing {
+class MockSettingsService: SettingsServiceable {
     private(set) var monthlyAllowance: Decimal = 0.0
     
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {

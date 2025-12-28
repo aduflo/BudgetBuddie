@@ -9,7 +9,7 @@ import Foundation
 
 // TODO: use Mutexes for thread safety on set/get
 
-class SettingsService: SettingsServicing {
+class SettingsService: SettingsServiceable {
     // Instance vars
     private let userDefaults: UserDefaults = .standard
 }
