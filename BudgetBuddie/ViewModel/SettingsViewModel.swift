@@ -9,7 +9,7 @@ import Foundation
 
 class SettingsViewModel {
     // Instance vars
-    let settingsService: SettingsServiceable
+    private let settingsService: SettingsServiceable
     let currencyFormatter: CurrencyFormattable
     
     // Constructors

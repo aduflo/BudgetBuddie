@@ -10,19 +10,19 @@ import Foundation
 @Observable
 class BudgetRundownViewModel {
     // Instance vars
-    let selectedDate: Date
     private(set) var dailyTrendViewModel: BudgetTrendViewModel
     private(set) var mtdTrendViewModel: BudgetTrendViewModel
     private(set) var monthlyTrendViewModel: BudgetTrendViewModel
     
-    let settingsService: SettingsServiceable
-    let calendarService: CalenderServiceable
-    let spendRepository: SpendRepository
-    let currencyFormatter: CurrencyFormattable
+    private let settingsService: SettingsServiceable
+    private let calendarService: CalenderServiceable
+    private let spendRepository: SpendRepository
+    private let currencyFormatter: CurrencyFormattable
+    
+    var onSettingsTapped: () -> () = {}
     
     // Constructors
     init(
-        selectedDate: Date,
         dailyTrendViewModel: BudgetTrendViewModel = .mockDaily(), // TODO: remove mock
         mtdTrendViewModel: BudgetTrendViewModel = .mockMtd(), // TODO: remove mock
         monthlyTrendViewModel: BudgetTrendViewModel = .mockMonthly(), // TODO: remove mock
@@ -31,7 +31,6 @@ class BudgetRundownViewModel {
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
-        self.selectedDate = selectedDate
         self.dailyTrendViewModel = dailyTrendViewModel
         self.mtdTrendViewModel = mtdTrendViewModel
         self.monthlyTrendViewModel = monthlyTrendViewModel
@@ -45,22 +44,20 @@ class BudgetRundownViewModel {
 // MARK: Public interface
 extension BudgetRundownViewModel {
     func reloadData() {
-        print("\(String(describing: Self.self))-\(#function)")
-        
         dailyTrendViewModel = dailyTrendViewModelBuilder()
         mtdTrendViewModel = mtdTrendViewModelBuilder()
         monthlyTrendViewModel = monthlyTrendViewModelBuilder()
     }
     
     var displayDate: String {
-        selectedDate.formatted(
+        calendarService.selectedDate.formatted(
             date: .long,
             time: .omitted
         )
     }
     
-    func postNotificationSettingsTapped() {
-        NotificationCenter.default.post(.SettingsTapped)
+    func settingsTapped() {
+        onSettingsTapped()
     }
 }
 
@@ -80,7 +77,7 @@ private extension BudgetRundownViewModel {
     
     func mtdTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Month-To-Date (MTD)",
+            title: "Month-to-date (MTD)",
             currentSpend: mtdCurrentSpend,
             maxSpend: mtdMaxSpend,
             settingsService: settingsService,
@@ -113,13 +110,13 @@ private extension BudgetRundownViewModel {
     }
     
     var dailyMaxSpend: Decimal {
-        let daysInMonth = calendarService.daysInMonth(selectedDate)
+        let daysInMonth = calendarService.daysInMonth(calendarService.selectedDate)
         return monthlyMaxSpend / Decimal(daysInMonth)
     }
     
     var mtdMaxSpend: Decimal {
         let dailyMaxSpend = dailyMaxSpend
-        let currentDay = calendarService.currentMonthDay(selectedDate)
+        let currentDay = calendarService.currentMonthDay(calendarService.selectedDate)
         return dailyMaxSpend * Decimal(currentDay)
     }
     
@@ -132,7 +129,6 @@ private extension BudgetRundownViewModel {
 extension BudgetRundownViewModel {
     static func mock() -> BudgetRundownViewModel {
         BudgetRundownViewModel(
-            selectedDate: Date(),
             settingsService: MockSettingsService(),
             calendarService: MockCalenderService(),
             spendRepository: SpendRepository(

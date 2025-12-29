@@ -15,5 +15,4 @@ struct SpendItem {
     let id: UUID
     let amount: Decimal
     let note: String?
-    let dayId: UUID
 }

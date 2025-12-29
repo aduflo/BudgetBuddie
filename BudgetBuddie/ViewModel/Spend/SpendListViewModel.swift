@@ -1,5 +1,5 @@
 //
-//  BudgetListViewModel.swift
+//  SpendListViewModel.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -8,15 +8,15 @@
 import Foundation
 
 @Observable
-class BudgetListViewModel {
+class SpendListViewModel {
     // Instance vars
-    private(set) var items: [BudgetListItemViewModel]
+    private(set) var items: [SpendListItemViewModel]
     
-    let spendRepository: SpendRepository
-    let currencyFormatter: CurrencyFormattable
+    private let spendRepository: SpendRepository
+    private let currencyFormatter: CurrencyFormattable
     
     init(
-        items: [BudgetListItemViewModel] = [],
+        items: [SpendListItemViewModel] = [],
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
@@ -27,13 +27,13 @@ class BudgetListViewModel {
 }
 
 // MARK: - Mocks
-extension BudgetListViewModel {
-    static func mock() -> BudgetListViewModel {
+extension SpendListViewModel {
+    static func mock() -> SpendListViewModel {
         let currencyFormatter = CurrencyFormatter()
         let items = (0..<25).map { _ in
-            BudgetListItemViewModel.mock()
+            SpendListItemViewModel.mock()
         }
-        return BudgetListViewModel(
+        return SpendListViewModel(
             items: items,
             spendRepository: SpendRepository(
                 spendService: MockSpendService()

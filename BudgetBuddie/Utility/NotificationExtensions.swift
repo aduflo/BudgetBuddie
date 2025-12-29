@@ -8,11 +8,11 @@
 import Foundation
 
 extension NSNotification.Name {
-    static let SettingsTapped = NSNotification.Name("SettingsTapped")
     static let SettingsUpdated = NSNotification.Name("SettingsUpdated")
+    static let SelectedDateUpdated = NSNotification.Name("SelectedDateUpdated")
 }
 
 extension Notification {
-    static let SettingsTapped = Notification(name: .SettingsTapped)
     static let SettingsUpdated = Notification(name: .SettingsUpdated)
+    static let SelectedDateUpdated = Notification(name: .SelectedDateUpdated)
 }

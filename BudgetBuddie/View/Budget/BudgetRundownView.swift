@@ -29,8 +29,8 @@ struct BudgetRundownView: View {
                 Spacer()
                 Button(
                     "Settings",
-                    systemImage: "gear",
-                    action: { viewModel.postNotificationSettingsTapped() }
+                    systemImage: SystemImage.gear,
+                    action: { viewModel.settingsTapped() }
                 )
                 .labelStyle(.iconOnly)
                 .buttonStyle(.borderedProminent)
@@ -39,9 +39,8 @@ struct BudgetRundownView: View {
                 .foregroundStyle(.black)
             }
             
-            Text("Spending Trends")
+            Text("Spending trends")
                 .font(.headline)
-            
             VStack(
                 alignment: .leading,
                 spacing: 8.0

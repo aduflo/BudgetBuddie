@@ -17,22 +17,29 @@ struct BudgetBuddieApp: App {
     
     var body: some Scene {
         WindowGroup {
-            BudgetView(
-                viewModel: BudgetViewModel(
+            HomeView(
+                viewModel: HomeViewModel(
                     rundownViewModel: BudgetRundownViewModel(
-                        selectedDate: Date(), // TODO: leverage date picker selection
                         settingsService: settingsService,
                         calendarService: calendarService,
                         spendRepository: spendRepository,
                         currencyFormatter: currencyFormatter
                     ),
-//                    listViewModel: BudgetListViewModel(
-//                        spendRepository: spendRepository,
-//                        currencyFormatter: currencyFormatter
-//                    ),
-                    listViewModel: .mock(), // TODO: use above
                     settingsViewModel: SettingsViewModel(
                         settingsService: settingsService,
+                        currencyFormatter: currencyFormatter
+                    ),
+                    spendViewModel: SpendViewModel(
+                        calendarViewModel: CalendarViewModel(
+                            calendarService: calendarService
+                        ),
+                        spendListViewModel: .mock(),
+//                        spendListViewModel: SpendListViewModel( // TODO: rethink this pattern. perhaps put this VMs as builders inside SpendViewModel instead of initializing them here. that way, they're initialized on first use and reassignable? maybe these are tired thoughts.
+//                            spendRepository: spendRepository,
+//                            currencyFormatter: currencyFormatter
+//                        ),
+                        calendarService: calendarService,
+                        spendRepository: spendRepository,
                         currencyFormatter: currencyFormatter
                     )
                 )

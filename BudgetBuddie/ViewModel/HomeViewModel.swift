@@ -1,5 +1,5 @@
 //
-//  BudgetViewModel.swift
+//  HomeViewModel.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -8,31 +8,32 @@
 import Foundation
 
 @Observable
-class BudgetViewModel {
+class HomeViewModel {
     // Instance vars
     let rundownViewModel: BudgetRundownViewModel
-    let listViewModel: BudgetListViewModel
     let settingsViewModel: SettingsViewModel
+    let spendViewModel: SpendViewModel
     
     // Constructors
     init(
         rundownViewModel: BudgetRundownViewModel,
-        listViewModel: BudgetListViewModel,
         settingsViewModel: SettingsViewModel,
+        spendViewModel: SpendViewModel
     ) {
         self.rundownViewModel = rundownViewModel
-        self.listViewModel = listViewModel
         self.settingsViewModel = settingsViewModel
+        self.spendViewModel = spendViewModel
     }
 }
 
+
 // MARK: - Mocks
-extension BudgetViewModel {
-    static func mock() -> BudgetViewModel {
-        BudgetViewModel(
+extension HomeViewModel {
+    static func mock() -> HomeViewModel {
+        HomeViewModel(
             rundownViewModel: .mock(),
-            listViewModel: .mock(),
-            settingsViewModel: .mock()
+            settingsViewModel: .mock(),
+            spendViewModel: .mock()
         )
     }
 }

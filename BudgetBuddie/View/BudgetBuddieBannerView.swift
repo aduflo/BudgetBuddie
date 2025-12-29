@@ -1,5 +1,5 @@
 //
-//  BudgetHeaderView.swift
+//  BudgetBuddieBannerView.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BudgetHeaderView: View {
+struct BudgetBuddieBannerView: View {
     var body: some View {
         HStack {
             Text("BudgetBuddie")
@@ -29,5 +29,5 @@ struct BudgetHeaderView: View {
 }
 
 #Preview {
-    BudgetHeaderView()
+    BudgetBuddieBannerView()
 }

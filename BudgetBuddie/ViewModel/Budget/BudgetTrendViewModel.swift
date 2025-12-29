@@ -17,8 +17,8 @@ class BudgetTrendViewModel {
     /// Amount in dollars and cents
     let maxSpend: Decimal
     
-    let settingsService: SettingsServiceable
-    let currencyFormatter: CurrencyFormattable
+    private let settingsService: SettingsServiceable
+    private let currencyFormatter: CurrencyFormattable
     
     // Constructors
     /// - `currentSpend` should be of dollar and cents value
@@ -88,7 +88,7 @@ extension BudgetTrendViewModel {
     
     static func mockMtd() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Month-To-Date (MTD)",
+            title: "Month-to-date (MTD)",
             currentSpend: 0,
             maxSpend: 0,
             settingsService: MockSettingsService(),
