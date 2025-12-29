@@ -13,10 +13,14 @@ class CalenderService: CalenderServiceable {
     
     // CalenderServiceable
     
-    var selectedDate: Date = Date() {
+    private(set) var selectedDate: Date = Date() {
         didSet {
             postNotificationSelectedDateUpdated()
         }
+    }
+    
+    func updateSelectedDate(_ date: Date) {
+        selectedDate = date
     }
     
     func dayInMonth(_ date: Date) -> Int {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SystemImage {
+enum SystemImage {
     static let gear = "gear"
     static let plus = "plus"
     static let dollarsignBankBuilding = "dollarsign.bank.building"

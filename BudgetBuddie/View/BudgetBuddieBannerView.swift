@@ -21,7 +21,7 @@ struct BudgetBuddieBannerView: View {
             cornerRadius: CornerRadius.2,
             color: .yellow,
             strokeColor: .brown,
-            strokeWidth: 2.0
+            strokeWidth: StrokeWidth.2
         )
     }
 }

@@ -7,8 +7,18 @@
 
 import Foundation
 
-struct CalendarViewModel {
+class CalendarViewModel {
     // Instance vars
+    lazy var dayViewModels: [CalenderDayViewModel] = {
+        monthDays.map { monthDay in
+            CalenderDayViewModel(
+                isSelected: false,
+                text: displayMonthDay(monthDay.date),
+                monthDay: monthDay
+            )
+        }
+    }()
+    private(set) var selectedDayViewModel: CalenderDayViewModel? = nil
     private let calendarService: CalenderServiceable
     
     // Constructors
@@ -21,11 +31,21 @@ struct CalendarViewModel {
 
 // MARK: Public interface
 extension CalendarViewModel {
-    var currentMonthDay: MonthDay? {
-        let currentDay = calendarService.currentMonthDay(calendarService.selectedDate)
-        return monthDays.first { $0.day == currentDay }
+    var currentDayViewModel: CalenderDayViewModel? {
+        guard let currentMonthDay = currentMonthDay else {
+            return nil
+        }
+        
+        return dayViewModels.first(where: { $0.monthDay.day == currentMonthDay.day })
     }
     
+    func updateSelectedDate(_ date: Date) {
+        calendarService.updateSelectedDate(date)
+    }
+}
+
+// MARK: Private interface
+private extension CalendarViewModel {
     var monthDays: [MonthDay] {
         let days = calendarService.monthDays(
             calendarService.selectedDate
@@ -36,6 +56,11 @@ extension CalendarViewModel {
                 date: $0
             )
         }
+    }
+    
+    var currentMonthDay: MonthDay? {
+        let currentDay = calendarService.currentMonthDay(calendarService.selectedDate)
+        return monthDays.first { $0.day == currentDay }
     }
     
     func displayMonthDay(_ date: Date) -> String {

@@ -16,6 +16,7 @@ struct SpendListView: View {
             // FIXME: proper empty state
             Text("empty, danggg")
         } else {
+            // TODO: add ability to delete spend item
             VStack(
                 alignment: .leading
             ) {

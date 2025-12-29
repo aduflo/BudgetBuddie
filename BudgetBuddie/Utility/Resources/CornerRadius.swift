@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CornerRadius {
+enum CornerRadius {
     static let `1` = 8.0
     static let `2` = 16.0
 }

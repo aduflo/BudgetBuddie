@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct CalenderDayView: View {
-    let text: String
+    // Instance vars
+    @State private var viewModel: CalenderDayViewModel
+    
+    // Constructors
+    init(viewModel: CalenderDayViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
-        Text(text)
+        Text(viewModel.text)
             .frame(
                 width: 48.0,
                 height: 32.0
@@ -19,14 +25,29 @@ struct CalenderDayView: View {
             .padding(Padding.1)
             .roundedRectangleBackground(
                 cornerRadius: CornerRadius.1,
-                color: .white
+                color: .white,
+                strokeColor: viewModel.isSelected ? .black: .clear,
+                strokeWidth: viewModel.isSelected ? StrokeWidth.2 : 0.0
             )
-            .padding(.horizontal, Padding.2)
     }
 }
 
-#Preview {
+#Preview("Selected") {
     CalenderDayView(
-        text: "12/25"
+        viewModel: CalenderDayViewModel(
+            isSelected: true,
+            text: "12/25",
+            monthDay: .mock()
+        )
+    )
+}
+
+#Preview("Not selected") {
+    CalenderDayView(
+        viewModel: CalenderDayViewModel(
+            isSelected: false,
+            text: "12/25",
+            monthDay: .mock()
+        )
     )
 }

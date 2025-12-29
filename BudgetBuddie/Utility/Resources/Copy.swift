@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Copy {
+enum Copy {
     static let appName = "BudgetBuddie"
     static let spendingTrends = "Spending trends"
     static let current = "Current"
     static let max = "Max"
     static let spendItems = "Spend items"
-    static let spendSummary = "Spend summary"
-    static let date = "Date"
+    static let summary = "Summary"
+    static let days = "Days"
     static let settings = "Settings"
     static let monthlyAllowance = "Monthly allowance"
     static func warningThreshold(_ value: String) -> String {

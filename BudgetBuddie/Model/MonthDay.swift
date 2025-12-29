@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct MonthDay: Identifiable {
+struct MonthDay {
     // Instance vars
     let day: Int
     let date: Date
-    
-    // Identifiable
-    let id = UUID()
+}
+
+// MARK: - Mocks
+extension MonthDay {
+    static func mock() -> MonthDay {
+        MonthDay(
+            day: 25,
+            date: Date()
+        )
+    }
 }

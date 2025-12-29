@@ -8,7 +8,11 @@
 import Foundation
 
 class MockCalenderService: CalenderServiceable {
-    var selectedDate: Date = Date()
+    private(set) var selectedDate: Date = Date()
+    
+    func updateSelectedDate(_ date: Date) {
+        selectedDate = date
+    }
     
     func dayInMonth(_ date: Date) -> Int {
         4

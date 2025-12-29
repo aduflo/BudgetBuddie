@@ -8,7 +8,8 @@
 import Foundation
 
 protocol CalenderServiceable {
-    var selectedDate: Date { get set }
+    var selectedDate: Date { get }
+    func updateSelectedDate(_ date: Date)
     /// Get the day associated with the date
     /// - Returns: The day of the date, represented as an `Int`
     func dayInMonth(_ date: Date) -> Int

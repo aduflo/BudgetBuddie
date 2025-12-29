@@ -17,7 +17,7 @@ struct SpendView: View {
             spacing: Spacing.1
         ) {
             HStack {
-                Text(Copy.spendSummary)
+                Text(Copy.summary)
                     .font(.title2)
                 Spacer()
                 Button(

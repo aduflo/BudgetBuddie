@@ -9,41 +9,68 @@ import SwiftUI
 
 struct CalendarView: View {
     // Instance vars
-    let viewModel: CalendarViewModel
+    @State private var viewModel: CalendarViewModel
+    @State private var selectedDayViewModel: CalenderDayViewModel? = nil
+    
+    // Constructors
+    init(
+        viewModel: CalendarViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(
             alignment: .leading
         ) {
-            Text(Copy.date)
+            Text(Copy.days)
                 .font(.headline)
             
             ScrollViewReader { proxy in
                 ScrollView {
-                    // TODO: implement selected state
-                    // might need to convert to List (not scrollview + vstack) for selected state, since it has it implemented
-                    // could create @Bindable for calendarService.selectedDate or something... ZzZzzzZzz
-                    // leverage roundedRectangle strokeColor and strokeWidth for selection state of CalendarDayView
                     VStack(
                         alignment: .leading,
-                        spacing: Spacing.1
+                        spacing: Spacing.2
                     ) {
-                        ForEach(viewModel.monthDays) { monthDay in
+                        ForEach(viewModel.dayViewModels) { viewModel in
                             CalenderDayView(
-                                text: viewModel.displayMonthDay(monthDay.date)
+                                viewModel: viewModel
                             )
-                            .id(monthDay.day)
+                            .id(viewModel.monthDay.day)
+                            .onTapGesture {
+                                if let selectedDayViewModel {
+                                    if selectedDayViewModel.monthDay.day == viewModel.monthDay.day {
+                                        return // selecting same day, abort
+                                    } else {
+                                        // untoggle previously selected
+                                        selectedDayViewModel.isSelected = false
+                                    }
+                                }
+                                
+                                // toggle new selection and persist day vm
+                                viewModel.isSelected = true
+                                selectedDayViewModel = viewModel
+                                
+                                // update selected date
+                                self.viewModel.updateSelectedDate(viewModel.monthDay.date)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .onAppear {
+                            guard let currentDayViewModel = viewModel.currentDayViewModel else {
+                                return
+                            }
+                            
+                            currentDayViewModel.isSelected = true
+                            selectedDayViewModel = currentDayViewModel
+                            proxy.scrollTo(
+                                currentDayViewModel.monthDay.day,
+                                anchor: .top
+                            )
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                    .onAppear {
-                        proxy.scrollTo(
-                            viewModel.currentMonthDay?.day,
-                            anchor: .top
-                        )
-                    }
+                    .frame(width: 64.0)
                 }
-                .frame(width: 64.0)
             }
         }
     }
