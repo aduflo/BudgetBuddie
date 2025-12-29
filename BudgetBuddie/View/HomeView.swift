@@ -59,8 +59,8 @@ struct HomeView: View {
                 .presentationDetents([.height(312.0)])
             }
         }
-        .padding(.top)
-        .padding(.horizontal)
+        .padding(.top, Padding.2)
+        .padding(.horizontal, Padding.2)
         .onAppear {
             // assign closures to facilitate presentables
             viewModel.rundownViewModel.onSettingsTapped = {

@@ -46,7 +46,7 @@ struct SpendView: View {
                 )
             }
         }
-        .padding()
+        .padding(Padding.2)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,
             color: .gray.opacity(0.25)

@@ -72,7 +72,7 @@ struct SettingsView: View {
                     .multilineTextAlignment(.center)
             }
         }
-        .padding()
+        .padding(Padding.2)
         .onAppear {
             monthlyAllowance = viewModel.monthlyAllowance
             warningThreshold = viewModel.warningThreshold

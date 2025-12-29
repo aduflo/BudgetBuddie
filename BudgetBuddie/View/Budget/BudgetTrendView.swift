@@ -12,16 +12,25 @@ struct BudgetTrendView: View {
     let viewModel: BudgetTrendViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(
+            alignment: .leading,
+            spacing: Spacing.half
+        ) {
             Text(viewModel.title)
                 .font(.headline)
             HStack(spacing: Spacing.2) {
-                VStack(alignment: .leading) {
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.half
+                ) {
                     Text(Copy.current)
                     Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
                 }
-                VStack(alignment: .leading) {
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.half
+                ) {
                     Text(Copy.max)
                     Text(viewModel.displayMaxSpend)
                 }

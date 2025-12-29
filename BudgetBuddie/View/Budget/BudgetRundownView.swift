@@ -58,13 +58,13 @@ struct BudgetRundownView: View {
                     viewModel: viewModel.monthlyTrendViewModel
                 )
             }
-            .padding()
+            .padding(Padding.2)
             .roundedRectangleBackground(
                 cornerRadius: CornerRadius.2,
                 color: .white
             )
         }
-        .padding()
+        .padding(Padding.2)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,
             color: .gray.opacity(0.25)

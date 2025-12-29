@@ -18,7 +18,8 @@ struct SpendListView: View {
         } else {
             // TODO: add ability to delete spend item
             VStack(
-                alignment: .leading
+                alignment: .leading,
+                spacing: Spacing.1
             ) {
                 Text(Copy.spendItems)
                     .font(.headline)

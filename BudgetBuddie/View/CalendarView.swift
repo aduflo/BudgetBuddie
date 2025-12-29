@@ -21,7 +21,8 @@ struct CalendarView: View {
     
     var body: some View {
         VStack(
-            alignment: .leading
+            alignment: .leading,
+            spacing: Spacing.1
         ) {
             Text(Copy.days)
                 .font(.headline)

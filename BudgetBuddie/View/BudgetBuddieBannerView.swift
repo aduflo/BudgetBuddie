@@ -16,7 +16,7 @@ struct BudgetBuddieBannerView: View {
                 .resizable()
                 .frame(width: 32.0, height: 32.0)
         }
-        .padding()
+        .padding(Padding.2)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,
             color: .yellow,
