@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: everything
+
 struct NewSpendItemView: View {
     // Instance vars
     let viewModel: NewSpendItemViewModel

@@ -18,7 +18,7 @@ struct BudgetBuddieBannerView: View {
         }
         .padding()
         .roundedRectangleBackground(
-            cornerRadius: 16.0,
+            cornerRadius: CornerRadius.2,
             color: .yellow,
             strokeColor: .brown,
             strokeWidth: 2.0

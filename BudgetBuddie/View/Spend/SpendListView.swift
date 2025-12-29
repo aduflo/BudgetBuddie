@@ -25,7 +25,7 @@ struct SpendListView: View {
                 ScrollView {
                     VStack(
                         alignment: .leading,
-                        spacing: 8.0
+                        spacing: Spacing.1
                     ) {
                         ForEach(viewModel.items) { item in
                             SpendListItemView(viewModel: item)

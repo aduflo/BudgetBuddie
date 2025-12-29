@@ -14,7 +14,7 @@ struct SpendView: View {
     
     var body: some View {
         VStack(
-            spacing: 8.0
+            spacing: Spacing.1
         ) {
             HStack {
                 Text(Copy.spendSummary)
@@ -33,7 +33,7 @@ struct SpendView: View {
             }
             
             HStack(
-                spacing: 18.0
+                spacing: Spacing.2
             ) {
                 SpendListView(
                     viewModel: viewModel.spendListViewModel
@@ -48,7 +48,7 @@ struct SpendView: View {
         }
         .padding()
         .roundedRectangleBackground(
-            cornerRadius: 16.0,
+            cornerRadius: CornerRadius.2,
             color: .gray.opacity(0.25)
         )
         .onReceive(

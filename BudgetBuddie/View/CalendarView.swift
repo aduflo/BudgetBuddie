@@ -23,9 +23,10 @@ struct CalendarView: View {
                     // TODO: implement selected state
                     // might need to convert to List (not scrollview + vstack) for selected state, since it has it implemented
                     // could create @Bindable for calendarService.selectedDate or something... ZzZzzzZzz
+                    // leverage roundedRectangle strokeColor and strokeWidth for selection state of CalendarDayView
                     VStack(
                         alignment: .leading,
-                        spacing: 8.0
+                        spacing: Spacing.1
                     ) {
                         ForEach(viewModel.monthDays) { monthDay in
                             CalenderDayView(

@@ -27,7 +27,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack(
-            spacing: 16.0
+            spacing: Spacing.2
         ) {
             BudgetBuddieBannerView()
             

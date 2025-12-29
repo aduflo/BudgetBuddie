@@ -16,12 +16,12 @@ struct CalenderDayView: View {
                 width: 48.0,
                 height: 32.0
             )
-            .padding(8.0)
+            .padding(Padding.1)
             .roundedRectangleBackground(
-                cornerRadius: 8.0,
+                cornerRadius: CornerRadius.1,
                 color: .white
             )
-            .padding(.horizontal, 16.0)
+            .padding(.horizontal, Padding.2)
     }
 }
 

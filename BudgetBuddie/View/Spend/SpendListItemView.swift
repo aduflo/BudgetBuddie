@@ -21,9 +21,9 @@ struct SpendListItemView: View {
             }
             Text(viewModel.displayNote)
         }
-        .padding(8.0)
+        .padding(Padding.1)
         .roundedRectangleBackground(
-            cornerRadius: 8.0,
+            cornerRadius: CornerRadius.1,
             color: .white
         )
     }

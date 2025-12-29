@@ -16,9 +16,11 @@ struct SettingsView: View {
     var body: some View {
         VStack(
             alignment: .leading,
-            spacing: 16.0
+            spacing: Spacing.2
         ) {
-            VStack(spacing: 8.0) {
+            VStack(
+                spacing: Spacing.1
+            ) {
                 Text(Copy.settings)
                     .font(.title)
                 Divider()
@@ -26,7 +28,7 @@ struct SettingsView: View {
             
             VStack(
                 alignment: .leading,
-                spacing: 8.0
+                spacing: Spacing.1
             ) {
                 Text(Copy.monthlyAllowance)
                 TextField(
@@ -43,7 +45,7 @@ struct SettingsView: View {
             
             VStack(
                 alignment: .leading,
-                spacing: 8.0
+                spacing: Spacing.1
             ) {
                 Text(Copy.warningThreshold(warningThreshold.formatted(.percent)))
                 Slider(

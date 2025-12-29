@@ -22,7 +22,7 @@ struct BudgetRundownView: View {
     var body: some View {
         VStack(
             alignment: .leading,
-            spacing: 8.0
+            spacing: Spacing.1
         ) {
             HStack {
                 Text(viewModel.displayDate)
@@ -44,7 +44,7 @@ struct BudgetRundownView: View {
                 .font(.headline)
             VStack(
                 alignment: .leading,
-                spacing: 8.0
+                spacing: Spacing.1
             ) {
                 BudgetTrendView(
                     viewModel: viewModel.dailyTrendViewModel
@@ -60,13 +60,13 @@ struct BudgetRundownView: View {
             }
             .padding()
             .roundedRectangleBackground(
-                cornerRadius: 16.0,
+                cornerRadius: CornerRadius.2,
                 color: .white
             )
         }
         .padding()
         .roundedRectangleBackground(
-            cornerRadius: 16.0,
+            cornerRadius: CornerRadius.2,
             color: .gray.opacity(0.25)
         )
         .onAppear {

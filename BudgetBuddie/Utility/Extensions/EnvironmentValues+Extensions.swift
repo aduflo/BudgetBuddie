@@ -14,10 +14,3 @@ extension EnvironmentValues {
     @Entry var spendRepository: SpendRepository = SpendRepository()
     @Entry var currencyFormatter: CurrencyFormatter = CurrencyFormatter()
 }
-
-//extension View {
-//    EG.
-//    func setMonthlyAllowance(_ monthlyAllowance: Decimal) -> some View {
-//        environment(\.monthlyAllowance, monthlyAllowance)
-//    }
-//}
