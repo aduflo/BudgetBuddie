@@ -13,6 +13,7 @@
 
 resources:
 - https://developer.apple.com/documentation/swiftdata
-- https://developer.apple.com/documentation/swiftui/datepicker
 - https://developer.apple.com/documentation/swiftui/environmentvalues
 - https://www.swiftyplace.com/blog/swiftui-sheets-modals-bottom-sheets-fullscreen-presentation-in-ios
+- https://sarunw.com/posts/swiftui-list-selection/
+- https://www.hackingwithswift.com/quick-start/swiftui/how-to-scroll-to-a-specific-row-in-a-list
