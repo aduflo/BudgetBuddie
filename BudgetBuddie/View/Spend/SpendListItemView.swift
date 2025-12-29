@@ -22,12 +22,11 @@ struct SpendListItemView: View {
             Text(viewModel.displayNote)
         }
         .padding(8.0)
-        .background(
-            RoundedRectangle(cornerRadius: 8.0)
-                .fill(.white)
+        .roundedRectangleBackground(
+            cornerRadius: 8.0,
+            color: .white
         )
     }
-    // TODO: need a empty state
 }
 
 #Preview {

@@ -75,10 +75,9 @@ private extension BudgetTrendViewModel {
 
 // MARK: - Mocks
 extension BudgetTrendViewModel {
-    // TODO: make strings file since we've reused "Daily" "Month-To-Date (MTD)" and "Monthly"
     static func mockDaily() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Daily",
+            title: Copy.daily,
             currentSpend: 0,
             maxSpend: 0,
             settingsService: MockSettingsService(),
@@ -88,7 +87,7 @@ extension BudgetTrendViewModel {
     
     static func mockMtd() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Month-to-date (MTD)",
+            title: Copy.monthToDate,
             currentSpend: 0,
             maxSpend: 0,
             settingsService: MockSettingsService(),
@@ -98,7 +97,7 @@ extension BudgetTrendViewModel {
     
     static func mockMonthly() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Monthly",
+            title: Copy.monthly,
             currentSpend: 0,
             maxSpend: 0,
             settingsService: MockSettingsService(),
@@ -108,7 +107,7 @@ extension BudgetTrendViewModel {
     
     static func mockAcceptable() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Budget trend",
+            title: Copy.budgetTrend,
             currentSpend: 40.00,
             maxSpend: 50.00,
             settingsService: MockSettingsService(),
@@ -118,7 +117,7 @@ extension BudgetTrendViewModel {
     
     static func mockEncroaching() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Budget trend",
+            title: Copy.budgetTrend,
             currentSpend: 8000.00,
             maxSpend: 9000.00,
             settingsService: MockSettingsService(),
@@ -128,7 +127,7 @@ extension BudgetTrendViewModel {
     
     static func mockExceeded() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Budget trend",
+            title: Copy.budgetTrend,
             currentSpend: 9000.01,
             maxSpend: 9000.00,
             settingsService: MockSettingsService(),

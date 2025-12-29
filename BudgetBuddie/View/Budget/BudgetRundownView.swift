@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct BudgetRundownView: View {
     // Instance vars
@@ -28,7 +29,7 @@ struct BudgetRundownView: View {
                     .font(.title2)
                 Spacer()
                 Button(
-                    "Settings",
+                    "settings",
                     systemImage: SystemImage.gear,
                     action: { viewModel.settingsTapped() }
                 )
@@ -39,7 +40,7 @@ struct BudgetRundownView: View {
                 .foregroundStyle(.black)
             }
             
-            Text("Spending trends")
+            Text(Copy.spendingTrends)
                 .font(.headline)
             VStack(
                 alignment: .leading,
@@ -58,19 +59,30 @@ struct BudgetRundownView: View {
                 )
             }
             .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(.white)
+            .roundedRectangleBackground(
+                cornerRadius: 16.0,
+                color: .white
             )
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(.gray.opacity(0.25))
+        .roundedRectangleBackground(
+            cornerRadius: 16.0,
+            color: .gray.opacity(0.25)
         )
         .onAppear {
             viewModel.reloadData()
         }
+        .onReceive(
+            Publishers.Merge(
+                NotificationCenter.default.publisher(for: .SettingsUpdated),
+                NotificationCenter.default.publisher(for: .SelectedDateUpdated)
+            ),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.reloadData()
+                }}
+            }
+        )
     }
 }
 

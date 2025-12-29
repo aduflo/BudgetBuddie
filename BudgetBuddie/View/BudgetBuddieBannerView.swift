@@ -10,20 +10,18 @@ import SwiftUI
 struct BudgetBuddieBannerView: View {
     var body: some View {
         HStack {
-            Text("BudgetBuddie")
+            Text(Copy.appName)
                 .font(.largeTitle)
-            Image(systemName: "dollarsign.bank.building")
+            Image(systemName: SystemImage.dollarsignBankBuilding)
                 .resizable()
                 .frame(width: 32.0, height: 32.0)
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(.yellow)
-                .strokeBorder(
-                    .brown,
-                    lineWidth: 2.0
-                )
+        .roundedRectangleBackground(
+            cornerRadius: 16.0,
+            color: .yellow,
+            strokeColor: .brown,
+            strokeWidth: 2.0
         )
     }
 }

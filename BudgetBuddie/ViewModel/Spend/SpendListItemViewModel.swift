@@ -20,11 +20,11 @@ struct SpendListItemViewModel: Identifiable {
 // MARK: Public interface
 extension SpendListItemViewModel {
     var displayAmount: String {
-        "Amount: \(currencyFormatter.stringAmount(spendItem.amount))"
+        Copy.amount(currencyFormatter.stringAmount(spendItem.amount))
     }
     
     var displayNote: String {
-        "Note: \(spendItem.note ?? "N/A")"
+        Copy.note(spendItem.note ?? "N/A")
     }
 }
 

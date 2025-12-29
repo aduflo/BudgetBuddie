@@ -12,20 +12,24 @@ struct SpendListView: View {
     let viewModel: SpendListViewModel
     
     var body: some View {
-        // TODO: if no models, need an empty state
-        VStack(
-            alignment: .leading
-        ) {
-            Text("Spend items")
-                .font(.headline)
-            
-            ScrollView {
-                VStack(
-                    alignment: .leading,
-                    spacing: 8.0
-                ) {
-                    ForEach(viewModel.items) { item in
-                        SpendListItemView(viewModel: item)
+        if viewModel.items.isEmpty {
+            // FIXME: proper empty state
+            Text("empty, danggg")
+        } else {
+            VStack(
+                alignment: .leading
+            ) {
+                Text(Copy.spendItems)
+                    .font(.headline)
+                
+                ScrollView {
+                    VStack(
+                        alignment: .leading,
+                        spacing: 8.0
+                    ) {
+                        ForEach(viewModel.items) { item in
+                            SpendListItemView(viewModel: item)
+                        }
                     }
                 }
             }

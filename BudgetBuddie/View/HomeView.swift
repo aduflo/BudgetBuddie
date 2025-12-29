@@ -13,12 +13,15 @@ struct HomeView: View {
     @State private var presentSettings = false
     @State private var presentNewSpendItem = false
     
+    @Environment(\.settingsService) var settingsService
+    @Environment(\.calendarService) var calendarService
+    @Environment(\.spendRepository) var spendRepository
+    @Environment(\.currencyFormatter) var currencyFormatter
+    
     // Constructors
     init(
-        presentSettings: Bool = false,
         viewModel: HomeViewModel
     ) {
-        self.presentSettings = presentSettings
         self.viewModel = viewModel
     }
     
@@ -33,7 +36,10 @@ struct HomeView: View {
             )
             .sheet(isPresented: $presentSettings) {
                 SettingsView(
-                    viewModel: viewModel.settingsViewModel
+                    viewModel: SettingsViewModel(
+                        settingsService: settingsService,
+                        currencyFormatter: currencyFormatter
+                    )
                 )
                 .presentationDetents([.height(312.0)])
             }
@@ -44,7 +50,11 @@ struct HomeView: View {
             .ignoresSafeArea(.all, edges: .bottom)
             .sheet(isPresented: $presentNewSpendItem) {
                 NewSpendItemView(
-                    viewModel: .mock() // TODO: generate new one with selected date
+                    viewModel: NewSpendItemViewModel(
+                        calendarService: calendarService,
+                        spendRepository: spendRepository,
+                        currencyFormatter: currencyFormatter
+                    )
                 )
                 .presentationDetents([.height(312.0)])
             }
@@ -52,7 +62,7 @@ struct HomeView: View {
         .padding(.top)
         .padding(.horizontal)
         .onAppear {
-            // implement presentation closures
+            // assign closures to facilitate presentables
             viewModel.rundownViewModel.onSettingsTapped = {
                 presentSettings.toggle()
             }
@@ -60,26 +70,6 @@ struct HomeView: View {
                 presentNewSpendItem.toggle()
             }
         }
-        .onReceive(
-            NotificationCenter.default.publisher(
-                for: .SettingsUpdated
-            ),
-            perform: { _ in
-                Task { await MainActor.run {
-                    viewModel.rundownViewModel.reloadData()
-                }}
-            }
-        )
-        .onReceive(
-            NotificationCenter.default.publisher(
-                for: .SelectedDateUpdated
-            ),
-            perform: { _ in
-                Task { await MainActor.run {
-                    viewModel.rundownViewModel.reloadData()
-                }}
-            }
-        )
     }
 }
 

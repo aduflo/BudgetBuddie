@@ -10,4 +10,5 @@ import Foundation
 struct SystemImage {
     static let gear = "gear"
     static let plus = "plus"
+    static let dollarsignBankBuilding = "dollarsign.bank.building"
 }

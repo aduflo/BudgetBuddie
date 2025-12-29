@@ -9,47 +9,41 @@ import SwiftUI
 
 struct CalendarView: View {
     // Instance vars
-    @State private var viewModel: CalendarViewModel
-    
-    // Constructors
-    init(
-        viewModel: CalendarViewModel
-    ) {
-        self.viewModel = viewModel
-    }
+    let viewModel: CalendarViewModel
     
     var body: some View {
         VStack(
             alignment: .leading
         ) {
-            Text("Date")
+            Text(Copy.date)
                 .font(.headline)
             
-            ScrollView {
-                // TODO: implement scroll to today
-                // TODO: add CalendDayView, to encapsulate ln 37-47
-                // TODO: implement selected state
-                VStack(
-                    alignment: .leading,
-                    spacing: 8.0
-                ) {
-                    ForEach(viewModel.monthDays) { monthDay in
-                        Text("\(viewModel.displayMonthDay(monthDay.date))")
-                            .frame(
-                                width: 48.0,
-                                height: 32.0
+            ScrollViewReader { proxy in
+                ScrollView {
+                    // TODO: implement selected state
+                    // might need to convert to List (not scrollview + vstack) for selected state, since it has it implemented
+                    // could create @Bindable for calendarService.selectedDate or something... ZzZzzzZzz
+                    VStack(
+                        alignment: .leading,
+                        spacing: 8.0
+                    ) {
+                        ForEach(viewModel.monthDays) { monthDay in
+                            CalenderDayView(
+                                text: viewModel.displayMonthDay(monthDay.date)
                             )
-                            .padding(8.0)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8.0)
-                                    .fill(.white)
-                            )
-                            .padding(.horizontal, 16.0)
+                            .id(monthDay.day)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .onAppear {
+                        proxy.scrollTo(
+                            viewModel.currentMonthDay?.day,
+                            anchor: .top
+                        )
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .frame(width: 64.0)
             }
-            .frame(width: 64.0)
         }
     }
 }

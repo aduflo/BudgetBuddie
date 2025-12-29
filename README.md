@@ -7,6 +7,7 @@
 - make spend items editable on row tap
 - tend to TODO's
 - tend to FIXME's
+- audit everything
 - build Widget
   - shows daily trends
   - has buttons for quick amounts ($5, $10, $20) and checkmark to save

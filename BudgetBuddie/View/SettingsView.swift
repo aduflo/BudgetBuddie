@@ -19,7 +19,7 @@ struct SettingsView: View {
             spacing: 16.0
         ) {
             VStack(spacing: 8.0) {
-                Text("Settings")
+                Text(Copy.settings)
                     .font(.title)
                 Divider()
             }
@@ -28,9 +28,9 @@ struct SettingsView: View {
                 alignment: .leading,
                 spacing: 8.0
             ) {
-                Text("Monthly allowance")
+                Text(Copy.monthlyAllowance)
                 TextField(
-                    "Monthly allowance",
+                    "monthly allowance",
                     value: $monthlyAllowance,
                     format: viewModel.currencyFormatter.decimalFormatStyle
                 )
@@ -45,19 +45,19 @@ struct SettingsView: View {
                 alignment: .leading,
                 spacing: 8.0
             ) {
-                Text("Warning threshold: \(warningThreshold.formatted(.percent))")
+                Text(Copy.warningThreshold(warningThreshold.formatted(.percent)))
                 Slider(
                     value: $warningThreshold,
                     in: 0.0...1.0,
                     step: 0.01,
                     label: {
-                        Text("Warning threshold")
+                        Text(Copy.warningThreshold)
                     },
                     minimumValueLabel: {
-                        Text("0%")
+                        Text(Copy.zeroPercent)
                     },
                     maximumValueLabel: {
-                        Text("100%")
+                        Text(Copy.oneHundredPercent)
                     },
                     onEditingChanged: { editing in
                         if editing == false { // only set when editing finishes
@@ -65,7 +65,7 @@ struct SettingsView: View {
                         }
                     }
                 )
-                Text("Assists in budget evaluation, determining if our budget is in a state of acceptable, encroaching, or exceeded.")
+                Text(warningThresholdFootnote)
                     .font(.footnote)
                     .multilineTextAlignment(.center)
             }
@@ -75,6 +75,27 @@ struct SettingsView: View {
             monthlyAllowance = viewModel.monthlyAllowance
             warningThreshold = viewModel.warningThreshold
         }
+    }
+}
+
+// Components
+extension SettingsView {
+    var warningThresholdFootnote: AttributedString {
+        let green = "green"
+        let orange = "orange"
+        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending zone. When you've left your comfortable spending zone, the text in \(Copy.spendingTrends) will change from \(green) to \(orange).")
+        
+        if let spendingTrendsRange = attributedString.range(of: Copy.spendingTrends) {
+            attributedString[spendingTrendsRange].inlinePresentationIntent = .stronglyEmphasized
+        }
+        if let greenRange = attributedString.range(of: green) {
+            attributedString[greenRange].foregroundColor = .green
+        }
+        if let orangeRange = attributedString.range(of: orange) {
+            attributedString[orangeRange].foregroundColor = .orange
+        }
+        
+        return attributedString
     }
 }
 

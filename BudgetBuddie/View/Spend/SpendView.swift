@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SpendView: View {
     // Instance vars
@@ -16,11 +17,11 @@ struct SpendView: View {
             spacing: 8.0
         ) {
             HStack {
-                Text("Spend summary")
+                Text(Copy.spendSummary)
                     .font(.title2)
                 Spacer()
                 Button(
-                    "New spend item",
+                    "new spend item",
                     systemImage: SystemImage.plus,
                     action: { viewModel.newSpendItemTapped() }
                 )
@@ -34,26 +35,27 @@ struct SpendView: View {
             HStack(
                 spacing: 18.0
             ) {
-                CalendarView(
-                    viewModel: viewModel.calendarViewModel
+                SpendListView(
+                    viewModel: viewModel.spendListViewModel
                 )
                 
                 Divider()
                 
-                SpendListView(
-                    viewModel: viewModel.spendListViewModel
+                CalendarView(
+                    viewModel: viewModel.calendarViewModel
                 )
             }
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(.gray.opacity(0.25))
+        .roundedRectangleBackground(
+            cornerRadius: 16.0,
+            color: .gray.opacity(0.25)
         )
         .onReceive(
-            NotificationCenter.default.publisher(
-                for: .SelectedDateUpdated
-            ),
+//            Publishers.Merge(
+//                NotificationCenter.default.publisher(for: .SettingsUpdated),
+                NotificationCenter.default.publisher(for: .SelectedDateUpdated),
+//            ),
             perform: { _ in
                 Task { await MainActor.run {
                     viewModel.reloadData()

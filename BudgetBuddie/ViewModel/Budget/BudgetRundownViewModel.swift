@@ -67,7 +67,7 @@ private extension BudgetRundownViewModel {
     
     func dailyTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Daily",
+            title: Copy.daily,
             currentSpend: dailyCurrentSpend,
             maxSpend: dailyMaxSpend,
             settingsService: settingsService,
@@ -77,7 +77,7 @@ private extension BudgetRundownViewModel {
     
     func mtdTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Month-to-date (MTD)",
+            title: Copy.monthToDate,
             currentSpend: mtdCurrentSpend,
             maxSpend: mtdMaxSpend,
             settingsService: settingsService,
@@ -87,7 +87,7 @@ private extension BudgetRundownViewModel {
     
     func monthlyTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
-            title: "Monthly",
+            title: Copy.monthly,
             currentSpend: monthlyCurrentSpend,
             maxSpend: monthlyMaxSpend,
             settingsService: settingsService,

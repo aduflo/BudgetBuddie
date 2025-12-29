@@ -25,22 +25,15 @@ struct BudgetBuddieApp: App {
                         spendRepository: spendRepository,
                         currencyFormatter: currencyFormatter
                     ),
-                    settingsViewModel: SettingsViewModel(
-                        settingsService: settingsService,
-                        currencyFormatter: currencyFormatter
-                    ),
                     spendViewModel: SpendViewModel(
+                        spendListViewModel: .mock(),
                         calendarViewModel: CalendarViewModel(
                             calendarService: calendarService
                         ),
-                        spendListViewModel: .mock(),
-//                        spendListViewModel: SpendListViewModel( // TODO: rethink this pattern. perhaps put this VMs as builders inside SpendViewModel instead of initializing them here. that way, they're initialized on first use and reassignable? maybe these are tired thoughts.
+//                        spendListViewModel: SpendListViewModel( // TODO: use this once ready
 //                            spendRepository: spendRepository,
 //                            currencyFormatter: currencyFormatter
-//                        ),
-                        calendarService: calendarService,
-                        spendRepository: spendRepository,
-                        currencyFormatter: currencyFormatter
+//                        )
                     )
                 )
             )

@@ -7,8 +7,7 @@
 
 import Foundation
 
-@Observable
-class CalendarViewModel {
+struct CalendarViewModel {
     // Instance vars
     private let calendarService: CalenderServiceable
     

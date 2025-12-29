@@ -17,12 +17,12 @@ struct BudgetTrendView: View {
                 .font(.headline)
             HStack(spacing: 16.0) {
                 VStack(alignment: .leading) {
-                    Text("Current")
+                    Text(Copy.current)
                     Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
                 }
                 VStack(alignment: .leading) {
-                    Text("Max")
+                    Text(Copy.max)
                     Text(viewModel.displayMaxSpend)
                 }
             }
