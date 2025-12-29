@@ -6,7 +6,14 @@
 //
 
 import Foundation
-
+//import SwiftData
+//
+//@Model
+//class SpendItem {
 struct SpendItem {
-    
+    // Instance vars
+    let id: UUID
+    let amount: Decimal
+    let note: String?
+    let dayId: UUID
 }

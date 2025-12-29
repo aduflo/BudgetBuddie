@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SettingsView: View {
     // Instance vars
+    let viewModel: SettingsViewModel
     @State var monthlyAllowance: Decimal = 0.0
     @State var warningThreshold: Double = 0.0
-    let viewModel: SettingsViewModel
     
     var body: some View {
         VStack(
@@ -80,8 +80,8 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView(
+        viewModel: .mock(),
         monthlyAllowance: 0.0,
-        warningThreshold: 0.0,
-        viewModel: .mock()
+        warningThreshold: 0.0
     )
 }

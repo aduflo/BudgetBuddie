@@ -9,7 +9,9 @@ import Foundation
 
 struct BudgetListItemViewModel: Identifiable {
     // Instance vars
-    let value: String
+    let spendItem: SpendItem
+    
+    let currencyFormatter: CurrencyFormattable
     
     // Identifiable
     let id = UUID()
@@ -18,13 +20,21 @@ struct BudgetListItemViewModel: Identifiable {
 // MARK: Public interface
 extension BudgetListItemViewModel {
     var displayValue: String {
-        "\(value)"
+        currencyFormatter.stringAmount(spendItem.amount)
     }
 }
 
 // MARK: - Mocks
 extension BudgetListItemViewModel {
     static func mock() -> Self {
-        Self(value: "123")
+        Self(
+            spendItem: SpendItem(
+                id: UUID(),
+                amount: 13.37,
+                note: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil,
+                dayId: UUID()
+            ),
+            currencyFormatter: CurrencyFormatter()
+        )
     }
 }

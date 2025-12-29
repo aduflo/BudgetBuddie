@@ -9,8 +9,8 @@ import SwiftUI
 
 struct BudgetView: View {
     // Instance vars
-    @State private var presentSettings = false
     @State private var viewModel: BudgetViewModel
+    @State private var presentSettings = false
     
     // Constructors
     init(

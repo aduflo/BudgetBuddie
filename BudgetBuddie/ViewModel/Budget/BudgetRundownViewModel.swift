@@ -11,30 +11,34 @@ import Foundation
 class BudgetRundownViewModel {
     // Instance vars
     let selectedDate: Date
-    let settingsService: SettingsServiceable
-    let spendRepository: SpendRepository
-    let currencyFormatter: CurrencyFormattable
     private(set) var dailyTrendViewModel: BudgetTrendViewModel
     private(set) var mtdTrendViewModel: BudgetTrendViewModel
     private(set) var monthlyTrendViewModel: BudgetTrendViewModel
     
+    let settingsService: SettingsServiceable
+    let calendarService: CalenderServiceable
+    let spendRepository: SpendRepository
+    let currencyFormatter: CurrencyFormattable
+    
     // Constructors
     init(
         selectedDate: Date,
+        dailyTrendViewModel: BudgetTrendViewModel = .mockDaily(), // TODO: remove mock
+        mtdTrendViewModel: BudgetTrendViewModel = .mockMtd(), // TODO: remove mock
+        monthlyTrendViewModel: BudgetTrendViewModel = .mockMonthly(), // TODO: remove mock
         settingsService: SettingsServiceable,
+        calendarService: CalenderServiceable,
         spendRepository: SpendRepository,
-        currencyFormatter: CurrencyFormattable,
-        dailyTrendViewModel: BudgetTrendViewModel = .mockDaily(),
-        mtdTrendViewModel: BudgetTrendViewModel = .mockMtd(),
-        monthlyTrendViewModel: BudgetTrendViewModel = .mockMonthly()
+        currencyFormatter: CurrencyFormattable
     ) {
         self.selectedDate = selectedDate
-        self.settingsService = settingsService
-        self.spendRepository = spendRepository
-        self.currencyFormatter = currencyFormatter
         self.dailyTrendViewModel = dailyTrendViewModel
         self.mtdTrendViewModel = mtdTrendViewModel
         self.monthlyTrendViewModel = monthlyTrendViewModel
+        self.settingsService = settingsService
+        self.calendarService = calendarService
+        self.spendRepository = spendRepository
+        self.currencyFormatter = currencyFormatter
     }
 }
 
@@ -63,10 +67,11 @@ extension BudgetRundownViewModel {
 // MARK: Private interface
 private extension BudgetRundownViewModel {
     // View model builders
+    
     func dailyTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
             title: "Daily",
-            currentSpend: currentSpend,
+            currentSpend: dailyCurrentSpend,
             maxSpend: dailyMaxSpend,
             settingsService: settingsService,
             currencyFormatter: currencyFormatter
@@ -76,7 +81,7 @@ private extension BudgetRundownViewModel {
     func mtdTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
             title: "Month-To-Date (MTD)",
-            currentSpend: currentSpend,
+            currentSpend: mtdCurrentSpend,
             maxSpend: mtdMaxSpend,
             settingsService: settingsService,
             currencyFormatter: currencyFormatter
@@ -86,7 +91,7 @@ private extension BudgetRundownViewModel {
     func monthlyTrendViewModelBuilder() -> BudgetTrendViewModel {
         BudgetTrendViewModel(
             title: "Monthly",
-            currentSpend: currentSpend,
+            currentSpend: monthlyCurrentSpend,
             maxSpend: monthlyMaxSpend,
             settingsService: settingsService,
             currencyFormatter: currencyFormatter
@@ -95,22 +100,26 @@ private extension BudgetRundownViewModel {
     
     // Spend vars
     
-    var currentSpend: Decimal {
+    var dailyCurrentSpend: Decimal {
         return 13.37 // FIXME: not foreal
     }
     
+    var mtdCurrentSpend: Decimal {
+        return 90.01 // FIXME: not real
+    }
+    
+    var monthlyCurrentSpend: Decimal {
+        return 90.01 // FIXME: not real
+    }
+    
     var dailyMaxSpend: Decimal {
-        let calendar = Calendar.current
-        let monthRange = calendar.range(of: .day, in: .month, for: selectedDate)
-        let daysInMonth = monthRange?.count ?? 0
+        let daysInMonth = calendarService.daysInMonth(selectedDate)
         return monthlyMaxSpend / Decimal(daysInMonth)
     }
     
     var mtdMaxSpend: Decimal {
-        let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents(in: TimeZone.current, from: selectedDate)
-        let currentDay = dateComponents.day ?? 0
         let dailyMaxSpend = dailyMaxSpend
+        let currentDay = calendarService.currentMonthDay(selectedDate)
         return dailyMaxSpend * Decimal(currentDay)
     }
     
@@ -125,6 +134,7 @@ extension BudgetRundownViewModel {
         BudgetRundownViewModel(
             selectedDate: Date(),
             settingsService: MockSettingsService(),
+            calendarService: MockCalenderService(),
             spendRepository: SpendRepository(
                 spendService: MockSpendService()
             ),

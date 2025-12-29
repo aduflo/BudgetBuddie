@@ -9,25 +9,25 @@ import Foundation
 
 class CurrencyFormatter: CurrencyFormattable {
     // Instance vars
-    private(set) var currentFormatter: CurrencyFormattable = USDCurrencyFormatter()
+    private(set) var formatter: CurrencyFormattable = USDCurrencyFormatter()
     
     // CurrencyFormattable
     var code: String {
-        currentFormatter.code
+        formatter.code
     }
     
     var decimalFormatStyle: Decimal.FormatStyle.Currency {
-        currentFormatter.decimalFormatStyle
+        formatter.decimalFormatStyle
     }
     
     func stringAmount(_ amount: Decimal) -> String {
-        currentFormatter.stringAmount(amount)
+        formatter.stringAmount(amount)
     }
 }
 
 // MARK: Public interface
 extension CurrencyFormatter {
     func swapIn(formatter: CurrencyFormattable) {
-        currentFormatter = formatter
+        self.formatter = formatter
     }
 }

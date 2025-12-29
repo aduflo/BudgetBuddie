@@ -16,6 +16,7 @@ class BudgetTrendViewModel {
     let currentSpend: Decimal
     /// Amount in dollars and cents
     let maxSpend: Decimal
+    
     let settingsService: SettingsServiceable
     let currencyFormatter: CurrencyFormattable
     

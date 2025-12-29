@@ -12,6 +12,7 @@ struct BudgetListView: View {
     let viewModel: BudgetListViewModel
     
     var body: some View {
+        // TODO: if no models, need an empty state
         ScrollView {
             LazyVStack(alignment: .leading) {
                 ForEach(viewModel.items) { item in

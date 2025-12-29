@@ -11,6 +11,7 @@ import SwiftUI
 struct BudgetBuddieApp: App {
     // Instance vars
     @Environment(\.settingsService) var settingsService
+    @Environment(\.calendarService) var calendarService
     @Environment(\.spendRepository) var spendRepository
     @Environment(\.currencyFormatter) var currencyFormatter
     
@@ -19,14 +20,17 @@ struct BudgetBuddieApp: App {
             BudgetView(
                 viewModel: BudgetViewModel(
                     rundownViewModel: BudgetRundownViewModel(
-                        selectedDate: Date(),
+                        selectedDate: Date(), // TODO: leverage date picker selection
                         settingsService: settingsService,
+                        calendarService: calendarService,
                         spendRepository: spendRepository,
                         currencyFormatter: currencyFormatter
                     ),
-                    listViewModel: BudgetListViewModel(
-                        spendRepository: spendRepository
-                    ),
+//                    listViewModel: BudgetListViewModel(
+//                        spendRepository: spendRepository,
+//                        currencyFormatter: currencyFormatter
+//                    ),
+                    listViewModel: .mock(), // TODO: use above
                     settingsViewModel: SettingsViewModel(
                         settingsService: settingsService,
                         currencyFormatter: currencyFormatter

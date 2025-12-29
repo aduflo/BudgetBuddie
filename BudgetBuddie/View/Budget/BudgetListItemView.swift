@@ -22,6 +22,7 @@ struct BudgetListItemView: View {
                 .fill(.red)
         )
     }
+    // TODO: need a empty state
 }
 
 #Preview {

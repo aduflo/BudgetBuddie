@@ -6,7 +6,14 @@
 //
 
 import Foundation
-
+//import SwiftData
+//
+//@Model
+//class SpendDay {
 struct SpendDay {
-    
+    // Instance vars
+    let id: UUID
+    let date: Date
+    let itemIds: [UUID]
+    let isWithinBudget: Bool
 }
