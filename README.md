@@ -14,9 +14,6 @@
 
 resources:
 - https://developer.apple.com/documentation/swiftdata
-- https://developer.apple.com/documentation/swiftui/environmentvalues
-- https://www.swiftyplace.com/blog/swiftui-sheets-modals-bottom-sheets-fullscreen-presentation-in-ios
-- https://sarunw.com/posts/swiftui-list-selection/
 - https://developer.apple.com/design/human-interface-guidelines/widgets
 - https://developer.apple.com/documentation/WidgetKit
 - https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension
