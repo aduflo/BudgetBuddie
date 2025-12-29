@@ -4,8 +4,6 @@
   - Note:
     - when deciding if is new month / to purge last month, can pull 1st SpendDay out of DB and check if month equals month of Date() (today)
       - tldr: purge last month if new month <-
-- add calendar scroller for day picking; refresh everything on day selection
-- make sure on spend item creation, it gets mapped to today instead of selectedDate
 - make spend items editable on row tap
 - tend to TODO's
 - tend to FIXME's
