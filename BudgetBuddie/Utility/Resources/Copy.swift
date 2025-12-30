@@ -9,7 +9,7 @@ import Foundation
 
 enum Copy {
     static let appName = "BudgetBuddie"
-    static let spendingTrends = "Spending trends"
+    static let spendTrends = "Spend trends"
     static let current = "Current"
     static let max = "Max"
     static let spendItems = "Spend items"

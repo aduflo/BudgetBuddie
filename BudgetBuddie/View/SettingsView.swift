@@ -83,11 +83,16 @@ struct SettingsView: View {
 // Components
 extension SettingsView {
     var warningThresholdFootnote: AttributedString {
+        let current = Copy.current
+        let spendTrends = Copy.spendTrends
         let green = "green"
         let orange = "orange"
-        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending zone. When you've left your comfortable spending zone, the text in \(Copy.spendingTrends) will change from \(green) to \(orange).")
+        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending allotment. When you've exceeded your comfortable spending allotment, the \(current) amounts under \(spendTrends) will change from \(green) to \(orange).")
         
-        if let spendingTrendsRange = attributedString.range(of: Copy.spendingTrends) {
+        if let currentRange = attributedString.range(of: current) {
+            attributedString[currentRange].inlinePresentationIntent = .stronglyEmphasized
+        }
+        if let spendingTrendsRange = attributedString.range(of: spendTrends) {
             attributedString[spendingTrendsRange].inlinePresentationIntent = .stronglyEmphasized
         }
         if let greenRange = attributedString.range(of: green) {

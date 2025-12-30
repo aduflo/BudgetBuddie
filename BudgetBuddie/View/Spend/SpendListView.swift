@@ -17,6 +17,8 @@ struct SpendListView: View {
             Text("empty, danggg")
         } else {
             // TODO: add ability to delete spend item
+            // TODO: add ability to edit spend item?? or just delete and readd workflow... maybe just this for v1
+            // if edit, will show SpendItemView?
             VStack(
                 alignment: .leading,
                 spacing: Spacing.1

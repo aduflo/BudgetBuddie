@@ -40,7 +40,7 @@ struct BudgetRundownView: View {
                 .foregroundStyle(.black)
             }
             
-            Text(Copy.spendingTrends)
+            Text(Copy.spendTrends)
                 .font(.headline)
             VStack(
                 alignment: .leading,

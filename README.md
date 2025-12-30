@@ -4,7 +4,6 @@
   - Note:
     - when deciding if is new month / to purge last month, can pull 1st SpendDay out of DB and check if month equals month of Date() (today)
       - tldr: purge last month if new month <-
-- make spend items editable on row tap
 - tend to TODO's
 - tend to FIXME's
 - audit everything

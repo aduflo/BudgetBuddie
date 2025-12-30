@@ -41,7 +41,7 @@ struct HomeView: View {
                         currencyFormatter: currencyFormatter
                     )
                 )
-                .presentationDetents([.height(312.0)])
+                .presentationDetents([.height(328.0)])
             }
             
             SpendView(
