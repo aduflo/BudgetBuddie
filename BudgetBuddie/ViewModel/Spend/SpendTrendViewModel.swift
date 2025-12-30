@@ -1,5 +1,5 @@
 //
-//  BudgetTrendViewModel.swift
+//  SpendTrendViewModel.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/23/25.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @Observable
-class BudgetTrendViewModel {
+class SpendTrendViewModel {
     // Instance vars
     let title: String
     /// Amount in dollars and cents
@@ -39,7 +39,7 @@ class BudgetTrendViewModel {
 }
 
 // MARK: Public interface
-extension BudgetTrendViewModel {
+extension SpendTrendViewModel {
     var displayCurrentSpend: String {
         return currencyFormatter.stringAmount(currentSpend)
     }
@@ -58,10 +58,40 @@ extension BudgetTrendViewModel {
         case .exceeded: .red
         }
     }
+    
+    static func emptyDaily() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            title: Copy.daily,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    }
+    
+    static func emptyMtd() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            title: Copy.monthToDate,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    }
+    
+    static func emptyMonthly() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            title: Copy.monthly,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    }
 }
 
 // MARK: Private interface
-private extension BudgetTrendViewModel {
+private extension SpendTrendViewModel {
     func evaluateBudget(spend: Decimal, max: Decimal) -> BudgetEvaluation {
         let percentage = spend / max
         let warningThreshold = Decimal(floatLiteral: settingsService.warningThreshold)
@@ -74,39 +104,39 @@ private extension BudgetTrendViewModel {
 }
 
 // MARK: - Mocks
-extension BudgetTrendViewModel {
-    static func mockDaily() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+extension SpendTrendViewModel {
+    static func mockDaily() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.daily,
-            currentSpend: 0,
-            maxSpend: 0,
+            currentSpend: 13.37,
+            maxSpend: 1337,
             settingsService: MockSettingsService(),
             currencyFormatter: CurrencyFormatter()
         )
     }
     
-    static func mockMtd() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    static func mockMtd() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.monthToDate,
-            currentSpend: 0,
-            maxSpend: 0,
+            currentSpend: 13.37,
+            maxSpend: 7331.00,
             settingsService: MockSettingsService(),
             currencyFormatter: CurrencyFormatter()
         )
     }
     
-    static func mockMonthly() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    static func mockMonthly() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.monthly,
-            currentSpend: 0,
-            maxSpend: 0,
+            currentSpend: 9001.00,
+            maxSpend: 9000.00,
             settingsService: MockSettingsService(),
             currencyFormatter: CurrencyFormatter()
         )
     }
     
-    static func mockAcceptable() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    static func mockAcceptable() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.budgetTrend,
             currentSpend: 40.00,
             maxSpend: 50.00,
@@ -115,8 +145,8 @@ extension BudgetTrendViewModel {
         )
     }
     
-    static func mockEncroaching() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    static func mockEncroaching() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.budgetTrend,
             currentSpend: 8000.00,
             maxSpend: 9000.00,
@@ -125,8 +155,8 @@ extension BudgetTrendViewModel {
         )
     }
     
-    static func mockExceeded() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    static func mockExceeded() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.budgetTrend,
             currentSpend: 9000.01,
             maxSpend: 9000.00,

@@ -26,14 +26,8 @@ struct BudgetBuddieApp: App {
                         currencyFormatter: currencyFormatter
                     ),
                     spendViewModel: SpendViewModel(
-                        spendListViewModel: .mock(),
-                        calendarViewModel: CalendarViewModel(
-                            calendarService: calendarService
-                        ),
-//                        spendListViewModel: SpendListViewModel( // TODO: use this once ready
-//                            spendRepository: spendRepository,
-//                            currencyFormatter: currencyFormatter
-//                        )
+                        spendRepository: spendRepository,
+                        currencyFormatter: currencyFormatter
                     )
                 )
             )

@@ -17,7 +17,7 @@ struct SpendView: View {
             spacing: Spacing.1
         ) {
             HStack {
-                Text(Copy.summary)
+                Text(Copy.spend)
                     .font(.title2)
                 Spacer()
                 Button(
@@ -32,19 +32,9 @@ struct SpendView: View {
                 .foregroundStyle(.black)
             }
             
-            HStack(
-                spacing: Spacing.2
-            ) {
-                SpendListView(
-                    viewModel: viewModel.spendListViewModel
-                )
-                
-                Divider()
-                
-                CalendarView(
-                    viewModel: viewModel.calendarViewModel
-                )
-            }
+            SpendListView(
+                viewModel: viewModel.spendListViewModel
+            )
         }
         .padding(Padding.2)
         .roundedRectangleBackground(

@@ -1,72 +1,50 @@
 //
-//  BudgetRundownViewModel.swift
+//  SpendTrendsViewModel.swift
 //  BudgetBuddie
 //
-//  Created by Adam Duflo on 12/22/25.
+//  Created by Adam Duflo on 12/30/25.
 //
 
 import Foundation
 
 @Observable
-class BudgetRundownViewModel {
+class SpendTrendsViewModel {
     // Instance vars
-    private(set) var dailyTrendViewModel: BudgetTrendViewModel
-    private(set) var mtdTrendViewModel: BudgetTrendViewModel
-    private(set) var monthlyTrendViewModel: BudgetTrendViewModel
+    private(set) var dailyTrendViewModel: SpendTrendViewModel = .emptyDaily()
+    private(set) var mtdTrendViewModel: SpendTrendViewModel = .emptyMtd()
+    private(set) var monthlyTrendViewModel: SpendTrendViewModel = .emptyMonthly()
     
     private let settingsService: SettingsServiceable
     private let calendarService: CalenderServiceable
-    private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
-    
-    var onSettingsTapped: () -> () = {}
     
     // Constructors
     init(
-        dailyTrendViewModel: BudgetTrendViewModel = .mockDaily(), // TODO: remove mock
-        mtdTrendViewModel: BudgetTrendViewModel = .mockMtd(), // TODO: remove mock
-        monthlyTrendViewModel: BudgetTrendViewModel = .mockMonthly(), // TODO: remove mock
         settingsService: SettingsServiceable,
         calendarService: CalenderServiceable,
-        spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
-        self.dailyTrendViewModel = dailyTrendViewModel
-        self.mtdTrendViewModel = mtdTrendViewModel
-        self.monthlyTrendViewModel = monthlyTrendViewModel
         self.settingsService = settingsService
         self.calendarService = calendarService
-        self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
     }
 }
 
 // MARK: Public interface
-extension BudgetRundownViewModel {
+extension SpendTrendsViewModel {
     func reloadData() {
         dailyTrendViewModel = dailyTrendViewModelBuilder()
         mtdTrendViewModel = mtdTrendViewModelBuilder()
         monthlyTrendViewModel = monthlyTrendViewModelBuilder()
     }
-    
-    var displayDate: String {
-        calendarService.selectedDate.formatted(
-            date: .long,
-            time: .omitted
-        )
-    }
-    
-    func settingsTapped() {
-        onSettingsTapped()
-    }
 }
 
 // MARK: Private interface
-private extension BudgetRundownViewModel {
+private extension SpendTrendsViewModel {
     // View model builders
     
-    func dailyTrendViewModelBuilder() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    func dailyTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.daily,
             currentSpend: dailyCurrentSpend,
             maxSpend: dailyMaxSpend,
@@ -75,8 +53,8 @@ private extension BudgetRundownViewModel {
         )
     }
     
-    func mtdTrendViewModelBuilder() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    func mtdTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.monthToDate,
             currentSpend: mtdCurrentSpend,
             maxSpend: mtdMaxSpend,
@@ -85,8 +63,8 @@ private extension BudgetRundownViewModel {
         )
     }
     
-    func monthlyTrendViewModelBuilder() -> BudgetTrendViewModel {
-        BudgetTrendViewModel(
+    func monthlyTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
             title: Copy.monthly,
             currentSpend: monthlyCurrentSpend,
             maxSpend: monthlyMaxSpend,
@@ -125,15 +103,12 @@ private extension BudgetRundownViewModel {
     }
 }
 
-// MARK: - Mocks
-extension BudgetRundownViewModel {
-    static func mock() -> BudgetRundownViewModel {
-        BudgetRundownViewModel(
+// MARK: Mocks
+extension SpendTrendsViewModel {
+    static func mock() -> SpendTrendsViewModel {
+        SpendTrendsViewModel(
             settingsService: MockSettingsService(),
             calendarService: MockCalenderService(),
-            spendRepository: SpendRepository(
-                spendService: MockSpendService()
-            ),
             currencyFormatter: CurrencyFormatter()
         )
     }

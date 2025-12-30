@@ -10,18 +10,24 @@ import Foundation
 @Observable
 class SpendViewModel {
     // Instance vars
-    let spendListViewModel: SpendListViewModel
-    let calendarViewModel: CalendarViewModel
+    private let spendRepository: SpendRepository
+    private let currencyFormatter: CurrencyFormattable
+
+    let spendListViewModel: SpendListViewModel = .mock()
     
     var onNewSpendItemTapped: () -> () = {}
     
     // Constructors
     init(
-        spendListViewModel: SpendListViewModel,
-        calendarViewModel: CalendarViewModel
+        spendRepository: SpendRepository,
+        currencyFormatter: CurrencyFormattable
     ) {
-        self.spendListViewModel = spendListViewModel
-        self.calendarViewModel = calendarViewModel
+        self.spendRepository = spendRepository
+        self.currencyFormatter = currencyFormatter
+//        self.spendListViewModel = SpendListViewModel( // TODO: use when persistence is ready
+//            spendRepository: spendRepository,
+//            currencyFormatter: currencyFormatter
+//        )
     }
 }
 
@@ -40,8 +46,8 @@ extension SpendViewModel {
 extension SpendViewModel {
     static func mock() -> SpendViewModel {
         SpendViewModel(
-            spendListViewModel: .mock(),
-            calendarViewModel: .mock()
+            spendRepository: SpendRepository(spendService: MockSpendService()),
+            currencyFormatter: CurrencyFormatter()
         )
     }
 }

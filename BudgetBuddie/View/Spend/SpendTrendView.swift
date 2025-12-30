@@ -1,5 +1,5 @@
 //
-//  BudgetTrendView.swift
+//  SpendTrendView.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/23/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct BudgetTrendView: View {
+struct SpendTrendView: View {
     // Instance vars
-    let viewModel: BudgetTrendViewModel
+    let viewModel: SpendTrendViewModel
     
     var body: some View {
         VStack(
@@ -40,13 +40,13 @@ struct BudgetTrendView: View {
 }
 
 #Preview("Acceptable") {
-    BudgetTrendView(viewModel: .mockAcceptable())
+    SpendTrendView(viewModel: .mockAcceptable())
 }
 
 #Preview("Encroaching") {
-    BudgetTrendView(viewModel: .mockEncroaching())
+    SpendTrendView(viewModel: .mockEncroaching())
 }
 
 #Preview("Exceeded") {
-    BudgetTrendView(viewModel: .mockExceeded())
+    SpendTrendView(viewModel: .mockExceeded())
 }

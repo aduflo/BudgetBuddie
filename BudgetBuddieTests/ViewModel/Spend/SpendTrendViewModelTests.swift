@@ -1,5 +1,5 @@
 //
-//  BudgetTrendViewModelTests.swift
+//  SpendTrendViewModelTests.swift
 //  BudgetBuddieTests
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -10,7 +10,7 @@ import Testing
 @testable import BudgetBuddie
 import SwiftUI
 
-struct BudgetTrendViewModelTests {
+struct SpendTrendViewModelTests {
 
     // MARK: dailySpendColor
     @Test func test_dailySpendColor_acceptable() async {
@@ -53,12 +53,12 @@ struct BudgetTrendViewModelTests {
     }
 }
 
-fileprivate extension BudgetTrendViewModelTests {
+fileprivate extension SpendTrendViewModelTests {
     @MainActor
-    func mockVM(currentSpend: Decimal, maxSpend: Decimal, warningThreshold: Double) -> BudgetTrendViewModel {
+    func mockVM(currentSpend: Decimal, maxSpend: Decimal, warningThreshold: Double) -> SpendTrendViewModel {
         let mockSettingsService = MockSettingsService()
         mockSettingsService.setWarningThreshold(warningThreshold)
-        return BudgetTrendViewModel(
+        return SpendTrendViewModel(
             title: Copy.budgetTrend,
             currentSpend: currentSpend,
             maxSpend: maxSpend,

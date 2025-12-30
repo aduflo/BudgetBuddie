@@ -26,9 +26,8 @@ struct CalendarView: View {
         ) {
             Text(Copy.days)
                 .font(.headline)
-            
             ScrollViewReader { proxy in
-                ScrollView {
+                ScrollView(.vertical) {
                     VStack(
                         alignment: .leading,
                         spacing: Spacing.2
@@ -56,7 +55,6 @@ struct CalendarView: View {
                                 self.viewModel.updateSelectedDate(viewModel.monthDay.date)
                             }
                         }
-                        .frame(maxWidth: .infinity)
                         .onAppear {
                             guard let currentDayViewModel = viewModel.currentDayViewModel else {
                                 return
@@ -70,7 +68,6 @@ struct CalendarView: View {
                             )
                         }
                     }
-                    .frame(width: 64.0)
                 }
             }
         }

@@ -23,7 +23,7 @@ struct SpendListView: View {
                 alignment: .leading,
                 spacing: Spacing.1
             ) {
-                Text(Copy.spendItems)
+                Text(Copy.items)
                     .font(.headline)
                 
                 ScrollView {
