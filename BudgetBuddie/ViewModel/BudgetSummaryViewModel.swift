@@ -27,6 +27,10 @@ class BudgetSummaryViewModel { // TODO: consider rename
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
+        self.settingsService = settingsService
+        self.calendarService = calendarService
+        self.spendRepository = spendRepository
+        self.currencyFormatter = currencyFormatter
         self.calendarViewModel = CalendarViewModel(
             calendarService: calendarService
         )
@@ -35,10 +39,6 @@ class BudgetSummaryViewModel { // TODO: consider rename
             calendarService: calendarService,
             currencyFormatter: currencyFormatter
         )
-        self.settingsService = settingsService
-        self.calendarService = calendarService
-        self.spendRepository = spendRepository
-        self.currencyFormatter = currencyFormatter
     }
 }
 

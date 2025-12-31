@@ -58,36 +58,6 @@ extension SpendTrendViewModel {
         case .exceeded: .red
         }
     }
-    
-    static func emptyDaily() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            title: Copy.daily,
-            currentSpend: 0,
-            maxSpend: 0,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
-        )
-    }
-    
-    static func emptyMtd() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            title: Copy.monthToDate,
-            currentSpend: 0,
-            maxSpend: 0,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
-        )
-    }
-    
-    static func emptyMonthly() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            title: Copy.monthly,
-            currentSpend: 0,
-            maxSpend: 0,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
-        )
-    }
 }
 
 // MARK: Private interface

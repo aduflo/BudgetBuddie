@@ -13,11 +13,6 @@ struct HomeView: View {
     @State private var presentSettings = false
     @State private var presentNewSpendItem = false
     
-    @Environment(\.settingsService) var settingsService
-    @Environment(\.calendarService) var calendarService
-    @Environment(\.spendRepository) var spendRepository
-    @Environment(\.currencyFormatter) var currencyFormatter
-    
     // Constructors
     init(
         viewModel: HomeViewModel
@@ -37,8 +32,8 @@ struct HomeView: View {
             .sheet(isPresented: $presentSettings) {
                 SettingsView(
                     viewModel: SettingsViewModel(
-                        settingsService: settingsService,
-                        currencyFormatter: currencyFormatter
+                        settingsService: viewModel.settingsService,
+                        currencyFormatter: viewModel.currencyFormatter
                     )
                 )
                 .presentationDetents([.height(328.0)])
@@ -51,9 +46,9 @@ struct HomeView: View {
             .sheet(isPresented: $presentNewSpendItem) {
                 NewSpendItemView(
                     viewModel: NewSpendItemViewModel(
-                        calendarService: calendarService,
-                        spendRepository: spendRepository,
-                        currencyFormatter: currencyFormatter
+                        calendarService: viewModel.calendarService,
+                        spendRepository: viewModel.spendRepository,
+                        currencyFormatter: viewModel.currencyFormatter
                     )
                 )
                 .presentationDetents([.height(312.0)])

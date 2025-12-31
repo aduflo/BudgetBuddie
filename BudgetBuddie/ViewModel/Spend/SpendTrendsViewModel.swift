@@ -10,13 +10,13 @@ import Foundation
 @Observable
 class SpendTrendsViewModel {
     // Instance vars
-    private(set) var dailyTrendViewModel: SpendTrendViewModel = .emptyDaily()
-    private(set) var mtdTrendViewModel: SpendTrendViewModel = .emptyMtd()
-    private(set) var monthlyTrendViewModel: SpendTrendViewModel = .emptyMonthly()
-    
     private let settingsService: SettingsServiceable
     private let calendarService: CalendarServiceable
     private let currencyFormatter: CurrencyFormattable
+    
+    private(set) var dailyTrendViewModel: SpendTrendViewModel = placeholderDailyTrendViewModelBuilder()
+    private(set) var mtdTrendViewModel: SpendTrendViewModel = placeholderMtdTrendViewModelBuilder()
+    private(set) var monthlyTrendViewModel: SpendTrendViewModel = placeholderMonthlyTrendViewModelBuilder()
     
     // Constructors
     init(
@@ -42,6 +42,36 @@ extension SpendTrendsViewModel {
 // MARK: Private interface
 private extension SpendTrendsViewModel {
     // View model builders
+    
+    static func placeholderDailyTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            title: Copy.daily,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    }
+    
+    static func placeholderMtdTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            title: Copy.monthToDate,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    }
+    
+    static func placeholderMonthlyTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            title: Copy.monthly,
+            currentSpend: 0,
+            maxSpend: 0,
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    }
     
     func dailyTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
