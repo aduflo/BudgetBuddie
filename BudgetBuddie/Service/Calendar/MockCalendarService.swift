@@ -1,5 +1,5 @@
 //
-//  MockCalenderService.swift
+//  MockCalendarService.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/28/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockCalenderService: CalenderServiceable {
+class MockCalendarService: CalendarServiceable {
     private(set) var selectedDate: Date = Date()
     
     func updateSelectedDate(_ date: Date) {

@@ -1,5 +1,5 @@
 //
-//  BudgetRundownViewModel.swift
+//  BudgetSummaryViewModel.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -8,10 +8,10 @@
 import Foundation
 
 @Observable
-class BudgetRundownViewModel { // TODO: consider rename
+class BudgetSummaryViewModel { // TODO: consider rename
     // Instance vars
     private let settingsService: SettingsServiceable
-    private let calendarService: CalenderServiceable
+    private let calendarService: CalendarServiceable
     private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
     
@@ -23,7 +23,7 @@ class BudgetRundownViewModel { // TODO: consider rename
     // Constructors
     init(
         settingsService: SettingsServiceable,
-        calendarService: CalenderServiceable,
+        calendarService: CalendarServiceable,
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
@@ -43,18 +43,18 @@ class BudgetRundownViewModel { // TODO: consider rename
 }
 
 // MARK: Public interface
-extension BudgetRundownViewModel {    
+extension BudgetSummaryViewModel {    
     func settingsTapped() {
         onSettingsTapped()
     }
 }
 
 // MARK: - Mocks
-extension BudgetRundownViewModel {
-    static func mock() -> BudgetRundownViewModel {
-        BudgetRundownViewModel(
+extension BudgetSummaryViewModel {
+    static func mock() -> BudgetSummaryViewModel {
+        BudgetSummaryViewModel(
             settingsService: MockSettingsService(),
-            calendarService: MockCalenderService(),
+            calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
                 spendService: MockSpendService()
             ),

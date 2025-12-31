@@ -17,7 +17,7 @@ struct SpendView: View {
             spacing: Spacing.1
         ) {
             HStack {
-                Text(Copy.spend)
+                Text(viewModel.title)
                     .font(.title2)
                 Spacer()
                 Button(
@@ -41,11 +41,11 @@ struct SpendView: View {
             cornerRadius: CornerRadius.2,
             color: .gray.opacity(0.25)
         )
+        .onAppear {
+            viewModel.reloadData()
+        }
         .onReceive(
-//            Publishers.Merge(
-//                NotificationCenter.default.publisher(for: .SettingsUpdated),
-                NotificationCenter.default.publisher(for: .SelectedDateUpdated),
-//            ),
+            NotificationCenter.default.publisher(for: .SelectedDateUpdated),
             perform: { _ in
                 Task { await MainActor.run {
                     viewModel.reloadData()

@@ -1,5 +1,5 @@
 //
-//  CalenderDayView.swift
+//  CalendarDayView.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/29/25.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct CalenderDayView: View {
+struct CalendarDayView: View {
     // Instance vars
-    @State private var viewModel: CalenderDayViewModel
+    @State private var viewModel: CalendarDayViewModel
     
     // Constructors
-    init(viewModel: CalenderDayViewModel) {
+    init(viewModel: CalendarDayViewModel) {
         self.viewModel = viewModel
     }
     
@@ -33,8 +33,8 @@ struct CalenderDayView: View {
 }
 
 #Preview("Selected") {
-    CalenderDayView(
-        viewModel: CalenderDayViewModel(
+    CalendarDayView(
+        viewModel: CalendarDayViewModel(
             isSelected: true,
             text: "12/25",
             monthDay: .mock()
@@ -43,8 +43,8 @@ struct CalenderDayView: View {
 }
 
 #Preview("Not selected") {
-    CalenderDayView(
-        viewModel: CalenderDayViewModel(
+    CalendarDayView(
+        viewModel: CalendarDayViewModel(
             isSelected: false,
             text: "12/25",
             monthDay: .mock()

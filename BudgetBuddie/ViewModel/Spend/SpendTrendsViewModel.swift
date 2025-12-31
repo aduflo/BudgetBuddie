@@ -15,13 +15,13 @@ class SpendTrendsViewModel {
     private(set) var monthlyTrendViewModel: SpendTrendViewModel = .emptyMonthly()
     
     private let settingsService: SettingsServiceable
-    private let calendarService: CalenderServiceable
+    private let calendarService: CalendarServiceable
     private let currencyFormatter: CurrencyFormattable
     
     // Constructors
     init(
         settingsService: SettingsServiceable,
-        calendarService: CalenderServiceable,
+        calendarService: CalendarServiceable,
         currencyFormatter: CurrencyFormattable
     ) {
         self.settingsService = settingsService
@@ -108,7 +108,7 @@ extension SpendTrendsViewModel {
     static func mock() -> SpendTrendsViewModel {
         SpendTrendsViewModel(
             settingsService: MockSettingsService(),
-            calendarService: MockCalenderService(),
+            calendarService: MockCalendarService(),
             currencyFormatter: CurrencyFormatter()
         )
     }

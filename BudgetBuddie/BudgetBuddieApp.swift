@@ -19,13 +19,14 @@ struct BudgetBuddieApp: App {
         WindowGroup {
             HomeView(
                 viewModel: HomeViewModel(
-                    rundownViewModel: BudgetRundownViewModel(
+                    budgetSummaryViewModel: BudgetSummaryViewModel(
                         settingsService: settingsService,
                         calendarService: calendarService,
                         spendRepository: spendRepository,
                         currencyFormatter: currencyFormatter
                     ),
                     spendViewModel: SpendViewModel(
+                        calendarService: calendarService,
                         spendRepository: spendRepository,
                         currencyFormatter: currencyFormatter
                     )

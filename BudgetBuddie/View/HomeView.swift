@@ -31,8 +31,8 @@ struct HomeView: View {
         ) {
             BudgetBuddieBannerView()
             
-            BudgetRundownView(
-                viewModel: viewModel.rundownViewModel
+            BudgetSummaryView(
+                viewModel: viewModel.budgetSummaryViewModel
             )
             .sheet(isPresented: $presentSettings) {
                 SettingsView(
@@ -63,7 +63,7 @@ struct HomeView: View {
         .padding(.horizontal, Padding.2)
         .onAppear {
             // assign closures to facilitate presentables
-            viewModel.rundownViewModel.onSettingsTapped = {
+            viewModel.budgetSummaryViewModel.onSettingsTapped = {
                 presentSettings.toggle()
             }
             viewModel.spendViewModel.onNewSpendItemTapped = {

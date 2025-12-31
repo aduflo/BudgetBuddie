@@ -9,13 +9,13 @@ import Foundation
 
 struct NewSpendItemViewModel {
     // Instance vars
-    private let calendarService: CalenderServiceable
+    private let calendarService: CalendarServiceable
     private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
     
     // Constructors
     init(
-        calendarService: CalenderServiceable,
+        calendarService: CalendarServiceable,
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
@@ -29,7 +29,7 @@ struct NewSpendItemViewModel {
 extension NewSpendItemViewModel {
     static func mock() -> NewSpendItemViewModel {
         NewSpendItemViewModel(
-            calendarService: MockCalenderService(),
+            calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
                 spendService: MockSpendService()
             ),

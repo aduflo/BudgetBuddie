@@ -9,21 +9,21 @@ import Foundation
 
 class CalendarViewModel {
     // Instance vars
-    lazy var dayViewModels: [CalenderDayViewModel] = {
+    lazy var dayViewModels: [CalendarDayViewModel] = {
         monthDays.map { monthDay in
-            CalenderDayViewModel(
+            CalendarDayViewModel(
                 isSelected: false,
                 text: displayMonthDay(monthDay.date),
                 monthDay: monthDay
             )
         }
     }()
-    private(set) var selectedDayViewModel: CalenderDayViewModel? = nil
-    private let calendarService: CalenderServiceable
+    private(set) var selectedDayViewModel: CalendarDayViewModel? = nil
+    private let calendarService: CalendarServiceable
     
     // Constructors
     init(
-        calendarService: CalenderServiceable
+        calendarService: CalendarServiceable
     ) {
         self.calendarService = calendarService
     }
@@ -31,7 +31,7 @@ class CalendarViewModel {
 
 // MARK: Public interface
 extension CalendarViewModel {
-    var currentDayViewModel: CalenderDayViewModel? {
+    var currentDayViewModel: CalendarDayViewModel? {
         guard let currentMonthDay = currentMonthDay else {
             return nil
         }
@@ -72,7 +72,7 @@ private extension CalendarViewModel {
 extension CalendarViewModel {
     static func mock() -> CalendarViewModel {
         CalendarViewModel(
-            calendarService: MockCalenderService()
+            calendarService: MockCalendarService()
         )
     }
 }

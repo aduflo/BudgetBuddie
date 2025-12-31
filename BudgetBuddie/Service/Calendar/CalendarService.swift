@@ -1,5 +1,5 @@
 //
-//  CalenderService.swift
+//  CalendarService.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/28/25.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-class CalenderService: CalenderServiceable {
+class CalendarService: CalendarServiceable {
     // Instance vars
     private let calendar = Calendar.current
     
-    // CalenderServiceable
+    // CalendarServiceable
     
     private(set) var selectedDate: Date = Date() {
         didSet {
@@ -62,7 +62,7 @@ class CalenderService: CalenderServiceable {
 }
 
 // MARK: Private interface
-private extension CalenderService {
+private extension CalendarService {
     func postNotificationSelectedDateUpdated() {
         NotificationCenter.default.post(.SelectedDateUpdated)
     }

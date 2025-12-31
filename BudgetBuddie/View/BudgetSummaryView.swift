@@ -1,5 +1,5 @@
 //
-//  BudgetRundownView.swift
+//  BudgetSummaryView.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct BudgetRundownView: View { // TODO: consider rename
+struct BudgetSummaryView: View { // TODO: consider rename
     // Instance vars
-    let viewModel: BudgetRundownViewModel
+    let viewModel: BudgetSummaryViewModel
     
     // Constructors
     init(
-        viewModel: BudgetRundownViewModel
+        viewModel: BudgetSummaryViewModel
     ) {
         self.viewModel = viewModel
     }
@@ -40,8 +40,7 @@ struct BudgetRundownView: View { // TODO: consider rename
             }
             
             HStack(
-                alignment: .top,
-                spacing: Spacing.1
+                spacing: Spacing.2
             ) {
                 SpendTrendsView(
                     viewModel: viewModel.spendTrendsViewModel
@@ -62,5 +61,5 @@ struct BudgetRundownView: View { // TODO: consider rename
 }
 
 #Preview {
-    BudgetRundownView(viewModel: .mock())
+    BudgetSummaryView(viewModel: .mock())
 }

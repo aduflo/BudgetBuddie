@@ -10,7 +10,7 @@ import SwiftUI
 struct CalendarView: View {
     // Instance vars
     @State private var viewModel: CalendarViewModel
-    @State private var selectedDayViewModel: CalenderDayViewModel? = nil
+    @State private var selectedDayViewModel: CalendarDayViewModel? = nil
     
     // Constructors
     init(
@@ -30,10 +30,10 @@ struct CalendarView: View {
                 ScrollView(.vertical) {
                     VStack(
                         alignment: .leading,
-                        spacing: Spacing.2
+                        spacing: Spacing.1
                     ) {
                         ForEach(viewModel.dayViewModels) { viewModel in
-                            CalenderDayView(
+                            CalendarDayView(
                                 viewModel: viewModel
                             )
                             .id(viewModel.monthDay.day)

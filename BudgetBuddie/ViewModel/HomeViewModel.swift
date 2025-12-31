@@ -10,15 +10,15 @@ import Foundation
 @Observable
 class HomeViewModel {
     // Instance vars
-    let rundownViewModel: BudgetRundownViewModel
+    let budgetSummaryViewModel: BudgetSummaryViewModel
     let spendViewModel: SpendViewModel
     
     // Constructors
     init(
-        rundownViewModel: BudgetRundownViewModel,
+        budgetSummaryViewModel: BudgetSummaryViewModel,
         spendViewModel: SpendViewModel
     ) {
-        self.rundownViewModel = rundownViewModel
+        self.budgetSummaryViewModel = budgetSummaryViewModel
         self.spendViewModel = spendViewModel
     }
 }
@@ -28,7 +28,7 @@ class HomeViewModel {
 extension HomeViewModel {
     static func mock() -> HomeViewModel {
         HomeViewModel(
-            rundownViewModel: .mock(),
+            budgetSummaryViewModel: .mock(),
             spendViewModel: .mock()
         )
     }

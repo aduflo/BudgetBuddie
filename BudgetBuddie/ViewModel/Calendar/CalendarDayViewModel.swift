@@ -1,5 +1,5 @@
 //
-//  CalenderDayViewModel.swift
+//  CalendarDayViewModel.swift
 //  BudgetBuddie
 //
 //  Created by Adam Duflo on 12/29/25.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class CalenderDayViewModel: Identifiable {
+class CalendarDayViewModel: Identifiable {
     // Instance vars
     var isSelected: Bool
     let text: String
