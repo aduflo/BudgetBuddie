@@ -11,24 +11,24 @@ import SwiftUI
 @Observable
 class SpendTrendViewModel {
     // Instance vars
+    private let settingsService: SettingsServiceable
+    private let currencyFormatter: CurrencyFormattable
+    
     let title: String
     /// Amount in dollars and cents
     let currentSpend: Decimal
     /// Amount in dollars and cents
     let maxSpend: Decimal
     
-    private let settingsService: SettingsServiceable
-    private let currencyFormatter: CurrencyFormattable
-    
     // Constructors
     /// - `currentSpend` should be of dollar and cents value
     /// - `maxSpend` should be of dollar and cents value
     init(
+        settingsService: SettingsServiceable,
+        currencyFormatter: CurrencyFormattable,
         title: String,
         currentSpend: Decimal,
-        maxSpend: Decimal,
-        settingsService: SettingsServiceable,
-        currencyFormatter: CurrencyFormattable
+        maxSpend: Decimal
     ) {
         self.title = title
         self.currentSpend = currentSpend
@@ -77,61 +77,61 @@ private extension SpendTrendViewModel {
 extension SpendTrendViewModel {
     static func mockDaily() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.daily,
             currentSpend: 13.37,
-            maxSpend: 1337,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 1337
         )
     }
     
     static func mockMtd() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.monthToDate,
             currentSpend: 13.37,
-            maxSpend: 7331.00,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 7331.00
         )
     }
     
     static func mockMonthly() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.monthly,
             currentSpend: 9001.00,
-            maxSpend: 9000.00,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 9000.00
         )
     }
     
     static func mockAcceptable() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.budgetTrend,
             currentSpend: 40.00,
-            maxSpend: 50.00,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 50.00
         )
     }
     
     static func mockEncroaching() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.budgetTrend,
             currentSpend: 8000.00,
-            maxSpend: 9000.00,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 9000.00
         )
     }
     
     static func mockExceeded() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: MockSettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.budgetTrend,
             currentSpend: 9000.01,
-            maxSpend: 9000.00,
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 9000.00
         )
     }
 }

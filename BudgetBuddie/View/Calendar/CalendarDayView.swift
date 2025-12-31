@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarDayView: View {
     // Instance vars
-    @State private var viewModel: CalendarDayViewModel
+    private let viewModel: CalendarDayViewModel
     
     // Constructors
     init(viewModel: CalendarDayViewModel) {

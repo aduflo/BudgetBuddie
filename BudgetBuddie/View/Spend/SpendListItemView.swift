@@ -19,7 +19,7 @@ struct SpendListItemView: View {
                 Text(viewModel.displayAmount)
                 Spacer()
             }
-            Text(viewModel.displayNote)
+            Text(viewModel.displayDescription)
         }
         .padding(Padding.1)
         .roundedRectangleBackground(

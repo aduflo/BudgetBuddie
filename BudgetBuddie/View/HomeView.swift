@@ -11,7 +11,8 @@ struct HomeView: View {
     // Instance vars
     @State private var viewModel: HomeViewModel
     @State private var presentSettings = false
-    @State private var presentNewSpendItem = false
+    @State private var presentSpendItem = false
+    @State private var spendItemToEdit: SpendItem? = nil
     
     // Constructors
     init(
@@ -43,15 +44,16 @@ struct HomeView: View {
                 viewModel: viewModel.spendViewModel
             )
             .ignoresSafeArea(.all, edges: .bottom)
-            .sheet(isPresented: $presentNewSpendItem) {
-                NewSpendItemView(
-                    viewModel: NewSpendItemViewModel(
+            .sheet(isPresented: $presentSpendItem) {
+                SpendItemView(
+                    viewModel: SpendItemViewModel(
                         calendarService: viewModel.calendarService,
                         spendRepository: viewModel.spendRepository,
-                        currencyFormatter: viewModel.currencyFormatter
+                        currencyFormatter: viewModel.currencyFormatter,
+                        mode: .new
                     )
                 )
-                .presentationDetents([.height(312.0)])
+                .presentationDetents([.height(256.0)])
             }
         }
         .padding(.top, Padding.2)
@@ -62,7 +64,12 @@ struct HomeView: View {
                 presentSettings.toggle()
             }
             viewModel.spendViewModel.onNewSpendItemTapped = {
-                presentNewSpendItem.toggle()
+                spendItemToEdit = nil
+                presentSpendItem.toggle()
+            }
+            viewModel.spendViewModel.onEditSpendItemTapped = { spendItem in
+                spendItemToEdit = spendItem
+                presentSpendItem.toggle()
             }
         }
     }

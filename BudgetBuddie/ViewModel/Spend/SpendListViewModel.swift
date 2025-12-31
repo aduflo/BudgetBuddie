@@ -10,19 +10,19 @@ import Foundation
 @Observable
 class SpendListViewModel {
     // Instance vars
-    private(set) var items: [SpendListItemViewModel]
-    
     private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
     
+    private(set) var items: [SpendListItemViewModel]
+    
     init(
-        items: [SpendListItemViewModel] = [],
         spendRepository: SpendRepository,
-        currencyFormatter: CurrencyFormattable
+        currencyFormatter: CurrencyFormattable,
+        items: [SpendListItemViewModel] = []
     ) {
-        self.items = items
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
+        self.items = items
     }
 }
 
@@ -34,11 +34,11 @@ extension SpendListViewModel {
             SpendListItemViewModel.mock()
         }
         return SpendListViewModel(
-            items: items,
             spendRepository: SpendRepository(
                 spendService: MockSpendService()
             ),
-            currencyFormatter: currencyFormatter
+            currencyFormatter: currencyFormatter,
+            items: items
         )
     }
 }

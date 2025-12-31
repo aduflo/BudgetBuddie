@@ -14,5 +14,5 @@ struct SpendItem {
     // Instance vars
     let id: UUID
     let amount: Decimal
-    let note: String?
+    let description: String?
 }

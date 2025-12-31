@@ -14,10 +14,12 @@ class SpendViewModel {
     private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
 
-    let spendListViewModel: SpendListViewModel = .mock()
+    private(set) var title: String = ""
     
     var onNewSpendItemTapped: () -> () = {}
-    private(set) var title: String = ""
+    var onEditSpendItemTapped: (SpendItem) -> () = { _ in }
+    
+    let spendListViewModel: SpendListViewModel = .mock()
     
     // Constructors
     init(

@@ -13,10 +13,13 @@ enum Copy {
     static let current = "Current"
     static let max = "Max"
     static let spendItems = "Spend items"
+    static let newSpendItem = "New spend item"
+    static let editSpendItem = "Edit spend item"
     static let summary = "Summary"
     static let days = "Days"
     static let settings = "Settings"
     static let monthlyAllowance = "Monthly allowance"
+    static let monthlyAllowanceTitleKey = "How much can you spend monthly?"
     static func warningThreshold(_ value: String) -> String {
         "Warning threshold: \(value)"
     }
@@ -27,10 +30,14 @@ enum Copy {
     static let monthToDate = "Month-to-date (MTD)"
     static let monthly = "Monthly"
     static let budgetTrend = "Budget trend"
+    static let amount = "Amount"
     static func amount(_ value: String) -> String {
         "Amount: \(value)"
     }
-    static func note(_ value: String) -> String {
-        "Note: \(value)"
+    static let amountTitleKey = "How much did you spend?"
+    static let description = "Description"
+    static func description(_ value: String) -> String {
+        "Description: \(value)"
     }
+    static let descriptionTitleKey = "What did you spend money on?"
 }

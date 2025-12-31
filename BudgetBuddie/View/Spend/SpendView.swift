@@ -25,11 +25,7 @@ struct SpendView: View {
                     systemImage: SystemImage.plus,
                     action: { viewModel.newSpendItemTapped() }
                 )
-                .labelStyle(.iconOnly)
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.circle)
-                .tint(.white)
-                .foregroundStyle(.black)
+                .circleBackground()
             }
             
             SpendListView(

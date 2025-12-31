@@ -45,61 +45,61 @@ private extension SpendTrendsViewModel {
     
     static func placeholderDailyTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.daily,
             currentSpend: 0,
-            maxSpend: 0,
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 0
         )
     }
     
     static func placeholderMtdTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.monthToDate,
             currentSpend: 0,
-            maxSpend: 0,
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 0
         )
     }
     
     static func placeholderMonthlyTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter(),
             title: Copy.monthly,
             currentSpend: 0,
-            maxSpend: 0,
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter()
+            maxSpend: 0
         )
     }
     
     func dailyTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter,
             title: Copy.daily,
             currentSpend: dailyCurrentSpend,
-            maxSpend: dailyMaxSpend,
-            settingsService: settingsService,
-            currencyFormatter: currencyFormatter
+            maxSpend: dailyMaxSpend
         )
     }
     
     func mtdTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter,
             title: Copy.monthToDate,
             currentSpend: mtdCurrentSpend,
-            maxSpend: mtdMaxSpend,
-            settingsService: settingsService,
-            currencyFormatter: currencyFormatter
+            maxSpend: mtdMaxSpend
         )
     }
     
     func monthlyTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter,
             title: Copy.monthly,
             currentSpend: monthlyCurrentSpend,
-            maxSpend: monthlyMaxSpend,
-            settingsService: settingsService,
-            currencyFormatter: currencyFormatter
+            maxSpend: monthlyMaxSpend
         )
     }
     

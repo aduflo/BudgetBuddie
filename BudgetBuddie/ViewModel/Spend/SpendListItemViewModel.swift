@@ -9,9 +9,9 @@ import Foundation
 
 struct SpendListItemViewModel: Identifiable {
     // Instance vars
-    let spendItem: SpendItem
-    
     private let currencyFormatter: CurrencyFormattable
+    
+    let spendItem: SpendItem
     
     // Identifiable
     let id = UUID()
@@ -23,8 +23,8 @@ extension SpendListItemViewModel {
         Copy.amount(currencyFormatter.stringAmount(spendItem.amount))
     }
     
-    var displayNote: String {
-        Copy.note(spendItem.note ?? "N/A")
+    var displayDescription: String {
+        Copy.description(spendItem.description ?? "N/A")
     }
 }
 
@@ -32,12 +32,12 @@ extension SpendListItemViewModel {
 extension SpendListItemViewModel {
     static func mock() -> Self {
         Self(
+            currencyFormatter: CurrencyFormatter(),
             spendItem: SpendItem(
                 id: UUID(),
                 amount: 13.37,
-                note: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil
-            ),
-            currencyFormatter: CurrencyFormatter()
+                description: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil
+            )
         )
     }
 }

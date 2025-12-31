@@ -32,11 +32,7 @@ struct BudgetSummaryView: View { // TODO: consider rename
                     systemImage: SystemImage.gear,
                     action: { viewModel.settingsTapped() }
                 )
-                .labelStyle(.iconOnly)
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.circle)
-                .tint(.white)
-                .foregroundStyle(.black)
+                .circleBackground()
             }
             
             HStack(

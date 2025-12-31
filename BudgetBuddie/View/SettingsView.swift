@@ -32,7 +32,7 @@ struct SettingsView: View {
             ) {
                 Text(Copy.monthlyAllowance)
                 TextField(
-                    "monthly allowance",
+                    Copy.monthlyAllowanceTitleKey,
                     value: $monthlyAllowance,
                     format: viewModel.currencyFormatter.decimalFormatStyle
                 )
