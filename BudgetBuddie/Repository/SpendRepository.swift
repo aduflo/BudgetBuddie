@@ -13,7 +13,7 @@ class SpendRepository {
     
     // Constructors
     init(
-        spendService: SpendServiceable = PersistenceSpendService()
+        spendService: SpendServiceable = InMemorySpendService()
     ) {
         self.spendService = spendService
     }

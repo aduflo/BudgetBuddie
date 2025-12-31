@@ -53,7 +53,7 @@ struct HomeView: View {
                         mode: .new
                     )
                 )
-                .presentationDetents([.height(256.0)])
+                .presentationDetents([.height(280.0)])
             }
         }
         .padding(.top, Padding.2)

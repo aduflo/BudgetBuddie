@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SpendItemViewModel {
+class SpendItemViewModel {
     // Instance vars
     private let calendarService: CalendarServiceable
     private let spendRepository: SpendRepository
