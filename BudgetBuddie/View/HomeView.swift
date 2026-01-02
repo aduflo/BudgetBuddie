@@ -12,7 +12,6 @@ struct HomeView: View {
     @State private var viewModel: HomeViewModel
     @State private var presentSettings = false
     @State private var presentSpendItem = false
-    @State private var spendItemToEdit: SpendItem? = nil
     
     // Constructors
     init(
@@ -50,7 +49,13 @@ struct HomeView: View {
                         calendarService: viewModel.calendarService,
                         spendRepository: viewModel.spendRepository,
                         currencyFormatter: viewModel.currencyFormatter,
-                        mode: .new
+                        mode: {
+                            if let spendItem = viewModel.spendItemToPresent {
+                                .existing(spendItem)
+                            } else {
+                                .new
+                            }
+                        }()
                     )
                 )
                 .presentationDetents([.height(280.0)])
@@ -64,11 +69,11 @@ struct HomeView: View {
                 presentSettings.toggle()
             }
             viewModel.spendViewModel.onNewSpendItemTapped = {
-                spendItemToEdit = nil
+                viewModel.setSpendItemToPresent(nil)
                 presentSpendItem.toggle()
             }
-            viewModel.spendViewModel.onEditSpendItemTapped = { spendItem in
-                spendItemToEdit = spendItem
+            viewModel.spendViewModel.spendListViewModel.onSpendItemTapped = { spendItem in
+                viewModel.setSpendItemToPresent(spendItem)
                 presentSpendItem.toggle()
             }
         }

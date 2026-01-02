@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
-enum Copy {
+enum Copy {}
+
+extension Copy {
+    // MARK: String
     static let appName = "BudgetBuddie"
     static let spendTrends = "Spend trends"
     static let current = "Current"
@@ -40,4 +44,50 @@ enum Copy {
         "Description: \(value)"
     }
     static let descriptionTitleKey = "What did you spend money on?"
+}
+
+extension Copy {
+    // MARK: AttributedString
+    static let warningThresholdFootnote: AttributedString = {
+        let current = Copy.current
+        let spendTrends = Copy.spendTrends
+        let green = "green"
+        let orange = "orange"
+        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending allotment. When you've exceeded your comfortable spending allotment, the \(current) amounts under \(spendTrends) will change from \(green) to \(orange).")
+        
+        if let currentRange = attributedString.range(of: current) {
+            attributedString[currentRange].inlinePresentationIntent = .stronglyEmphasized
+        }
+        if let spendingTrendsRange = attributedString.range(of: spendTrends) {
+            attributedString[spendingTrendsRange].inlinePresentationIntent = .stronglyEmphasized
+        }
+        if let greenRange = attributedString.range(of: green) {
+            attributedString[greenRange].foregroundColor = .green
+        }
+        if let orangeRange = attributedString.range(of: orange) {
+            attributedString[orangeRange].foregroundColor = .orange
+        }
+        
+        return attributedString
+    }()
+    static func required(_ value: String) -> AttributedString {
+        let asterisk = "*"
+        var attributedString = AttributedString("\(value) \(asterisk)")
+        if let asteriskRange = attributedString.range(of: asterisk) {
+            attributedString[asteriskRange].inlinePresentationIntent = .stronglyEmphasized
+            attributedString[asteriskRange].foregroundColor = .red
+        }
+        return attributedString
+    }
+    static let requiredFieldWarningAmount: AttributedString = {
+        let attributedString = AttributedString(
+            "Amount is a required field",
+            attributes: {
+                var attributes = AttributeContainer()
+                attributes[AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = .red
+                return attributes
+            }()
+        )
+        return attributedString
+    }()
 }

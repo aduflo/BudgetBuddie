@@ -18,6 +18,9 @@ class HomeViewModel {
     let budgetSummaryViewModel: BudgetSummaryViewModel
     let spendViewModel: SpendViewModel
     
+    @ObservationIgnored
+    private(set) var spendItemToPresent: SpendItem? = nil
+    
     // Constructors
     init(
         settingsService: SettingsServiceable,
@@ -40,6 +43,13 @@ class HomeViewModel {
             spendRepository: spendRepository,
             currencyFormatter: currencyFormatter
         )
+    }
+}
+
+// MARK: Public interface
+extension HomeViewModel {
+    func setSpendItemToPresent(_ spendItem: SpendItem?) {
+        spendItemToPresent = spendItem
     }
 }
 

@@ -9,9 +9,12 @@ import SwiftUI
 
 struct SpendItemView: View {
     // Instance vars
-    let viewModel: SpendItemViewModel
+    @State var viewModel: SpendItemViewModel
     @State var amount: Decimal = 0.0
     @State var description: String = ""
+    
+    // TODO: add ability to delete spend item
+    // TODO: add ability to edit spend item
     
     var body: some View {
         VStack(
@@ -30,7 +33,7 @@ struct SpendItemView: View {
                 alignment: .leading,
                 spacing: Spacing.1
             ) {
-                Text(Copy.amount)
+                Text(Copy.required(Copy.amount))
                 TextField(
                     Copy.amountTitleKey,
                     value: $amount,
@@ -59,6 +62,10 @@ struct SpendItemView: View {
             }
             
             HStack {
+                if let requiredFieldWarningText = viewModel.requiredFieldWarningText {
+                    Text(requiredFieldWarningText)
+                        .foregroundStyle(Color.red)
+                }
                 Spacer()
                 Button(
                     "save",
@@ -71,6 +78,7 @@ struct SpendItemView: View {
         .padding(Padding.2)
         .onAppear {
             amount = viewModel.amount
+            description = viewModel.description
         }
     }
 }

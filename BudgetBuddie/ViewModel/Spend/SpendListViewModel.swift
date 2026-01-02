@@ -15,6 +15,8 @@ class SpendListViewModel {
     
     private(set) var items: [SpendListItemViewModel]
     
+    var onSpendItemTapped: (SpendItem) -> () = { _ in }
+    
     init(
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable,
@@ -23,6 +25,13 @@ class SpendListViewModel {
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
         self.items = items
+    }
+}
+
+// MARK: Public interface
+extension SpendListViewModel {
+    func spendItemTapped(_ spendItem: SpendItem) {
+        onSpendItemTapped(spendItem)
     }
 }
 

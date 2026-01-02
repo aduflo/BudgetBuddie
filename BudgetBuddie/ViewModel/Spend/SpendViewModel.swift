@@ -17,7 +17,6 @@ class SpendViewModel {
     private(set) var title: String = ""
     
     var onNewSpendItemTapped: () -> () = {}
-    var onEditSpendItemTapped: (SpendItem) -> () = { _ in }
     
     let spendListViewModel: SpendListViewModel = .mock()
     

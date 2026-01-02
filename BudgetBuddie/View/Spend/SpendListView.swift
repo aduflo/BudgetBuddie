@@ -16,9 +16,6 @@ struct SpendListView: View {
             // FIXME: proper empty state
             Text("empty, danggg")
         } else {
-            // TODO: add ability to delete spend item
-            // TODO: add ability to edit spend item?? or just delete and readd workflow... maybe just this for v1
-            // if edit, will show SpendItemView?
             VStack(
                 alignment: .leading,
                 spacing: Spacing.1
@@ -32,7 +29,12 @@ struct SpendListView: View {
                         spacing: Spacing.1
                     ) {
                         ForEach(viewModel.items) { item in
-                            SpendListItemView(viewModel: item)
+                            SpendListItemView(
+                                viewModel: item
+                            )
+                            .onTapGesture {
+                                viewModel.spendItemTapped(item.spendItem)
+                            }
                         }
                     }
                 }
@@ -42,5 +44,7 @@ struct SpendListView: View {
 }
 
 #Preview {
-    SpendListView(viewModel: .mock())
+    SpendListView(
+        viewModel: .mock()
+    )
 }
