@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct BudgetSummaryView: View { // TODO: consider rename
+struct BudgetSummaryView: View {
     // Instance vars
-    let viewModel: BudgetSummaryViewModel
+    private let viewModel: BudgetSummaryViewModel
     
     // Constructors
     init(
@@ -32,7 +32,7 @@ struct BudgetSummaryView: View { // TODO: consider rename
                     systemImage: SystemImage.gear,
                     action: { viewModel.settingsTapped() }
                 )
-                .circleBackground()
+                .buttonStyle(.circleSystemImage)
             }
             
             HStack(

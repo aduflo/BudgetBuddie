@@ -9,23 +9,31 @@ import SwiftUI
 
 struct SpendItemView: View {
     // Instance vars
-    @State var viewModel: SpendItemViewModel
-    @State var amount: Decimal = 0.0
-    @State var description: String = ""
+    @State private var viewModel: SpendItemViewModel
+    @State private var amount: Decimal = 0.0
+    @State private var description: String = ""
+    @State private var isDeleteConfirmationAlertPresented: Bool = false
     
-    // TODO: add ability to delete spend item
-    // TODO: add ability to edit spend item
+    @Environment(\.dismiss) var dismiss
+    
+    // Constructors
+    init(
+        viewModel: SpendItemViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(
             alignment: .leading,
-            spacing: Spacing.2
+            spacing: Spacing.3
         ) {
             VStack(
                 spacing: Spacing.1
             ) {
                 Text(viewModel.title)
                     .font(.title)
+                    .padding(Padding.1)
                 Divider()
             }
             
@@ -41,6 +49,9 @@ struct SpendItemView: View {
                 )
                 .textFieldStyle(.roundedBorder)
                 .keyboardType(.decimalPad)
+                .onChange(of: amount, { _, newValue in
+                    viewModel.setAmount(newValue)
+                })
                 .onSubmit {
                     viewModel.setAmount(amount)
                 }
@@ -56,24 +67,49 @@ struct SpendItemView: View {
                     text: $description
                 )
                 .textFieldStyle(.roundedBorder)
+                .onChange(of: description, { _, newValue in
+                    viewModel.setDescription(newValue)
+                })
                 .onSubmit {
                     viewModel.setDescription(description)
                 }
             }
             
-            HStack {
+            HStack(
+                spacing: Spacing.2
+            ) {
                 if let requiredFieldWarningText = viewModel.requiredFieldWarningText {
                     Text(requiredFieldWarningText)
                         .foregroundStyle(Color.red)
                 }
                 Spacer()
+                if case .existing = viewModel.mode {
+                    Button(
+                        "delete",
+                        systemImage: "trash",
+                        action: { isDeleteConfirmationAlertPresented = true }
+                    )
+                    .buttonStyle(.circleSystemImage)
+                    .alert(
+                        Copy.deleteAlertTitle,
+                        isPresented: $isDeleteConfirmationAlertPresented
+                    ) {
+                        Button(Copy.cancel, role: .cancel) {}
+                        Button(Copy.delete) {
+                            viewModel.deleteTapped()
+                            dismiss()
+                        }
+                    }
+                }
                 Button(
                     "save",
                     systemImage: SystemImage.checkmark,
                     action: { viewModel.saveTapped() }
                 )
-                .circleBackground()
+                .buttonStyle(.circleSystemImage)
             }
+            .padding(Padding.1)
+            Spacer() // to push everything to the top
         }
         .padding(Padding.2)
         .onAppear {

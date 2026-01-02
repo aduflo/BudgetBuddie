@@ -9,7 +9,14 @@ import SwiftUI
 
 struct SpendTrendView: View {
     // Instance vars
-    let viewModel: SpendTrendViewModel
+    private let viewModel: SpendTrendViewModel
+    
+    // Constructors
+    init(
+        viewModel: SpendTrendViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(

@@ -10,7 +10,14 @@ import Combine
 
 struct SpendTrendsView: View {
     // Instance vars
-    let viewModel: SpendTrendsViewModel
+    private let viewModel: SpendTrendsViewModel
+    
+    // Constructors
+    init(
+        viewModel: SpendTrendsViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(

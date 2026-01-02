@@ -9,7 +9,14 @@ import SwiftUI
 
 struct SpendListItemView: View {
     // Instance vars
-    let viewModel: SpendListItemViewModel
+    private let viewModel: SpendListItemViewModel
+    
+    // Constructors
+    init(
+        viewModel: SpendListItemViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(

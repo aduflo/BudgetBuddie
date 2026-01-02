@@ -36,7 +36,7 @@ struct HomeView: View {
                         currencyFormatter: viewModel.currencyFormatter
                     )
                 )
-                .presentationDetents([.height(328.0)])
+                .presentationDetents([.fraction(0.5)])
             }
             
             SpendView(
@@ -58,7 +58,7 @@ struct HomeView: View {
                         }()
                     )
                 )
-                .presentationDetents([.height(280.0)])
+                .presentationDetents([.fraction(0.5)])
             }
         }
         .padding(.top, Padding.2)

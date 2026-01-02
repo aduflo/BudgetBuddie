@@ -69,13 +69,17 @@ extension SpendItemViewModel {
         self.description = description
     }
     
-    func saveTapped() {
+    func deleteTapped() {
         print("\(String(describing: Self.self))-\(#function)")
+        // TODO: implement
+    }
+    
+    func saveTapped() {
+        requiredFieldWarningText = nil
         guard amount > 0.0 else {
             requiredFieldWarningText = Copy.requiredFieldWarningAmount
             return
         }
-        requiredFieldWarningText = nil
         
         // TODO: save SpendItem
     }

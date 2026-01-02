@@ -11,4 +11,5 @@ enum Spacing {
     static let half = 4.0
     static let `1` = 8.0
     static let `2` = 16.0
+    static let `3` = 32.0
 }

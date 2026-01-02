@@ -9,20 +9,28 @@ import SwiftUI
 
 struct SettingsView: View {
     // Instance vars
-    let viewModel: SettingsViewModel
+    private let viewModel: SettingsViewModel
     @State var monthlyAllowance: Decimal = 0.0
     @State var warningThreshold: Double = 0.0
+    
+    // Constructors
+    init(
+        viewModel: SettingsViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(
             alignment: .leading,
-            spacing: Spacing.2
+            spacing: Spacing.3
         ) {
             VStack(
                 spacing: Spacing.1
             ) {
                 Text(Copy.settings)
                     .font(.title)
+                    .padding(Padding.1)
                 Divider()
             }
             
@@ -70,7 +78,9 @@ struct SettingsView: View {
                 Text(Copy.warningThresholdFootnote)
                     .font(.footnote)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            Spacer() // to push everything to the top
         }
         .padding(Padding.2)
         .onAppear {
@@ -82,8 +92,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView(
-        viewModel: .mock(),
-        monthlyAllowance: 0.0,
-        warningThreshold: 0.0
+        viewModel: .mock()
     )
 }

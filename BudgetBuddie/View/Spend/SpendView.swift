@@ -10,7 +10,14 @@ import Combine
 
 struct SpendView: View {
     // Instance vars
-    let viewModel: SpendViewModel
+    private let viewModel: SpendViewModel
+    
+    // Constructors
+    init(
+        viewModel: SpendViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(
@@ -25,7 +32,7 @@ struct SpendView: View {
                     systemImage: SystemImage.plus,
                     action: { viewModel.newSpendItemTapped() }
                 )
-                .circleBackground()
+                .buttonStyle(.circleSystemImage)
             }
             
             SpendListView(

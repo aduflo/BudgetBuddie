@@ -44,6 +44,9 @@ extension Copy {
         "Description: \(value)"
     }
     static let descriptionTitleKey = "What did you spend money on?"
+    static let deleteAlertTitle = "Are you sure you want to delete this spend item?"
+    static let cancel = "Cancel"
+    static let delete = "Delete"
 }
 
 extension Copy {

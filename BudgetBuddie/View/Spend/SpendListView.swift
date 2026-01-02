@@ -9,7 +9,14 @@ import SwiftUI
 
 struct SpendListView: View {
     // Instance vars
-    let viewModel: SpendListViewModel
+    private let viewModel: SpendListViewModel
+    
+    // Constructors
+    init(
+        viewModel: SpendListViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         if viewModel.items.isEmpty {
