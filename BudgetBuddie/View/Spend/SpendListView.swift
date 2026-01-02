@@ -30,18 +30,16 @@ struct SpendListView: View {
                 Text(Copy.spendItems)
                     .font(.headline)
                 
-                ScrollView {
-                    VStack(
-                        alignment: .leading,
-                        spacing: Spacing.1
-                    ) {
-                        ForEach(viewModel.items) { item in
-                            SpendListItemView(
-                                viewModel: item
-                            )
-                            .onTapGesture {
-                                viewModel.spendItemTapped(item.spendItem)
-                            }
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.1
+                ) {
+                    ForEach(viewModel.items) { item in
+                        SpendListItemView(
+                            viewModel: item
+                        )
+                        .onTapGesture {
+                            viewModel.spendItemTapped(item.spendItem)
                         }
                     }
                 }

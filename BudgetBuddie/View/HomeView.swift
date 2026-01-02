@@ -21,44 +21,45 @@ struct HomeView: View {
     }
     
     var body: some View {
-        VStack(
-            spacing: Spacing.2
-        ) {
-            BudgetBuddieBannerView()
-            
-            BudgetSummaryView(
-                viewModel: viewModel.budgetSummaryViewModel
-            )
-            .sheet(isPresented: $presentSettings) {
-                SettingsView(
-                    viewModel: SettingsViewModel(
-                        settingsService: viewModel.settingsService,
-                        currencyFormatter: viewModel.currencyFormatter
-                    )
+        ScrollView {
+            VStack(
+                spacing: Spacing.2
+            ) {
+                BudgetBuddieBannerView()
+                
+                BudgetSummaryView(
+                    viewModel: viewModel.budgetSummaryViewModel
                 )
-                .presentationDetents([.fraction(0.5)])
-            }
-            
-            SpendView(
-                viewModel: viewModel.spendViewModel
-            )
-            .ignoresSafeArea(.all, edges: .bottom)
-            .sheet(isPresented: $presentSpendItem) {
-                SpendItemView(
-                    viewModel: SpendItemViewModel(
-                        calendarService: viewModel.calendarService,
-                        spendRepository: viewModel.spendRepository,
-                        currencyFormatter: viewModel.currencyFormatter,
-                        mode: {
-                            if let spendItem = viewModel.spendItemToPresent {
-                                .existing(spendItem)
-                            } else {
-                                .new
-                            }
-                        }()
+                .sheet(isPresented: $presentSettings) {
+                    SettingsView(
+                        viewModel: SettingsViewModel(
+                            settingsService: viewModel.settingsService,
+                            currencyFormatter: viewModel.currencyFormatter
+                        )
                     )
+                    .presentationDetents([.fraction(0.5)])
+                }
+                
+                SpendView(
+                    viewModel: viewModel.spendViewModel
                 )
-                .presentationDetents([.fraction(0.5)])
+                .sheet(isPresented: $presentSpendItem) {
+                    SpendItemView(
+                        viewModel: SpendItemViewModel(
+                            calendarService: viewModel.calendarService,
+                            spendRepository: viewModel.spendRepository,
+                            currencyFormatter: viewModel.currencyFormatter,
+                            mode: {
+                                if let spendItem = viewModel.spendItemToPresent {
+                                    .existing(spendItem)
+                                } else {
+                                    .new
+                                }
+                            }()
+                        )
+                    )
+                    .presentationDetents([.fraction(0.5)])
+                }
             }
         }
         .padding(.top, Padding.2)
