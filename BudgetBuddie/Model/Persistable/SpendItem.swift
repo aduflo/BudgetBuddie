@@ -9,10 +9,23 @@ import Foundation
 //import SwiftData
 //
 //@Model
-//class SpendItem {
-struct SpendItem {
+class SpendItem {
     // Instance vars
     let id: UUID
     let amount: Decimal
     let description: String?
+    let date: Date
+    
+    // Constructors
+    init(
+        id: UUID,
+        amount: Decimal,
+        description: String?,
+        date: Date
+    ) {
+        self.id = id
+        self.amount = amount
+        self.description = description
+        self.date = date
+    }
 }

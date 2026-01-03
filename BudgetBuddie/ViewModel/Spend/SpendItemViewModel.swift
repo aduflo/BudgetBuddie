@@ -60,28 +60,50 @@ extension SpendItemViewModel {
     }
     
     func setAmount(_ amount: Decimal) {
-        print("\(String(describing: Self.self))-\(#function)-\(String(describing: amount))")
         self.amount = amount
     }
     
     func setDescription(_ description: String) {
-        print("\(String(describing: Self.self))-\(#function)-\(String(describing: description))")
         self.description = description
     }
     
     func deleteTapped() {
-        print("\(String(describing: Self.self))-\(#function)")
-        // TODO: implement
-    }
-    
-    func saveTapped() {
-        requiredFieldWarningText = nil
-        guard amount > 0.0 else {
-            requiredFieldWarningText = Copy.requiredFieldWarningAmount
+        guard case .existing(let spendItem) = mode else {
             return
         }
         
-        // TODO: save SpendItem
+        spendRepository.deleteItem(spendItem)
+    }
+    
+    /// - Returns: Flag value indicating if save succeeded, or not.
+    func saveTapped() -> Bool {
+        requiredFieldWarningText = nil
+        guard amount > 0.0 else {
+            requiredFieldWarningText = Copy.requiredFieldWarningAmount
+            return false
+        }
+        
+        switch mode {
+        case .new:
+            spendRepository.saveItem(
+                SpendItem(
+                    id: UUID(),
+                    amount: amount,
+                    description: description,
+                    date: calendarService.selectedDate
+                )
+            )
+        case .existing(let spendItem):
+            spendRepository.saveItem(
+                SpendItem(
+                    id: spendItem.id,
+                    amount: amount,
+                    description: description,
+                    date: spendItem.date
+                )
+            )
+        }
+        return true
     }
 }
 
@@ -91,7 +113,8 @@ extension SpendItemViewModel {
         SpendItemViewModel(
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendService: MockSpendService()
+                spendService: MockSpendService(),
+                calendarService: MockCalendarService()
             ),
             currencyFormatter: CurrencyFormatter(),
             mode: .new

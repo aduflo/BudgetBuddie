@@ -36,7 +36,8 @@ extension SpendListItemViewModel {
             spendItem: SpendItem(
                 id: UUID(),
                 amount: 13.37,
-                description: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil
+                description: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil,
+                date: Date()
             )
         )
     }

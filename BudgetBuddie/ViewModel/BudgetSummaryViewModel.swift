@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class BudgetSummaryViewModel { // TODO: consider rename
+class BudgetSummaryViewModel {
     // Instance vars
     private let settingsService: SettingsServiceable
     private let calendarService: CalendarServiceable
@@ -56,7 +56,8 @@ extension BudgetSummaryViewModel {
             settingsService: MockSettingsService(),
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendService: MockSpendService()
+                spendService: MockSpendService(),
+                calendarService: MockCalendarService()
             ),
             currencyFormatter: CurrencyFormatter()
         )

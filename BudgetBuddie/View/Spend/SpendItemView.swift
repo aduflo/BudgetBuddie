@@ -104,7 +104,11 @@ struct SpendItemView: View {
                 Button(
                     "save",
                     systemImage: SystemImage.checkmark,
-                    action: { viewModel.saveTapped() }
+                    action: {
+                        if viewModel.saveTapped() {
+                            dismiss()
+                        }
+                    }
                 )
                 .buttonStyle(.circleSystemImage)
             }

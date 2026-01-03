@@ -10,10 +10,9 @@ import SwiftUI
 @main
 struct BudgetBuddieApp: App {
     // Instance vars
-    @Environment(\.settingsService) var settingsService
-    @Environment(\.calendarService) var calendarService
-    @Environment(\.spendRepository) var spendRepository
-    @Environment(\.currencyFormatter) var currencyFormatter
+    @Environment(\.settingsService) private var settingsService
+    @Environment(\.calendarService) private var calendarService
+    @Environment(\.currencyFormatter) private var currencyFormatter
     
     var body: some Scene {
         WindowGroup {
@@ -21,7 +20,10 @@ struct BudgetBuddieApp: App {
                 viewModel: HomeViewModel(
                     settingsService: settingsService,
                     calendarService: calendarService,
-                    spendRepository: spendRepository,
+                    spendRepository: SpendRepository(
+                        spendService: InMemorySpendService(),
+                        calendarService: calendarService
+                    ),
                     currencyFormatter: currencyFormatter
                 )
             )

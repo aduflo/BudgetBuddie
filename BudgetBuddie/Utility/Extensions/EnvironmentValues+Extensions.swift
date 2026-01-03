@@ -11,6 +11,5 @@ import SwiftUI
 extension EnvironmentValues {
     @Entry var settingsService: SettingsServiceable = SettingsService()
     @Entry var calendarService: CalendarServiceable = CalendarService()
-    @Entry var spendRepository: SpendRepository = SpendRepository()
     @Entry var currencyFormatter: CurrencyFormatter = CurrencyFormatter()
 }

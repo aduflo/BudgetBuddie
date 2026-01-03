@@ -59,7 +59,10 @@ extension SpendViewModel {
     static func mock() -> SpendViewModel {
         SpendViewModel(
             calendarService: MockCalendarService(),
-            spendRepository: SpendRepository(spendService: MockSpendService()),
+            spendRepository: SpendRepository(
+                spendService: MockSpendService(),
+                calendarService: MockCalendarService()
+            ),
             currencyFormatter: CurrencyFormatter()
         )
     }
