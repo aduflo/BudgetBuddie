@@ -40,11 +40,15 @@ class SpendRepository: SpendStoreable {
 
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay {
-        return try spendStore.getSpendDay(date: date)
+        try spendStore.getSpendDay(date: date)
     }
     
     func getSpendItems(date: Date) throws -> [SpendItem] {
-        return try spendStore.getSpendItems(date: date)
+        try spendStore.getSpendItems(date: date)
+    }
+    
+    func getAllSpendItems(date: Date) throws -> [SpendItem] {
+        try spendStore.getAllSpendItems(date: date)
     }
     
     func saveItem(_ item: SpendItem) throws {

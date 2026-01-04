@@ -29,6 +29,19 @@ class InMemorySpendStore: SpendStoreable {
         }
     }
     
+    func getAllSpendItems(date: Date) throws -> [SpendItem] {
+        let monthDates = Calendar.current.monthDatesFor(date)
+        var items: [SpendItem] = []
+        for date in monthDates {
+            do {
+                items.append(
+                    contentsOf: try getSpendItems(date: date)
+                )
+            } catch {}
+        }
+        return items
+    }
+    
     func saveItem(_ item: SpendItem) throws {
         do {
             let date = item.date

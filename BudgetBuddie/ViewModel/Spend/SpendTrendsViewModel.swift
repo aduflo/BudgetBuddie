@@ -12,6 +12,7 @@ class SpendTrendsViewModel {
     // Instance vars
     private let settingsService: SettingsServiceable
     private let calendarService: CalendarServiceable
+    private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
     
     private(set) var dailyTrendViewModel: SpendTrendViewModel = placeholderDailyTrendViewModelBuilder()
@@ -22,10 +23,12 @@ class SpendTrendsViewModel {
     init(
         settingsService: SettingsServiceable,
         calendarService: CalendarServiceable,
+        spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
         self.settingsService = settingsService
         self.calendarService = calendarService
+        self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
     }
 }
@@ -106,15 +109,33 @@ private extension SpendTrendsViewModel {
     // Spend vars
     
     var dailyCurrentSpend: Decimal {
-        return 13.37 // FIXME: not foreal
+        do {
+            let items = try spendRepository.getSpendItems(
+                date: calendarService.selectedDate
+            )
+            return items.reduce(0, { $0 + $1.amount})
+        } catch {
+            return  0.0
+        }
     }
     
     var mtdCurrentSpend: Decimal {
-        return 90.01 // FIXME: not real
+        cumulativeCurrentSpend
     }
     
     var monthlyCurrentSpend: Decimal {
-        return 90.01 // FIXME: not real
+        cumulativeCurrentSpend
+    }
+    
+    var cumulativeCurrentSpend: Decimal {
+        do {
+            let items = try spendRepository.getAllSpendItems(
+                date: calendarService.selectedDate
+            )
+            return items.reduce(0, { $0 + $1.amount })
+        } catch {
+            return 0
+        }
     }
     
     var dailyMaxSpend: Decimal {
@@ -139,6 +160,9 @@ extension SpendTrendsViewModel {
         SpendTrendsViewModel(
             settingsService: MockSettingsService(),
             calendarService: MockCalendarService(),
+            spendRepository: SpendRepository(
+                spendStore: MockSpendStore()
+            ),
             currencyFormatter: CurrencyFormatter()
         )
     }

@@ -27,6 +27,23 @@ class MockSpendStore: SpendStoreable {
         }
     }
     
+    func getAllSpendItems(date: Date) throws -> [SpendItem] {
+        let monthDays = Calendar.current.monthDatesFor(date)
+        return monthDays.compactMap { date in
+            let dayString = date.formatted(.dateTime.day(.twoDigits))
+            guard let day = Int(dayString) else {
+                return nil
+            }
+            
+            return SpendItem(
+                id: UUID(),
+                amount: Decimal(day),
+                description: (day % 2 == 0) ? "Day #: \(day)" : nil,
+                date: date
+            )
+        }
+    }
+    
     func saveItem(_ item: SpendItem) throws {
         print("\(String(describing: Self.self))-\(#function)-id: \(item.id.uuidString)")
     }

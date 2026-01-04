@@ -37,6 +37,7 @@ class BudgetSummaryViewModel {
         self.spendTrendsViewModel = SpendTrendsViewModel(
             settingsService: settingsService,
             calendarService: calendarService,
+            spendRepository: spendRepository,
             currencyFormatter: currencyFormatter
         )
     }

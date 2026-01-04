@@ -19,6 +19,11 @@ class OnDiskSpendStore: SpendStoreable {
         return []
     }
     
+    func getAllSpendItems(date: Date) throws -> [SpendItem] {
+        // TODO: implement
+        return []
+    }
+    
     func saveItem(_ item: SpendItem) throws {
         // TODO: implement
     }

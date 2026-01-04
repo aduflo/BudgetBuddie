@@ -32,7 +32,6 @@ class SpendListViewModel {
 // MARK: Public interface
 extension SpendListViewModel {
     func reloadData() {
-        print("\(String(describing: Self.self))-\(#function)")
         do {
             items = try spendRepository.getSpendItems(
                 date: calendarService.selectedDate
