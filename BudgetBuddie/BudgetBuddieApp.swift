@@ -20,8 +20,8 @@ struct BudgetBuddieApp: App {
                 viewModel: HomeViewModel(
                     settingsService: settingsService,
                     calendarService: calendarService,
-                    spendRepository: SpendRepository(
-                        spendService: InMemorySpendService(),
+                    spendRepository: SpendRepository( // FIXME: this needs to be in instance var, it's getting constructed everytime view is redrawn
+                        spendStore: InMemorySpendStore(),
                         calendarService: calendarService
                     ),
                     currencyFormatter: currencyFormatter

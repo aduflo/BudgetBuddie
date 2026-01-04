@@ -8,39 +8,62 @@
 import Foundation
 
 @Observable
-class SpendRepository {
+class SpendRepository: SpendStoreable {
     // Instance vars
-    private var spendService: SpendServiceable
-    private var calendarService: CalendarServiceable // TODO: determine if we even need this. idea is we will for purgeLastMonthIfNeeded... but perhaps we can shove that operation into saveItem which will have a date and we can cross check with Date()
+    private let spendStore: SpendStoreable
+    let calendarService: CalendarServiceable
     
     // Constructors
     init(
-        spendService: SpendServiceable,
+        spendStore: SpendStoreable,
         calendarService: CalendarServiceable
     ) {
-        self.spendService = spendService
+        self.spendStore = spendStore
         self.calendarService = calendarService
-        purgeLastMonthIfNeeded()
+        setup()
     }
-}
 
-// MARK: Public interface
-extension SpendRepository {
-//    func itemsForDay(_ day: SpendDay) {
-//        
-//    }
-    func saveItem(_ item: SpendItem) {
-        print("\(String(describing: Self.self))-\(#function)-id: \(item.id.uuidString)")
+    // SpendStoreable
+    func getSpendDay(date: Date) throws -> SpendDay {
+        try spendStore.getSpendDay(date: date)
     }
     
-    func deleteItem(_ item: SpendItem) {
-        print("\(String(describing: Self.self))-\(#function)-id: \(item.id.uuidString)")
+    func getSpendItems(date: Date) throws -> [SpendItem] {
+        try spendStore.getSpendItems(date: date)
+    }
+    
+    func saveItem(_ item: SpendItem) throws {
+        try spendStore.saveItem(item)
+    }
+    
+    func deleteItem(_ item: SpendItem) throws {
+        try spendStore.deleteItem(item)
+    }
+    
+    func prepStoreForMonth(_ dates: [Date]) {
+        spendStore.prepStoreForMonth(dates)
+    }
+    
+    func purgeStore() {
+        spendStore.purgeStore()
     }
 }
 
 // MARK: Private interface
 private extension SpendRepository {
-    func purgeLastMonthIfNeeded() {
-        // only want to hold onto current months SpendDay(s) and SpendItem(s)
+    func setup() {
+        let date = calendarService.selectedDate
+        do {
+            _ = try getSpendDay(date: date)
+        } catch {
+            if case .spendDayNotFound = error as? SpendStoreError {
+                // if we cannot find a SpendDay associated with today's date
+                // we can conclude we are in a different month
+                // because no SpendDay stored has a `date` value that overlaps
+                // thus, we purge the store + prep store for month matching today's date
+                purgeStore()
+                prepStoreForMonth(calendarService.monthDates(date))
+            }
+        }
     }
 }

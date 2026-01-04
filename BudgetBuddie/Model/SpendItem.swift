@@ -6,9 +6,7 @@
 //
 
 import Foundation
-//import SwiftData
-//
-//@Model
+
 class SpendItem {
     // Instance vars
     let id: UUID

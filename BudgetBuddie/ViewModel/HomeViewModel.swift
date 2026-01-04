@@ -61,7 +61,7 @@ extension HomeViewModel {
             settingsService: MockSettingsService(),
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendService: MockSpendService(),
+                spendStore: MockSpendStore(),
                 calendarService: MockCalendarService()
             ),
             currencyFormatter: CurrencyFormatter()

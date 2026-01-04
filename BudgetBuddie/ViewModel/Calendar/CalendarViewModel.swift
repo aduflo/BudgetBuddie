@@ -47,10 +47,10 @@ extension CalendarViewModel {
 // MARK: Private interface
 private extension CalendarViewModel {
     var monthDays: [MonthDay] {
-        let days = calendarService.monthDays(
+        let dates = calendarService.monthDates(
             calendarService.selectedDate
         )
-        return days.map {
+        return dates.map {
             MonthDay(
                 day: calendarService.dayInMonth($0),
                 date: $0

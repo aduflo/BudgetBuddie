@@ -72,7 +72,11 @@ extension SpendItemViewModel {
             return
         }
         
-        spendRepository.deleteItem(spendItem)
+        do {
+            try spendRepository.deleteItem(spendItem)
+        } catch {
+            // TODO: handle error
+        }
     }
     
     /// - Returns: Flag value indicating if save succeeded, or not.
@@ -83,25 +87,33 @@ extension SpendItemViewModel {
             return false
         }
         
-        switch mode {
-        case .new:
-            spendRepository.saveItem(
-                SpendItem(
-                    id: UUID(),
-                    amount: amount,
-                    description: description,
-                    date: calendarService.selectedDate
+        let amount = amount
+        let description = description.isEmpty ? nil : description
+        do {
+            switch mode {
+            case .new:
+                try spendRepository.saveItem(
+                    SpendItem(
+                        id: UUID(),
+                        amount: amount,
+                        description: description,
+                        date: calendarService.selectedDate
+                    )
                 )
-            )
-        case .existing(let spendItem):
-            spendRepository.saveItem(
-                SpendItem(
-                    id: spendItem.id,
-                    amount: amount,
-                    description: description,
-                    date: spendItem.date
+            case .existing(let spendItem):
+                try spendRepository.saveItem(
+                    SpendItem(
+                        id: spendItem.id,
+                        amount: amount,
+                        description: description,
+                        date: spendItem.date
+                    )
                 )
-            )
+            }
+        } catch {
+            // TODO: handle error
+            print("\(String(describing: Self.self))-\(#function) error: \(error)")
+            return false
         }
         return true
     }
@@ -113,7 +125,7 @@ extension SpendItemViewModel {
         SpendItemViewModel(
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendService: MockSpendService(),
+                spendStore: MockSpendStore(),
                 calendarService: MockCalendarService()
             ),
             currencyFormatter: CurrencyFormatter(),

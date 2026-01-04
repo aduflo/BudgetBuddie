@@ -14,11 +14,10 @@ class SpendViewModel {
     private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
 
-    private(set) var title: String = ""
-    
+    let spendListViewModel: SpendListViewModel
     var onNewSpendItemTapped: () -> () = {}
     
-    let spendListViewModel: SpendListViewModel = .mock()
+    private(set) var title: String = ""    
     
     // Constructors
     init(
@@ -29,10 +28,10 @@ class SpendViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
-//        self.spendListViewModel = SpendListViewModel( // TODO: use when persistence is ready
-//            spendRepository: spendRepository,
-//            currencyFormatter: currencyFormatter
-//        )
+        self.spendListViewModel = SpendListViewModel(
+            spendRepository: spendRepository,
+            currencyFormatter: currencyFormatter
+        )
     }
 }
 
@@ -60,7 +59,7 @@ extension SpendViewModel {
         SpendViewModel(
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendService: MockSpendService(),
+                spendStore: MockSpendStore(),
                 calendarService: MockCalendarService()
             ),
             currencyFormatter: CurrencyFormatter()

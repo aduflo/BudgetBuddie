@@ -12,7 +12,6 @@ class CalendarService: CalendarServiceable {
     private let calendar = Calendar.current
     
     // CalendarServiceable
-    
     private(set) var selectedDate: Date = Date() {
         didSet {
             postNotificationSelectedDateUpdated()
@@ -36,7 +35,7 @@ class CalendarService: CalendarServiceable {
         return dayRange?.count ?? 0
     }
     
-    func monthDays(_ date: Date) -> [Date] {
+    func monthDates(_ date: Date) -> [Date] {
         let dayRange = calendar.range(
             of: .day,
             in: .month,

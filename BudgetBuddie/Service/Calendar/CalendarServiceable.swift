@@ -16,6 +16,6 @@ protocol CalendarServiceable {
     /// Get the number of days in a month
     /// - Returns: The number of days, represented as an `Int`
     func daysInMonth(_ date: Date) -> Int
-    func monthDays(_ date: Date) -> [Date]
+    func monthDates(_ date: Date) -> [Date]
     func currentMonthDay(_ date: Date) -> Int
 }

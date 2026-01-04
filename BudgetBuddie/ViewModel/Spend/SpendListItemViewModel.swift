@@ -15,6 +15,15 @@ struct SpendListItemViewModel: Identifiable {
     
     // Identifiable
     let id = UUID()
+    
+    // Constructors
+    init(
+        currencyFormatter: CurrencyFormattable,
+        spendItem: SpendItem
+    ) {
+        self.currencyFormatter = currencyFormatter
+        self.spendItem = spendItem
+    }
 }
 
 // MARK: Public interface

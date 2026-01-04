@@ -12,17 +12,8 @@ import Foundation
 class SettingsService: SettingsServiceable {
     // Instance vars
     private let userDefaults: UserDefaults = .standard
-}
-
-private extension SettingsService {
-    struct Key {
-        static let monthlyAllowance = "monthlyAllowance"
-        static let warningThreshold = "warningThreshold"
-    }
-}
-
-// MARK: Public interface
-extension SettingsService {
+    
+    // SettingsServiceable
     var monthlyAllowance: Decimal {
         let monthlyAllowance = userDefaults.object(forKey: Key.monthlyAllowance) as? Double ?? 0.0
         return Decimal(floatLiteral: monthlyAllowance)
@@ -38,5 +29,12 @@ extension SettingsService {
     
     func setWarningThreshold(_ warningThreshold: Double) {
         userDefaults.set(warningThreshold, forKey: Key.warningThreshold)
+    }
+}
+
+private extension SettingsService {
+    struct Key {
+        static let monthlyAllowance = "monthlyAllowance"
+        static let warningThreshold = "warningThreshold"
     }
 }

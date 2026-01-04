@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SpendListView: View {
     // Instance vars
@@ -19,32 +20,48 @@ struct SpendListView: View {
     }
     
     var body: some View {
-        if viewModel.items.isEmpty {
-            // FIXME: proper empty state
-            Text("empty, danggg")
-        } else {
-            VStack(
-                alignment: .leading,
-                spacing: Spacing.1
-            ) {
-                Text(Copy.spendItems)
-                    .font(.headline)
-                
+        Group {
+            if viewModel.items.isEmpty {
+                // FIXME: proper empty state
+                Text("empty, danggg")
+            } else {
                 VStack(
                     alignment: .leading,
                     spacing: Spacing.1
                 ) {
-                    ForEach(viewModel.items) { item in
-                        SpendListItemView(
-                            viewModel: item
-                        )
-                        .onTapGesture {
-                            viewModel.spendItemTapped(item.spendItem)
+                    Text(Copy.spendItems)
+                        .font(.headline)
+                    
+                    VStack(
+                        alignment: .leading,
+                        spacing: Spacing.1
+                    ) {
+                        ForEach(viewModel.items) { item in
+                            SpendListItemView(
+                                viewModel: item
+                            )
+                            .onTapGesture {
+                                viewModel.spendItemTapped(item.spendItem)
+                            }
                         }
                     }
                 }
             }
         }
+        .onAppear {
+            viewModel.reloadData()
+        }
+        .onReceive(
+            Publishers.Merge(
+                NotificationCenter.default.publisher(for: .SelectedDateUpdated),
+                NotificationCenter.default.publisher(for: .SpendRepositoryUpdated)
+            ),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.reloadData()
+                }}
+            }
+        )
     }
 }
 

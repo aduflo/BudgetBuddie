@@ -22,7 +22,7 @@ class MockCalendarService: CalendarServiceable {
         31
     }
     
-    func monthDays(_ date: Date) -> [Date] {
+    func monthDates(_ date: Date) -> [Date] {
         let calendar = Calendar.current
         let dayRange = calendar.range(
             of: .day,
