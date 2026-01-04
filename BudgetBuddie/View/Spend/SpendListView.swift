@@ -22,8 +22,7 @@ struct SpendListView: View {
     var body: some View {
         Group {
             if viewModel.items.isEmpty {
-                // FIXME: proper empty state
-                Text("empty, danggg")
+                Text(Copy.goodJobSaving)
             } else {
                 VStack(
                     alignment: .leading,

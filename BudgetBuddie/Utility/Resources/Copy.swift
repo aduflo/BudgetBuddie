@@ -47,6 +47,7 @@ extension Copy {
     static let deleteAlertTitle = "Are you sure you want to delete this spend item?"
     static let cancel = "Cancel"
     static let delete = "Delete"
+    static let goodJobSaving = "Good job saving today!"
 }
 
 extension Copy {
