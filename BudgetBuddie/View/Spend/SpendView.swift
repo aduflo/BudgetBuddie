@@ -59,5 +59,7 @@ struct SpendView: View {
 }
 
 #Preview {
-    SpendView(viewModel: .mock())
+    SpendView(
+        viewModel: .mock()
+    )
 }

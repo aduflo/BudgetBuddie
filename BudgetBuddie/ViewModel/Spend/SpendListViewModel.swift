@@ -10,6 +10,7 @@ import Foundation
 @Observable
 class SpendListViewModel {
     // Instance vars
+    private let calendarService: CalendarServiceable
     private let spendRepository: SpendRepository
     private let currencyFormatter: CurrencyFormattable
     
@@ -18,9 +19,11 @@ class SpendListViewModel {
     var onSpendItemTapped: (SpendItem) -> () = { _ in }
     
     init(
+        calendarService: CalendarServiceable,
         spendRepository: SpendRepository,
         currencyFormatter: CurrencyFormattable
     ) {
+        self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
     }
@@ -29,8 +32,11 @@ class SpendListViewModel {
 // MARK: Public interface
 extension SpendListViewModel {
     func reloadData() {
+        print("\(String(describing: Self.self))-\(#function)")
         do {
-            items = try spendRepository.getSpendItems(date: Date()).map {
+            items = try spendRepository.getSpendItems(
+                date: calendarService.selectedDate
+            ).map {
                 SpendListItemViewModel(
                     currencyFormatter: currencyFormatter,
                     spendItem: $0
@@ -52,9 +58,9 @@ extension SpendListViewModel {
     static func mock() -> SpendListViewModel {
         let currencyFormatter = CurrencyFormatter()
         return SpendListViewModel(
+            calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendStore: MockSpendStore(),
-                calendarService: MockCalendarService()
+                spendStore: MockSpendStore()
             ),
             currencyFormatter: currencyFormatter
         )

@@ -9,12 +9,11 @@ import Foundation
 
 class InMemorySpendStore: SpendStoreable {
     // Instance vars
-    private var daysDict: [Date: SpendDay] = [:]
+    private var daysDict: [String: SpendDay] = [:]
     
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay {
-        // FIXME: this is doing exact day.. no good. we need string representation such as yyyy/mm/dd
-        guard let day = daysDict[date] else {
+        guard let day = daysDict[dateString(date)] else {
             throw SpendStoreError.spendDayNotFound
         }
         
@@ -52,7 +51,7 @@ class InMemorySpendStore: SpendStoreable {
                 date: day.date,
                 items: items
             )
-            daysDict[date] = newDay
+            daysDict[dateString(date)] = newDay
         } catch {
             throw SpendStoreError.unableToSaveItem
         }
@@ -77,7 +76,7 @@ class InMemorySpendStore: SpendStoreable {
                 date: day.date,
                 items: items
             )
-            daysDict[date] = newDay
+            daysDict[dateString(date)] = newDay
         } catch {
             throw SpendStoreError.unableToSaveItem
         }
@@ -85,7 +84,7 @@ class InMemorySpendStore: SpendStoreable {
     
     func prepStoreForMonth(_ dates: [Date]) {
         for date in dates {
-            daysDict[date] = SpendDay(
+            daysDict[dateString(date)] = SpendDay(
                 id: UUID(),
                 date: date,
                 items: []
@@ -95,5 +94,12 @@ class InMemorySpendStore: SpendStoreable {
     
     func purgeStore() {
         daysDict = [:]
+    }
+}
+
+// MARK: Private interface
+private extension InMemorySpendStore {
+    func dateString(_ date: Date) -> String {
+        date.monthDayYearString
     }
 }

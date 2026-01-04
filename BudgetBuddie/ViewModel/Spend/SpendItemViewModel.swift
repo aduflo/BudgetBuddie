@@ -111,7 +111,7 @@ extension SpendItemViewModel {
                 )
             }
         } catch {
-            // TODO: handle error
+            // TODO: handle error <-----
             print("\(String(describing: Self.self))-\(#function) error: \(error)")
             return false
         }
@@ -125,8 +125,7 @@ extension SpendItemViewModel {
         SpendItemViewModel(
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendStore: MockSpendStore(),
-                calendarService: MockCalendarService()
+                spendStore: MockSpendStore()
             ),
             currencyFormatter: CurrencyFormatter(),
             mode: .new

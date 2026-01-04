@@ -1,0 +1,18 @@
+//
+//  DateFormatter.swift
+//  BudgetBuddie
+//
+//  Created by Adam Duflo on 1/4/26.
+//
+
+import Foundation
+
+extension Date {
+    var monthDayString: String {
+        formatted(.dateTime.day(.twoDigits).month(.twoDigits))
+    }
+    
+    var monthDayYearString: String {
+        formatted(.dateTime.day(.twoDigits).month(.twoDigits).year(.twoDigits))
+    }
+}

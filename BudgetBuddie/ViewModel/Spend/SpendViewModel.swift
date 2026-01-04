@@ -29,6 +29,7 @@ class SpendViewModel {
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
         self.spendListViewModel = SpendListViewModel(
+            calendarService: calendarService,
             spendRepository: spendRepository,
             currencyFormatter: currencyFormatter
         )
@@ -49,7 +50,7 @@ extension SpendViewModel {
 // MARK: - Private interface
 private extension SpendViewModel {
     func generateTitle() {
-        title = calendarService.selectedDate.formatted(.dateTime.day(.twoDigits).month(.twoDigits))
+        title = calendarService.selectedDate.monthDayString
     }
 }
 
@@ -59,8 +60,7 @@ extension SpendViewModel {
         SpendViewModel(
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendStore: MockSpendStore(),
-                calendarService: MockCalendarService()
+                spendStore: MockSpendStore()
             ),
             currencyFormatter: CurrencyFormatter()
         )

@@ -10,9 +10,14 @@ import SwiftUI
 @main
 struct BudgetBuddieApp: App {
     // Instance vars
-    @Environment(\.settingsService) private var settingsService
-    @Environment(\.calendarService) private var calendarService
-    @Environment(\.currencyFormatter) private var currencyFormatter
+    let settingsService: SettingsServiceable = SettingsService()
+    let calendarService: CalendarServiceable = CalendarService()
+    let currencyFormatter: CurrencyFormatter = CurrencyFormatter()
+    let spendRepository: SpendRepository = SpendRepository(
+        spendStore: InMemorySpendStore()
+    )
+    
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -20,13 +25,15 @@ struct BudgetBuddieApp: App {
                 viewModel: HomeViewModel(
                     settingsService: settingsService,
                     calendarService: calendarService,
-                    spendRepository: SpendRepository( // FIXME: this needs to be in instance var, it's getting constructed everytime view is redrawn
-                        spendStore: InMemorySpendStore(),
-                        calendarService: calendarService
-                    ),
+                    spendRepository: spendRepository,
                     currencyFormatter: currencyFormatter
                 )
             )
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            if newValue == .active {
+                spendRepository.setup()
+            }
         }
     }
 }

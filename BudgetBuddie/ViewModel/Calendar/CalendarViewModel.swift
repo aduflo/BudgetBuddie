@@ -64,7 +64,7 @@ private extension CalendarViewModel {
     }
     
     func displayMonthDay(_ date: Date) -> String {
-        date.formatted(.dateTime.day(.twoDigits).month(.twoDigits))
+        date.monthDayString
     }
 }
 

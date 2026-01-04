@@ -37,5 +37,7 @@ struct SpendListItemView: View {
 }
 
 #Preview {
-    SpendListItemView(viewModel: .mock())
+    SpendListItemView(
+        viewModel: .mock()
+    )
 }

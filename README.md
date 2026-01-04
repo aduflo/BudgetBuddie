@@ -1,9 +1,5 @@
 ### TODO:
-- add persistence layer for SpendDay->[SpendItem]
-  - only want to persist current month; OK to purge when new month starts
-  - Note:
-    - when deciding if is new month / to purge last month, can pull 1st SpendDay out of DB and check if month equals month of Date() (today)
-      - tldr: purge last month if new month <-
+- add on-disk persistence layer
 - tend to TODO's
 - tend to FIXME's
 - add LaunchScreen

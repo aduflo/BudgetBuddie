@@ -82,5 +82,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(viewModel: .mock())
+    HomeView(
+        viewModel: .mock()
+    )
 }

@@ -57,5 +57,7 @@ struct BudgetSummaryView: View {
 }
 
 #Preview {
-    BudgetSummaryView(viewModel: .mock())
+    BudgetSummaryView(
+        viewModel: .mock()
+    )
 }

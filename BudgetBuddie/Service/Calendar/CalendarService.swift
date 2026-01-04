@@ -36,19 +36,7 @@ class CalendarService: CalendarServiceable {
     }
     
     func monthDates(_ date: Date) -> [Date] {
-        let dayRange = calendar.range(
-            of: .day,
-            in: .month,
-            for: date
-        )
-        var dateComponents = calendar.dateComponents(
-            [.day, .month, .year],
-            from: date
-        )
-        return dayRange?.compactMap {
-            dateComponents.day = $0
-            return calendar.date(from: dateComponents)
-        } ?? []
+        calendar.monthDatesFor(date)
     }
     
     func currentMonthDay(_ date: Date) -> Int {
