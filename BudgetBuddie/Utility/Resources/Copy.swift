@@ -35,14 +35,8 @@ extension Copy {
     static let monthly = "Monthly"
     static let budgetTrend = "Budget trend"
     static let amount = "Amount"
-    static func amount(_ value: String) -> String {
-        "Amount: \(value)"
-    }
     static let amountTitleKey = "How much did you spend?"
     static let description = "Description"
-    static func description(_ value: String) -> String {
-        "Description: \(value)"
-    }
     static let descriptionTitleKey = "What did you spend money on?"
     static let deleteAlertTitle = "Are you sure you want to delete this spend item?"
     static let cancel = "Cancel"

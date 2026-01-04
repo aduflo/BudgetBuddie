@@ -8,6 +8,10 @@
 import Foundation
 
 extension Date {
+    var timeString: String {
+        formatted(date: .omitted, time: .standard)
+    }
+    
     var monthDayString: String {
         formatted(.dateTime.day(.twoDigits).month(.twoDigits))
     }

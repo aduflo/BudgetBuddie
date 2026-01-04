@@ -22,7 +22,11 @@ struct SpendListView: View {
     var body: some View {
         Group {
             if viewModel.items.isEmpty {
-                Text(Copy.goodJobSaving)
+                HStack {
+                    Text(Copy.goodJobSaving)
+                        .font(.headline)
+                    Spacer()
+                }
             } else {
                 VStack(
                     alignment: .leading,

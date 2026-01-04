@@ -29,11 +29,11 @@ struct SpendListItemViewModel: Identifiable {
 // MARK: Public interface
 extension SpendListItemViewModel {
     var displayAmount: String {
-        Copy.amount(currencyFormatter.stringAmount(spendItem.amount))
+        currencyFormatter.stringAmount(spendItem.amount)
     }
     
     var displayDescription: String {
-        Copy.description(spendItem.description ?? "N/A")
+        spendItem.description ?? "N/A"
     }
 }
 
@@ -43,7 +43,6 @@ extension SpendListItemViewModel {
         Self(
             currencyFormatter: CurrencyFormatter(),
             spendItem: SpendItem(
-                id: UUID(),
                 amount: 13.37,
                 description: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil,
                 date: Date()

@@ -40,7 +40,9 @@ extension SpendListViewModel {
                     currencyFormatter: currencyFormatter,
                     spendItem: $0
                 )
-            }
+            }.sorted(by: { left, right in
+                left.spendItem.createdAt > right.spendItem.createdAt // we want latest item first
+            })
         } catch {
             print("\(String(describing: Self.self))-\(#function) error: \(error)")
             // TODO: handle error

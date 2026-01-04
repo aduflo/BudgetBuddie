@@ -94,7 +94,6 @@ extension SpendItemViewModel {
             case .new:
                 try spendRepository.saveItem(
                     SpendItem(
-                        id: UUID(),
                         amount: amount,
                         description: description,
                         date: calendarService.selectedDate

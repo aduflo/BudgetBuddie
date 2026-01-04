@@ -13,17 +13,20 @@ class SpendItem {
     let amount: Decimal
     let description: String?
     let date: Date
+    let createdAt: Date
     
     // Constructors
     init(
-        id: UUID,
+        id: UUID = UUID(),
         amount: Decimal,
         description: String?,
-        date: Date
+        date: Date,
+        createdAt: Date = Date()
     ) {
         self.id = id
         self.amount = amount
         self.description = description
         self.date = date
+        self.createdAt = createdAt
     }
 }

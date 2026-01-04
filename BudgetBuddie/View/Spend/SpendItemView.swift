@@ -94,8 +94,14 @@ struct SpendItemView: View {
                         Copy.deleteAlertTitle,
                         isPresented: $isDeleteConfirmationAlertPresented
                     ) {
-                        Button(Copy.cancel, role: .cancel) {}
-                        Button(Copy.delete) {
+                        Button(
+                            Copy.cancel,
+                            role: .cancel
+                        ) {}
+                        Button(
+                            Copy.delete,
+                            role: .destructive
+                        ) {
                             viewModel.deleteTapped()
                             dismiss()
                         }

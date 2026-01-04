@@ -19,14 +19,28 @@ struct SpendListItemView: View {
     }
     
     var body: some View {
-        VStack(
-            alignment: .leading
+        HStack(
+            spacing: Spacing.zero
         ) {
-            HStack {
+            VStack(
+                alignment: .leading,
+                spacing: Spacing.1
+            ) {
                 Text(viewModel.displayAmount)
-                Spacer()
+                    .font(.headline)
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.half
+                ) {
+                    Text(Copy.description)
+                        .font(.subheadline)
+                    Text(viewModel.displayDescription)
+                        .font(.caption)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                }
             }
-            Text(viewModel.displayDescription)
+            Spacer()
         }
         .padding(Padding.1)
         .roundedRectangleBackground(

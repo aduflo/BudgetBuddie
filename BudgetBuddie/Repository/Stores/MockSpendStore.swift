@@ -19,7 +19,6 @@ class MockSpendStore: SpendStoreable {
     func getSpendItems(date: Date) throws -> [SpendItem] {
         (0..<10).map { item in
             SpendItem(
-                id: UUID(),
                 amount: Decimal(item),
                 description: (item % 2 == 0) ? "Item #: \(item)" : nil,
                 date: date
@@ -36,7 +35,6 @@ class MockSpendStore: SpendStoreable {
             }
             
             return SpendItem(
-                id: UUID(),
                 amount: Decimal(day),
                 description: (day % 2 == 0) ? "Day #: \(day)" : nil,
                 date: date
