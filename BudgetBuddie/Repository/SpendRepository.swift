@@ -7,7 +7,6 @@
 
 import Foundation
 
-@Observable
 class SpendRepository: SpendStoreable {
     // Instance vars
     private let spendStore: SpendStoreable

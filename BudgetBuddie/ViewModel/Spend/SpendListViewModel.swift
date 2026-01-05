@@ -15,6 +15,7 @@ class SpendListViewModel {
     private let currencyFormatter: CurrencyFormattable
     
     private(set) var items: [SpendListItemViewModel] = []
+    private(set) var spendStoreError: SpendStoreError? = nil
     
     var onSpendItemTapped: (SpendItem) -> () = { _ in }
     
@@ -33,6 +34,7 @@ class SpendListViewModel {
 extension SpendListViewModel {
     func reloadData() {
         do {
+            spendStoreError = nil
             items = try spendRepository.getSpendItems(
                 date: calendarService.selectedDate
             ).map {
@@ -44,8 +46,8 @@ extension SpendListViewModel {
                 left.spendItem.createdAt > right.spendItem.createdAt // we want latest item first
             })
         } catch {
-            print("\(String(describing: Self.self))-\(#function) error: \(error)")
-            // TODO: handle error
+            spendStoreError = error as? SpendStoreError
+            items = []
         }
     }
     

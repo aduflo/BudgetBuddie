@@ -21,6 +21,7 @@ class SpendItemViewModel {
     private(set) var amount: Decimal = 0.0
     private(set) var description: String = ""
     private(set) var requiredFieldWarningText: AttributedString? = nil
+    private(set) var spendStoreError: SpendStoreError? = nil
     
     // Constructors
     init(
@@ -67,21 +68,27 @@ extension SpendItemViewModel {
         self.description = description
     }
     
-    func deleteTapped() {
+    func deleteTapped() -> Bool {
+        spendStoreError = nil
+        
         guard case .existing(let spendItem) = mode else {
-            return
+            return false
         }
         
         do {
             try spendRepository.deleteItem(spendItem)
         } catch {
-            // TODO: handle error
+            spendStoreError = error as? SpendStoreError
+            return false
         }
+        return true
     }
     
     /// - Returns: Flag value indicating if save succeeded, or not.
     func saveTapped() -> Bool {
         requiredFieldWarningText = nil
+        spendStoreError = nil
+        
         guard amount > 0.0 else {
             requiredFieldWarningText = Copy.requiredFieldWarningAmount
             return false
@@ -110,8 +117,7 @@ extension SpendItemViewModel {
                 )
             }
         } catch {
-            // TODO: handle error <-----
-            print("\(String(describing: Self.self))-\(#function) error: \(error)")
+            spendStoreError = error as? SpendStoreError
             return false
         }
         return true

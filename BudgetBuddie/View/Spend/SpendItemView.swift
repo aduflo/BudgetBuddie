@@ -81,6 +81,9 @@ struct SpendItemView: View {
                 if let requiredFieldWarningText = viewModel.requiredFieldWarningText {
                     Text(requiredFieldWarningText)
                         .foregroundStyle(Color.red)
+                } else if viewModel.spendStoreError != nil {
+                    Text(Copy.errorPleaseTryAgain)
+                        .foregroundStyle(Color.red)
                 }
                 Spacer()
                 if case .existing = viewModel.mode {
@@ -102,8 +105,9 @@ struct SpendItemView: View {
                             Copy.delete,
                             role: .destructive
                         ) {
-                            viewModel.deleteTapped()
-                            dismiss()
+                            if viewModel.deleteTapped() {
+                                dismiss()
+                            }
                         }
                     }
                 }

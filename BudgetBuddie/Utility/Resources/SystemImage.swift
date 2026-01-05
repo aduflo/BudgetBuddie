@@ -12,4 +12,5 @@ enum SystemImage {
     static let plus = "plus"
     static let dollarsignBankBuilding = "dollarsign.bank.building"
     static let checkmark = "checkmark"
+    static let arrowClockwise = "arrow.clockwise"
 }

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+//import Synchronization
 
-class OnDiskSpendStore: SpendStoreable {    
+// TODO: use Mutexes for thread safety on set/get
+class OnDiskSpendStore: SpendStoreable {
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay {
         // TODO: implement

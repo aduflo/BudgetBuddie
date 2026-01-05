@@ -14,42 +14,11 @@ enum SpendStoreError: LocalizedError {
     case unableToDeleteItem
     
     var errorDescription: String? {
-        // TODO: implement
         switch self {
-        case .spendDayNotFound: nil
-        case .spendItemsNotFound: nil
-        case .unableToSaveItem: nil
-        case .unableToDeleteItem: nil
-        }
-    }
-    
-    var failureReason: String? {
-        // TODO: implement
-        switch self {
-        case .spendDayNotFound: nil
-        case .spendItemsNotFound: nil
-        case .unableToSaveItem: nil
-        case .unableToDeleteItem: nil
-        }
-    }
-
-    var recoverySuggestion: String? {
-        // TODO: implement
-        switch self {
-        case .spendDayNotFound: nil
-        case .spendItemsNotFound: nil
-        case .unableToSaveItem: nil
-        case .unableToDeleteItem: nil
-        }
-    }
-    
-    var helpAnchor: String? {
-        // TODO: implement
-        switch self {
-        case .spendDayNotFound: nil
-        case .spendItemsNotFound: nil
-        case .unableToSaveItem: nil
-        case .unableToDeleteItem: nil
+        case .spendDayNotFound: "Could not find spend day."
+        case .spendItemsNotFound: "Could not find spend items."
+        case .unableToSaveItem: "Could not save spend item."
+        case .unableToDeleteItem: "Could not delete spend item."
         }
     }
 }

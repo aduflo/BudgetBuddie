@@ -6,18 +6,21 @@
 //
 
 import Foundation
+import Synchronization
 
 class InMemorySpendStore: SpendStoreable {
     // Instance vars
-    private var daysDict: [String: SpendDay] = [:]
+    private let daysDict = Mutex<[String: SpendDay]>([:])
     
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay {
-        guard let day = daysDict[dateString(date)] else {
-            throw SpendStoreError.spendDayNotFound
+        try daysDict.withLock { daysDict in
+            guard let day = daysDict[dateString(date)] else {
+                throw SpendStoreError.spendDayNotFound
+            }
+            
+            return day
         }
-        
-        return day
     }
     
     func getSpendItems(date: Date) throws -> [SpendItem] {
@@ -64,7 +67,9 @@ class InMemorySpendStore: SpendStoreable {
                 date: day.date,
                 items: items
             )
-            daysDict[dateString(date)] = newDay
+            daysDict.withLock { daysDict in
+                daysDict[dateString(date)] = newDay
+            }
         } catch {
             throw SpendStoreError.unableToSaveItem
         }
@@ -89,24 +94,28 @@ class InMemorySpendStore: SpendStoreable {
                 date: day.date,
                 items: items
             )
-            daysDict[dateString(date)] = newDay
+            daysDict.withLock { daysDict in
+                daysDict[dateString(date)] = newDay
+            }
         } catch {
-            throw SpendStoreError.unableToSaveItem
+            throw SpendStoreError.unableToDeleteItem
         }
     }
     
     func prepStoreForMonth(_ dates: [Date]) {
-        for date in dates {
-            daysDict[dateString(date)] = SpendDay(
-                id: UUID(),
-                date: date,
-                items: []
-            )
+        daysDict.withLock { daysDict in
+            for date in dates {
+                daysDict[dateString(date)] = SpendDay(
+                    id: UUID(),
+                    date: date,
+                    items: []
+                )
+            }
         }
     }
     
     func purgeStore() {
-        daysDict = [:]
+        daysDict.withLock { $0 = [:] }
     }
 }
 

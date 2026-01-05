@@ -21,7 +21,23 @@ struct SpendListView: View {
     
     var body: some View {
         Group {
-            if viewModel.items.isEmpty {
+            if viewModel.spendStoreError != nil {
+                VStack(
+                    spacing: Spacing.1
+                ) {
+                    Text(Copy.errorFetchingItems)
+                        .font(.headline)
+                        .foregroundStyle(Color.red)
+                    Button(
+                        "reload",
+                        systemImage: SystemImage.arrowClockwise,
+                        action: {
+                            viewModel.reloadData()
+                        }
+                    )
+                    .buttonStyle(.circleSystemImage)
+                }
+            } else if viewModel.items.isEmpty {
                 HStack {
                     Text(Copy.goodJobSaving)
                         .font(.headline)
