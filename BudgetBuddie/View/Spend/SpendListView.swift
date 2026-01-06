@@ -37,7 +37,7 @@ struct SpendListView: View {
                     )
                     .buttonStyle(.circleSystemImage)
                 }
-            } else if viewModel.items.isEmpty {
+            } else if viewModel.listItemViewModels.isEmpty {
                 HStack {
                     Text(Copy.goodJobSaving)
                         .font(.headline)
@@ -55,12 +55,12 @@ struct SpendListView: View {
                         alignment: .leading,
                         spacing: Spacing.1
                     ) {
-                        ForEach(viewModel.items) { item in
+                        ForEach(viewModel.listItemViewModels) { listItemViewModel in
                             SpendListItemView(
-                                viewModel: item
+                                viewModel: listItemViewModel
                             )
                             .onTapGesture {
-                                viewModel.spendItemTapped(item.spendItem)
+                                viewModel.spendItemTapped(listItemViewModel.spendItem)
                             }
                         }
                     }

@@ -10,7 +10,8 @@ import Synchronization
 
 class InMemorySpendStore: SpendStoreable {
     // Instance vars
-    private let daysDict = Mutex<[String: SpendDay]>([:])
+    typealias DateString = String
+    private let daysDict = Mutex<[DateString: SpendDay]>([:])
     
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay {

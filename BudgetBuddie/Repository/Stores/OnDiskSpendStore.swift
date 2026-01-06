@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 //import Synchronization
 
 // TODO: use Mutexes for thread safety on set/get
