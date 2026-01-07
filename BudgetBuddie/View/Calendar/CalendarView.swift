@@ -64,7 +64,7 @@ struct CalendarView: View {
                             selectedDayViewModel = currentDayViewModel
                             proxy.scrollTo(
                                 currentDayViewModel.monthDay.day,
-                                anchor: .top
+                                anchor: .center
                             )
                         }
                     }
