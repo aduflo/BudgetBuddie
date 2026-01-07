@@ -30,7 +30,6 @@ extension SettingsViewModel {
     
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {
         settingsService.setMonthlyAllowance(monthlyAllowance)
-        postNotificationSettingsUpdated()
     }
     
     var warningThreshold: Double {
@@ -39,14 +38,6 @@ extension SettingsViewModel {
     
     func setWarningThreshold(_ warningThreshold: Double) {
         settingsService.setWarningThreshold(warningThreshold)
-        postNotificationSettingsUpdated()
-    }
-}
-
-// MARK: Private interface
-private extension SettingsViewModel {
-    func postNotificationSettingsUpdated() {
-        NotificationCenter.default.post(.SettingsUpdated)
     }
 }
 

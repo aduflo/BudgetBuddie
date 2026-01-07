@@ -70,10 +70,11 @@ class OnDiskSpendStore: SpendStoreable {
             
             // save item to items
             var items = day.items
+            var oldItem: SpendItem_SD? // need to hold onto old model object
             if let matchingIdx = items.firstIndex(
                 where: { $0.id == item_sd.id }
             ) {
-                items.remove(at: matchingIdx)
+                oldItem = items.remove(at: matchingIdx)
                 items.insert(item_sd, at: matchingIdx)
             } else {
                 items.append(item_sd)
@@ -81,7 +82,12 @@ class OnDiskSpendStore: SpendStoreable {
             
             // update context
             try context?.transaction {
-                day.items = items
+                if let oldItem {
+                    // delete old model object to prevent .id collision
+                    // given items are bound to .id
+                    context?.delete(oldItem)
+                }
+                day.setItems(items)
             }
         } catch {
             throw SpendStoreError.unableToSaveItem
@@ -106,7 +112,7 @@ class OnDiskSpendStore: SpendStoreable {
             
             // update context
             try context?.transaction {
-                day.items = items
+                day.setItems(items)
             }
         } catch {
             throw SpendStoreError.unableToDeleteItem

@@ -19,6 +19,7 @@ class SettingsService: SettingsServiceable {
     
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {
         userDefaults.set(monthlyAllowance, forKey: Key.monthlyAllowance)
+        postNotificationSettingsUpdated()
     }
     
     var warningThreshold: Double {
@@ -27,12 +28,18 @@ class SettingsService: SettingsServiceable {
     
     func setWarningThreshold(_ warningThreshold: Double) {
         userDefaults.set(warningThreshold, forKey: Key.warningThreshold)
+        postNotificationSettingsUpdated()
     }
 }
 
+// MARK: Private interface
 private extension SettingsService {
     struct Key {
         static let monthlyAllowance = "monthlyAllowance"
         static let warningThreshold = "warningThreshold"
+    }
+    
+    func postNotificationSettingsUpdated() {
+        NotificationCenter.default.post(.SettingsUpdated)
     }
 }

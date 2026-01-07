@@ -44,6 +44,7 @@ extension Copy {
     static let goodJobSaving = "Good job saving today!"
     static let errorPleaseTryAgain = "Error! Please try again."
     static let errorFetchingItems = "Error! Could not fetch spend items."
+    static let notAvailabile = "N/A"
 }
 
 extension Copy {

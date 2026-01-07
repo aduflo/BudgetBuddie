@@ -28,7 +28,7 @@ struct SpendView: View {
                     .font(.title2)
                 Spacer()
                 Button(
-                    "new spend item",
+                    ButtonKey.newSpendItem,
                     systemImage: SystemImage.plus,
                     action: { viewModel.newSpendItemTapped() }
                 )

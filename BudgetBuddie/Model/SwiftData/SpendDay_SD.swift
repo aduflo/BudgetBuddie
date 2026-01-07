@@ -14,11 +14,11 @@ class SpendDay_SD {
     @Attribute(.unique) private(set) var id: UUID
     private(set) var date: Date
     private(set) var key: String
-    @Relationship(deleteRule: .cascade) var items: [SpendItem_SD]
+    @Relationship(deleteRule: .cascade) private(set) var items: [SpendItem_SD]
     
     // Constructors
     init(
-        id: UUID = UUID(),
+        id: UUID,
         date: Date,
         key: String,
         items: [SpendItem_SD]
@@ -32,11 +32,28 @@ class SpendDay_SD {
 
 // MARK: Public interface
 extension SpendDay_SD {
+    convenience init(
+        date: Date,
+        key: String,
+        items: [SpendItem_SD]
+    ) {
+        self.init(
+            id: UUID(),
+            date: date,
+            key: key,
+            items: items
+        )
+    }
+    
     var spendDay: SpendDay {
         SpendDay(
             id: id,
             date: date,
             items: items.map { $0.spendItem }
         )
+    }
+    
+    func setItems(_ items: [SpendItem_SD]) {
+        self.items = items
     }
 }

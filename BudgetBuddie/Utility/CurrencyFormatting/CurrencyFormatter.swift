@@ -9,7 +9,7 @@ import Foundation
 
 class CurrencyFormatter: CurrencyFormattable {
     // Instance vars
-    private(set) var formatter: CurrencyFormattable = USDCurrencyFormatter()
+    private var formatter: CurrencyFormattable = USDCurrencyFormatter()
     
     // CurrencyFormattable
     var code: String {

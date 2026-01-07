@@ -15,12 +15,26 @@ class SpendDay {
     
     // Constructors
     init(
-        id: UUID = UUID(),
+        id: UUID,
         date: Date,
         items: [SpendItem]
     ) {
         self.id = id
         self.date = date
         self.items = items
+    }
+}
+
+// MARK: Public interface
+extension SpendDay {
+    convenience init(
+        date: Date,
+        items: [SpendItem]
+    ) {
+        self.init(
+            id: UUID(),
+            date: date,
+            items: items
+        )
     }
 }

@@ -108,11 +108,9 @@ extension SpendItemViewModel {
                 )
             case .existing(let spendItem):
                 try spendRepository.saveItem(
-                    SpendItem(
-                        id: spendItem.id,
+                    spendItem.updatedCopy(
                         amount: amount,
-                        note: note,
-                        date: spendItem.date
+                        note: note
                     )
                 )
             }

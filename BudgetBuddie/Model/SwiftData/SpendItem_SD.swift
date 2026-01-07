@@ -19,11 +19,11 @@ class SpendItem_SD {
     
     // Constructors
     init(
-        id: UUID = UUID(),
+        id: UUID,
         amount: Decimal,
-        note: String? = nil,
+        note: String?,
         date: Date,
-        createdAt: Date = Date()
+        createdAt: Date
     ) {
         self.id = id
         self.amount = amount

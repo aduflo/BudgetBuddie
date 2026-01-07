@@ -29,7 +29,7 @@ struct SpendListView: View {
                         .font(.headline)
                         .foregroundStyle(Color.red)
                     Button(
-                        "reload",
+                        ButtonKey.reload,
                         systemImage: SystemImage.arrowClockwise,
                         action: {
                             viewModel.reloadData()
