@@ -1,9 +1,6 @@
 ### TODO:
-- add on-disk persistence layer
-- tend to TODO's
-- tend to FIXME's
-- add LaunchScreen
 - audit everything
+- add LaunchScreen
 - re-up Apple Dev for distribution, setup with FireBase (app distribution + crashlytics)
 - build Widget
   - shows daily trends

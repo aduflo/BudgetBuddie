@@ -47,20 +47,20 @@ extension CalendarViewModel {
 // MARK: Private interface
 private extension CalendarViewModel {
     var monthDays: [MonthDay] {
-        let dates = calendarService.monthDates(
+        let dates = CalendarService.monthDates(
             calendarService.selectedDate
         )
         return dates.map {
             MonthDay(
-                day: calendarService.dayInMonth($0),
+                day: CalendarService.dayInMonth($0),
                 date: $0
             )
         }
     }
     
     var currentMonthDay: MonthDay? {
-        let currentDay = calendarService.currentMonthDay(calendarService.selectedDate)
-        return monthDays.first { $0.day == currentDay }
+        let dayInMonth = CalendarService.dayInMonth(calendarService.selectedDate)
+        return monthDays.first { $0.day == dayInMonth }
     }
     
     func displayMonthDay(_ date: Date) -> String {

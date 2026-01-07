@@ -19,7 +19,7 @@ class SpendItemViewModel {
     // Display instance vars
     private(set) var title: String = ""
     private(set) var amount: Decimal = 0.0
-    private(set) var description: String = ""
+    private(set) var note: String = ""
     private(set) var requiredFieldWarningText: AttributedString? = nil
     private(set) var spendStoreError: SpendStoreError? = nil
     
@@ -46,9 +46,9 @@ class SpendItemViewModel {
         case .new: 0.0
         case .existing(let spendItem): spendItem.amount
         }
-        description = switch mode {
+        note = switch mode {
         case .new: ""
-        case .existing(let spendItem): spendItem.description ?? ""
+        case .existing(let spendItem): spendItem.note ?? ""
         }
     }
 }
@@ -64,8 +64,8 @@ extension SpendItemViewModel {
         self.amount = amount
     }
     
-    func setDescription(_ description: String) {
-        self.description = description
+    func setNote(_ note: String) {
+        self.note = note
     }
     
     func deleteTapped() -> Bool {
@@ -95,14 +95,14 @@ extension SpendItemViewModel {
         }
         
         let amount = amount
-        let description = description.isEmpty ? nil : description
+        let note = note.isEmpty ? nil : note
         do {
             switch mode {
             case .new:
                 try spendRepository.saveItem(
                     SpendItem(
                         amount: amount,
-                        description: description,
+                        note: note,
                         date: calendarService.selectedDate
                     )
                 )
@@ -111,7 +111,7 @@ extension SpendItemViewModel {
                     SpendItem(
                         id: spendItem.id,
                         amount: amount,
-                        description: description,
+                        note: note,
                         date: spendItem.date
                     )
                 )
@@ -130,7 +130,7 @@ extension SpendItemViewModel {
         SpendItemViewModel(
             calendarService: MockCalendarService(),
             spendRepository: SpendRepository(
-                spendStore: MockSpendStore()
+                spendStore: MockSpendStore(),
             ),
             currencyFormatter: CurrencyFormatter(),
             mode: .new

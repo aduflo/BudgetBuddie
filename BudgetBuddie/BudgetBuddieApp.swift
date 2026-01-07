@@ -13,8 +13,8 @@ struct BudgetBuddieApp: App {
     let settingsService: SettingsServiceable = SettingsService()
     let calendarService: CalendarServiceable = CalendarService()
     let currencyFormatter: CurrencyFormatter = CurrencyFormatter()
-    let spendRepository: SpendRepository = SpendRepository(
-        spendStore: InMemorySpendStore()
+    let spendRepository = SpendRepository(
+        spendStore: OnDiskSpendStore()
     )
     
     @Environment(\.scenePhase) private var scenePhase
@@ -29,10 +29,10 @@ struct BudgetBuddieApp: App {
                     currencyFormatter: currencyFormatter
                 )
             )
-        }
-        .onChange(of: scenePhase) { _, newValue in
-            if newValue == .active {
-                spendRepository.setup()
+            .onChange(of: scenePhase) { _, newValue in
+                if newValue == .active {
+                    spendRepository.setup()
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ class CalendarService: CalendarServiceable {
     // Instance vars
     private let calendar = Calendar.current
     
-    // CalendarServiceable
+    // CalendarServiceable    
     private(set) var selectedDate: Date = Date() {
         didSet {
             postNotificationSelectedDateUpdated()
@@ -22,12 +22,15 @@ class CalendarService: CalendarServiceable {
         selectedDate = date
     }
     
-    func dayInMonth(_ date: Date) -> Int {
-        calendar.component(.day, from: date)
+    static func dayInMonth(_ date: Date) -> Int {
+        Calendar.current.component(
+            .day,
+            from: date
+        )
     }
     
-    func daysInMonth(_ date: Date) -> Int {
-        let dayRange = calendar.range(
+    static func daysInMonth(_ date: Date) -> Int {
+        let dayRange = Calendar.current.range(
             of: .day,
             in: .month,
             for: date
@@ -35,16 +38,21 @@ class CalendarService: CalendarServiceable {
         return dayRange?.count ?? 0
     }
     
-    func monthDates(_ date: Date) -> [Date] {
-        calendar.monthDatesFor(date)
-    }
-    
-    func currentMonthDay(_ date: Date) -> Int {
-        let dateComponents = calendar.dateComponents(
-            in: TimeZone.current,
+    static func monthDates(_ date: Date) -> [Date] {
+        let calendar = Calendar.current
+        let dayRange = calendar.range(
+            of: .day,
+            in: .month,
+            for: date
+        )
+        var dateComponents = calendar.dateComponents(
+            [.day, .month, .year],
             from: date
         )
-        return dateComponents.day ?? 0
+        return dayRange?.compactMap {
+            dateComponents.day = $0
+            return calendar.date(from: dateComponents)
+        } ?? []
     }
 }
 

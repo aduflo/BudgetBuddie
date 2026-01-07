@@ -16,7 +16,7 @@ class InMemorySpendStore: SpendStoreable {
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay {
         try daysDict.withLock { daysDict in
-            guard let day = daysDict[dateString(date)] else {
+            guard let day = daysDict[dateStringKey(date)] else {
                 throw SpendStoreError.spendDayNotFound
             }
             
@@ -26,7 +26,9 @@ class InMemorySpendStore: SpendStoreable {
     
     func getSpendItems(date: Date) throws -> [SpendItem] {
         do {
-            let day = try getSpendDay(date: date)
+            let day = try getSpendDay(
+                date: date
+            )
             return day.items
         } catch {
             throw SpendStoreError.spendItemsNotFound
@@ -34,14 +36,18 @@ class InMemorySpendStore: SpendStoreable {
     }
     
     func getAllSpendItems(date: Date) throws -> [SpendItem] {
-        let monthDates = Calendar.current.monthDatesFor(date)
+        let monthDates = CalendarService.monthDates(date)
         var items: [SpendItem] = []
         for date in monthDates {
             do {
                 items.append(
-                    contentsOf: try getSpendItems(date: date)
+                    contentsOf: try getSpendItems(
+                        date: date
+                    )
                 )
-            } catch {}
+            } catch {
+                throw SpendStoreError.spendItemsNotFound
+            }
         }
         return items
     }
@@ -50,8 +56,10 @@ class InMemorySpendStore: SpendStoreable {
         do {
             let date = item.date
             
-            // get day
-            let day = try getSpendDay(date: date)
+            // get day associated with date
+            let day = try getSpendDay(
+                date: date
+            )
             
             // save item to items
             var items = day.items
@@ -69,7 +77,7 @@ class InMemorySpendStore: SpendStoreable {
                 items: items
             )
             daysDict.withLock { daysDict in
-                daysDict[dateString(date)] = newDay
+                daysDict[dateStringKey(date)] = newDay
             }
         } catch {
             throw SpendStoreError.unableToSaveItem
@@ -81,7 +89,9 @@ class InMemorySpendStore: SpendStoreable {
             let date = item.date
             
             // get day
-            let day = try getSpendDay(date: date)
+            let day = try getSpendDay(
+                date: date
+            )
             
             // delete item to items
             var items = day.items
@@ -96,7 +106,7 @@ class InMemorySpendStore: SpendStoreable {
                 items: items
             )
             daysDict.withLock { daysDict in
-                daysDict[dateString(date)] = newDay
+                daysDict[dateStringKey(date)] = newDay
             }
         } catch {
             throw SpendStoreError.unableToDeleteItem
@@ -106,8 +116,7 @@ class InMemorySpendStore: SpendStoreable {
     func prepStoreForMonth(_ dates: [Date]) {
         daysDict.withLock { daysDict in
             for date in dates {
-                daysDict[dateString(date)] = SpendDay(
-                    id: UUID(),
+                daysDict[dateStringKey(date)] = SpendDay(
                     date: date,
                     items: []
                 )
@@ -122,7 +131,7 @@ class InMemorySpendStore: SpendStoreable {
 
 // MARK: Private interface
 private extension InMemorySpendStore {
-    func dateString(_ date: Date) -> String {
+    func dateStringKey(_ date: Date) -> String {
         date.monthDayYearString
     }
 }

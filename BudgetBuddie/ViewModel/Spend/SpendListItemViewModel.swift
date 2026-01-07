@@ -32,8 +32,8 @@ extension SpendListItemViewModel {
         currencyFormatter.stringAmount(spendItem.amount)
     }
     
-    var displayDescription: String {
-        spendItem.description ?? "N/A"
+    var displayNote: String {
+        spendItem.note ?? "N/A"
     }
 }
 
@@ -44,7 +44,7 @@ extension SpendListItemViewModel {
             currencyFormatter: CurrencyFormatter(),
             spendItem: SpendItem(
                 amount: 13.37,
-                description: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil,
+                note: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil,
                 date: Date()
             )
         )

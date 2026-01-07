@@ -14,15 +14,15 @@ class MockCalendarService: CalendarServiceable {
         selectedDate = date
     }
     
-    func dayInMonth(_ date: Date) -> Int {
+    static func dayInMonth(_ date: Date) -> Int {
         4
     }
     
-    func daysInMonth(_ date: Date) -> Int {
+    static func daysInMonth(_ date: Date) -> Int {
         31
     }
     
-    func monthDates(_ date: Date) -> [Date] {
+    static func monthDates(_ date: Date) -> [Date] {
         let calendar = Calendar.current
         let dayRange = calendar.range(
             of: .day,
@@ -37,9 +37,5 @@ class MockCalendarService: CalendarServiceable {
             dateComponents.day = day
             return calendar.date(from: dateComponents)
         } ?? []
-    }
-    
-    func currentMonthDay(_ date: Date) -> Int {
-        3
     }
 }

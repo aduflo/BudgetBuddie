@@ -11,7 +11,7 @@ struct SpendItemView: View {
     // Instance vars
     @State private var viewModel: SpendItemViewModel
     @State private var amount: Decimal = 0.0
-    @State private var description: String = ""
+    @State private var note: String = ""
     @State private var isDeleteConfirmationAlertPresented: Bool = false
     
     @Environment(\.dismiss) var dismiss
@@ -61,17 +61,17 @@ struct SpendItemView: View {
                 alignment: .leading,
                 spacing: Spacing.1
             ) {
-                Text(Copy.description)
+                Text(Copy.note)
                 TextField(
-                    Copy.descriptionTitleKey,
-                    text: $description
+                    Copy.noteTitleKey,
+                    text: $note
                 )
                 .textFieldStyle(.roundedBorder)
-                .onChange(of: description, { _, newValue in
-                    viewModel.setDescription(newValue)
+                .onChange(of: note, { _, newValue in
+                    viewModel.setNote(newValue)
                 })
                 .onSubmit {
-                    viewModel.setDescription(description)
+                    viewModel.setNote(note)
                 }
             }
             
@@ -128,7 +128,7 @@ struct SpendItemView: View {
         .padding(Padding.2)
         .onAppear {
             amount = viewModel.amount
-            description = viewModel.description
+            note = viewModel.note
         }
     }
 }

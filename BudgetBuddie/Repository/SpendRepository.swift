@@ -13,24 +13,23 @@ class SpendRepository: SpendStoreable {
     
     // Constructors
     init(
-        spendStore: SpendStoreable,
+        spendStore: SpendStoreable
     ) {
         self.spendStore = spendStore
-        setup()
     }
     
     func setup() {
-        let date = Date()
+        let date = Date() // today's date
         do {
             _ = try getSpendDay(date: date)
         } catch {
             if case .spendDayNotFound = error as? SpendStoreError {
                 // if we cannot find a SpendDay associated with today's date
                 // we can conclude we are in a different month
-                // because no SpendDay stored has a `date` value that overlaps
+                // because no SpendDay stored has a `date` value that overlaps with today's date
                 // thus, we purge the store + prep store for month matching today's date
                 purgeStore()
-                let monthDates = Calendar.current.monthDatesFor(date)
+                let monthDates = CalendarService.monthDates(date)
                 prepStoreForMonth(monthDates)
                 postNotificationSpendRepositoryUpdated()
             }

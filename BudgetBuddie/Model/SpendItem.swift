@@ -11,7 +11,7 @@ class SpendItem {
     // Instance vars
     let id: UUID
     let amount: Decimal
-    let description: String?
+    let note: String?
     let date: Date
     let createdAt: Date
     
@@ -19,13 +19,13 @@ class SpendItem {
     init(
         id: UUID = UUID(),
         amount: Decimal,
-        description: String?,
+        note: String?,
         date: Date,
         createdAt: Date = Date()
     ) {
         self.id = id
         self.amount = amount
-        self.description = description
+        self.note = note
         self.date = date
         self.createdAt = createdAt
     }

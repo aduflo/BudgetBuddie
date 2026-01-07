@@ -15,7 +15,7 @@ class SpendDay {
     
     // Constructors
     init(
-        id: UUID,
+        id: UUID = UUID(),
         date: Date,
         items: [SpendItem]
     ) {

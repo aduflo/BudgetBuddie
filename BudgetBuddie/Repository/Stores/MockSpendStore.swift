@@ -10,7 +10,6 @@ import Foundation
 class MockSpendStore: SpendStoreable {
     func getSpendDay(date: Date) throws -> SpendDay {
         SpendDay(
-            id: UUID(),
             date: date,
             items: []
         )
@@ -20,14 +19,14 @@ class MockSpendStore: SpendStoreable {
         (0..<10).map { item in
             SpendItem(
                 amount: Decimal(item),
-                description: (item % 2 == 0) ? "Item #: \(item)" : nil,
+                note: (item % 2 == 0) ? "Item #: \(item)" : nil,
                 date: date
             )
         }
     }
     
     func getAllSpendItems(date: Date) throws -> [SpendItem] {
-        let monthDays = Calendar.current.monthDatesFor(date)
+        let monthDays = MockCalendarService.monthDates(date)
         return monthDays.compactMap { date in
             let dayString = date.formatted(.dateTime.day(.twoDigits))
             guard let day = Int(dayString) else {
@@ -36,25 +35,29 @@ class MockSpendStore: SpendStoreable {
             
             return SpendItem(
                 amount: Decimal(day),
-                description: (day % 2 == 0) ? "Day #: \(day)" : nil,
+                note: (day % 2 == 0) ? "Day #: \(day)" : nil,
                 date: date
             )
         }
     }
     
+    private(set) var saveItem_value: SpendItem? = nil
     func saveItem(_ item: SpendItem) throws {
-        print("\(String(describing: Self.self))-\(#function)-id: \(item.id.uuidString)")
+        saveItem_value = item
     }
     
+    private(set) var deleteItem_value: SpendItem? = nil
     func deleteItem(_ item: SpendItem) throws {
-        print("\(String(describing: Self.self))-\(#function)-id: \(item.id.uuidString)")
+        deleteItem_value = item
     }
     
+    private(set) var prepStoreForMonth_flag: Bool = false
     func prepStoreForMonth(_ dates: [Date]) {
-        print("\(String(describing: Self.self))-\(#function)-dates: \(String(describing: dates))")
+        prepStoreForMonth_flag = true
     }
     
+    private(set) var purgeStore_flag: Bool = false
     func purgeStore() {
-        print("\(String(describing: Self.self))-\(#function)")
+        purgeStore_flag = true
     }
 }

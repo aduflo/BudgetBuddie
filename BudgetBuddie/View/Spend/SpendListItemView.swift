@@ -32,9 +32,9 @@ struct SpendListItemView: View {
                     alignment: .leading,
                     spacing: Spacing.half
                 ) {
-                    Text(Copy.description)
+                    Text(Copy.note)
                         .font(.subheadline)
-                    Text(viewModel.displayDescription)
+                    Text(viewModel.displayNote)
                         .font(.caption)
                         .lineLimit(1)
                         .truncationMode(.tail)
