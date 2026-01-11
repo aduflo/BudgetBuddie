@@ -13,9 +13,7 @@ struct BudgetBuddieApp: App {
     let settingsService: SettingsServiceable = SettingsService()
     let calendarService: CalendarServiceable = CalendarService()
     let currencyFormatter: CurrencyFormatter = CurrencyFormatter()
-    let spendRepository = SpendRepository(
-        spendStore: OnDiskSpendStore()
-    )
+    let spendRepository: SpendRepositable = SpendRepository()
     
     @Environment(\.scenePhase) private var scenePhase
     
