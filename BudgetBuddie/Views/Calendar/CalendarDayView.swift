@@ -17,7 +17,7 @@ struct CalendarDayView: View {
     }
     
     var body: some View {
-        Text(viewModel.text)
+        Text(viewModel.displayMonthDay)
             .frame(
                 width: 48.0,
                 height: 32.0
@@ -25,7 +25,7 @@ struct CalendarDayView: View {
             .padding(Padding.1)
             .roundedRectangleBackground(
                 cornerRadius: CornerRadius.1,
-                color: .white,
+                color: viewModel.isToday ? .yellow : .white,
                 strokeColor: viewModel.isSelected ? .black: .clear,
                 strokeWidth: viewModel.isSelected ? StrokeWidth.2 : 0.0
             )
@@ -35,9 +35,8 @@ struct CalendarDayView: View {
 #Preview("Selected") {
     CalendarDayView(
         viewModel: CalendarDayViewModel(
-            isSelected: true,
-            text: "12/25",
-            monthDay: .mock()
+            monthDay: .mockPast(),
+            isSelected: true
         )
     )
 }
@@ -45,9 +44,26 @@ struct CalendarDayView: View {
 #Preview("Not selected") {
     CalendarDayView(
         viewModel: CalendarDayViewModel(
-            isSelected: false,
-            text: "12/25",
-            monthDay: .mock()
+            monthDay: .mockFuture(),
+            isSelected: false
+        )
+    )
+}
+
+#Preview("Today selected") {
+    CalendarDayView(
+        viewModel: CalendarDayViewModel(
+            monthDay: .mockPresent(),
+            isSelected: true
+        )
+    )
+}
+
+#Preview("Today not selected") {
+    CalendarDayView(
+        viewModel: CalendarDayViewModel(
+            monthDay: .mockPresent(),
+            isSelected: false
         )
     )
 }

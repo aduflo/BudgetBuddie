@@ -11,10 +11,10 @@ class CalendarViewModel {
     // Instance vars
     lazy var dayViewModels: [CalendarDayViewModel] = {
         monthDays.map { monthDay in
-            CalendarDayViewModel(
-                isSelected: false,
-                text: displayMonthDay(monthDay.date),
-                monthDay: monthDay
+            let date = monthDay.date
+            return CalendarDayViewModel(
+                monthDay: monthDay,
+                isSelected: false
             )
         }
     }()
@@ -61,10 +61,6 @@ private extension CalendarViewModel {
     var currentMonthDay: MonthDay? {
         let dayInMonth = CalendarService.dayInMonth(calendarService.selectedDate)
         return monthDays.first { $0.day == dayInMonth }
-    }
-    
-    func displayMonthDay(_ date: Date) -> String {
-        date.monthDayString
     }
 }
 

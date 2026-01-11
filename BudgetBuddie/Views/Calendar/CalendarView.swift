@@ -43,12 +43,12 @@ struct CalendarView: View {
                                         return // selecting same day, abort
                                     } else {
                                         // untoggle previously selected
-                                        selectedDayViewModel.isSelected = false
+                                        selectedDayViewModel.setSelected(false)
                                     }
                                 }
                                 
                                 // toggle new selection and persist day vm
-                                viewModel.isSelected = true
+                                viewModel.setSelected(true)
                                 selectedDayViewModel = viewModel
                                 
                                 // update selected date
@@ -60,7 +60,7 @@ struct CalendarView: View {
                                 return
                             }
                             
-                            currentDayViewModel.isSelected = true
+                            currentDayViewModel.setSelected(true)
                             selectedDayViewModel = currentDayViewModel
                             proxy.scrollTo(
                                 currentDayViewModel.monthDay.day,

@@ -14,11 +14,25 @@ struct MonthDay {
 }
 
 // MARK: - Mocks
-extension MonthDay {
-    static func mock() -> MonthDay {
+extension MonthDay {    
+    static func mockPast() -> MonthDay {
         MonthDay(
-            day: 25,
+            day: 01,
+            date: Date.distantPast
+        )
+    }
+    
+    static func mockPresent() -> MonthDay {
+        MonthDay(
+            day: 12,
             date: Date()
+        )
+    }
+    
+    static func mockFuture() -> MonthDay {
+        MonthDay(
+            day: 23,
+            date: Date.distantFuture
         )
     }
 }

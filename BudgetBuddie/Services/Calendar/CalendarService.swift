@@ -54,6 +54,10 @@ class CalendarService: CalendarServiceable {
             return calendar.date(from: dateComponents)
         } ?? []
     }
+    
+    static func isDateToday(_ date: Date) -> Bool {
+        Calendar.current.isDateInToday(date)
+    }
 }
 
 // MARK: Private interface
