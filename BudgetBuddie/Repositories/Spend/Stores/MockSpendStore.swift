@@ -12,8 +12,7 @@ class MockSpendStore: SpendStoreable {
         SpendDay_Data(
             id: UUID(),
             date: date,
-            items: try getSpendItems(date: date),
-            key: nil
+            items: try getSpendItems(date: date)
         )
     }
     

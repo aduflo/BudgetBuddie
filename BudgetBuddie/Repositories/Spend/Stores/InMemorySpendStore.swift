@@ -10,13 +10,12 @@ import Synchronization
 
 class InMemorySpendStore: SpendStoreable {
     // Instance vars
-    typealias DateString = String
-    private let daysDict = Mutex<[DateString: SpendDay_Data]>([:])
+    private let daysDict = Mutex<[String: SpendDay_Data]>([:])
     
     // SpendStoreable
     func getSpendDay(date: Date) throws -> SpendDay_Data {
         try daysDict.withLock { daysDict in
-            guard let day = daysDict[dateStringKey(date)] else {
+            guard let day = daysDict[spendDayKey(date)] else {
                 throw SpendStoreError.spendDayNotFound
             }
             
@@ -73,11 +72,10 @@ class InMemorySpendStore: SpendStoreable {
             let newDay = SpendDay_Data(
                 id: day.id,
                 date: day.date,
-                items: items,
-                key: nil
+                items: items
             )
             daysDict.withLock { daysDict in
-                daysDict[dateStringKey(date)] = newDay
+                daysDict[spendDayKey(date)] = newDay
             }
         } catch {
             throw SpendStoreError.unableToSaveItem
@@ -103,11 +101,10 @@ class InMemorySpendStore: SpendStoreable {
             let newDay = SpendDay_Data(
                 id: day.id,
                 date: day.date,
-                items: items,
-                key: nil
+                items: items
             )
             daysDict.withLock { daysDict in
-                daysDict[dateStringKey(date)] = newDay
+                daysDict[spendDayKey(date)] = newDay
             }
         } catch {
             throw SpendStoreError.unableToDeleteItem
@@ -117,11 +114,10 @@ class InMemorySpendStore: SpendStoreable {
     func prepStoreForMonth(_ dates: [Date]) {
         daysDict.withLock { daysDict in
             for date in dates {
-                daysDict[dateStringKey(date)] = SpendDay_Data(
+                daysDict[spendDayKey(date)] = SpendDay_Data(
                     id: UUID(),
                     date: date,
-                    items: [],
-                    key: nil
+                    items: []
                 )
             }
         }
@@ -134,7 +130,7 @@ class InMemorySpendStore: SpendStoreable {
 
 // MARK: Private interface
 private extension InMemorySpendStore {
-    func dateStringKey(_ date: Date) -> String {
-        date.monthDayYearString
+    func spendDayKey(_ date: Date) -> String {
+        SpendDayKey(date).value
     }
 }

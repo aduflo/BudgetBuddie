@@ -24,18 +24,19 @@ enum SpendDayMapper {
         SpendDay_Data(
             id: swiftData.id,
             date: swiftData.date,
-            items: swiftData.items.map { SpendItemMapper.toDataObject($0) },
-            key: nil
+            items: swiftData.items.map { SpendItemMapper.toDataObject($0) }
         )
     }
     
     static func toSwiftDataObject(
         _ data: SpendDay_Data
     ) -> SpendDay_SwiftData {
-        SpendDay_SwiftData(
+        let date = data.date
+        let key = SpendDayKey(date).value
+        return SpendDay_SwiftData(
             id: data.id,
-            date: data.date,
-            key: data.key ?? "",
+            date: date,
+            key: key,
             items: data.items.map { SpendItemMapper.toSwiftDataObject($0) }
         )
     }

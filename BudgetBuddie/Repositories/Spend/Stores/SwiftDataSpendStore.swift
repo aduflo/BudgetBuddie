@@ -126,7 +126,7 @@ class SwiftDataSpendStore: SpendStoreable {
                         SpendDay_SwiftData(
                             id: UUID(),
                             date: date,
-                            key: dateStringKey(date),
+                            key: SpendDayKey(date).value,
                             items: []
                         )
                     )
@@ -148,12 +148,8 @@ class SwiftDataSpendStore: SpendStoreable {
 
 // MARK: Private interface
 private extension SwiftDataSpendStore {
-    func dateStringKey(_ date: Date) -> String {
-        date.monthDayYearString
-    }
-    
     func getSpendDay_SwiftData(date: Date) throws -> SpendDay_SwiftData {
-        let key = dateStringKey(date)
+        let key = SpendDayKey(date).value
         let predicate: Predicate<SpendDay_SwiftData> = #Predicate { spendDay in
             spendDay.key == key
         }

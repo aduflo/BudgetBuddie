@@ -12,18 +12,15 @@ class SpendDay_Data {
     let id: UUID
     let date: Date
     let items: [SpendItem_Data]
-    let key: String?
     
     // Constructors
     init(
         id: UUID,
         date: Date,
-        items: [SpendItem_Data],
-        key: String?
+        items: [SpendItem_Data]
     ) {
         self.id = id
         self.date = date
         self.items = items
-        self.key = key
     }
 }
