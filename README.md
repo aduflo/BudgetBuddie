@@ -1,10 +1,9 @@
 ### TODO:
 - modal for when new month starts:
     - 1) a month spend summary screen that pops at a new month to give overview of previous month
-    - 2) a always accessible MonthsOverview/MonthsSummary view, that shows the total spend of each month compared to our monthly allowance
-        - Might create confusion tbh, since monthly allowance can change and these would be static numbers
-            - Unless we hold onto what the monthly allowance was at_the_time?
-        - Would require a new data model object that we persist before purging the store
+    - 2) an always accessible MonthsOverview/MonthsSummary view, that shows the total spend of each month compared to monthly allowance
+        - needs Model persisted; fields of `spend` and `allowance`
+            - field values come from the time of persistence (specifically talking about allowance). we want to persist each months allowance and reflect this nuance in the UI
 - new user experience; explains intent and usage
 - currency dropdown; USD, CAD…
     - Need to add notification and have appropriate views react
