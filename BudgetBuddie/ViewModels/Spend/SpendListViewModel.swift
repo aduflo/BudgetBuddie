@@ -50,7 +50,7 @@ extension SpendListViewModel {
 // MARK: Private interface
 private extension SpendListViewModel {
     func listItemViewModelsBuilder() throws -> [SpendListItemViewModel] {
-        try spendRepository.getSpendItems(
+        try spendRepository.getItems(
             date: calendarService.selectedDate
         ).sorted(by: { left, right in
             left.createdAt > right.createdAt // we want latest item first

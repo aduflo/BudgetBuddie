@@ -8,17 +8,29 @@
 import Foundation
 
 enum SpendStoreError: LocalizedError {
-    case spendDayNotFound
-    case spendItemsNotFound
+    case dayNotFound
+    case itemsNotFound
+    case monthsNotFound
+    case previousMonthNotFound
     case unableToSaveItem
     case unableToDeleteItem
+    case unableToSaveMonth
+    case unableToPrepForMonth
+    case unableToDeletePreviousMonthData
+    case notImplemented(String)
     
     var errorDescription: String? {
         switch self {
-        case .spendDayNotFound: "Could not find spend day."
-        case .spendItemsNotFound: "Could not find spend items."
-        case .unableToSaveItem: "Could not save spend item."
-        case .unableToDeleteItem: "Could not delete spend item."
+        case .dayNotFound: "Could not find day."
+        case .itemsNotFound: "Could not find items."
+        case .monthsNotFound: "Could not find months."
+        case .previousMonthNotFound: "Could not find previous month."
+        case .unableToSaveItem: "Could not save item."
+        case .unableToDeleteItem: "Could not delete item."
+        case .unableToSaveMonth: "Could not save month."
+        case .unableToPrepForMonth: "Could not prep for month."
+        case .unableToDeletePreviousMonthData: "Could not delete previous month data."
+        case .notImplemented(let value): "Not implemented: \(value)"
         }
     }
 }

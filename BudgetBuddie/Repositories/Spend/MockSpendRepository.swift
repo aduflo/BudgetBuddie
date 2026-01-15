@@ -9,22 +9,14 @@ import Foundation
 
 class MockSpendRepository: SpendRepositable {
     // SpendRepositable
-    func setup() {}
+    func setup(settingsService: any SettingsServiceable) {}
     
-    func getSpendDay(date: Date) throws -> SpendDay {
-        .mock()
+    func getItems(date: Date) throws -> [SpendItem] {
+        [.mock()]
     }
     
-    func getSpendItems(date: Date) throws -> [SpendItem] {
-        [
-            .mock()
-        ]
-    }
-    
-    func getSpendItems(dates: [Date]) throws -> [SpendItem] {
-        [
-            .mock()
-        ]
+    func getItems(dates: [Date]) throws -> [SpendItem] {
+        [.mock()]
     }
     
     private(set) var saveItem_value: SpendItem? = nil
@@ -35,5 +27,17 @@ class MockSpendRepository: SpendRepositable {
     private(set) var deleteItem_value: SpendItem? = nil
     func deleteItem(_ item: SpendItem) throws {
         deleteItem_value = item
+    }
+    
+    func getDay(date: Date) throws -> SpendDay {
+        .mock()
+    }
+    
+    func getAllMonths() throws -> [SpendMonth] {
+        [.mock()]
+    }
+    
+    func getPreviousMonth() throws -> SpendMonth {
+        .mock()
     }
 }

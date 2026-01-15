@@ -14,39 +14,42 @@ class SpendRepository: SpendRepositable {
 //        InMemorySpendStore()
     }()
     
-    func setup() {
+    func setup(settingsService: any SettingsServiceable) {
         let date = Date() // today's date
         do {
-            _ = try getSpendDay(date: date)
+            _ = try getDay(date: date)
         } catch {
-            if case .spendDayNotFound = error as? SpendStoreError {
+            if case .dayNotFound = error as? SpendStoreError {
                 // if we cannot find a SpendDay associated with today's date
                 // we can conclude we are in a different month
                 // because no SpendDay stored has a `date` value that overlaps with today's date
-                // thus, we purge the store + prep store for month matching today's date
-                spendStore.purgeStore()
-                let monthDates = CalendarService.monthDates(date)
-                spendStore.prepStoreForMonth(monthDates)
+                // thus, we:
+                // - save previous month to store
+                // - prep store for month matching today's date
+                // - post notification
+                // TODO: - verify functionality around month persisting for new month
+                do {
+                    try savePreviousMonth(
+                        settingsService: settingsService
+                    )
+                    try prepStoreForNewMonth(date)
+                } catch {
+                    print("\(#function)-error: \(error.localizedDescription)")
+                }
                 postNotificationSpendRepositoryUpdated()
             }
         }
     }
 
     // SpendRepositable
-    func getSpendDay(date: Date) throws -> SpendDay {
-        let day_data = try spendStore.getSpendDay(date: date)
-        let day = SpendDayMapper.toDomainObject(day_data)
-        return day
-    }
-    
-    func getSpendItems(date: Date) throws -> [SpendItem] {
-        let items_data = try spendStore.getSpendItems(date: date)
+    func getItems(date: Date) throws -> [SpendItem] {
+        let items_data = try spendStore.getItems(date: date)
         let items = items_data.map { SpendItemMapper.toDomainObject($0) }
         return items
     }
     
-    func getSpendItems(dates: [Date]) throws -> [SpendItem] {
-        let items_data = try spendStore.getSpendItems(
+    func getItems(dates: [Date]) throws -> [SpendItem] {
+        let items_data = try spendStore.getItems(
             dates: dates
         )
         let items = items_data.map { SpendItemMapper.toDomainObject($0) }
@@ -64,11 +67,54 @@ class SpendRepository: SpendRepositable {
         try spendStore.deleteItem(item_data)
         postNotificationSpendRepositoryUpdated()
     }
+    
+    func getDay(date: Date) throws -> SpendDay {
+        let day_data = try spendStore.getDay(date: date)
+        let day = SpendDayMapper.toDomainObject(day_data)
+        return day
+    }
+    
+    func getAllMonths() throws -> [SpendMonth] {
+        let months_data = try spendStore.getAllMonths()
+        let months = months_data.map { SpendMonthMapper.toDomainObject($0) }
+        return months
+    }
+    
+    func getPreviousMonth() throws -> SpendMonth {
+        let previousMonth_data = try spendStore.getPreviousMonth()
+        let previousMonth = SpendMonthMapper.toDomainObject(previousMonth_data)
+        return previousMonth
+    }
 }
 
 // MARK: Private interface
 private extension SpendRepository {
     func postNotificationSpendRepositoryUpdated() {
         NotificationCenter.default.post(.SpendRepositoryUpdated)
+    }
+    
+    func savePreviousMonth(settingsService: SettingsServiceable) throws {
+        let items = try spendStore.getItems()
+        let spend = items.reduce(0.0, { $0 + $1.amount })
+        let allowance = settingsService.monthlyAllowance
+        let calendar = Calendar.current
+        let month = calendar.month
+        let year = calendar.year
+        let month_data = SpendMonth_Data(
+            id: UUID(),
+            month: month,
+            year: year,
+            spend: spend,
+            allowance: allowance
+        )
+        try spendStore.saveMonth(month_data)
+    }
+    
+    func prepStoreForNewMonth(_ date: Date) throws {
+        // firstly, delete previous month data
+        try spendStore.deletePreviousMonthData()
+        
+        // prep store for month matching date
+        try spendStore.prepForMonth(date)
     }
 }

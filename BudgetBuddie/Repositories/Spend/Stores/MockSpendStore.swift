@@ -8,15 +8,20 @@
 import Foundation
 
 class MockSpendStore: SpendStoreable {
-    func getSpendDay(date: Date) throws -> SpendDay_Data {
-        SpendDay_Data(
-            id: UUID(),
-            date: date,
-            items: try getSpendItems(date: date)
-        )
+    func getItems() throws -> [SpendItem_Data] {
+        let date = Date()
+        return (0..<20).map { idx in
+            SpendItem_Data(
+                id: UUID(),
+                amount: Decimal(idx),
+                note: (idx % 2 == 0) ? "Item #: \(idx)" : nil,
+                date: date,
+                createdAt: date
+            )
+        }
     }
     
-    func getSpendItems(date: Date) throws -> [SpendItem_Data] {
+    func getItems(date: Date) throws -> [SpendItem_Data] {
         (0..<10).map { idx in
             SpendItem_Data(
                 id: UUID(),
@@ -28,7 +33,7 @@ class MockSpendStore: SpendStoreable {
         }
     }
     
-    func getSpendItems(dates: [Date]) throws -> [SpendItem_Data] {
+    func getItems(dates: [Date]) throws -> [SpendItem_Data] {
         return dates.compactMap { date in
             let dayString = date.formatted(.dateTime.day(.twoDigits))
             guard let day = Int(dayString) else {
@@ -55,13 +60,48 @@ class MockSpendStore: SpendStoreable {
         deleteItem_value = item
     }
     
-    private(set) var prepStoreForMonth_flag: Bool = false
-    func prepStoreForMonth(_ dates: [Date]) {
-        prepStoreForMonth_flag = true
+    func getDay(date: Date) throws -> SpendDay_Data {
+        SpendDay_Data(
+            id: UUID(),
+            date: date,
+            items: try getItems(date: date)
+        )
     }
     
-    private(set) var purgeStore_flag: Bool = false
-    func purgeStore() {
-        purgeStore_flag = true
+    func getAllMonths() throws -> [SpendMonth_Data] {
+        (0..<20).map { idx in
+            SpendMonth_Data(
+                id: UUID(),
+                month: 01,
+                year: 2026,
+                spend: Decimal(idx),
+                allowance: 1337.00
+            )
+        }
+    }
+    
+    func getPreviousMonth() throws -> SpendMonth_Data {
+        SpendMonth_Data(
+            id: UUID(),
+            month: 01,
+            year: 2026,
+            spend: 9001.00,
+            allowance: 9000.00
+        )
+    }
+    
+    private(set) var saveMonth_value: SpendMonth_Data? = nil
+    func saveMonth(_ month: SpendMonth_Data) throws {
+        saveMonth_value = month
+    }
+    
+    private(set) var prepForMonth_flag: Bool = false
+    func prepForMonth(_ date: Date) throws {
+        prepForMonth_flag = true
+    }
+    
+    private(set) var deletePreviousMonthData_flag: Bool = false
+    func deletePreviousMonthData() {
+        deletePreviousMonthData_flag = true
     }
 }

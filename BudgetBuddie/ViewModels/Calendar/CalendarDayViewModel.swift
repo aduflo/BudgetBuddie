@@ -37,6 +37,6 @@ extension CalendarDayViewModel {
     }
     
     var isToday: Bool {
-        CalendarService.isDateToday(monthDay.date)
+        Calendar.current.isDateInToday(monthDay.date)
     }
 }

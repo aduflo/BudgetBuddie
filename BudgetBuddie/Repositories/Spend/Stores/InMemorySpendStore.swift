@@ -13,38 +13,41 @@ class InMemorySpendStore: SpendStoreable {
     private let daysDict = Mutex<[String: SpendDay_Data]>([:])
     
     // SpendStoreable
-    func getSpendDay(date: Date) throws -> SpendDay_Data {
-        try daysDict.withLock { daysDict in
-            guard let day = daysDict[spendDayKey(date)] else {
-                throw SpendStoreError.spendDayNotFound
-            }
-            
-            return day
+    func getItems() throws -> [SpendItem_Data] {
+        let days_data = daysDict.withLock { daysDict in
+            daysDict.values
         }
+        var items_data: [SpendItem_Data] = []
+        for day_data in days_data {
+            items_data.append(
+                contentsOf: day_data.items
+            )
+        }
+        return items_data
     }
     
-    func getSpendItems(date: Date) throws -> [SpendItem_Data] {
+    func getItems(date: Date) throws -> [SpendItem_Data] {
         do {
-            let day = try getSpendDay(
+            let day = try getDay(
                 date: date
             )
             return day.items
         } catch {
-            throw SpendStoreError.spendItemsNotFound
+            throw SpendStoreError.itemsNotFound
         }
     }
     
-    func getSpendItems(dates: [Date]) throws -> [SpendItem_Data] {
+    func getItems(dates: [Date]) throws -> [SpendItem_Data] {
         var items: [SpendItem_Data] = []
         for date in dates {
             do {
                 items.append(
-                    contentsOf: try getSpendItems(
+                    contentsOf: try getItems(
                         date: date
                     )
                 )
             } catch {
-                throw SpendStoreError.spendItemsNotFound
+                throw SpendStoreError.itemsNotFound
             }
         }
         return items
@@ -55,7 +58,7 @@ class InMemorySpendStore: SpendStoreable {
             let date = item.date
             
             // get day associated with date
-            let day = try getSpendDay(
+            let day = try getDay(
                 date: date
             )
             
@@ -87,7 +90,7 @@ class InMemorySpendStore: SpendStoreable {
             let date = item.date
             
             // get day
-            let day = try getSpendDay(
+            let day = try getDay(
                 date: date
             )
             
@@ -111,7 +114,32 @@ class InMemorySpendStore: SpendStoreable {
         }
     }
     
-    func prepStoreForMonth(_ dates: [Date]) {
+    func getDay(date: Date) throws -> SpendDay_Data {
+        try daysDict.withLock { daysDict in
+            guard let day = daysDict[spendDayKey(date)] else {
+                throw SpendStoreError.dayNotFound
+            }
+            
+            return day
+        }
+    }
+    
+    func getAllMonths() throws -> [SpendMonth_Data] {
+        throw notImplementedError(functionName: #function)
+    }
+    
+    func getPreviousMonth() throws -> SpendMonth_Data {
+        throw notImplementedError(functionName: #function)
+    }
+    
+    func saveMonth(_ month: SpendMonth_Data) throws {
+        throw notImplementedError(functionName: #function)
+    }
+    
+    func prepForMonth(_ date: Date) throws {
+        let dates = Calendar.current.monthDates(
+            date
+        )
         daysDict.withLock { daysDict in
             for date in dates {
                 daysDict[spendDayKey(date)] = SpendDay_Data(
@@ -123,7 +151,7 @@ class InMemorySpendStore: SpendStoreable {
         }
     }
     
-    func purgeStore() {
+    func deletePreviousMonthData() throws {
         daysDict.withLock { $0 = [:] }
     }
 }
@@ -132,5 +160,10 @@ class InMemorySpendStore: SpendStoreable {
 private extension InMemorySpendStore {
     func spendDayKey(_ date: Date) -> String {
         SpendDayKey(date).value
+    }
+    
+    func notImplementedError(functionName: String) -> SpendStoreError {
+        let value = "\(String(describing: Self.self)).\(functionName)"
+        return .notImplemented(value)
     }
 }

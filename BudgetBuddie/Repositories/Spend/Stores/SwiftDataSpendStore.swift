@@ -22,36 +22,44 @@ class SwiftDataSpendStore: SpendStoreable {
     }
     
     // SpendStoreable
-    func getSpendDay(date: Date) throws -> SpendDay_Data {
-        let day_swiftData = try getSpendDay_SwiftData(
-            date: date
-        )
-        let day_data = SpendDayMapper.toDataObject(day_swiftData)
-        return day_data
+    func getItems() throws -> [SpendItem_Data] {
+        do {
+            let fetchDescriptor = FetchDescriptor<SpendItem_SwiftData>()
+            guard let items_swiftData = try context?.fetch(fetchDescriptor) else {
+                throw SpendStoreError.itemsNotFound
+            }
+            
+            let items_data = items_swiftData.map {
+                SpendItemMapper.toDataObject($0)
+            }
+            return items_data
+        } catch {
+            throw SpendStoreError.itemsNotFound
+        }
     }
     
-    func getSpendItems(date: Date) throws -> [SpendItem_Data] {
+    func getItems(date: Date) throws -> [SpendItem_Data] {
         do {
-            let day = try getSpendDay(
+            let day = try getDay(
                 date: date
             )
             return day.items
         } catch {
-            throw SpendStoreError.spendItemsNotFound
+            throw SpendStoreError.itemsNotFound
         }
     }
     
-    func getSpendItems(dates: [Date]) throws -> [SpendItem_Data] {
+    func getItems(dates: [Date]) throws -> [SpendItem_Data] {
         var items: [SpendItem_Data] = []
         for date in dates {
             do {
                 items.append(
-                    contentsOf: try getSpendItems(
+                    contentsOf: try getItems(
                         date: date
                     )
                 )
             } catch {
-                throw SpendStoreError.spendItemsNotFound
+                throw SpendStoreError.itemsNotFound
             }
         }
         return items
@@ -118,8 +126,62 @@ class SwiftDataSpendStore: SpendStoreable {
         }
     }
     
-    func prepStoreForMonth(_ dates: [Date]) {
+    func getDay(date: Date) throws -> SpendDay_Data {
+        let day_swiftData = try getSpendDay_SwiftData(
+            date: date
+        )
+        let day_data = SpendDayMapper.toDataObject(day_swiftData)
+        return day_data
+    }
+    
+    func getAllMonths() throws -> [SpendMonth_Data] {
         do {
+            let yearSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.year, order: .reverse) // TODO: validate .reverse is what we want
+            let monthSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.month, order: .reverse) // TODO: validate .reverse is what we want
+            let fetchDescriptor = FetchDescriptor<SpendMonth_SwiftData>(
+                sortBy: [
+                    yearSortDescriptor,
+                    monthSortDescriptor
+                ]
+            )
+            let months_swiftData = try context?.fetch(fetchDescriptor) ?? []
+            let months_data = months_swiftData.map {
+                SpendMonthMapper.toDataObject($0)
+            }
+            return months_data
+        } catch {
+            throw SpendStoreError.monthsNotFound
+        }
+    }
+    
+    func getPreviousMonth() throws -> SpendMonth_Data {
+        do {
+            let months_data = try getAllMonths()
+            guard let previousMonth = months_data.first else { // TODO: validate we're getting the previous month
+                throw SpendStoreError.previousMonthNotFound
+            }
+            return previousMonth
+        } catch {
+            throw SpendStoreError.previousMonthNotFound
+        }
+    }
+    
+    func saveMonth(_ month: SpendMonth_Data) throws {
+        do {
+            let month_swiftData = SpendMonthMapper.toSwiftDataObject(month)
+            try context?.transaction {
+                context?.insert(month_swiftData)
+            }
+        } catch {
+            throw SpendStoreError.unableToSaveMonth
+        }
+    }
+    
+    func prepForMonth(_ date: Date) throws {
+        do {
+            let dates = Calendar.current.monthDates(
+                date
+            )
             try context?.transaction {
                 for date in dates {
                     context?.insert(
@@ -132,17 +194,24 @@ class SwiftDataSpendStore: SpendStoreable {
                     )
                 }
             }
-        } catch {}
+        } catch {
+            throw SpendStoreError.unableToPrepForMonth
+        }
     }
     
-    func purgeStore() {
+    func deletePreviousMonthData() throws {
         do {
+            // deleting all instances of SpendDay_SwiftData within context
+            // due to [the aforementioned] relationship with SpendItem_SwiftData, all will also be deleted
+            // given presence of delete rule: cascading
             try context?.transaction {
                 try context?.delete(
                     model: SpendDay_SwiftData.self
                 )
             }
-        } catch {}
+        } catch {
+            throw SpendStoreError.unableToDeletePreviousMonthData
+        }
     }
 }
 
@@ -159,7 +228,7 @@ private extension SwiftDataSpendStore {
         let spendDays = try context?.fetch(descriptor)
         
         guard let firstDay = spendDays?.first else {
-            throw SpendStoreError.spendDayNotFound
+            throw SpendStoreError.dayNotFound
         }
         
         return firstDay

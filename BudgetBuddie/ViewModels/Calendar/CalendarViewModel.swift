@@ -36,7 +36,9 @@ extension CalendarViewModel {
             return nil
         }
         
-        return dayViewModels.first(where: { $0.monthDay.day == currentMonthDay.day })
+        return dayViewModels.first(
+            where: { $0.monthDay.day == currentMonthDay.day }
+        )
     }
     
     func updateSelectedDate(_ date: Date) {
@@ -47,19 +49,19 @@ extension CalendarViewModel {
 // MARK: Private interface
 private extension CalendarViewModel {
     var monthDays: [MonthDay] {
-        let dates = CalendarService.monthDates(
+        let dates = Calendar.current.monthDates(
             calendarService.selectedDate
         )
         return dates.map {
             MonthDay(
-                day: CalendarService.dayInMonth($0),
+                day: Calendar.current.dayInMonth($0),
                 date: $0
             )
         }
     }
     
     var currentMonthDay: MonthDay? {
-        let dayInMonth = CalendarService.dayInMonth(calendarService.selectedDate)
+        let dayInMonth = Calendar.current.dayInMonth(calendarService.selectedDate)
         return monthDays.first { $0.day == dayInMonth }
     }
 }

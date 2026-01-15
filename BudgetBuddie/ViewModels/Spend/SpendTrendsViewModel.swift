@@ -110,7 +110,7 @@ private extension SpendTrendsViewModel {
     
     var dailyCurrentSpend: Decimal {
         do {
-            let items = try spendRepository.getSpendItems(
+            let items = try spendRepository.getItems(
                 date: calendarService.selectedDate
             )
             return items.reduce(0, { $0 + $1.amount})
@@ -129,8 +129,8 @@ private extension SpendTrendsViewModel {
     
     var cumulativeCurrentSpend: Decimal {
         do {
-            let monthDates = CalendarService.monthDates(calendarService.selectedDate)
-            let items = try spendRepository.getSpendItems(
+            let monthDates = Calendar.current.monthDates(calendarService.selectedDate)
+            let items = try spendRepository.getItems(
                 dates: monthDates
             )
             return items.reduce(0, { $0 + $1.amount })
@@ -140,13 +140,13 @@ private extension SpendTrendsViewModel {
     }
     
     var dailyMaxSpend: Decimal {
-        let daysInMonth = CalendarService.daysInMonth(calendarService.selectedDate)
+        let daysInMonth = Calendar.current.daysInMonth(calendarService.selectedDate)
         return monthlyMaxSpend / Decimal(daysInMonth)
     }
     
     var mtdMaxSpend: Decimal {
         let dailyMaxSpend = dailyMaxSpend
-        let dayInMonth = CalendarService.dayInMonth(calendarService.selectedDate)
+        let dayInMonth = Calendar.current.dayInMonth(calendarService.selectedDate)
         return dailyMaxSpend * Decimal(dayInMonth)
     }
     

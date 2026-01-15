@@ -29,7 +29,9 @@ struct BudgetBuddieApp: App {
             )
             .onChange(of: scenePhase) { _, newValue in
                 if newValue == .active {
-                    spendRepository.setup()
+                    spendRepository.setup(
+                        settingsService: settingsService
+                    )
                 }
             }
         }
