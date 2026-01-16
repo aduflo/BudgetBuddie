@@ -128,7 +128,7 @@ class InMemorySpendStore: SpendStoreable {
         throw notImplementedError(functionName: #function)
     }
     
-    func getPreviousMonth() throws -> SpendMonth_Data {
+    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data {
         throw notImplementedError(functionName: #function)
     }
     
@@ -136,7 +136,11 @@ class InMemorySpendStore: SpendStoreable {
         throw notImplementedError(functionName: #function)
     }
     
-    func prepForMonth(_ date: Date) throws {
+    func deleteStagedMonthData() throws {
+        daysDict.withLock { $0 = [:] }
+    }
+    
+    func stageMonthData(_ date: Date) throws {
         let dates = Calendar.current.monthDates(
             date
         )
@@ -149,10 +153,6 @@ class InMemorySpendStore: SpendStoreable {
                 )
             }
         }
-    }
-    
-    func deletePreviousMonthData() throws {
-        daysDict.withLock { $0 = [:] }
     }
 }
 

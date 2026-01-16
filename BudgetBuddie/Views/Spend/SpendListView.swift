@@ -71,9 +71,10 @@ struct SpendListView: View {
             viewModel.reloadData()
         }
         .onReceive(
-            Publishers.Merge(
-                NotificationCenter.default.publisher(for: .SelectedDateUpdated),
-                NotificationCenter.default.publisher(for: .SpendRepositoryUpdated)
+            Publishers.Merge3(
+                NotificationCenter.default.publisher(for: .SelectedDateDidUpdate),
+                NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem),
+                NotificationCenter.default.publisher(for: .SpendRepositoryDidStageNewMonth)
             ),
             perform: { _ in
                 Task { await MainActor.run {

@@ -80,11 +80,11 @@ class MockSpendStore: SpendStoreable {
         }
     }
     
-    func getPreviousMonth() throws -> SpendMonth_Data {
+    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data {
         SpendMonth_Data(
             id: UUID(),
-            month: 01,
-            year: 2026,
+            month: month,
+            year: year,
             spend: 9001.00,
             allowance: 9000.00
         )
@@ -95,13 +95,13 @@ class MockSpendStore: SpendStoreable {
         saveMonth_value = month
     }
     
-    private(set) var prepForMonth_flag: Bool = false
-    func prepForMonth(_ date: Date) throws {
-        prepForMonth_flag = true
+    private(set) var deleteStagedMonthData_flag: Bool = false
+    func deleteStagedMonthData() {
+        deleteStagedMonthData_flag = true
     }
     
-    private(set) var deletePreviousMonthData_flag: Bool = false
-    func deletePreviousMonthData() {
-        deletePreviousMonthData_flag = true
+    private(set) var stageMonthData_flag: Bool = false
+    func stageMonthData(_ date: Date) throws {
+        stageMonthData_flag = true
     }
 }

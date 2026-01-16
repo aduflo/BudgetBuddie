@@ -138,7 +138,7 @@ class SwiftDataSpendStore: SpendStoreable {
         do {
             let yearSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.year, order: .reverse) // TODO: validate .reverse is what we want
             let monthSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.month, order: .reverse) // TODO: validate .reverse is what we want
-            let fetchDescriptor = FetchDescriptor<SpendMonth_SwiftData>(
+            let fetchDescriptor = FetchDescriptor(
                 sortBy: [
                     yearSortDescriptor,
                     monthSortDescriptor
@@ -154,15 +154,22 @@ class SwiftDataSpendStore: SpendStoreable {
         }
     }
     
-    func getPreviousMonth() throws -> SpendMonth_Data {
+    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data {
         do {
-            let months_data = try getAllMonths()
-            guard let previousMonth = months_data.first else { // TODO: validate we're getting the previous month
-                throw SpendStoreError.previousMonthNotFound
+            let predicate: Predicate<SpendMonth_SwiftData> = #Predicate {
+                $0.month == month && $0.year == year
             }
-            return previousMonth
+            let fetchDescriptor = FetchDescriptor(
+                predicate: predicate
+            )
+            guard let month_swiftData = try context?.fetch(fetchDescriptor).first else {
+                throw SpendStoreError.monthNotFound
+            }
+            
+            let month_data = SpendMonthMapper.toDataObject(month_swiftData)
+            return month_data
         } catch {
-            throw SpendStoreError.previousMonthNotFound
+            throw SpendStoreError.monthNotFound
         }
     }
     
@@ -177,7 +184,22 @@ class SwiftDataSpendStore: SpendStoreable {
         }
     }
     
-    func prepForMonth(_ date: Date) throws {
+    func deleteStagedMonthData() throws {
+        do {
+            // deleting all instances of SpendDay_SwiftData within context
+            // due to [the aforementioned] relationship with SpendItem_SwiftData, all [SpendItem_SwiftData] instances
+            // will also be deleted given presence of relational delete rule: cascading
+            try context?.transaction {
+                try context?.delete(
+                    model: SpendDay_SwiftData.self
+                )
+            }
+        } catch {
+            throw SpendStoreError.unableToDeleteStagedMonthData
+        }
+    }
+    
+    func stageMonthData(_ date: Date) throws {
         do {
             let dates = Calendar.current.monthDates(
                 date
@@ -195,22 +217,7 @@ class SwiftDataSpendStore: SpendStoreable {
                 }
             }
         } catch {
-            throw SpendStoreError.unableToPrepForMonth
-        }
-    }
-    
-    func deletePreviousMonthData() throws {
-        do {
-            // deleting all instances of SpendDay_SwiftData within context
-            // due to [the aforementioned] relationship with SpendItem_SwiftData, all will also be deleted
-            // given presence of delete rule: cascading
-            try context?.transaction {
-                try context?.delete(
-                    model: SpendDay_SwiftData.self
-                )
-            }
-        } catch {
-            throw SpendStoreError.unableToDeletePreviousMonthData
+            throw SpendStoreError.unableToStageMonth
         }
     }
 }
@@ -222,7 +229,7 @@ private extension SwiftDataSpendStore {
         let predicate: Predicate<SpendDay_SwiftData> = #Predicate { spendDay in
             spendDay.key == key
         }
-        let descriptor = FetchDescriptor<SpendDay_SwiftData>(
+        let descriptor = FetchDescriptor(
             predicate: predicate
         )
         let spendDays = try context?.fetch(descriptor)

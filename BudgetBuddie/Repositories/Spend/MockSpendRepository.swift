@@ -37,7 +37,7 @@ class MockSpendRepository: SpendRepositable {
         [.mock()]
     }
     
-    func getPreviousMonth() throws -> SpendMonth {
+    func getMonth(month: Int, year: Int) throws -> SpendMonth {
         .mock()
     }
 }

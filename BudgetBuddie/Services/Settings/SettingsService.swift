@@ -40,6 +40,6 @@ private extension SettingsService {
     }
     
     func postNotificationSettingsUpdated() {
-        NotificationCenter.default.post(.SettingsUpdated)
+        NotificationCenter.default.post(.SettingsDidUpdate)
     }
 }

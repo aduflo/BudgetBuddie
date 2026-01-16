@@ -19,5 +19,5 @@ protocol SpendRepositable {
     func deleteItem(_ item: SpendItem) throws
     func getDay(date: Date) throws -> SpendDay
     func getAllMonths() throws -> [SpendMonth]
-    func getPreviousMonth() throws -> SpendMonth
+    func getMonth(month: Int, year: Int) throws -> SpendMonth
 }

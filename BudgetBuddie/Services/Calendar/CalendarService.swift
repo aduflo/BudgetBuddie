@@ -23,6 +23,6 @@ class CalendarService: CalendarServiceable {
 // MARK: Private interface
 private extension CalendarService {
     func postNotificationSelectedDateUpdated() {
-        NotificationCenter.default.post(.SelectedDateUpdated)
+        NotificationCenter.default.post(.SelectedDateDidUpdate)
     }
 }

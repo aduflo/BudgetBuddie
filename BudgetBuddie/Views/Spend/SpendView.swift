@@ -48,7 +48,7 @@ struct SpendView: View {
             viewModel.reloadData()
         }
         .onReceive(
-            NotificationCenter.default.publisher(for: .SelectedDateUpdated),
+            NotificationCenter.default.publisher(for: .SelectedDateDidUpdate),
             perform: { _ in
                 Task { await MainActor.run {
                     viewModel.reloadData()

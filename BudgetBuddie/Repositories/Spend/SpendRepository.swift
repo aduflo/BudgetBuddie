@@ -24,19 +24,16 @@ class SpendRepository: SpendRepositable {
                 // we can conclude we are in a different month
                 // because no SpendDay stored has a `date` value that overlaps with today's date
                 // thus, we:
-                // - save previous month to store
-                // - prep store for month matching today's date
-                // - post notification
-                // TODO: - verify functionality around month persisting for new month
+                // - commit staged month to store
+                // - stage new month matching today's date
                 do {
-                    try savePreviousMonth(
+                    try commitStagedMonth(
                         settingsService: settingsService
                     )
-                    try prepStoreForNewMonth(date)
+                    try stageNewMonth(date)
                 } catch {
                     print("\(#function)-error: \(error.localizedDescription)")
                 }
-                postNotificationSpendRepositoryUpdated()
             }
         }
     }
@@ -59,13 +56,13 @@ class SpendRepository: SpendRepositable {
     func saveItem(_ item: SpendItem) throws {
         let item_data = SpendItemMapper.toDataObject(item)
         try spendStore.saveItem(item_data)
-        postNotificationSpendRepositoryUpdated()
+        postNotificationSpendRepositoryDidUpdateItem()
     }
     
     func deleteItem(_ item: SpendItem) throws {
         let item_data = SpendItemMapper.toDataObject(item)
         try spendStore.deleteItem(item_data)
-        postNotificationSpendRepositoryUpdated()
+        postNotificationSpendRepositoryDidUpdateItem()
     }
     
     func getDay(date: Date) throws -> SpendDay {
@@ -80,20 +77,20 @@ class SpendRepository: SpendRepositable {
         return months
     }
     
-    func getPreviousMonth() throws -> SpendMonth {
-        let previousMonth_data = try spendStore.getPreviousMonth()
-        let previousMonth = SpendMonthMapper.toDomainObject(previousMonth_data)
-        return previousMonth
+    func getMonth(month: Int, year: Int) throws -> SpendMonth {
+        let month_data = try spendStore.getMonth(
+            month: month,
+            year: year
+        )
+        let month = SpendMonthMapper.toDomainObject(month_data)
+        return month
     }
 }
 
 // MARK: Private interface
 private extension SpendRepository {
-    func postNotificationSpendRepositoryUpdated() {
-        NotificationCenter.default.post(.SpendRepositoryUpdated)
-    }
-    
-    func savePreviousMonth(settingsService: SettingsServiceable) throws {
+    func commitStagedMonth(settingsService: SettingsServiceable) throws { // TODO: verify functionality; month is persisted and spend amount is proper
+        // compose month_data
         let items = try spendStore.getItems()
         let spend = items.reduce(0.0, { $0 + $1.amount })
         let allowance = settingsService.monthlyAllowance
@@ -107,14 +104,45 @@ private extension SpendRepository {
             spend: spend,
             allowance: allowance
         )
+        
+        // save month_data
         try spendStore.saveMonth(month_data)
+        
+        // post notification
+        postNotificationSpendRepositoryDidCommitStagedMonth(
+            month: month,
+            year: year
+        )
     }
     
-    func prepStoreForNewMonth(_ date: Date) throws {
-        // firstly, delete previous month data
-        try spendStore.deletePreviousMonthData()
+    func stageNewMonth(_ date: Date) throws {
+        // firstly, delete staged month data
+        try spendStore.deleteStagedMonthData()
         
-        // prep store for month matching date
-        try spendStore.prepForMonth(date)
+        // secondly, have store stage data for month matching date
+        try spendStore.stageMonthData(date)
+        
+        // lastly, post notification
+        postNotificatioSpendRepositoryDidStageNewMonth()
+    }
+    
+    // Notifications
+    func postNotificationSpendRepositoryDidUpdateItem() {
+        NotificationCenter.default.post(.SpendRepositoryDidUpdateItem)
+    }
+    
+    func postNotificatioSpendRepositoryDidStageNewMonth() {
+        NotificationCenter.default.post(.SpendRepositoryDidStageNewMonth)
+    }
+    
+    func postNotificationSpendRepositoryDidCommitStagedMonth(month: Int, year: Int) {
+        NotificationCenter.default.post(
+            name: .SpendRepositoryDidCommitStagedMonth,
+            object: nil,
+            userInfo: [
+                Notification.UserInfoKey.month: month,
+                Notification.UserInfoKey.year: year
+            ]
+        )
     }
 }
