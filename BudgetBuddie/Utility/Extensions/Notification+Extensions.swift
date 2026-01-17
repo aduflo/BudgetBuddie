@@ -11,7 +11,7 @@ extension NSNotification.Name {
     static let SettingsDidUpdate = NSNotification.Name("SettingsDidUpdate")
     static let SelectedDateDidUpdate = NSNotification.Name("SelectedDateDidUpdate")
     static let SpendRepositoryDidUpdateItem = NSNotification.Name("SpendRepositoryDidUpdateItem")
-    static let SpendRepositoryDidStageNewMonth = NSNotification.Name("")
+    static let SpendRepositoryDidStageNewMonth = NSNotification.Name("SpendRepositoryDidStageNewMonth")
     static let SpendRepositoryDidCommitStagedMonth = NSNotification.Name("SpendRepositoryDidCommitStagedMonth")
 }
 
