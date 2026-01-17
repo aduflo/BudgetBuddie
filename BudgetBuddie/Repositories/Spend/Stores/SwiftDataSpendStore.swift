@@ -12,7 +12,8 @@ class SwiftDataSpendStore: SpendStoreable {
     // Instance vars
     private let container: ModelContainer? = {
         try? ModelContainer(
-            for: SpendDay_SwiftData.self,
+            for: SpendMonth_SwiftData.self,
+            SpendDay_SwiftData.self,
             SpendItem_SwiftData.self,
             configurations: ModelConfiguration()
         )
@@ -22,7 +23,7 @@ class SwiftDataSpendStore: SpendStoreable {
     }
     
     // SpendStoreable
-    func getItems() throws -> [SpendItem_Data] {
+    func getAllItems() throws -> [SpendItem_Data] {
         do {
             let fetchDescriptor = FetchDescriptor<SpendItem_SwiftData>()
             guard let items_swiftData = try context?.fetch(fetchDescriptor) else {
@@ -136,15 +137,19 @@ class SwiftDataSpendStore: SpendStoreable {
     
     func getAllMonths() throws -> [SpendMonth_Data] {
         do {
-            let yearSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.year, order: .reverse) // TODO: validate .reverse is what we want
-            let monthSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.month, order: .reverse) // TODO: validate .reverse is what we want
-            let fetchDescriptor = FetchDescriptor(
-                sortBy: [
-                    yearSortDescriptor,
-                    monthSortDescriptor
-                ]
-            )
-            let months_swiftData = try context?.fetch(fetchDescriptor) ?? []
+            // TODO: determine if we want the sorting done here, or at the consumer level
+//            let yearSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.year, order: .reverse) // latest year first
+//            let monthSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.month, order: .reverse) // latest month first
+//            let fetchDescriptor = FetchDescriptor(
+//                sortBy: [
+//                    yearSortDescriptor,
+//                    monthSortDescriptor
+//                ]
+//            )
+            let fetchDescriptor = FetchDescriptor<SpendMonth_SwiftData>()
+            guard let months_swiftData = try context?.fetch(fetchDescriptor) else {
+                throw SpendStoreError.monthsNotFound
+            }
             let months_data = months_swiftData.map {
                 SpendMonthMapper.toDataObject($0)
             }
@@ -220,6 +225,48 @@ class SwiftDataSpendStore: SpendStoreable {
             throw SpendStoreError.unableToStageMonth
         }
     }
+    
+    // TODO: remove after testing
+//    func commitMultipleMonths() {
+//        do {
+//            try context?.transaction {
+//                for duo in [
+//                    (2025,01),
+//                    (2026,01),
+//                    (2025,02),
+//                    (2026,02),
+//                    (2025,03),
+//                    (2026,03),
+//                ] {
+//                    context?.insert(
+//                        SpendMonth_SwiftData(
+//                            id: UUID(),
+//                            month: duo.1,
+//                            year: duo.0,
+//                            spend: Decimal(integerLiteral: duo.0),
+//                            allowance: 9000
+//                        )
+//                    )
+//                }
+//                print("\(#function) success")
+//            }
+//        } catch {
+//            print("\(#function) error: \(error)")
+//        }
+//    }
+//    
+//    func purgeAllMonths() {
+//        do {
+//            try context?.transaction {
+//                try context?.delete(
+//                    model: SpendMonth_SwiftData.self
+//                )
+//                print("\(#function) success")
+//            }
+//        } catch {
+//            print("\(#function) error: \(error)")
+//        }
+//    }
 }
 
 // MARK: Private interface

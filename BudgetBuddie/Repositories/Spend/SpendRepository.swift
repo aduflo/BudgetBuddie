@@ -9,13 +9,90 @@ import Foundation
 
 class SpendRepository: SpendRepositable {
     // Instance vars
-    private let spendStore: SpendStoreable = {
+    private let store: SpendStoreable = {
         SwiftDataSpendStore()
 //        InMemorySpendStore()
     }()
+    private var didSetupOnce: Bool {
+        UserDefaults.standard.bool(
+            forKey: UserDefaults.Key.SpendRepository.didSetupOnce
+        )
+    }
     
     func setup(settingsService: any SettingsServiceable) {
-        let date = Date() // today's date
+        if didSetupOnce {
+            standardSetup(
+                settingsService: settingsService
+            )
+        } else {
+            initialSetup()
+        }
+    }
+
+    // SpendRepositable
+    func getItems(date: Date) throws -> [SpendItem] {
+        let items_data = try store.getItems(date: date)
+        let items = items_data.map { SpendItemMapper.toDomainObject($0) }
+        return items
+    }
+    
+    func getItems(dates: [Date]) throws -> [SpendItem] {
+        let items_data = try store.getItems(
+            dates: dates
+        )
+        let items = items_data.map { SpendItemMapper.toDomainObject($0) }
+        return items
+    }
+    
+    func saveItem(_ item: SpendItem) throws {
+        let item_data = SpendItemMapper.toDataObject(item)
+        try store.saveItem(item_data)
+        postNotificationSpendRepositoryDidUpdateItem()
+    }
+    
+    func deleteItem(_ item: SpendItem) throws {
+        let item_data = SpendItemMapper.toDataObject(item)
+        try store.deleteItem(item_data)
+        postNotificationSpendRepositoryDidUpdateItem()
+    }
+    
+    func getDay(date: Date) throws -> SpendDay {
+        let day_data = try store.getDay(date: date)
+        let day = SpendDayMapper.toDomainObject(day_data)
+        return day
+    }
+    
+    func getAllMonths() throws -> [SpendMonth] {
+        let months_data = try store.getAllMonths()
+        let months = months_data.map { SpendMonthMapper.toDomainObject($0) }
+        return months
+    }
+    
+    func getMonth(month: Int, year: Int) throws -> SpendMonth {
+        let month_data = try store.getMonth(
+            month: month,
+            year: year
+        )
+        let month = SpendMonthMapper.toDomainObject(month_data)
+        return month
+    }
+}
+
+// MARK: Private interface
+private extension SpendRepository {
+    // Setup
+    func initialSetup() {
+        do {
+            try stageNewMonth(Date())
+            UserDefaults.standard.set(
+                true,
+                forKey: UserDefaults.Key.SpendRepository.didSetupOnce
+            )
+        } catch {}
+    }
+    
+    func standardSetup(settingsService: any SettingsServiceable) {
+        let date = Date()
         do {
             _ = try getDay(date: date)
         } catch {
@@ -31,67 +108,15 @@ class SpendRepository: SpendRepositable {
                         settingsService: settingsService
                     )
                     try stageNewMonth(date)
-                } catch {
-                    print("\(#function)-error: \(error.localizedDescription)")
-                }
+                } catch {}
             }
         }
     }
-
-    // SpendRepositable
-    func getItems(date: Date) throws -> [SpendItem] {
-        let items_data = try spendStore.getItems(date: date)
-        let items = items_data.map { SpendItemMapper.toDomainObject($0) }
-        return items
-    }
     
-    func getItems(dates: [Date]) throws -> [SpendItem] {
-        let items_data = try spendStore.getItems(
-            dates: dates
-        )
-        let items = items_data.map { SpendItemMapper.toDomainObject($0) }
-        return items
-    }
-    
-    func saveItem(_ item: SpendItem) throws {
-        let item_data = SpendItemMapper.toDataObject(item)
-        try spendStore.saveItem(item_data)
-        postNotificationSpendRepositoryDidUpdateItem()
-    }
-    
-    func deleteItem(_ item: SpendItem) throws {
-        let item_data = SpendItemMapper.toDataObject(item)
-        try spendStore.deleteItem(item_data)
-        postNotificationSpendRepositoryDidUpdateItem()
-    }
-    
-    func getDay(date: Date) throws -> SpendDay {
-        let day_data = try spendStore.getDay(date: date)
-        let day = SpendDayMapper.toDomainObject(day_data)
-        return day
-    }
-    
-    func getAllMonths() throws -> [SpendMonth] {
-        let months_data = try spendStore.getAllMonths()
-        let months = months_data.map { SpendMonthMapper.toDomainObject($0) }
-        return months
-    }
-    
-    func getMonth(month: Int, year: Int) throws -> SpendMonth {
-        let month_data = try spendStore.getMonth(
-            month: month,
-            year: year
-        )
-        let month = SpendMonthMapper.toDomainObject(month_data)
-        return month
-    }
-}
-
-// MARK: Private interface
-private extension SpendRepository {
-    func commitStagedMonth(settingsService: SettingsServiceable) throws { // TODO: verify functionality; month is persisted and spend amount is proper
+    // Stage/commit month
+    func commitStagedMonth(settingsService: SettingsServiceable) throws {
         // compose month_data
-        let items = try spendStore.getItems()
+        let items = try store.getAllItems()
         let spend = items.reduce(0.0, { $0 + $1.amount })
         let allowance = settingsService.monthlyAllowance
         let calendar = Calendar.current
@@ -106,7 +131,7 @@ private extension SpendRepository {
         )
         
         // save month_data
-        try spendStore.saveMonth(month_data)
+        try store.saveMonth(month_data)
         
         // post notification
         postNotificationSpendRepositoryDidCommitStagedMonth(
@@ -117,10 +142,10 @@ private extension SpendRepository {
     
     func stageNewMonth(_ date: Date) throws {
         // firstly, delete staged month data
-        try spendStore.deleteStagedMonthData()
+        try store.deleteStagedMonthData()
         
         // secondly, have store stage data for month matching date
-        try spendStore.stageMonthData(date)
+        try store.stageMonthData(date)
         
         // lastly, post notification
         postNotificatioSpendRepositoryDidStageNewMonth()

@@ -10,7 +10,7 @@ import Foundation
 protocol SpendStoreable {
     /// Get all items held by the store.
     /// - Returns: An array of `SpendItem_Data`.
-    func getItems() throws -> [SpendItem_Data]
+    func getAllItems() throws -> [SpendItem_Data]
     /// Get all items for a specific date.
     /// - Returns: An array of `SpendItem_Data`.
     func getItems(date: Date) throws -> [SpendItem_Data]
@@ -25,4 +25,8 @@ protocol SpendStoreable {
     func saveMonth(_ month: SpendMonth_Data) throws
     func deleteStagedMonthData() throws
     func stageMonthData(_ date: Date) throws
+    
+    // TODO: remove after testing
+//    func commitMultipleMonths()
+//    func purgeAllMonths()
 }

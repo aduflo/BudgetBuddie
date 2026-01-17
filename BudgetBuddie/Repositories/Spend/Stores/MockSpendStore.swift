@@ -8,7 +8,11 @@
 import Foundation
 
 class MockSpendStore: SpendStoreable {
-    func getItems() throws -> [SpendItem_Data] {
+    // TODO: remove after testing
+//    func commitMultipleMonths() {}
+//    func purgeAllMonths() {}
+    
+    func getAllItems() throws -> [SpendItem_Data] {
         let date = Date()
         return (0..<20).map { idx in
             SpendItem_Data(
