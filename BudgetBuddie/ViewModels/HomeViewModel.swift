@@ -20,6 +20,8 @@ class HomeViewModel {
     
     @ObservationIgnored
     private(set) var spendItemToPresent: SpendItem? = nil
+    @ObservationIgnored
+    private(set) var spendMonthSummaryParamsToPresent: (month: Int, year: Int)? = nil
     
     // Constructors
     init(
@@ -50,6 +52,10 @@ class HomeViewModel {
 extension HomeViewModel {
     func setSpendItemToPresent(_ spendItem: SpendItem?) {
         spendItemToPresent = spendItem
+    }
+    
+    func setSpendMonthSummaryParamsToPresent(month: Int, year: Int) {
+        spendMonthSummaryParamsToPresent = (month, year)
     }
 }
 

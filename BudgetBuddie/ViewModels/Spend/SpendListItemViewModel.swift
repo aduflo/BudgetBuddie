@@ -10,7 +10,6 @@ import Foundation
 struct SpendListItemViewModel: Identifiable {
     // Instance vars
     private let currencyFormatter: CurrencyFormatter
-    
     let spendItem: SpendItem
     
     // Identifiable

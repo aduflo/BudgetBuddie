@@ -12,6 +12,7 @@ struct HomeView: View {
     @State private var viewModel: HomeViewModel
     @State private var presentSettings = false
     @State private var presentSpendItem = false
+    @State private var presentSpendMonthSummary = false
     
     // Constructors
     init(
@@ -77,6 +78,36 @@ struct HomeView: View {
                 viewModel.setSpendItemToPresent(spendItem)
                 presentSpendItem.toggle()
             }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(for: .SpendRepositoryDidCommitStagedMonth),
+            perform: { notification in
+                guard let userInfo = notification.userInfo,
+                      let month = userInfo[Notification.UserInfoKey.month] as? Int,
+                      let year = userInfo[Notification.UserInfoKey.year] as? Int else {
+                    return
+                }
+                
+                Task { await MainActor.run {
+                    viewModel.setSpendMonthSummaryParamsToPresent(
+                        month: month,
+                        year: year
+                    )
+                    presentSpendMonthSummary.toggle()
+                }}
+            }
+        )
+        .sheet(isPresented: $presentSpendMonthSummary) {
+            if let params = viewModel.spendMonthSummaryParamsToPresent {
+                SpendMonthSummaryView(
+                    viewModel: SpendMonthSummaryViewModel(
+                        spendRepository: viewModel.spendRepository,
+                        month: params.month,
+                        year: params.year
+                    )
+                )
+                .presentationDetents([.fraction(0.75)])
+            } else { EmptyView() }
         }
     }
 }

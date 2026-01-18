@@ -13,7 +13,6 @@ class SpendItemViewModel {
     private let calendarService: CalendarServiceable
     private let spendRepository: SpendRepositable
     let currencyFormatter: CurrencyFormatter
-    
     let mode: Mode
     
     // Display instance vars

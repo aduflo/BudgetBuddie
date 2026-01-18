@@ -95,6 +95,12 @@ private extension SpendRepository {
         let date = Date()
         do {
             _ = try getDay(date: date)
+//            store.commitMultipleMonths()
+//            store.purgeAllMonths()
+            postNotificationSpendRepositoryDidCommitStagedMonth( // TODO: remove after testing
+                month: 03,
+                year: 2025
+            )
         } catch {
             if case .dayNotFound = error as? SpendStoreError {
                 // if we cannot find a SpendDay associated with today's date

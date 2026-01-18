@@ -13,7 +13,6 @@ class SpendTrendViewModel {
     // Instance vars
     private let settingsService: SettingsServiceable
     private let currencyFormatter: CurrencyFormatter
-    
     let title: String
     /// Amount in dollars and cents
     let currentSpend: Decimal

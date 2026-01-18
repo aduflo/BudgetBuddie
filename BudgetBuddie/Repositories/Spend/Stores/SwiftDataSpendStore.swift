@@ -138,14 +138,7 @@ class SwiftDataSpendStore: SpendStoreable {
     func getAllMonths() throws -> [SpendMonth_Data] {
         do {
             // TODO: determine if we want the sorting done here, or at the consumer level
-//            let yearSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.year, order: .reverse) // latest year first
-//            let monthSortDescriptor = SortDescriptor<SpendMonth_SwiftData>(\.month, order: .reverse) // latest month first
-//            let fetchDescriptor = FetchDescriptor(
-//                sortBy: [
-//                    yearSortDescriptor,
-//                    monthSortDescriptor
-//                ]
-//            )
+            // decision: we'll have sorting be a dropdown on the list view, and we'll return non-sorted order
             let fetchDescriptor = FetchDescriptor<SpendMonth_SwiftData>()
             guard let months_swiftData = try context?.fetch(fetchDescriptor) else {
                 throw SpendStoreError.monthsNotFound

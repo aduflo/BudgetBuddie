@@ -9,6 +9,8 @@ import Foundation
 
 class CalendarViewModel {
     // Instance vars
+    private let calendarService: CalendarServiceable
+    
     lazy var dayViewModels: [CalendarDayViewModel] = {
         monthDays.map { monthDay in
             let date = monthDay.date
@@ -19,7 +21,6 @@ class CalendarViewModel {
         }
     }()
     private(set) var selectedDayViewModel: CalendarDayViewModel? = nil
-    private let calendarService: CalendarServiceable
     
     // Constructors
     init(
