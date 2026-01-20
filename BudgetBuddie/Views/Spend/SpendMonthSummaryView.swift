@@ -15,10 +15,31 @@ struct SpendMonthSummaryView: View {
     
     var body: some View {
         // TODO: build view
-        Text(viewModel.displayText)
+        VStack(
+            spacing: Spacing.1
+        ) {
+            headerView
+            contentView
+        }
+        .padding(Padding.2)
         .onAppear {
             viewModel.reloadData()
         }
+    }
+    
+    var headerView: some View {
+        VStack(
+            spacing: Spacing.1
+        ) {
+            Text(Copy.history)
+                .font(.title)
+                .padding(Padding.1)
+            Divider()
+        }
+    }
+    
+    var contentView: some View {
+        Text(viewModel.displayText)
     }
 }
 

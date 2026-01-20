@@ -64,47 +64,59 @@ struct SpendListView: View {
     var contentView: some View {
         Group {
             if viewModel.error != nil {
-                VStack(
-                    spacing: Spacing.1
-                ) {
-                    Text(Copy.errorFetchingItems)
-                        .font(.headline)
-                        .foregroundStyle(Color.red)
-                    Button(
-                        ButtonKey.reload,
-                        systemImage: SystemImage.arrowClockwise,
-                        action: {
-                            viewModel.reloadData()
-                        }
-                    )
-                    .buttonStyle(.circleSystemImage)
-                }
+                errorView
             } else if viewModel.listItemViewModels.isEmpty {
-                HStack {
-                    Text(Copy.goodJobSaving)
-                        .font(.headline)
-                    Spacer()
-                }
+                goodJobSavingView
             } else {
-                VStack(
-                    alignment: .leading,
-                    spacing: Spacing.1
-                ) {
-                    Text(Copy.spendItems)
-                        .font(.headline)
-                    
-                    VStack(
-                        alignment: .leading,
-                        spacing: Spacing.1
-                    ) {
-                        ForEach(viewModel.listItemViewModels) { viewModel in
-                            SpendListItemView(
-                                viewModel: viewModel
-                            )
-                            .onTapGesture {
-                                self.viewModel.spendItemTapped(viewModel.spendItem)
-                            }
-                        }
+                listView
+            }
+        }
+    }
+    
+    var errorView: some View {
+        VStack(
+            spacing: Spacing.1
+        ) {
+            Text(Copy.errorFetchingItems)
+                .font(.headline)
+                .foregroundStyle(Color.red)
+            Button(
+                ButtonKey.reload,
+                systemImage: SystemImage.arrowClockwise,
+                action: {
+                    viewModel.reloadData()
+                }
+            )
+            .buttonStyle(.circleSystemImage)
+        }
+    }
+    
+    var goodJobSavingView: some View {
+        HStack {
+            Text(Copy.goodJobSaving)
+                .font(.headline)
+            Spacer()
+        }
+    }
+    
+    var listView: some View {
+        VStack(
+            alignment: .leading,
+            spacing: Spacing.1
+        ) {
+            Text(Copy.spendItems)
+                .font(.headline)
+            
+            VStack(
+                alignment: .leading,
+                spacing: Spacing.1
+            ) {
+                ForEach(viewModel.listItemViewModels) { viewModel in
+                    SpendListItemView(
+                        viewModel: viewModel
+                    )
+                    .onTapGesture {
+                        self.viewModel.spendItemTapped(viewModel.spendItem)
                     }
                 }
             }

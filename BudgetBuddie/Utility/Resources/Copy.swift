@@ -46,6 +46,7 @@ extension Copy {
     static let errorFetchingItems = "Error! Could not fetch spend items."
     static let notAvailabile = "N/A"
     static let spendHistory = "Spend History"
+    static let history = "History"
 }
 
 extension Copy {
