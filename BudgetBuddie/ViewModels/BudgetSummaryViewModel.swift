@@ -44,7 +44,12 @@ class BudgetSummaryViewModel {
 }
 
 // MARK: Public interface
-extension BudgetSummaryViewModel {    
+extension BudgetSummaryViewModel {
+    func reloadData() {
+        spendTrendsViewModel.reloadData()
+        calendarViewModel.reloadData()
+    }
+    
     func settingsTapped() {
         onSettingsTapped()
     }

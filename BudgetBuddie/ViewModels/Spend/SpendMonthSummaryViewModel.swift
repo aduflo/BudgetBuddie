@@ -19,7 +19,7 @@ class SpendMonthSummaryViewModel {
     private(set) var spendMonth: SpendMonth?
     private(set) var error: Error? = nil
     
-    // Constructor
+    // Constructors
     init(
         spendRepository: SpendRepositable,
         month: Int,

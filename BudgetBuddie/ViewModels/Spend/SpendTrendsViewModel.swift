@@ -56,26 +56,6 @@ private extension SpendTrendsViewModel {
         )
     }
     
-    static func placeholderMtdTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.monthToDate,
-            currentSpend: 0,
-            maxSpend: 0
-        )
-    }
-    
-    static func placeholderMonthlyTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.monthly,
-            currentSpend: 0,
-            maxSpend: 0
-        )
-    }
-    
     func dailyTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: settingsService,
@@ -86,6 +66,16 @@ private extension SpendTrendsViewModel {
         )
     }
     
+    static func placeholderMtdTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter(),
+            title: Copy.monthToDate,
+            currentSpend: 0,
+            maxSpend: 0
+        )
+    }
+    
     func mtdTrendViewModelBuilder() -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: settingsService,
@@ -93,6 +83,16 @@ private extension SpendTrendsViewModel {
             title: Copy.monthToDate,
             currentSpend: mtdCurrentSpend,
             maxSpend: mtdMaxSpend
+        )
+    }
+    
+    static func placeholderMonthlyTrendViewModelBuilder() -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            settingsService: SettingsService(),
+            currencyFormatter: CurrencyFormatter(),
+            title: Copy.monthly,
+            currentSpend: 0,
+            maxSpend: 0
         )
     }
     

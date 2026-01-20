@@ -220,46 +220,46 @@ class SwiftDataSpendStore: SpendStoreable {
     }
     
     // TODO: remove after testing
-//    func commitMultipleMonths() {
-//        do {
-//            try context?.transaction {
-//                for duo in [
-//                    (2025,01),
-//                    (2026,01),
-//                    (2025,02),
-//                    (2026,02),
-//                    (2025,03),
-//                    (2026,03),
-//                ] {
-//                    context?.insert(
-//                        SpendMonth_SwiftData(
-//                            id: UUID(),
-//                            month: duo.1,
-//                            year: duo.0,
-//                            spend: Decimal(integerLiteral: duo.0),
-//                            allowance: 9000
-//                        )
-//                    )
-//                }
-//                print("\(#function) success")
-//            }
-//        } catch {
-//            print("\(#function) error: \(error)")
-//        }
-//    }
-//    
-//    func purgeAllMonths() {
-//        do {
-//            try context?.transaction {
-//                try context?.delete(
-//                    model: SpendMonth_SwiftData.self
-//                )
-//                print("\(#function) success")
-//            }
-//        } catch {
-//            print("\(#function) error: \(error)")
-//        }
-//    }
+    func commitMultipleMonths() {
+        do {
+            try context?.transaction {
+                for duo in [
+                    (2025,01),
+                    (2026,01),
+                    (2025,02),
+                    (2026,02),
+                    (2025,03),
+                    (2026,03),
+                ] {
+                    context?.insert(
+                        SpendMonth_SwiftData(
+                            id: UUID(),
+                            month: duo.1,
+                            year: duo.0,
+                            spend: Decimal(integerLiteral: duo.0),
+                            allowance: 9000
+                        )
+                    )
+                }
+                print("\(#function) success")
+            }
+        } catch {
+            print("\(#function) error: \(error)")
+        }
+    }
+    
+    func purgeAllMonths() {
+        do {
+            try context?.transaction {
+                try context?.delete(
+                    model: SpendMonth_SwiftData.self
+                )
+                print("\(#function) success")
+            }
+        } catch {
+            print("\(#function) error: \(error)")
+        }
+    }
 }
 
 // MARK: Private interface

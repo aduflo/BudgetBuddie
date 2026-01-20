@@ -14,6 +14,7 @@ struct SpendMonthSummaryView: View {
     @State var viewModel: SpendMonthSummaryViewModel
     
     var body: some View {
+        // TODO: build view
         Text(viewModel.displayText)
         .onAppear {
             viewModel.reloadData()

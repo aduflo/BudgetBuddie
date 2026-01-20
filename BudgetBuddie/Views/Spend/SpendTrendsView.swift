@@ -52,11 +52,10 @@ struct SpendTrendsView: View {
             viewModel.reloadData()
         }
         .onReceive(
-            Publishers.Merge4(
+            Publishers.Merge3(
                 NotificationCenter.default.publisher(for: .SettingsDidUpdate),
                 NotificationCenter.default.publisher(for: .SelectedDateDidUpdate),
-                NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem),
-                NotificationCenter.default.publisher(for: .SpendRepositoryDidStageNewMonth)
+                NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem)
             ),
             perform: { _ in
                 Task { await MainActor.run {

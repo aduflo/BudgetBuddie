@@ -16,7 +16,7 @@ class HomeViewModel {
     let currencyFormatter: CurrencyFormatter
     
     let budgetSummaryViewModel: BudgetSummaryViewModel
-    let spendViewModel: SpendViewModel
+    let spendListViewModel: SpendListViewModel
     
     @ObservationIgnored
     private(set) var spendItemToPresent: SpendItem? = nil
@@ -40,7 +40,7 @@ class HomeViewModel {
             spendRepository: spendRepository,
             currencyFormatter: currencyFormatter
         )
-        self.spendViewModel = SpendViewModel(
+        self.spendListViewModel = SpendListViewModel(
             calendarService: calendarService,
             spendRepository: spendRepository,
             currencyFormatter: currencyFormatter
@@ -50,6 +50,11 @@ class HomeViewModel {
 
 // MARK: Public interface
 extension HomeViewModel {
+    func reloadData() {
+        budgetSummaryViewModel.reloadData()
+        spendListViewModel.reloadData()
+    }
+    
     func setSpendItemToPresent(_ spendItem: SpendItem?) {
         spendItemToPresent = spendItem
     }

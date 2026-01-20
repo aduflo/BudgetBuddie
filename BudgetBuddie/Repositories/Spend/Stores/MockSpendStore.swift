@@ -9,8 +9,8 @@ import Foundation
 
 class MockSpendStore: SpendStoreable {
     // TODO: remove after testing
-//    func commitMultipleMonths() {}
-//    func purgeAllMonths() {}
+    func commitMultipleMonths() {}
+    func purgeAllMonths() {}
     
     func getAllItems() throws -> [SpendItem_Data] {
         let date = Date()

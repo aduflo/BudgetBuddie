@@ -7,19 +7,12 @@
 
 import Foundation
 
+@Observable
 class CalendarViewModel {
     // Instance vars
     private let calendarService: CalendarServiceable
     
-    lazy var dayViewModels: [CalendarDayViewModel] = {
-        monthDays.map { monthDay in
-            let date = monthDay.date
-            return CalendarDayViewModel(
-                monthDay: monthDay,
-                isSelected: false
-            )
-        }
-    }()
+    private(set) var dayViewModels: [CalendarDayViewModel] = []
     private(set) var selectedDayViewModel: CalendarDayViewModel? = nil
     
     // Constructors
@@ -32,6 +25,11 @@ class CalendarViewModel {
 
 // MARK: Public interface
 extension CalendarViewModel {
+    func reloadData() {
+        dayViewModels = dayViewModelsBuilder()
+        selectedDayViewModel = nil
+    }
+    
     var currentDayViewModel: CalendarDayViewModel? {
         guard let currentMonthDay = currentMonthDay else {
             return nil
@@ -44,6 +42,10 @@ extension CalendarViewModel {
     
     func updateSelectedDate(_ date: Date) {
         calendarService.updateSelectedDate(date)
+    }
+    
+    func setSelectedDayViewModel(_ viewModel: CalendarDayViewModel) {
+        selectedDayViewModel = viewModel
     }
 }
 
@@ -64,6 +66,15 @@ private extension CalendarViewModel {
     var currentMonthDay: MonthDay? {
         let dayInMonth = Calendar.current.dayInMonth(calendarService.selectedDate)
         return monthDays.first { $0.day == dayInMonth }
+    }
+    
+    func dayViewModelsBuilder() -> [CalendarDayViewModel] {
+        monthDays.map { monthDay in
+            CalendarDayViewModel(
+                monthDay: monthDay,
+                isSelected: false
+            )
+        }
     }
 }
 

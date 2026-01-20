@@ -9,8 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     // Instance vars
-    private let viewModel: CalendarViewModel
-    @State private var selectedDayViewModel: CalendarDayViewModel? = nil
+    @State private var viewModel: CalendarViewModel
     
     // Constructors
     init(
@@ -32,14 +31,14 @@ struct CalendarView: View {
                         alignment: .leading,
                         spacing: Spacing.1
                     ) {
-                        ForEach(viewModel.dayViewModels) { viewModel in
+                        ForEach(viewModel.dayViewModels) { dayViewModel in
                             CalendarDayView(
-                                viewModel: viewModel
+                                viewModel: dayViewModel
                             )
-                            .id(viewModel.monthDay.day)
+                            .id(dayViewModel.monthDay.day)
                             .onTapGesture {
-                                if let selectedDayViewModel {
-                                    if selectedDayViewModel.monthDay.day == viewModel.monthDay.day {
+                                if let selectedDayViewModel = viewModel.selectedDayViewModel {
+                                    if selectedDayViewModel.monthDay.day == dayViewModel.monthDay.day {
                                         return // selecting same day, abort
                                     } else {
                                         // untoggle previously selected
@@ -48,11 +47,11 @@ struct CalendarView: View {
                                 }
                                 
                                 // toggle new selection and persist day vm
-                                viewModel.setSelected(true)
-                                selectedDayViewModel = viewModel
+                                dayViewModel.setSelected(true)
+                                viewModel.setSelectedDayViewModel(dayViewModel)
                                 
                                 // update selected date
-                                self.viewModel.updateSelectedDate(viewModel.monthDay.date)
+                                viewModel.updateSelectedDate(dayViewModel.monthDay.date)
                             }
                         }
                         .onAppear {
@@ -61,7 +60,7 @@ struct CalendarView: View {
                             }
                             
                             currentDayViewModel.setSelected(true)
-                            selectedDayViewModel = currentDayViewModel
+                            viewModel.setSelectedDayViewModel(currentDayViewModel)
                             proxy.scrollTo(
                                 currentDayViewModel.monthDay.day,
                                 anchor: .center
@@ -70,6 +69,9 @@ struct CalendarView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            viewModel.reloadData()
         }
     }
 }

@@ -27,6 +27,6 @@ protocol SpendStoreable {
     func stageMonthData(_ date: Date) throws
     
     // TODO: remove after testing
-//    func commitMultipleMonths()
-//    func purgeAllMonths()
+    func commitMultipleMonths()
+    func purgeAllMonths()
 }

@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var presentSettings = false
     @State private var presentSpendItem = false
     @State private var presentSpendMonthSummary = false
+    @State private var presentSpendMonthList = false
     
     // Constructors
     init(
@@ -41,8 +42,8 @@ struct HomeView: View {
                     .presentationDetents([.fraction(0.5)])
                 }
                 
-                SpendView(
-                    viewModel: viewModel.spendViewModel
+                SpendListView(
+                    viewModel: viewModel.spendListViewModel
                 )
                 .sheet(isPresented: $presentSpendItem) {
                     SpendItemView(
@@ -61,6 +62,26 @@ struct HomeView: View {
                     )
                     .presentationDetents([.fraction(0.5)])
                 }
+                
+                Button {
+                    presentSpendMonthList.toggle()
+                } label: {
+                    Text(Copy.spendHistory) // TODO: come back to this to determine styling/copy/tint color
+                }
+                .padding(Padding.1)
+                .roundedRectangleBackground(
+                    cornerRadius: CornerRadius.1,
+                    color: .gray.opacity(0.25)
+                )
+                .sheet(isPresented: $presentSpendMonthList) {
+                    SpendMonthListView(
+                        viewModel: SpendMonthListViewModel(
+                            spendRepository: viewModel.spendRepository,
+                            currencyFormatter: viewModel.currencyFormatter
+                        )
+                    )
+                    .presentationDetents([.fraction(0.75)])
+                }
             }
         }
         .padding(.top, Padding.2)
@@ -70,11 +91,11 @@ struct HomeView: View {
             viewModel.budgetSummaryViewModel.onSettingsTapped = {
                 presentSettings.toggle()
             }
-            viewModel.spendViewModel.onNewSpendItemTapped = {
+            viewModel.spendListViewModel.onNewSpendItemTapped = {
                 viewModel.setSpendItemToPresent(nil)
                 presentSpendItem.toggle()
             }
-            viewModel.spendViewModel.spendListViewModel.onSpendItemTapped = { spendItem in
+            viewModel.spendListViewModel.onSpendItemTapped = { spendItem in
                 viewModel.setSpendItemToPresent(spendItem)
                 presentSpendItem.toggle()
             }
@@ -94,6 +115,14 @@ struct HomeView: View {
                         year: year
                     )
                     presentSpendMonthSummary.toggle()
+                }}
+            }
+        )
+        .onReceive(
+            NotificationCenter.default.publisher(for: .SpendRepositoryDidStageNewMonth),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.reloadData()
                 }}
             }
         )

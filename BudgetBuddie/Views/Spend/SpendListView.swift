@@ -20,6 +20,48 @@ struct SpendListView: View {
     }
     
     var body: some View {
+        VStack(
+            spacing: Spacing.1
+        ) {
+            headerView
+            contentView
+        }
+        .padding(Padding.2)
+        .roundedRectangleBackground(
+            cornerRadius: CornerRadius.2,
+            color: .gray.opacity(0.25)
+        )
+        .onAppear {
+            viewModel.reloadData()
+        }
+        .onReceive(
+            Publishers.Merge(
+                NotificationCenter.default.publisher(for: .SelectedDateDidUpdate),
+                NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem)
+            ),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.reloadData()
+                }}
+            }
+        )
+    }
+    
+    var headerView: some View {
+        HStack {
+            Text(viewModel.title)
+                .font(.title2)
+            Spacer()
+            Button(
+                ButtonKey.newSpendItem,
+                systemImage: SystemImage.plus,
+                action: { viewModel.newSpendItemTapped() }
+            )
+            .buttonStyle(.circleSystemImage)
+        }
+    }
+    
+    var contentView: some View {
         Group {
             if viewModel.error != nil {
                 VStack(
@@ -55,33 +97,18 @@ struct SpendListView: View {
                         alignment: .leading,
                         spacing: Spacing.1
                     ) {
-                        ForEach(viewModel.listItemViewModels) { listItemViewModel in
+                        ForEach(viewModel.listItemViewModels) { viewModel in
                             SpendListItemView(
-                                viewModel: listItemViewModel
+                                viewModel: viewModel
                             )
                             .onTapGesture {
-                                viewModel.spendItemTapped(listItemViewModel.spendItem)
+                                self.viewModel.spendItemTapped(viewModel.spendItem)
                             }
                         }
                     }
                 }
             }
         }
-        .onAppear {
-            viewModel.reloadData()
-        }
-        .onReceive(
-            Publishers.Merge3(
-                NotificationCenter.default.publisher(for: .SelectedDateDidUpdate),
-                NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem),
-                NotificationCenter.default.publisher(for: .SpendRepositoryDidStageNewMonth)
-            ),
-            perform: { _ in
-                Task { await MainActor.run {
-                    viewModel.reloadData()
-                }}
-            }
-        )
     }
 }
 

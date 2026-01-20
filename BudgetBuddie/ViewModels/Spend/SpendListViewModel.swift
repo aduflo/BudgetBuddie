@@ -14,9 +14,11 @@ class SpendListViewModel {
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     
+    private(set) var title: String = ""
     private(set) var listItemViewModels: [SpendListItemViewModel] = []
     private(set) var error: Error? = nil
     
+    var onNewSpendItemTapped: () -> () = {}
     var onSpendItemTapped: (SpendItem) -> () = { _ in }
     
     init(
@@ -33,6 +35,8 @@ class SpendListViewModel {
 // MARK: Public interface
 extension SpendListViewModel {
     func reloadData() {
+        title = calendarService.selectedDate.monthDayString
+        
         do {
             error = nil
             listItemViewModels = try listItemViewModelsBuilder()
@@ -40,6 +44,10 @@ extension SpendListViewModel {
             self.error = error
             listItemViewModels = []
         }
+    }
+    
+    func newSpendItemTapped() {
+        onNewSpendItemTapped()
     }
     
     func spendItemTapped(_ spendItem: SpendItem) {
@@ -66,11 +74,10 @@ private extension SpendListViewModel {
 // MARK: - Mocks
 extension SpendListViewModel {
     static func mock() -> SpendListViewModel {
-        let currencyFormatter = CurrencyFormatter()
-        return SpendListViewModel(
+        SpendListViewModel(
             calendarService: MockCalendarService(),
             spendRepository: MockSpendRepository(),
-            currencyFormatter: currencyFormatter
+            currencyFormatter: CurrencyFormatter()
         )
     }
 }
