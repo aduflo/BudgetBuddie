@@ -13,7 +13,7 @@ struct HomeView: View {
     @State private var presentSettings = false
     @State private var presentSpendItem = false
     @State private var presentSpendMonthSummary = false
-    @State private var presentSpendMonthList = false
+    @State private var presentSpendHistory = false
     
     // Constructors
     init(
@@ -64,18 +64,18 @@ struct HomeView: View {
                 }
                 
                 Button {
-                    presentSpendMonthList.toggle()
+                    presentSpendHistory.toggle()
                 } label: {
-                    Text(Copy.spendHistory) // TODO: come back to this to determine styling/copy/tint color
+                    Text(Copy.spendHistoryButton) // TODO: come back to this to determine styling/copy/tint color
                 }
                 .padding(Padding.1)
                 .roundedRectangleBackground(
                     cornerRadius: CornerRadius.1,
                     color: .gray.opacity(0.25)
                 )
-                .sheet(isPresented: $presentSpendMonthList) {
-                    SpendMonthListView(
-                        viewModel: SpendMonthListViewModel(
+                .sheet(isPresented: $presentSpendHistory) {
+                    SpendHistoryView(
+                        viewModel: SpendHistoryViewModel(
                             spendRepository: viewModel.spendRepository,
                             currencyFormatter: viewModel.currencyFormatter
                         )

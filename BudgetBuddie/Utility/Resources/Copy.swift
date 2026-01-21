@@ -12,16 +12,23 @@ enum Copy {}
 
 extension Copy {
     // MARK: String
+    // Title
+    static let settingsTitle = "Settings"
+    static let newSpendItemTitle = "New Spend Item"
+    static let editSpendItemTitle = "Edit Spend Item"
+    static let spendHistoryTitle = "Spend History"
+    
+    // Button
+    static let spendHistoryButton = "Spend history"
+    
+    // Misc.
     static let appName = "BudgetBuddie"
     static let spendTrends = "Spend trends"
     static let current = "Current"
     static let max = "Max"
     static let spendItems = "Spend items"
-    static let newSpendItem = "New spend item"
-    static let editSpendItem = "Edit spend item"
     static let summary = "Summary"
     static let days = "Days"
-    static let settings = "Settings"
     static let monthlyAllowance = "Monthly allowance"
     static let monthlyAllowanceTitleKey = "How much can you spend monthly?"
     static func warningThreshold(_ value: String) -> String {
@@ -43,10 +50,15 @@ extension Copy {
     static let delete = "Delete"
     static let goodJobSaving = "Good job saving today!"
     static let errorPleaseTryAgain = "Error! Please try again."
-    static let errorFetchingItems = "Error! Could not fetch spend items."
     static let notAvailabile = "N/A"
-    static let spendHistory = "Spend History"
-    static let history = "History"
+    static let spend = "Spend"
+    static let date = "Date"
+    static let allowance = "Allowance"
+    static let newest = "Newest"
+    static let oldest = "Oldest"
+    static let lessSpend = "$"
+    static let moreSpend = "$$$$"
+    static let noRecordedHistory = "No recorded history."
 }
 
 extension Copy {

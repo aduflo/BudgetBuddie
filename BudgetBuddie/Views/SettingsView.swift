@@ -41,7 +41,7 @@ struct SettingsView: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text(Copy.settings)
+            Text(Copy.settingsTitle)
                 .font(.title)
                 .padding(Padding.1)
             Divider()

@@ -108,7 +108,7 @@ struct SpendItemView: View {
             Spacer()
             if case .existing = viewModel.mode {
                 Button(
-                    ButtonKey.delete,
+                    TitleKey.Button.delete,
                     systemImage: SystemImage.trash,
                     action: { isDeleteConfirmationAlertPresented = true }
                 )
@@ -132,7 +132,7 @@ struct SpendItemView: View {
                 }
             }
             Button(
-                ButtonKey.save,
+                TitleKey.Button.save,
                 systemImage: SystemImage.checkmark,
                 action: {
                     if viewModel.saveTapped() {

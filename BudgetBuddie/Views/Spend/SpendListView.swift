@@ -53,7 +53,7 @@ struct SpendListView: View {
                 .font(.title2)
             Spacer()
             Button(
-                ButtonKey.newSpendItem,
+                TitleKey.Button.newSpendItem,
                 systemImage: SystemImage.plus,
                 action: { viewModel.newSpendItemTapped() }
             )
@@ -66,7 +66,7 @@ struct SpendListView: View {
             if viewModel.error != nil {
                 errorView
             } else if viewModel.listItemViewModels.isEmpty {
-                goodJobSavingView
+                emptyView
             } else {
                 listView
             }
@@ -77,11 +77,11 @@ struct SpendListView: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text(Copy.errorFetchingItems)
+            Text(Copy.errorPleaseTryAgain)
                 .font(.headline)
                 .foregroundStyle(Color.red)
             Button(
-                ButtonKey.reload,
+                TitleKey.Button.reload,
                 systemImage: SystemImage.arrowClockwise,
                 action: {
                     viewModel.reloadData()
@@ -91,7 +91,7 @@ struct SpendListView: View {
         }
     }
     
-    var goodJobSavingView: some View {
+    var emptyView: some View {
         HStack {
             Text(Copy.goodJobSaving)
                 .font(.headline)

@@ -31,7 +31,7 @@ struct SpendMonthSummaryView: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text(Copy.history)
+            Text("Copy.history")
                 .font(.title)
                 .padding(Padding.1)
             Divider()

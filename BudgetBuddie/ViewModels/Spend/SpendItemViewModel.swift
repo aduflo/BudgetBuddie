@@ -38,8 +38,8 @@ class SpendItemViewModel {
     
     func setInitialDisplayValues() {
         title = switch mode {
-        case .new: Copy.newSpendItem
-        case .existing: Copy.editSpendItem
+        case .new: Copy.newSpendItemTitle
+        case .existing: Copy.editSpendItemTitle
         }
         amount = switch mode {
         case .new: 0.0

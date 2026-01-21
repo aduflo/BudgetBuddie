@@ -28,7 +28,7 @@ struct BudgetSummaryView: View {
                     .font(.title2)
                 Spacer()
                 Button(
-                    ButtonKey.settings,
+                    TitleKey.Button.settings,
                     systemImage: SystemImage.gear,
                     action: { viewModel.settingsTapped() }
                 )

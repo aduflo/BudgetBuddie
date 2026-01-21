@@ -1,19 +1,23 @@
 ### TODO:
-- modal for when new month starts:
-    - 1) a month spend summary screen that pops at a new month to give overview of previous month
-    - 2) an always accessible MonthsOverview/MonthsSummary view, that shows the total spend of each month compared to monthly allowance
-- new user experience; explains intent and usage
-- currency dropdown; USD, CAD…
-    - Need to add notification and have appropriate views react
-- add more tests
-- add LaunchScreen
-- build Widget
+Before RC:
+- modal for when new month starts
+- modal for spend history
+- modal for new user experience; explains intent and usage
+- widget
   - shows daily trends
   - has buttons for quick amounts ($5, $10, $20) and checkmark to save
+- test additions
+- outstanding TODOs
+- icon
+- LaunchScreen
 - re-up Apple Dev for distribution, setup with FireBase (app distribution + crashlytics)
+
+Feature backlog:
 - add notion of Category to SpendItem
   - update model
   - update SpendItemView to have dropdown selector
+- currency dropdown; USD, CAD…
+    - Need to add notification and have appropriate views react
 
 resources:
 - https://developer.apple.com/design/human-interface-guidelines/widgets

@@ -10,6 +10,7 @@ import Foundation
 class SpendMonth {
     // Instance vars
     let id: UUID
+    // TODO: persist date: Date instead of month+year; fix up everything and test
     let month: Int
     let year: Int
     let spend: Decimal
