@@ -1,7 +1,6 @@
 ### TODO:
 Before RC:
 - modal for when new month starts
-- modal for spend history
 - modal for new user experience; explains intent and usage
 - widget
   - shows daily trends
