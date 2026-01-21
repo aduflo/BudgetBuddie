@@ -82,9 +82,7 @@ private extension SpendHistoryViewModel {
         var sortDescriptors: [SortDescriptor<SpendMonth>] = []
         switch monthSortAttributeSelection {
         case .date:
-            // TODO: revisit to see if we want to leverage SpendMonth.date once it's included on model
-            sortDescriptors.append(SortDescriptor<SpendMonth>(\.year, order: sortOrderSelection))
-            sortDescriptors.append(SortDescriptor<SpendMonth>(\.month, order: sortOrderSelection))
+            sortDescriptors.append(SortDescriptor<SpendMonth>(\.date, order: sortOrderSelection))
         case .spend:
             sortDescriptors.append(SortDescriptor<SpendMonth>(\.spend, order: sortOrderSelection))
         }

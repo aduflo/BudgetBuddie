@@ -12,8 +12,8 @@ class SpendItem {
     let id: UUID
     let amount: Decimal
     let note: String?
-    let date: Date
-    let createdAt: Date
+    let date: Date // intended to be the date this object maps to; can be any date
+    let createdAt: Date // intended to be the date this object was initialized
     
     // Constructors
     init(

@@ -25,7 +25,6 @@ extension Notification {
 
 extension Notification {
     enum UserInfoKey {
-        static let month = "month"
-        static let year = "year"
+        static let date = "date"
     }
 }

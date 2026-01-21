@@ -68,10 +68,9 @@ class SpendRepository: SpendRepositable {
         return months
     }
     
-    func getMonth(month: Int, year: Int) throws -> SpendMonth {
+    func getMonth(date: Date) throws -> SpendMonth {
         let month_data = try store.getMonth(
-            month: month,
-            year: year
+            date: date
         )
         let month = SpendMonthMapper.toDomainObject(month_data)
         return month
@@ -121,15 +120,25 @@ private extension SpendRepository {
     
     // Stage/commit month
     func commitStagedMonth(settingsService: SettingsServiceable) throws {
-        // compose month_data
+        // extract items from staging environment
         let items = try store.getAllItems()
+        
+        // extract first items date, for reference
+        guard let referenceDate = items.first?.date else {
+            throw SpendRepositoryError.unableToCommitStagedMonth
+        }
+        
+        // compose arguments
+        let calendar = Calendar.current
+        let month = calendar.monthInDate(referenceDate)
+        let year = calendar.yearInDate(referenceDate)
         let spend = items.reduce(0.0, { $0 + $1.amount })
         let allowance = settingsService.monthlyAllowance
-        let calendar = Calendar.current
-        let month = calendar.month
-        let year = calendar.year
+        
+        // compose month_data
         let month_data = SpendMonth_Data(
             id: UUID(),
+            date: referenceDate,
             month: month,
             year: year,
             spend: spend,
@@ -141,8 +150,7 @@ private extension SpendRepository {
         
         // post notification
         postNotificationSpendRepositoryDidCommitStagedMonth(
-            month: month,
-            year: year
+            date: referenceDate
         )
     }
     
@@ -166,13 +174,12 @@ private extension SpendRepository {
         NotificationCenter.default.post(.SpendRepositoryDidStageNewMonth)
     }
     
-    func postNotificationSpendRepositoryDidCommitStagedMonth(month: Int, year: Int) {
+    func postNotificationSpendRepositoryDidCommitStagedMonth(date: Date) {
         NotificationCenter.default.post(
             name: .SpendRepositoryDidCommitStagedMonth,
             object: nil,
             userInfo: [
-                Notification.UserInfoKey.month: month,
-                Notification.UserInfoKey.year: year
+                Notification.UserInfoKey.date: date
             ]
         )
     }

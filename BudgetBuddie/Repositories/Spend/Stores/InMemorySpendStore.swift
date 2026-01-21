@@ -132,7 +132,7 @@ class InMemorySpendStore: SpendStoreable {
         throw notImplementedError(functionName: #function)
     }
     
-    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data {
+    func getMonth(date: Date) throws -> SpendMonth_Data {
         throw notImplementedError(functionName: #function)
     }
     

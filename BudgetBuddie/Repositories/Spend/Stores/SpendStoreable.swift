@@ -21,7 +21,7 @@ protocol SpendStoreable {
     func deleteItem(_ item: SpendItem_Data) throws
     func getDay(date: Date) throws -> SpendDay_Data
     func getAllMonths() throws -> [SpendMonth_Data]
-    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data
+    func getMonth(date: Date) throws -> SpendMonth_Data
     func saveMonth(_ month: SpendMonth_Data) throws
     func deleteStagedMonthData() throws
     func stageMonthData(_ date: Date) throws

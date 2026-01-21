@@ -10,23 +10,19 @@ import Foundation
 class SpendMonth {
     // Instance vars
     let id: UUID
-    // TODO: persist date: Date instead of month+year; fix up everything and test
-    let month: Int
-    let year: Int
+    let date: Date
     let spend: Decimal
     let allowance: Decimal
     
     // Constructors
     init(
         id: UUID,
-        month: Int,
-        year: Int,
+        date: Date,
         spend: Decimal,
         allowance: Decimal
     ) {
         self.id = id
-        self.month = month
-        self.year = year
+        self.date = date
         self.spend = spend
         self.allowance = allowance
     }
@@ -35,15 +31,13 @@ class SpendMonth {
 // MARK: Public interface
 extension SpendMonth {
     convenience init(
-        month: Int,
-        year: Int,
+        date: Date,
         spend: Decimal,
         allowance: Decimal
     ) {
         self.init(
             id: UUID(),
-            month: month,
-            year: year,
+            date: date,
             spend: spend,
             allowance: allowance
         )
@@ -54,8 +48,7 @@ extension SpendMonth {
 extension SpendMonth {
     static func mock() -> SpendMonth {
         SpendMonth(
-            month: 01,
-            year: 2026,
+            date: Date(),
             spend: 9001.00,
             allowance: 9000.00
         )

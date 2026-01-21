@@ -76,6 +76,7 @@ class MockSpendStore: SpendStoreable {
         (0..<20).map { idx in
             SpendMonth_Data(
                 id: UUID(),
+                date: .distantPast,
                 month: 01,
                 year: 2026,
                 spend: Decimal(idx),
@@ -84,11 +85,12 @@ class MockSpendStore: SpendStoreable {
         }
     }
     
-    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data {
+    func getMonth(date: Date) throws -> SpendMonth_Data {
         SpendMonth_Data(
             id: UUID(),
-            month: month,
-            year: year,
+            date: date,
+            month: Calendar.current.monthInDate(date),
+            year: Calendar.current.yearInDate(date),
             spend: 9001.00,
             allowance: 9000.00
         )

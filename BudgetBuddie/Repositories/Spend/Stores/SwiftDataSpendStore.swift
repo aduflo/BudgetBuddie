@@ -137,8 +137,6 @@ class SwiftDataSpendStore: SpendStoreable {
     
     func getAllMonths() throws -> [SpendMonth_Data] {
         do {
-            // TODO: determine if we want the sorting done here, or at the consumer level
-            // decision: we'll have sorting be a dropdown on the list view, and we'll return non-sorted order
             let fetchDescriptor = FetchDescriptor<SpendMonth_SwiftData>()
             guard let months_swiftData = try context?.fetch(fetchDescriptor) else {
                 throw SpendStoreError.monthsNotFound
@@ -152,7 +150,10 @@ class SwiftDataSpendStore: SpendStoreable {
         }
     }
     
-    func getMonth(month: Int, year: Int) throws -> SpendMonth_Data {
+    func getMonth(date: Date) throws -> SpendMonth_Data {
+        let calendar = Calendar.current
+        let month = calendar.monthInDate(date)
+        let year = calendar.yearInDate(date)
         do {
             let predicate: Predicate<SpendMonth_SwiftData> = #Predicate {
                 $0.month == month && $0.year == year
@@ -222,22 +223,29 @@ class SwiftDataSpendStore: SpendStoreable {
     // TODO: remove after testing
     func commitMultipleMonths() {
         do {
+            var date = Date()
+            let calendar = Calendar.current
+            var dates: [Date] = []
+            var idx = 0
+            while idx < 100 {
+                date = calendar.date(
+                    byAdding: .day,
+                    value: -3,
+                    to: date
+                ) ?? Date()
+                dates.append(date)
+                idx += 1
+            }
             try context?.transaction {
-                for duo in [
-                    (2025,01),
-                    (2026,01),
-                    (2025,02),
-                    (2026,02),
-                    (2025,03),
-                    (2026,03),
-                ] {
+                for date in dates {
                     context?.insert(
                         SpendMonth_SwiftData(
                             id: UUID(),
-                            month: duo.1,
-                            year: duo.0,
-                            spend: Decimal(integerLiteral: duo.0),
-                            allowance: 9000
+                            date: date,
+                            month: calendar.monthInDate(date),
+                            year: calendar.yearInDate(date),
+                            spend: Decimal(floatLiteral: .random(in: (0.0..<2000.00))),
+                            allowance: 1337.00
                         )
                     )
                 }

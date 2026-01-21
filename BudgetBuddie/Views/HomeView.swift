@@ -104,15 +104,13 @@ struct HomeView: View {
             NotificationCenter.default.publisher(for: .SpendRepositoryDidCommitStagedMonth),
             perform: { notification in
                 guard let userInfo = notification.userInfo,
-                      let month = userInfo[Notification.UserInfoKey.month] as? Int,
-                      let year = userInfo[Notification.UserInfoKey.year] as? Int else {
+                      let date = userInfo[Notification.UserInfoKey.date] as? Date else {
                     return
                 }
                 
                 Task { await MainActor.run {
-                    viewModel.setSpendMonthSummaryParamsToPresent(
-                        month: month,
-                        year: year
+                    viewModel.setSpendMonthSummaryDateToPresent(
+                        date: date
                     )
                     presentSpendMonthSummary.toggle()
                 }}
@@ -127,12 +125,11 @@ struct HomeView: View {
             }
         )
         .sheet(isPresented: $presentSpendMonthSummary) {
-            if let params = viewModel.spendMonthSummaryParamsToPresent {
+            if let date = viewModel.spendMonthSummaryDateToPresent {
                 SpendMonthSummaryView(
                     viewModel: SpendMonthSummaryViewModel(
                         spendRepository: viewModel.spendRepository,
-                        month: params.month,
-                        year: params.year
+                        date: date
                     )
                 )
                 .presentationDetents([.fraction(0.75)])

@@ -13,8 +13,7 @@ import Foundation
 class SpendMonthSummaryViewModel {
     // Instance vars
     private let spendRepository: SpendRepositable
-    private let month: Int
-    private let year: Int
+    private let date: Date
     
     private(set) var spendMonth: SpendMonth?
     private(set) var error: Error? = nil
@@ -22,12 +21,10 @@ class SpendMonthSummaryViewModel {
     // Constructors
     init(
         spendRepository: SpendRepositable,
-        month: Int,
-        year: Int
+        date: Date
     ) {
         self.spendRepository = spendRepository
-        self.month = month
-        self.year = year
+        self.date = date
     }
 }
 
@@ -38,8 +35,7 @@ extension SpendMonthSummaryViewModel {
         do {
             error = nil
             spendMonth = try spendRepository.getMonth(
-                month: month,
-                year: year
+                date: date
             )
         } catch {
             self.error = error
@@ -55,7 +51,7 @@ extension SpendMonthSummaryViewModel {
     }
     
     var displayText: String {
-        "Month: \(spendMonth?.month) Year: \(spendMonth?.year) Spend: \(spendMonth?.spend) Allowance: \(spendMonth?.allowance)"
+        "Date: \(date.monthDayYearString) Spend: \(spendMonth?.spend) Allowance: \(spendMonth?.allowance)"
     }
 }
 

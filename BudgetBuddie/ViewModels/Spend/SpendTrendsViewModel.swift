@@ -140,14 +140,14 @@ private extension SpendTrendsViewModel {
     }
     
     var dailyMaxSpend: Decimal {
-        let daysInMonth = Calendar.current.daysInMonth(calendarService.selectedDate)
-        return monthlyMaxSpend / Decimal(daysInMonth)
+        let days = Calendar.current.daysInMonthInDate(calendarService.selectedDate)
+        return monthlyMaxSpend / Decimal(days)
     }
     
     var mtdMaxSpend: Decimal {
         let dailyMaxSpend = dailyMaxSpend
-        let dayInMonth = Calendar.current.dayInMonth(calendarService.selectedDate)
-        return dailyMaxSpend * Decimal(dayInMonth)
+        let day = Calendar.current.dayInDate(calendarService.selectedDate)
+        return dailyMaxSpend * Decimal(day)
     }
     
     var monthlyMaxSpend: Decimal {

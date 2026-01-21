@@ -57,14 +57,14 @@ private extension CalendarViewModel {
         )
         return dates.map {
             MonthDay(
-                day: Calendar.current.dayInMonth($0),
+                day: Calendar.current.dayInDate($0),
                 date: $0
             )
         }
     }
     
     var currentMonthDay: MonthDay? {
-        let dayInMonth = Calendar.current.dayInMonth(calendarService.selectedDate)
+        let dayInMonth = Calendar.current.dayInDate(calendarService.selectedDate)
         return monthDays.first { $0.day == dayInMonth }
     }
     

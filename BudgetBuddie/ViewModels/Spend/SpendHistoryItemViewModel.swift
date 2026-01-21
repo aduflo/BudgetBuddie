@@ -29,14 +29,7 @@ struct SpendHistoryItemViewModel: Identifiable {
 // MARK: Public interface
 extension SpendHistoryItemViewModel {
     var displayDate: String {
-        let month = if spendMonth.month < 10 {
-            "0\(spendMonth.month)"
-        } else {
-            String(spendMonth.month)
-        }
-        let year = String(spendMonth.year - 2000)
-        // TODO: use actual date once refactor occurs, and leverage the date format used in the header of SpendListView
-        return "\(month)/\(year)"
+        spendMonth.date.monthDayYearString
     }
     
     var displaySpend: String {

@@ -13,8 +13,7 @@ enum SpendMonthMapper {
     ) -> SpendMonth {
         SpendMonth(
             id: data.id,
-            month: data.month,
-            year: data.year,
+            date: data.date,
             spend: data.spend,
             allowance: data.allowance
         )
@@ -25,6 +24,7 @@ enum SpendMonthMapper {
     ) -> SpendMonth_Data {
         SpendMonth_Data(
             id: swiftData.id,
+            date: swiftData.date,
             month: swiftData.month,
             year: swiftData.year,
             spend: swiftData.spend,
@@ -37,6 +37,7 @@ enum SpendMonthMapper {
     ) -> SpendMonth_SwiftData {
         SpendMonth_SwiftData(
             id: data.id,
+            date: data.date,
             month: data.month,
             year: data.year,
             spend: data.spend,

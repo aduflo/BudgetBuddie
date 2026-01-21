@@ -47,8 +47,7 @@ struct SpendMonthSummaryView: View {
     SpendMonthSummaryView(
         viewModel: SpendMonthSummaryViewModel(
             spendRepository: MockSpendRepository(),
-            month: 01,
-            year: 2026
+            date: .distantPast
         )
     )
 }
