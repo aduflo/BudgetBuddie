@@ -15,4 +15,5 @@ enum SystemImage {
     static let arrowClockwise = "arrow.clockwise"
     static let chartLineUptrendXyaxis = "chart.line.uptrend.xyaxis"
     static let chartLineDowntrendXyaxis = "chart.line.downtrend.xyaxis"
+    static let clockArrowTriangleheadCounterclockwiseRotate90 = "clock.arrow.trianglehead.counterclockwise.rotate.90"
 }

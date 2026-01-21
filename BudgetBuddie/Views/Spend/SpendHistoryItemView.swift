@@ -41,6 +41,7 @@ struct SpendHistoryItemView: View {
     
     var contentView: some View {
         HStack(
+            alignment: .bottom,
             spacing: Spacing.2
         ) {
             VStack(
@@ -50,7 +51,6 @@ struct SpendHistoryItemView: View {
                 Text(Copy.spend)
                     .font(.subheadline)
                 Text(viewModel.displaySpend)
-                    .font(.caption)
             }
             VStack(
                 alignment: .leading,
@@ -59,7 +59,6 @@ struct SpendHistoryItemView: View {
                 Text(Copy.allowance)
                     .font(.subheadline)
                 Text(viewModel.displayAllowance)
-                    .font(.caption)
             }
             
             Spacer()
@@ -76,7 +75,6 @@ struct SpendHistoryItemView: View {
                     }
                 }())
                 Text(viewModel.displayDifference)
-                    .font(.subheadline)
             }
             .foregroundStyle({
                 if viewModel.isSpendWithinBudget {

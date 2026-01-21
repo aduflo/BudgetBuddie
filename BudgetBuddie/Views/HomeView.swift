@@ -66,8 +66,10 @@ struct HomeView: View {
                 Button {
                     presentSpendHistory.toggle()
                 } label: {
-                    Text(Copy.spendHistoryButton) // TODO: come back to this to determine styling/copy/tint color
+                    Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
+                    Text(Copy.historyButton)
                 }
+                .tint(.black)
                 .padding(Padding.1)
                 .roundedRectangleBackground(
                     cornerRadius: CornerRadius.1,

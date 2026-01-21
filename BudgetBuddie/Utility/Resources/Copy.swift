@@ -16,10 +16,10 @@ extension Copy {
     static let settingsTitle = "Settings"
     static let newSpendItemTitle = "New Spend Item"
     static let editSpendItemTitle = "Edit Spend Item"
-    static let spendHistoryTitle = "Spend History"
+    static let historyTitle = "History"
     
     // Button
-    static let spendHistoryButton = "Spend history"
+    static let historyButton = "History"
     
     // Misc.
     static let appName = "BudgetBuddie"

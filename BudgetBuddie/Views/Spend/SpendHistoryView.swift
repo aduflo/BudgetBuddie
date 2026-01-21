@@ -30,7 +30,7 @@ struct SpendHistoryView: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text(Copy.spendHistoryTitle)
+            Text(Copy.historyTitle)
                 .font(.title)
                 .padding(Padding.1)
             Divider()

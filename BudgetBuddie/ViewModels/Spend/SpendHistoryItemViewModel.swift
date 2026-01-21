@@ -42,12 +42,7 @@ extension SpendHistoryItemViewModel {
     
     var displayDifference: String {
         let difference = spendMonth.allowance - spendMonth.spend
-        let stringDifference = currencyFormatter.stringAmount(difference)
-        return if difference < 0 {
-            "-\(stringDifference)"
-        } else {
-            "+\(stringDifference)"
-        }
+        return currencyFormatter.stringAmount(difference)
     }
     
     var isSpendWithinBudget: Bool {
