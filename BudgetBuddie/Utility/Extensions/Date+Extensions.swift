@@ -19,4 +19,8 @@ extension Date {
     var monthDayYearString: String {
         formatted(.dateTime.day(.twoDigits).month(.twoDigits).year(.defaultDigits))
     }
+    
+    var monthLongString: String {
+        formatted(.dateTime.month(.wide))
+    }
 }

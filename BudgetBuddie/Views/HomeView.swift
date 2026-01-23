@@ -39,7 +39,7 @@ struct HomeView: View {
                             currencyFormatter: viewModel.currencyFormatter
                         )
                     )
-                    .presentationDetents([.fraction(0.5)])
+                    .presentationDetents([.fraction(1/2)])
                 }
                 
                 SpendListView(
@@ -60,7 +60,7 @@ struct HomeView: View {
                             }()
                         )
                     )
-                    .presentationDetents([.fraction(0.5)])
+                    .presentationDetents([.fraction(1/2)])
                 }
                 
                 Button {
@@ -82,7 +82,7 @@ struct HomeView: View {
                             currencyFormatter: viewModel.currencyFormatter
                         )
                     )
-                    .presentationDetents([.fraction(0.75)])
+                    .presentationDetents([.fraction(3/4)])
                 }
             }
         }
@@ -131,10 +131,11 @@ struct HomeView: View {
                 SpendMonthSummaryView(
                     viewModel: SpendMonthSummaryViewModel(
                         spendRepository: viewModel.spendRepository,
+                        currencyFormatter: viewModel.currencyFormatter,
                         date: date
                     )
                 )
-                .presentationDetents([.fraction(0.75)])
+                .presentationDetents([.fraction(1/3)])
             } else { EmptyView() }
         }
     }

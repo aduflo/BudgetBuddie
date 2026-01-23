@@ -8,11 +8,7 @@
 import Foundation
 import Synchronization
 
-class InMemorySpendStore: SpendStoreable {
-    // TODO: remove after testing
-    func commitMultipleMonths() {}
-    func purgeAllMonths() {}
-    
+class InMemorySpendStore: SpendStoreable {    
     // Instance vars
     private let daysDict = Mutex<[String: SpendDay_Data]>([:])
     

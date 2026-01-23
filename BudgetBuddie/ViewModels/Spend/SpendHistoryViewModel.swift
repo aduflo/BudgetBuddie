@@ -41,11 +41,11 @@ class SpendHistoryViewModel {
 extension SpendHistoryViewModel {
     func reloadData() {
         do {
-            error = nil
             listItemViewModels = try listItemViewModelsBuilder()
+            error = nil
         } catch {
-            self.error = error
             listItemViewModels = []
+            self.error = error
         }
     }
     

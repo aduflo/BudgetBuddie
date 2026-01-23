@@ -7,19 +7,17 @@
 
 import SwiftUI
 
-// TODO: button things up here
-
 struct SpendMonthSummaryView: View {
     // Instance vars
     @State var viewModel: SpendMonthSummaryViewModel
     
     var body: some View {
-        // TODO: build view
         VStack(
             spacing: Spacing.1
         ) {
             headerView
             contentView
+            Spacer() // to push everything to the top
         }
         .padding(Padding.2)
         .onAppear {
@@ -31,7 +29,7 @@ struct SpendMonthSummaryView: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text("Copy.history")
+            Text(Copy.monthSummaryTitle)
                 .font(.title)
                 .padding(Padding.1)
             Divider()
@@ -39,14 +37,127 @@ struct SpendMonthSummaryView: View {
     }
     
     var contentView: some View {
-        Text(viewModel.displayText)
+        Group {
+            if viewModel.error != nil {
+                errorView
+            } else {
+                summaryView
+            }
+        }
+    }
+    
+    var errorView: some View {
+        Text(Copy.errorSomethingWentWrong)
+            .font(.headline)
+            .foregroundStyle(Color.red)
+    }
+    
+    var summaryView: some View {
+        VStack(
+            spacing: Spacing.2
+        ) {
+            VStack(
+                spacing: Spacing.1
+            ) {
+                Text(Copy.letsSeeHowWeDidThisMonth(viewModel.displayMonth))
+                    .font(.headline)
+                
+                Text(viewModel.displaySpendDifference)
+                    .foregroundStyle({
+                        if viewModel.isSpendWithinBudget {
+                            Color.green
+                        } else {
+                            Color.red
+                        }
+                    }())
+                    .font(.largeTitle)
+                
+                HStack(
+                    spacing: Spacing.2
+                ) {
+                    VStack(
+                        alignment: .leading,
+                        spacing: Spacing.half
+                    ) {
+                        Text(Copy.spend)
+                            .font(.subheadline)
+                        Text(viewModel.displaySpend)
+                    }
+                    
+                    VStack(
+                        alignment: .leading,
+                        spacing: Spacing.half
+                    ) {
+                        Text(Copy.allowance)
+                            .font(.subheadline)
+                        Text(viewModel.displayAllowance)
+                    }
+                }
+            }
+            
+            Group {
+                if viewModel.isSpendWithinBudget {
+                    Text(Copy.greatJobLetsKeepItUp)
+                } else {
+                    Text(Copy.letsDoBetterThisMonth)
+                }
+            }
+            .font(.title3)
+        }
     }
 }
 
-#Preview {
+#Preview("Happy State; Underspent") {
     SpendMonthSummaryView(
         viewModel: SpendMonthSummaryViewModel(
-            spendRepository: MockSpendRepository(),
+            spendRepository: {
+                let spendRepository = MockSpendRepository()
+                spendRepository.getMonth_returnValue = (
+                    SpendMonth(
+                        date: .distantPast,
+                        spend: 13.37,
+                        allowance: 1337
+                    ),
+                    nil
+                )
+                return spendRepository
+            }(),
+            currencyFormatter: CurrencyFormatter(),
+            date: .distantPast
+        )
+    )
+}
+
+#Preview("Happy State; Overspent") {
+    SpendMonthSummaryView(
+        viewModel: SpendMonthSummaryViewModel(
+            spendRepository: {
+                let spendRepository = MockSpendRepository()
+                spendRepository.getMonth_returnValue = (
+                    SpendMonth(
+                        date: .distantFuture,
+                        spend: 9001,
+                        allowance: 9000
+                    ),
+                    nil
+                )
+                return spendRepository
+            }(),
+            currencyFormatter: CurrencyFormatter(),
+            date: .distantPast
+        )
+    )
+}
+
+#Preview("Error State") {
+    SpendMonthSummaryView(
+        viewModel: SpendMonthSummaryViewModel(
+            spendRepository: {
+                let spendRepository = MockSpendRepository()
+                spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.unableToCommitStagedMonth)
+                return spendRepository
+            }(),
+            currencyFormatter: CurrencyFormatter(),
             date: .distantPast
         )
     )

@@ -37,7 +37,15 @@ class MockSpendRepository: SpendRepositable {
         [.mock()]
     }
     
+    var getMonth_returnValue: (spendMonth: SpendMonth?, error: Error?)? = nil
     func getMonth(date: Date) throws -> SpendMonth {
-        .mock()
+        let returnValue = getMonth_returnValue
+        if let spendMonth = returnValue?.spendMonth {
+            return spendMonth
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return .mock()
     }
 }

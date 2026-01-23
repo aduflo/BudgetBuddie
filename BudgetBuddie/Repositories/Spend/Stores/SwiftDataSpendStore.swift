@@ -219,55 +219,6 @@ class SwiftDataSpendStore: SpendStoreable {
             throw SpendStoreError.unableToStageMonth
         }
     }
-    
-    // TODO: remove after testing
-    func commitMultipleMonths() {
-        do {
-            var date = Date()
-            let calendar = Calendar.current
-            var dates: [Date] = []
-            var idx = 0
-            while idx < 100 {
-                date = calendar.date(
-                    byAdding: .day,
-                    value: -3,
-                    to: date
-                ) ?? Date()
-                dates.append(date)
-                idx += 1
-            }
-            try context?.transaction {
-                for date in dates {
-                    context?.insert(
-                        SpendMonth_SwiftData(
-                            id: UUID(),
-                            date: date,
-                            month: calendar.monthInDate(date),
-                            year: calendar.yearInDate(date),
-                            spend: Decimal(floatLiteral: .random(in: (0.0..<2000.00))),
-                            allowance: 1337.00
-                        )
-                    )
-                }
-                print("\(#function) success")
-            }
-        } catch {
-            print("\(#function) error: \(error)")
-        }
-    }
-    
-    func purgeAllMonths() {
-        do {
-            try context?.transaction {
-                try context?.delete(
-                    model: SpendMonth_SwiftData.self
-                )
-                print("\(#function) success")
-            }
-        } catch {
-            print("\(#function) error: \(error)")
-        }
-    }
 }
 
 // MARK: Private interface

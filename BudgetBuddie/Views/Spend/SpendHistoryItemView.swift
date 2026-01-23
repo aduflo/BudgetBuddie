@@ -74,7 +74,7 @@ struct SpendHistoryItemView: View {
                         SystemImage.chartLineDowntrendXyaxis
                     }
                 }())
-                Text(viewModel.displayDifference)
+                Text(viewModel.displaySpendDifference)
             }
             .foregroundStyle({
                 if viewModel.isSpendWithinBudget {

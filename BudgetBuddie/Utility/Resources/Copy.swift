@@ -17,6 +17,7 @@ extension Copy {
     static let newSpendItemTitle = "New Spend Item"
     static let editSpendItemTitle = "Edit Spend Item"
     static let historyTitle = "History"
+    static let monthSummaryTitle = "Month Summary"
     
     // Button
     static let historyButton = "History"
@@ -50,6 +51,7 @@ extension Copy {
     static let delete = "Delete"
     static let goodJobSaving = "Good job saving today!"
     static let errorPleaseTryAgain = "Error! Please try again."
+    static let errorSomethingWentWrong = "Error! Something went wrong."
     static let notAvailabile = "N/A"
     static let spend = "Spend"
     static let date = "Date"
@@ -59,6 +61,11 @@ extension Copy {
     static let lessSpend = "$"
     static let moreSpend = "$$$$"
     static let noRecordedHistory = "No recorded history."
+    static func letsSeeHowWeDidThisMonth(_ month: String) -> String {
+        "Let's see how we did in \(month):"
+    }
+    static let greatJobLetsKeepItUp = "Great job! Let's keep it up."
+    static let letsDoBetterThisMonth = "Let's do better this month."
 }
 
 extension Copy {

@@ -7,12 +7,11 @@
 
 import Foundation
 
-// TODO: button things up here
-
 @Observable
 class SpendMonthSummaryViewModel {
     // Instance vars
     private let spendRepository: SpendRepositable
+    private let currencyFormatter: CurrencyFormatter
     private let date: Date
     
     private(set) var spendMonth: SpendMonth?
@@ -21,9 +20,11 @@ class SpendMonthSummaryViewModel {
     // Constructors
     init(
         spendRepository: SpendRepositable,
+        currencyFormatter: CurrencyFormatter,
         date: Date
     ) {
         self.spendRepository = spendRepository
+        self.currencyFormatter = currencyFormatter
         self.date = date
     }
 }
@@ -31,31 +32,55 @@ class SpendMonthSummaryViewModel {
 // MARK: Public interface
 extension SpendMonthSummaryViewModel {
     func reloadData() {
-        // attempt to extract spendMonth via params
         do {
-            error = nil
             spendMonth = try spendRepository.getMonth(
                 date: date
             )
+            error = nil
         } catch {
+            spendMonth = nil
             self.error = error
         }
-        
-        // digest outcome; continue if spendMonth extracted + no error
-        guard let spendMonth, error == nil else {
-            return
-        }
-        
-        // update view attributes since we have spend month
-        
     }
     
-    var displayText: String {
-        "Date: \(date.monthDayYearString) Spend: \(spendMonth?.spend) Allowance: \(spendMonth?.allowance)"
+    var displayMonth: String {
+        guard let date = spendMonth?.date else {
+            return ""
+        }
+        
+        return date.monthLongString
     }
-}
-
-// MARK: Private interface
-private extension SpendMonthSummaryViewModel {
-    //
+    
+    var displaySpend: String {
+        guard let spend = spendMonth?.spend else {
+            return ""
+        }
+        
+        return currencyFormatter.stringAmount(spend)
+    }
+    
+    var displayAllowance: String {
+        guard let allowance = spendMonth?.allowance else {
+            return ""
+        }
+        
+        return currencyFormatter.stringAmount(allowance)
+    }
+    
+    var isSpendWithinBudget: Bool {
+        guard let spendMonth else {
+            return false
+        }
+        
+        return spendMonth.spend <= spendMonth.allowance
+    }
+    
+    var displaySpendDifference: String {
+        guard let spendMonth else {
+            return ""
+        }
+        
+        let difference = spendMonth.allowance - spendMonth.spend
+        return currencyFormatter.stringAmount(difference)
+    }
 }
