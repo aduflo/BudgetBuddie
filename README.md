@@ -1,12 +1,10 @@
 ### TODO:
 Before RC:
-- make icon; Icon Composer
 - widget
   - shows daily trends
   - has buttons for quick amounts ($5, $10, $20) and checkmark to save
 - test additions
-- outstanding TODOs
-- LaunchScreen
+- any outstanding TODOs
 - setup Crashlytics
 - re-up Apple Dev for distribution
 - setup TestFlight or Firebase distro
