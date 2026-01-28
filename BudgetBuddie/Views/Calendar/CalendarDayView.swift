@@ -18,6 +18,8 @@ struct CalendarDayView: View {
     
     var body: some View {
         Text(viewModel.displayMonthDay)
+            .fontWeight(.semibold)
+            .foregroundStyle(viewModel.isToday ? .white : .black)
             .frame(
                 width: 48.0,
                 height: 32.0
@@ -25,7 +27,7 @@ struct CalendarDayView: View {
             .padding(Padding.1)
             .roundedRectangleBackground(
                 cornerRadius: CornerRadius.1,
-                color: viewModel.isToday ? .yellow : .white,
+                color: viewModel.isToday ? .blue: .white,
                 strokeColor: viewModel.isSelected ? .black: .clear,
                 strokeWidth: viewModel.isSelected ? StrokeWidth.2 : 0.0
             )

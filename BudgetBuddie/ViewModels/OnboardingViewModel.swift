@@ -12,10 +12,9 @@ struct OnboardingViewModel {}
 // MARK: Public interface
 extension OnboardingViewModel {    
     func setDidOnboardOnce() {
-        // TODO: uncomment when wrapped with testing
-//        UserDefaults.standard.set(
-//            true,
-//            forKey: UserDefaults.Key.App.didOnboardOnce
-//        )
+        UserDefaults.standard.set(
+            true,
+            forKey: UserDefaults.Key.App.didOnboardOnce
+        )
     }
 }

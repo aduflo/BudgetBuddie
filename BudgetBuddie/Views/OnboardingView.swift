@@ -15,16 +15,13 @@ struct OnboardingView: View {
         VStack(
             spacing: Spacing.2
         ) {
-            AppIconIdea() // TODO: replace with app icon asset
+            AppIcon()
             
-            Text(Copy.onboardingExplanation)
-                .font(.body)
-                .fixedSize(
-                    horizontal: false,
-                    vertical: true
-                )
-            
-            Spacer() // to push everything to the top
+            ScrollView(.vertical) {
+                Text(Copy.onboardingExplanation)
+                    .font(.body)
+            }
+            .scrollIndicators(.automatic)
         }
         .frame(
             maxWidth: .infinity,

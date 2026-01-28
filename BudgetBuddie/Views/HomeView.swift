@@ -27,9 +27,7 @@ struct HomeView: View {
         ScrollView {
             VStack(
                 spacing: Spacing.2
-            ) {
-                BudgetBuddieBannerView()
-                
+            ) {                
                 BudgetSummaryView(
                     viewModel: viewModel.budgetSummaryViewModel
                 )

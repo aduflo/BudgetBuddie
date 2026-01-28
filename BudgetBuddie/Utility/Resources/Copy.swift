@@ -12,6 +12,11 @@ enum Copy {}
 
 extension Copy {
     // MARK: String
+    // App Name
+    static let budgetBuddieName = "BudgetBuddie"
+    static let budgetName = "Budget"
+    static let buddieName = "Buddie"
+    
     // Title
     static let settingsTitle = "Settings"
     static let newSpendItemTitle = "New Spend Item"
@@ -23,7 +28,6 @@ extension Copy {
     static let historyButton = "History"
     
     // Misc.
-    static let appName = "BudgetBuddie"
     static let spendTrends = "Spend trends"
     static let current = "Current"
     static let max = "Max"
@@ -120,12 +124,12 @@ extension Copy {
         """
         Welcome!
         
-        **BudgetBuddie** is a simple budgeting app with two primary intents:
+        **\(budgetBuddieName)** is a simple budgeting app with two primary intents:
         
         1) To provide a bird's-eye view of your monthly expenses
         2) To promote habit building behavior
         
-        When using **BudgetBuddie**, you simply log your expenses day-to-day. The logged expenses are attached to whichever day is specified and assist in the compilation of a view (of the ongoing month's expenses).
+        When using **\(budgetBuddieName)**, you simply log your expenses day-to-day. The logged expenses are attached to whichever day is specified and assist in the compilation of a view (of the ongoing month's expenses).
         
         When a month concludes, you will be shown a summary. Additionally, if you'd like to see how you've tended to your budget over time, you can view that in your history.
         
