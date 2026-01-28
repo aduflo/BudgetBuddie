@@ -1,8 +1,5 @@
 ### TODO:
 Before RC:
-- widget
-  - shows daily trends
-  - has buttons for quick amounts ($5, $10, $20) and checkmark to save
 - test additions
 - any outstanding TODOs
 - setup Crashlytics
@@ -10,6 +7,9 @@ Before RC:
 - setup TestFlight or Firebase distro
 
 Feature backlog:
+- widget
+  - shows daily trends
+  - has buttons for quick amounts ($5, $10, $20) and checkmark to save
 - add notion of Category to SpendItem
   - update model
   - update SpendItemView to have dropdown selector
