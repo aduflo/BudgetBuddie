@@ -12,8 +12,9 @@ struct HomeView: View {
     @State private var viewModel: HomeViewModel
     @State private var presentSettings = false
     @State private var presentSpendItem = false
-    @State private var presentSpendMonthSummary = false
     @State private var presentSpendHistory = false
+    @State private var presentOnboarding = false
+    @State private var presentSpendMonthSummary = false
     
     // Constructors
     init(
@@ -89,6 +90,9 @@ struct HomeView: View {
         .padding(.top, Padding.2)
         .padding(.horizontal, Padding.2)
         .onAppear {
+            // flip onboarding presentation if need be
+            presentOnboarding = viewModel.didOnboardOnce == false
+            
             // assign closures to facilitate presentables
             viewModel.budgetSummaryViewModel.onSettingsTapped = {
                 presentSettings.toggle()
@@ -126,6 +130,10 @@ struct HomeView: View {
                 }}
             }
         )
+        .sheet(isPresented: $presentOnboarding) {
+            OnboardingView()
+                .presentationDetents([.large])
+        }
         .sheet(isPresented: $presentSpendMonthSummary) {
             if let date = viewModel.spendMonthSummaryDateToPresent {
                 SpendMonthSummaryView(

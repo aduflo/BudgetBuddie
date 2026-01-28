@@ -50,6 +50,12 @@ class HomeViewModel {
 
 // MARK: Public interface
 extension HomeViewModel {
+    var didOnboardOnce: Bool {
+        UserDefaults.standard.bool(
+            forKey: UserDefaults.Key.App.didOnboardOnce
+        )
+    }
+    
     func reloadData() {
         budgetSummaryViewModel.reloadData()
         spendListViewModel.reloadData()

@@ -1,15 +1,15 @@
 ### TODO:
 Before RC:
-- modal for when new month starts
-- modal for new user experience; explains intent and usage
+- make icon; Icon Composer
 - widget
   - shows daily trends
   - has buttons for quick amounts ($5, $10, $20) and checkmark to save
 - test additions
 - outstanding TODOs
-- icon
 - LaunchScreen
-- re-up Apple Dev for distribution, setup with FireBase (app distribution + crashlytics)
+- setup Crashlytics
+- re-up Apple Dev for distribution
+- setup TestFlight or Firebase distro
 
 Feature backlog:
 - add notion of Category to SpendItem
@@ -23,4 +23,5 @@ resources:
 - https://developer.apple.com/documentation/WidgetKit
 - https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension
 - https://developer.apple.com/documentation/widgetkit/building_widgets_using_widgetkit_and_swiftui
+- https://developer.apple.com/icon-composer/
 - https://developer.apple.com/design/human-interface-guidelines/typography

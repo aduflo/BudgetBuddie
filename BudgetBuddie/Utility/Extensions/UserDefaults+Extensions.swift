@@ -9,6 +9,9 @@ import Foundation
 
 extension UserDefaults {
     enum Key {
+        enum App: UserDefaultsKey {
+            static let didOnboardOnce = compose(key: "didOnboardOnce")
+        }
         enum Settings: UserDefaultsKey {
             static let monthlyAllowance = compose(key: "monthlyAllowance")
             static let warningThreshold = compose(key: "warningThreshold")
