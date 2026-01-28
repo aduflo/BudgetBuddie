@@ -15,7 +15,9 @@ struct OnboardingView: View {
         VStack(
             spacing: Spacing.2
         ) {
-            AppIcon()
+            Image(Asset.appIconSmall)
+                .resizable()
+                .frame(width: 72.0, height: 72.0)
             
             ScrollView(.vertical) {
                 Text(Copy.onboardingExplanation)
