@@ -1,9 +1,8 @@
 ### TODO:
 Before RC:
 - test additions
-- any outstanding TODOs
-- setup TestFlight || Firebase distro
-- cut RC
+- QA + find bugs
+- cut 1.0 RC
 
 Feature backlog:
 - widget
