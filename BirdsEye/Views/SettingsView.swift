@@ -61,6 +61,9 @@ struct SettingsView: View {
             )
             .textFieldStyle(.roundedBorder)
             .keyboardType(.decimalPad)
+            .onChange(of: monthlyAllowance, { oldValue, newValue in
+                viewModel.setMonthlyAllowance(monthlyAllowance)
+            })
             .onSubmit {
                 viewModel.setMonthlyAllowance(monthlyAllowance)
             }
