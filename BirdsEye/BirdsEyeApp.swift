@@ -17,6 +17,11 @@ struct BirdsEyeApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     
+    // Constructors
+    init() {
+        startDependencies()
+    }
+    
     var body: some Scene {
         WindowGroup {
             HomeView(
@@ -35,5 +40,12 @@ struct BirdsEyeApp: App {
                 }
             }
         }
+    }
+}
+
+// MARK: Private interface
+private extension BirdsEyeApp {
+    func startDependencies() {
+        ObservabilityService.start()
     }
 }

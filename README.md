@@ -2,9 +2,8 @@
 Before RC:
 - test additions
 - any outstanding TODOs
-- setup Crashlytics
-- re-up Apple Dev for distribution
-- setup TestFlight or Firebase distro
+- setup TestFlight || Firebase distro
+- cut RC
 
 Feature backlog:
 - widget
