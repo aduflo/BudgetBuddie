@@ -29,7 +29,7 @@ struct SpendListView: View {
         .padding(Padding.2)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,
-            color: .gray.opacity(0.25)
+            color: .backgroundSecondary
         )
         .onAppear {
             viewModel.reloadData()

@@ -45,7 +45,7 @@ struct SpendListItemView: View {
         .padding(Padding.1)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.1,
-            color: .white
+            color: .backgroundPrimary
         )
     }
 }

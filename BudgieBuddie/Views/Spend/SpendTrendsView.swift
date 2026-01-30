@@ -45,7 +45,7 @@ struct SpendTrendsView: View {
             .padding(Padding.2)
             .roundedRectangleBackground(
                 cornerRadius: CornerRadius.2,
-                color: .white
+                color: .backgroundPrimary
             )
         }
         .onAppear {

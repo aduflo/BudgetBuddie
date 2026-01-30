@@ -23,7 +23,7 @@ struct AppIcon: View {
         .padding(Padding.1)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,
-            color: .blue
+            color: .backgroundApp
         )
     }
 }

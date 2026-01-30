@@ -1,5 +1,14 @@
 ### TODO:
 Before RC:
+- fix up for dark mode
+  - backgrounds are good now. just need to visit every Text() to give it an applicable .foregroundStyle(.??)
+  - audit every screen
+    - onboarding view
+    - home view
+    - month summary view
+    - history view
+    - settings view
+    - spend item view
 - test additions
 - QA + find bugs
 - cut 1.0 RC
@@ -28,3 +37,4 @@ Feature backlog:
 
 // misc.
 - https://developer.apple.com/design/human-interface-guidelines/typography
+- https://stackoverflow.com/questions/57988687/how-to-use-dark-mode-in-ios-simulator

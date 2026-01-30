@@ -30,7 +30,7 @@ struct SpendHistoryItemView: View {
         .padding(.horizontal, Padding.3)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,
-            color: .white
+            color: .backgroundPrimary
         )
     }
     

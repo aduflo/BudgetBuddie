@@ -65,15 +65,19 @@ struct HomeView: View {
                 Button {
                     presentSpendHistory.toggle()
                 } label: {
-                    Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
-                    Text(Copy.historyButton)
+                    HStack(
+                        spacing: Spacing.half
+                    ) {
+                        Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
+                        Text(Copy.historyButton)
+                    }
+                    .foregroundStyle(.tintPrimary)
+                    .padding(Padding.1)
+                    .roundedRectangleBackground(
+                        cornerRadius: CornerRadius.1,
+                        color: .backgroundSecondary
+                    )
                 }
-                .tint(.black)
-                .padding(Padding.1)
-                .roundedRectangleBackground(
-                    cornerRadius: CornerRadius.1,
-                    color: .gray.opacity(0.25)
-                )
                 .sheet(isPresented: $presentSpendHistory) {
                     SpendHistoryView(
                         viewModel: SpendHistoryViewModel(

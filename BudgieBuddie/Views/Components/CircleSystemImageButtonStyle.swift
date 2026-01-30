@@ -18,8 +18,8 @@ struct CircleSystemImageButtonStyle: ButtonStyle {
                 width: 40.0,
                 height: 40.0
             )
-            .foregroundStyle(Color.black)
-            .background(Color.white)
+            .foregroundStyle(.tintPrimary)
+            .background(.backgroundPrimary)
             .clipShape(
                 Circle()
             )
