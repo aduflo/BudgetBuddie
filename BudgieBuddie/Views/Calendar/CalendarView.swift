@@ -25,6 +25,7 @@ struct CalendarView: View {
         ) {
             Text(Copy.days)
                 .font(.headline)
+                .foregroundStyle(.foregroundPrimary)
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
                     VStack(

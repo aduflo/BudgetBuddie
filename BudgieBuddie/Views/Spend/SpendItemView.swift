@@ -47,7 +47,9 @@ struct SpendItemView: View {
         ) {
             Text(viewModel.title)
                 .font(.title)
+                .foregroundStyle(.foregroundPrimary)
                 .padding(Padding.1)
+            
             Divider()
         }
     }
@@ -72,6 +74,7 @@ struct SpendItemView: View {
                 viewModel.setAmount(amount)
             }
         }
+        .foregroundStyle(.foregroundPrimary)
     }
     
     var noteView: some View {
@@ -92,20 +95,24 @@ struct SpendItemView: View {
                 viewModel.setNote(note)
             }
         }
+        .foregroundStyle(.foregroundPrimary)
     }
     
     var footerView: some View {
         HStack(
             spacing: Spacing.2
         ) {
-            if let requiredFieldWarningText = viewModel.requiredFieldWarningText {
-                Text(requiredFieldWarningText)
-                    .foregroundStyle(Color.red)
-            } else if viewModel.error != nil {
-                Text(Copy.errorPleaseTryAgain)
-                    .foregroundStyle(Color.red)
+            Group {
+                if let requiredFieldWarningText = viewModel.requiredFieldWarningText {
+                    Text(requiredFieldWarningText)
+                } else if viewModel.error != nil {
+                    Text(Copy.errorPleaseTryAgain)
+                }
             }
+            .foregroundStyle(.red)
+            
             Spacer()
+            
             if case .existing = viewModel.mode {
                 Button(
                     TitleKey.Button.delete,

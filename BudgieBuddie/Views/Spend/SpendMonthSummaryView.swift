@@ -31,7 +31,9 @@ struct SpendMonthSummaryView: View {
         ) {
             Text(Copy.monthSummaryTitle)
                 .font(.title)
+                .foregroundStyle(.foregroundPrimary)
                 .padding(Padding.1)
+            
             Divider()
         }
     }
@@ -61,8 +63,10 @@ struct SpendMonthSummaryView: View {
             ) {
                 Text(Copy.letsSeeHowWeDidThisMonth(viewModel.displayMonth))
                     .font(.headline)
+                    .foregroundStyle(.foregroundPrimary)
                 
                 Text(viewModel.displaySpendDifference)
+                    .font(.largeTitle)
                     .foregroundStyle({
                         if viewModel.isSpendWithinBudget {
                             Color.green
@@ -70,7 +74,6 @@ struct SpendMonthSummaryView: View {
                             Color.red
                         }
                     }())
-                    .font(.largeTitle)
                 
                 HStack(
                     spacing: Spacing.2
@@ -93,6 +96,7 @@ struct SpendMonthSummaryView: View {
                         Text(viewModel.displayAllowance)
                     }
                 }
+                .foregroundStyle(.foregroundPrimary)
             }
             
             Group {
@@ -103,6 +107,7 @@ struct SpendMonthSummaryView: View {
                 }
             }
             .font(.title3)
+            .foregroundStyle(.foregroundPrimary)
         }
     }
 }

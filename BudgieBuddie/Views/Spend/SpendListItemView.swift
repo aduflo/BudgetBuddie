@@ -28,6 +28,7 @@ struct SpendListItemView: View {
             ) {
                 Text(viewModel.displayAmount)
                     .font(.headline)
+                
                 VStack(
                     alignment: .leading,
                     spacing: Spacing.half
@@ -40,6 +41,8 @@ struct SpendListItemView: View {
                         .truncationMode(.tail)
                 }
             }
+            .foregroundStyle(.foregroundPrimary)
+            
             Spacer()
         }
         .padding(Padding.1)

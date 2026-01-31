@@ -20,6 +20,7 @@ struct OnboardingView: View {
             ScrollView(.vertical) {
                 Text(Copy.onboardingDescription)
                     .font(.body)
+                    .foregroundStyle(.foregroundPrimary)
             }
             .scrollIndicators(.automatic)
         }

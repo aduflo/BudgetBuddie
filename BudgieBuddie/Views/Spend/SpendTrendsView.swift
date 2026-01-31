@@ -26,6 +26,8 @@ struct SpendTrendsView: View {
         ) {
             Text(Copy.spendTrends)
                 .font(.headline)
+                .foregroundStyle(.foregroundPrimary)
+            
             VStack(
                 alignment: .leading,
                 spacing: Spacing.1

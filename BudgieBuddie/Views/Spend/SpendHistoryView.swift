@@ -32,6 +32,7 @@ struct SpendHistoryView: View {
         ) {
             Text(Copy.historyTitle)
                 .font(.title)
+                .foregroundStyle(.foregroundPrimary)
                 .padding(Padding.1)
             Divider()
         }
@@ -48,8 +49,10 @@ struct SpendHistoryView: View {
             ) {
                 ForEach(SpendMonthSortAttribute.allCases) { option in
                     Text(viewModel.monthAttributeSortDisplayValue(option))
+                        .foregroundStyle(.foregroundPrimary)
                 }
             }
+            
             Picker(
                 TitleKey.Sort.order,
                 selection: $viewModel.sortOrderSelection
@@ -60,6 +63,7 @@ struct SpendHistoryView: View {
                 ]
                 ForEach(options, id: \.self) { option in
                     Text(viewModel.sortOrderDisplayValue(option))
+                        .foregroundStyle(.foregroundPrimary)
                 }
             }
         }
@@ -106,6 +110,7 @@ struct SpendHistoryView: View {
     var emptyView: some View {
         Text(Copy.noRecordedHistory)
             .font(.headline)
+            .foregroundStyle(.foregroundPrimary)
     }
     
     var listView: some View {

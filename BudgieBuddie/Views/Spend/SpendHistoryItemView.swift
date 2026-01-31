@@ -37,6 +37,7 @@ struct SpendHistoryItemView: View {
     var headerView: some View {
         Text(viewModel.displayDate)
             .font(.headline)
+            .foregroundStyle(.foregroundPrimary)
     }
     
     var contentView: some View {
@@ -52,6 +53,8 @@ struct SpendHistoryItemView: View {
                     .font(.subheadline)
                 Text(viewModel.displaySpend)
             }
+            .foregroundStyle(.foregroundPrimary)
+            
             VStack(
                 alignment: .leading,
                 spacing: Spacing.half
@@ -60,6 +63,7 @@ struct SpendHistoryItemView: View {
                     .font(.subheadline)
                 Text(viewModel.displayAllowance)
             }
+            .foregroundStyle(.foregroundPrimary)
             
             Spacer()
             

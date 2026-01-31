@@ -51,7 +51,10 @@ struct SpendListView: View {
         HStack {
             Text(viewModel.title)
                 .font(.title2)
+                .foregroundStyle(.foregroundPrimary)
+            
             Spacer()
+            
             Button(
                 TitleKey.Button.newSpendItem,
                 systemImage: SystemImage.plus,
@@ -80,6 +83,7 @@ struct SpendListView: View {
             Text(Copy.errorPleaseTryAgain)
                 .font(.headline)
                 .foregroundStyle(Color.red)
+            
             Button(
                 TitleKey.Button.reload,
                 systemImage: SystemImage.arrowClockwise,
@@ -95,6 +99,8 @@ struct SpendListView: View {
         HStack {
             Text(Copy.goodJobSaving)
                 .font(.headline)
+                .foregroundStyle(.foregroundPrimary)
+            
             Spacer()
         }
     }
@@ -106,6 +112,7 @@ struct SpendListView: View {
         ) {
             Text(Copy.spendItems)
                 .font(.headline)
+                .foregroundStyle(.foregroundPrimary)
             
             VStack(
                 alignment: .leading,

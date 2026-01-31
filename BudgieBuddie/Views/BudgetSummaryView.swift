@@ -26,7 +26,10 @@ struct BudgetSummaryView: View {
             HStack {
                 Text(Copy.summary)
                     .font(.title2)
+                    .foregroundStyle(.foregroundPrimary)
+                
                 Spacer()
+                
                 Button(
                     TitleKey.Button.settings,
                     systemImage: SystemImage.gear,

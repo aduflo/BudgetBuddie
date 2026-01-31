@@ -26,6 +26,7 @@ struct SpendTrendView: View {
             Text(viewModel.title)
                 .font(.headline)
                 .foregroundStyle(.foregroundPrimary)
+            
             HStack(spacing: Spacing.2) {
                 VStack(
                     alignment: .leading,
@@ -36,6 +37,7 @@ struct SpendTrendView: View {
                     Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
                 }
+                
                 VStack(
                     alignment: .leading,
                     spacing: Spacing.half

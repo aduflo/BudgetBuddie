@@ -1,7 +1,6 @@
 ### TODO:
 Before RC:
 - fix up for dark mode
-  - backgrounds are good now. just need to visit every Text() to give it an applicable .foregroundStyle(.??)
   - audit every screen
     - onboarding view
     - home view

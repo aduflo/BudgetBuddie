@@ -43,7 +43,9 @@ struct SettingsView: View {
         ) {
             Text(Copy.settingsTitle)
                 .font(.title)
+                .foregroundStyle(.foregroundPrimary)
                 .padding(Padding.1)
+            
             Divider()
         }
     }
@@ -68,6 +70,7 @@ struct SettingsView: View {
                 viewModel.setMonthlyAllowance(monthlyAllowance)
             }
         }
+        .foregroundStyle(.foregroundPrimary)
     }
     
     var warningThresholdView: some View {
@@ -100,6 +103,7 @@ struct SettingsView: View {
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
+        .foregroundStyle(.foregroundPrimary)
     }
 }
 
