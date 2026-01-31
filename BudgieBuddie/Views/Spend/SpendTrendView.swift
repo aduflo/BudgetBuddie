@@ -25,14 +25,14 @@ struct SpendTrendView: View {
         ) {
             Text(viewModel.title)
                 .font(.headline)
-                .foregroundStyle(.tintPrimary)
+                .foregroundStyle(.foregroundPrimary)
             HStack(spacing: Spacing.2) {
                 VStack(
                     alignment: .leading,
                     spacing: Spacing.half
                 ) {
                     Text(Copy.current)
-                        .foregroundStyle(.tintPrimary)
+                        .foregroundStyle(.foregroundPrimary)
                     Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
                 }
@@ -43,7 +43,7 @@ struct SpendTrendView: View {
                     Text(Copy.max)
                     Text(viewModel.displayMaxSpend)
                 }
-                .foregroundStyle(.tintPrimary)
+                .foregroundStyle(.foregroundPrimary)
             }
         }
     }

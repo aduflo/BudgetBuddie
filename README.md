@@ -9,6 +9,9 @@ Before RC:
     - history view
     - settings view
     - spend item view
+- adjust textfields with decimal values, give placeholder of nil instead of 0.0
+  - monthly allowance
+  - spend item amount
 - test additions
 - QA + find bugs
 - cut 1.0 RC
@@ -33,7 +36,6 @@ Feature backlog:
 // app icon
 - https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
 - https://developer.apple.com/documentation/xcode/creating-your-app-icon-using-icon-composer/
-- https://cloudconvert.com/pdf-to-png
 
 // misc.
 - https://developer.apple.com/design/human-interface-guidelines/typography

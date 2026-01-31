@@ -71,7 +71,7 @@ struct HomeView: View {
                         Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
                         Text(Copy.historyButton)
                     }
-                    .foregroundStyle(.tintPrimary)
+                    .foregroundStyle(.foregroundPrimary)
                     .padding(Padding.1)
                     .roundedRectangleBackground(
                         cornerRadius: CornerRadius.1,
