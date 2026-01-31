@@ -16,9 +16,9 @@ struct AppIcon: View {
             Text(Copy.appNamePrefix)
             Text(Copy.appNameSuffix)
         }
-        .foregroundStyle(.white)
         .font(.body)
         .fontWeight(.heavy)
+        .foregroundStyle(.white)
         .frame(width: 64.0, height: 64.0)
         .padding(Padding.1)
         .roundedRectangleBackground(

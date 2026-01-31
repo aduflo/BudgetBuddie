@@ -27,7 +27,12 @@ struct HomeScreen: View {
         ScrollView {
             VStack(
                 spacing: Spacing.2
-            ) {                
+            ) {
+                Text(Copy.appName)
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                    .foregroundStyle(.appPrimary)
+                
                 SpendSummaryView(
                     viewModel: screenModel.spendSummaryViewModel
                 )
