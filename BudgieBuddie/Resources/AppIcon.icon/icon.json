@@ -6,8 +6,8 @@
     {
       "layers" : [
         {
-          "image-name" : "app_icon_1024x1024.png",
-          "name" : "app_icon_1024x1024"
+          "image-name" : "app_icon.png",
+          "name" : "app_icon"
         }
       ],
       "shadow" : {
