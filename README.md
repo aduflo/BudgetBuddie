@@ -1,8 +1,5 @@
 ### TODO:
 Before RC:
-- adjust textfields with decimal values, give placeholder of nil instead of 0.0
-  - monthly allowance
-  - spend item amount
 - test additions
 - QA + find bugs
 - cut 1.0 RC

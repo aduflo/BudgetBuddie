@@ -28,8 +28,8 @@ extension SettingsScreenModel {
         settingsService.monthlyAllowance
     }
     
-    func setMonthlyAllowance(_ monthlyAllowance: Decimal) {
-        settingsService.setMonthlyAllowance(monthlyAllowance)
+    func setMonthlyAllowance(_ monthlyAllowance: Decimal?) {
+        settingsService.setMonthlyAllowance(monthlyAllowance ?? 0.0)
     }
     
     var warningThreshold: Double {

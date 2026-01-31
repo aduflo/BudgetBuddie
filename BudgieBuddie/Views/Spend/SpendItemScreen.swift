@@ -10,7 +10,7 @@ import SwiftUI
 struct SpendItemScreen: View {
     // Instance vars
     @State private var screenModel: SpendItemScreenModel
-    @State private var amount: Decimal = 0.0
+    @State private var amount: Decimal? = nil
     @State private var note: String = ""
     @State private var isDeleteConfirmationAlertPresented: Bool = false
     
@@ -36,7 +36,9 @@ struct SpendItemScreen: View {
         }
         .padding(Padding.2)
         .onAppear {
-            amount = screenModel.amount
+            if screenModel.amount > 0.0 {
+                amount = screenModel.amount
+            }
             note = screenModel.note
         }
     }

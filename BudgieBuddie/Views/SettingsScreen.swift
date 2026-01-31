@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsScreen: View {
     // Instance vars
     private let screenModel: SettingsScreenModel
-    @State var monthlyAllowance: Decimal = 0.0
+    @State var monthlyAllowance: Decimal? = nil
     @State var warningThreshold: Double = 0.0
     
     // Constructors
@@ -32,7 +32,9 @@ struct SettingsScreen: View {
         }
         .padding(Padding.2)
         .onAppear {
-            monthlyAllowance = screenModel.monthlyAllowance
+            if screenModel.monthlyAllowance > 0.0 {
+                monthlyAllowance = screenModel.monthlyAllowance
+            }
             warningThreshold = screenModel.warningThreshold
         }
     }

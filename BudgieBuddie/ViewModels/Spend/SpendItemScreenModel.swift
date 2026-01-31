@@ -59,8 +59,8 @@ extension SpendItemScreenModel {
         case existing(SpendItem)
     }
     
-    func setAmount(_ amount: Decimal) {
-        self.amount = amount
+    func setAmount(_ amount: Decimal?) {
+        self.amount = amount ?? 0.0
     }
     
     func setNote(_ note: String) {
