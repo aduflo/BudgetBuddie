@@ -1,5 +1,5 @@
 //
-//  SpendHistoryViewModel.swift
+//  SpendHistoryScreenModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/18/26.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class SpendHistoryViewModel {
+class SpendHistoryScreenModel {
     // Instance vars
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
@@ -38,7 +38,7 @@ class SpendHistoryViewModel {
 }
 
 // MARK: Public interface
-extension SpendHistoryViewModel {
+extension SpendHistoryScreenModel {
     func reloadData() {
         do {
             listItemViewModels = try listItemViewModelsBuilder()
@@ -73,7 +73,7 @@ extension SpendHistoryViewModel {
 }
 
 // MARK: Private interface
-private extension SpendHistoryViewModel {
+private extension SpendHistoryScreenModel {
     func listItemViewModelsBuilder() throws -> [SpendHistoryItemViewModel] {
         // get allMonths
         let allMonths = try spendRepository.getAllMonths()
@@ -99,9 +99,9 @@ private extension SpendHistoryViewModel {
 }
 
 // MARK: - Mocks
-extension SpendHistoryViewModel {
-    static func mock() -> SpendHistoryViewModel {
-        SpendHistoryViewModel(
+extension SpendHistoryScreenModel {
+    static func mock() -> SpendHistoryScreenModel {
+        SpendHistoryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )

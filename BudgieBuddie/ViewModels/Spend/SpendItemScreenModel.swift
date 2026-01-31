@@ -1,5 +1,5 @@
 //
-//  SpendItemViewModel.swift
+//  SpendItemScreenModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/28/25.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class SpendItemViewModel {
+class SpendItemScreenModel {
     // Instance vars
     private let calendarService: CalendarServiceable
     private let spendRepository: SpendRepositable
@@ -53,7 +53,7 @@ class SpendItemViewModel {
 }
 
 // MARK: Public interface
-extension SpendItemViewModel {
+extension SpendItemScreenModel {
     enum Mode {
         case new
         case existing(SpendItem)
@@ -122,9 +122,9 @@ extension SpendItemViewModel {
 }
 
 // MARK: - Mocks
-extension SpendItemViewModel {
-    static func mock() -> SpendItemViewModel {
-        SpendItemViewModel(
+extension SpendItemScreenModel {
+    static func mock() -> SpendItemScreenModel {
+        SpendItemScreenModel(
             calendarService: MockCalendarService(),
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter(),

@@ -1,5 +1,5 @@
 //
-//  OnboardingView.swift
+//  OnboardingScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/23/26.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct OnboardingView: View {
+struct OnboardingScreen: View {
     // Instance vars
-    private let viewModel = OnboardingViewModel()
+    private let screenModel = OnboardingScreenModel()
     
     var body: some View {
         VStack(
@@ -30,17 +30,17 @@ struct OnboardingView: View {
         )
         .padding(Padding.3)
         .onAppear {
-            viewModel.setDidOnboardOnce()
+            screenModel.setDidOnboardOnce()
         }
     }
 }
 
 #Preview("Light Mode") {
-    OnboardingView()
+    OnboardingScreen()
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    OnboardingView()
+    OnboardingScreen()
         .preferredColorScheme(.dark)
 }

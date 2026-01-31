@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  HomeScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct HomeScreen: View {
     // Instance vars
-    @State private var viewModel: HomeViewModel
+    @State private var screenModel: HomeScreenModel
     @State private var presentSettings = false
     @State private var presentSpendItem = false
     @State private var presentSpendHistory = false
@@ -18,9 +18,9 @@ struct HomeView: View {
     
     // Constructors
     init(
-        viewModel: HomeViewModel
+        screenModel: HomeScreenModel
     ) {
-        self.viewModel = viewModel
+        self.screenModel = screenModel
     }
     
     var body: some View {
@@ -28,30 +28,30 @@ struct HomeView: View {
             VStack(
                 spacing: Spacing.2
             ) {                
-                BudgetSummaryView(
-                    viewModel: viewModel.budgetSummaryViewModel
+                SpendSummaryView(
+                    viewModel: screenModel.spendSummaryViewModel
                 )
                 .sheet(isPresented: $presentSettings) {
-                    SettingsView(
-                        viewModel: SettingsViewModel(
-                            settingsService: viewModel.settingsService,
-                            currencyFormatter: viewModel.currencyFormatter
+                    SettingsScreen(
+                        viewModel: SettingsScreenModel(
+                            settingsService: screenModel.settingsService,
+                            currencyFormatter: screenModel.currencyFormatter
                         )
                     )
                     .presentationDetents([.fraction(1/2)])
                 }
                 
                 SpendListView(
-                    viewModel: viewModel.spendListViewModel
+                    viewModel: screenModel.spendListViewModel
                 )
                 .sheet(isPresented: $presentSpendItem) {
-                    SpendItemView(
-                        viewModel: SpendItemViewModel(
-                            calendarService: viewModel.calendarService,
-                            spendRepository: viewModel.spendRepository,
-                            currencyFormatter: viewModel.currencyFormatter,
+                    SpendItemScreen(
+                        screenModel: SpendItemScreenModel(
+                            calendarService: screenModel.calendarService,
+                            spendRepository: screenModel.spendRepository,
+                            currencyFormatter: screenModel.currencyFormatter,
                             mode: {
-                                if let spendItem = viewModel.spendItemToPresent {
+                                if let spendItem = screenModel.spendItemToPresent {
                                     .existing(spendItem)
                                 } else {
                                     .new
@@ -79,10 +79,10 @@ struct HomeView: View {
                     )
                 }
                 .sheet(isPresented: $presentSpendHistory) {
-                    SpendHistoryView(
-                        viewModel: SpendHistoryViewModel(
-                            spendRepository: viewModel.spendRepository,
-                            currencyFormatter: viewModel.currencyFormatter
+                    SpendHistoryScreen(
+                        screenModel: SpendHistoryScreenModel(
+                            spendRepository: screenModel.spendRepository,
+                            currencyFormatter: screenModel.currencyFormatter
                         )
                     )
                     .presentationDetents([.fraction(3/4)])
@@ -93,18 +93,18 @@ struct HomeView: View {
         .padding(.horizontal, Padding.2)
         .onAppear {
             // flip onboarding presentation if need be
-            presentOnboarding = viewModel.didOnboardOnce == false
+            presentOnboarding = screenModel.didOnboardOnce == false
             
             // assign closures to facilitate presentables
-            viewModel.budgetSummaryViewModel.onSettingsTapped = {
+            screenModel.spendSummaryViewModel.onSettingsTapped = {
                 presentSettings.toggle()
             }
-            viewModel.spendListViewModel.onNewSpendItemTapped = {
-                viewModel.setSpendItemToPresent(nil)
+            screenModel.spendListViewModel.onNewSpendItemTapped = {
+                screenModel.setSpendItemToPresent(nil)
                 presentSpendItem.toggle()
             }
-            viewModel.spendListViewModel.onSpendItemTapped = { spendItem in
-                viewModel.setSpendItemToPresent(spendItem)
+            screenModel.spendListViewModel.onSpendItemTapped = { spendItem in
+                screenModel.setSpendItemToPresent(spendItem)
                 presentSpendItem.toggle()
             }
         }
@@ -117,7 +117,7 @@ struct HomeView: View {
                 }
                 
                 Task { await MainActor.run {
-                    viewModel.setSpendMonthSummaryDateToPresent(
+                    screenModel.setSpendMonthSummaryDateToPresent(
                         date: date
                     )
                     presentSpendMonthSummary.toggle()
@@ -128,20 +128,20 @@ struct HomeView: View {
             NotificationCenter.default.publisher(for: .SpendRepositoryDidStageNewMonth),
             perform: { _ in
                 Task { await MainActor.run {
-                    viewModel.reloadData()
+                    screenModel.reloadData()
                 }}
             }
         )
         .sheet(isPresented: $presentOnboarding) {
-            OnboardingView()
+            OnboardingScreen()
                 .presentationDetents([.large])
         }
         .sheet(isPresented: $presentSpendMonthSummary) {
-            if let date = viewModel.spendMonthSummaryDateToPresent {
-                SpendMonthSummaryView(
-                    viewModel: SpendMonthSummaryViewModel(
-                        spendRepository: viewModel.spendRepository,
-                        currencyFormatter: viewModel.currencyFormatter,
+            if let date = screenModel.spendMonthSummaryDateToPresent {
+                SpendMonthSummaryScreen(
+                    screenModel: SpendMonthSummaryScreenModel(
+                        spendRepository: screenModel.spendRepository,
+                        currencyFormatter: screenModel.currencyFormatter,
                         date: date
                     )
                 )
@@ -152,15 +152,15 @@ struct HomeView: View {
 }
 
 #Preview("Light Mode") {
-    HomeView(
-        viewModel: .mock()
+    HomeScreen(
+        screenModel: .mock()
     )
     .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    HomeView(
-        viewModel: .mock()
+    HomeScreen(
+        screenModel: .mock()
     )
     .preferredColorScheme(.dark)
 }

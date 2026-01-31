@@ -1,5 +1,5 @@
 //
-//  SettingsViewModel.swift
+//  SettingsScreenModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/24/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SettingsViewModel {
+class SettingsScreenModel {
     // Instance vars
     private let settingsService: SettingsServiceable
     let currencyFormatter: CurrencyFormatter
@@ -23,7 +23,7 @@ class SettingsViewModel {
 }
 
 // MARK: Public interface
-extension SettingsViewModel {
+extension SettingsScreenModel {
     var monthlyAllowance: Decimal {
         settingsService.monthlyAllowance
     }
@@ -42,9 +42,9 @@ extension SettingsViewModel {
 }
 
 // MARK: - Mocks
-extension SettingsViewModel {
-    static func mock() -> SettingsViewModel {
-        SettingsViewModel(
+extension SettingsScreenModel {
+    static func mock() -> SettingsScreenModel {
+        SettingsScreenModel(
             settingsService: MockSettingsService(),
             currencyFormatter: CurrencyFormatter()
         )

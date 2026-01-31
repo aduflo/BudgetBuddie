@@ -24,8 +24,8 @@ struct BudgieBuddieApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView(
-                viewModel: HomeViewModel(
+            HomeScreen(
+                screenModel: HomeScreenModel(
                     settingsService: settingsService,
                     calendarService: calendarService,
                     spendRepository: spendRepository,

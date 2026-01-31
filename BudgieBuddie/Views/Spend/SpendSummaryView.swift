@@ -1,5 +1,5 @@
 //
-//  BudgetSummaryView.swift
+//  SpendSummaryView.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct BudgetSummaryView: View {
+struct SpendSummaryView: View {
     // Instance vars
-    private let viewModel: BudgetSummaryViewModel
+    private let viewModel: SpendSummaryViewModel
     
     // Constructors
     init(
-        viewModel: BudgetSummaryViewModel
+        viewModel: SpendSummaryViewModel
     ) {
         self.viewModel = viewModel
     }
@@ -60,7 +60,7 @@ struct BudgetSummaryView: View {
 }
 
 #Preview {
-    BudgetSummaryView(
+    SpendSummaryView(
         viewModel: .mock()
     )
 }

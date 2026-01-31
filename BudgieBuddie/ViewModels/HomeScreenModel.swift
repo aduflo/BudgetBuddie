@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  HomeScreenModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -8,14 +8,14 @@
 import Foundation
 
 @Observable
-class HomeViewModel {
+class HomeScreenModel {
     // Instance vars
     let settingsService: SettingsServiceable
     let calendarService: CalendarServiceable
     let spendRepository: SpendRepositable
     let currencyFormatter: CurrencyFormatter
     
-    let budgetSummaryViewModel: BudgetSummaryViewModel
+    let spendSummaryViewModel: SpendSummaryViewModel
     let spendListViewModel: SpendListViewModel
     
     @ObservationIgnored
@@ -34,7 +34,7 @@ class HomeViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
-        self.budgetSummaryViewModel = BudgetSummaryViewModel(
+        self.spendSummaryViewModel = SpendSummaryViewModel(
             settingsService: settingsService,
             calendarService: calendarService,
             spendRepository: spendRepository,
@@ -49,7 +49,7 @@ class HomeViewModel {
 }
 
 // MARK: Public interface
-extension HomeViewModel {
+extension HomeScreenModel {
     var didOnboardOnce: Bool {
         UserDefaults.standard.bool(
             forKey: UserDefaults.Key.App.didOnboardOnce
@@ -57,7 +57,7 @@ extension HomeViewModel {
     }
     
     func reloadData() {
-        budgetSummaryViewModel.reloadData()
+        spendSummaryViewModel.reloadData()
         spendListViewModel.reloadData()
     }
     
@@ -72,9 +72,9 @@ extension HomeViewModel {
 
 
 // MARK: - Mocks
-extension HomeViewModel {
-    static func mock() -> HomeViewModel {
-        HomeViewModel(
+extension HomeScreenModel {
+    static func mock() -> HomeScreenModel {
+        HomeScreenModel(
             settingsService: MockSettingsService(),
             calendarService: MockCalendarService(),
             spendRepository: MockSpendRepository(),

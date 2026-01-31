@@ -1,5 +1,5 @@
 //
-//  SpendItemView.swift
+//  SpendItemScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/28/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SpendItemView: View {
+struct SpendItemScreen: View {
     // Instance vars
-    @State private var viewModel: SpendItemViewModel
+    @State private var screenModel: SpendItemScreenModel
     @State private var amount: Decimal = 0.0
     @State private var note: String = ""
     @State private var isDeleteConfirmationAlertPresented: Bool = false
@@ -18,9 +18,9 @@ struct SpendItemView: View {
     
     // Constructors
     init(
-        viewModel: SpendItemViewModel
+        screenModel: SpendItemScreenModel
     ) {
-        self.viewModel = viewModel
+        self.screenModel = screenModel
     }
     
     var body: some View {
@@ -36,8 +36,8 @@ struct SpendItemView: View {
         }
         .padding(Padding.2)
         .onAppear {
-            amount = viewModel.amount
-            note = viewModel.note
+            amount = screenModel.amount
+            note = screenModel.note
         }
     }
     
@@ -45,7 +45,7 @@ struct SpendItemView: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text(viewModel.title)
+            Text(screenModel.title)
                 .font(.title)
                 .foregroundStyle(.foregroundPrimary)
                 .padding(Padding.1)
@@ -63,15 +63,15 @@ struct SpendItemView: View {
             TextField(
                 Copy.amountTitleKey,
                 value: $amount,
-                format: viewModel.currencyFormatter.decimalFormatStyle
+                format: screenModel.currencyFormatter.decimalFormatStyle
             )
             .textFieldStyle(.roundedBorder)
             .keyboardType(.decimalPad)
             .onChange(of: amount, { _, newValue in
-                viewModel.setAmount(newValue)
+                screenModel.setAmount(newValue)
             })
             .onSubmit {
-                viewModel.setAmount(amount)
+                screenModel.setAmount(amount)
             }
         }
         .foregroundStyle(.foregroundPrimary)
@@ -89,10 +89,10 @@ struct SpendItemView: View {
             )
             .textFieldStyle(.roundedBorder)
             .onChange(of: note, { _, newValue in
-                viewModel.setNote(newValue)
+                screenModel.setNote(newValue)
             })
             .onSubmit {
-                viewModel.setNote(note)
+                screenModel.setNote(note)
             }
         }
         .foregroundStyle(.foregroundPrimary)
@@ -103,9 +103,9 @@ struct SpendItemView: View {
             spacing: Spacing.2
         ) {
             Group {
-                if let requiredFieldWarningText = viewModel.requiredFieldWarningText {
+                if let requiredFieldWarningText = screenModel.requiredFieldWarningText {
                     Text(requiredFieldWarningText)
-                } else if viewModel.error != nil {
+                } else if screenModel.error != nil {
                     Text(Copy.errorPleaseTryAgain)
                 }
             }
@@ -113,7 +113,7 @@ struct SpendItemView: View {
             
             Spacer()
             
-            if case .existing = viewModel.mode {
+            if case .existing = screenModel.mode {
                 Button(
                     TitleKey.Button.delete,
                     systemImage: SystemImage.trash,
@@ -132,7 +132,7 @@ struct SpendItemView: View {
                         Copy.delete,
                         role: .destructive
                     ) {
-                        if viewModel.deleteTapped() {
+                        if screenModel.deleteTapped() {
                             dismiss()
                         }
                     }
@@ -142,7 +142,7 @@ struct SpendItemView: View {
                 TitleKey.Button.save,
                 systemImage: SystemImage.checkmark,
                 action: {
-                    if viewModel.saveTapped() {
+                    if screenModel.saveTapped() {
                         dismiss()
                     }
                 }
@@ -154,15 +154,15 @@ struct SpendItemView: View {
 }
 
 #Preview("Light Mode") {
-    SpendItemView(
-        viewModel: .mock()
+    SpendItemScreen(
+        screenModel: .mock()
     )
     .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    SpendItemView(
-        viewModel: .mock()
+    SpendItemScreen(
+        screenModel: .mock()
     )
     .preferredColorScheme(.dark)
 }

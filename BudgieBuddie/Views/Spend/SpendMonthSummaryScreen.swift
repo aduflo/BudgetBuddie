@@ -1,5 +1,5 @@
 //
-//  SpendMonthSummaryView.swift
+//  SpendMonthSummaryScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/17/26.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SpendMonthSummaryView: View {
+struct SpendMonthSummaryScreen: View {
     // Instance vars
-    @State var viewModel: SpendMonthSummaryViewModel
+    @State var screenModel: SpendMonthSummaryScreenModel
     
     var body: some View {
         VStack(
@@ -21,7 +21,7 @@ struct SpendMonthSummaryView: View {
         }
         .padding(Padding.2)
         .onAppear {
-            viewModel.reloadData()
+            screenModel.reloadData()
         }
     }
     
@@ -40,7 +40,7 @@ struct SpendMonthSummaryView: View {
     
     var contentView: some View {
         Group {
-            if viewModel.error != nil {
+            if screenModel.error != nil {
                 errorView
             } else {
                 summaryView
@@ -61,14 +61,14 @@ struct SpendMonthSummaryView: View {
             VStack(
                 spacing: Spacing.1
             ) {
-                Text(Copy.letsSeeHowWeDidThisMonth(viewModel.displayMonth))
+                Text(Copy.letsSeeHowWeDidThisMonth(screenModel.displayMonth))
                     .font(.headline)
                     .foregroundStyle(.foregroundPrimary)
                 
-                Text(viewModel.displaySpendDifference)
+                Text(screenModel.displaySpendDifference)
                     .font(.largeTitle)
                     .foregroundStyle({
-                        if viewModel.isSpendWithinBudget {
+                        if screenModel.isSpendWithinBudget {
                             Color.green
                         } else {
                             Color.red
@@ -84,7 +84,7 @@ struct SpendMonthSummaryView: View {
                     ) {
                         Text(Copy.spend)
                             .font(.subheadline)
-                        Text(viewModel.displaySpend)
+                        Text(screenModel.displaySpend)
                     }
                     
                     VStack(
@@ -93,14 +93,14 @@ struct SpendMonthSummaryView: View {
                     ) {
                         Text(Copy.allowance)
                             .font(.subheadline)
-                        Text(viewModel.displayAllowance)
+                        Text(screenModel.displayAllowance)
                     }
                 }
                 .foregroundStyle(.foregroundPrimary)
             }
             
             Group {
-                if viewModel.isSpendWithinBudget {
+                if screenModel.isSpendWithinBudget {
                     Text(Copy.greatJobLetsKeepItUp)
                 } else {
                     Text(Copy.letsDoBetterThisMonth)
@@ -113,22 +113,22 @@ struct SpendMonthSummaryView: View {
 }
 
 #Preview("Light Mode") {
-    SpendMonthSummaryView(
-        viewModel: .mock()
+    SpendMonthSummaryScreen(
+        screenModel: .mock()
     )
     .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    SpendMonthSummaryView(
-        viewModel: .mock()
+    SpendMonthSummaryScreen(
+        screenModel: .mock()
     )
     .preferredColorScheme(.dark)
 }
 
 #Preview("Happy State; Underspent") {
-    SpendMonthSummaryView(
-        viewModel: SpendMonthSummaryViewModel(
+    SpendMonthSummaryScreen(
+        screenModel: SpendMonthSummaryScreenModel(
             spendRepository: {
                 let spendRepository = MockSpendRepository()
                 spendRepository.getMonth_returnValue = (
@@ -148,8 +148,8 @@ struct SpendMonthSummaryView: View {
 }
 
 #Preview("Happy State; Overspent") {
-    SpendMonthSummaryView(
-        viewModel: SpendMonthSummaryViewModel(
+    SpendMonthSummaryScreen(
+        screenModel: SpendMonthSummaryScreenModel(
             spendRepository: {
                 let spendRepository = MockSpendRepository()
                 spendRepository.getMonth_returnValue = (
@@ -169,8 +169,8 @@ struct SpendMonthSummaryView: View {
 }
 
 #Preview("Error State") {
-    SpendMonthSummaryView(
-        viewModel: SpendMonthSummaryViewModel(
+    SpendMonthSummaryScreen(
+        screenModel: SpendMonthSummaryScreenModel(
             spendRepository: {
                 let spendRepository = MockSpendRepository()
                 spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.unableToCommitStagedMonth)

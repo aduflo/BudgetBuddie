@@ -1,5 +1,5 @@
 //
-//  SpendHistoryView.swift
+//  SpendHistoryScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/18/26.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SpendHistoryView: View {
+struct SpendHistoryScreen: View {
     // Instance vars
-    @State var viewModel: SpendHistoryViewModel
+    @State var screenModel: SpendHistoryScreenModel
     
     var body: some View {
         VStack(
@@ -22,7 +22,7 @@ struct SpendHistoryView: View {
         .padding(.top, Padding.2)
         .padding(.horizontal, Padding.2)
         .onAppear {
-            viewModel.reloadData()
+            screenModel.reloadData()
         }
     }
     
@@ -45,24 +45,24 @@ struct SpendHistoryView: View {
         ) {
             Picker(
                 TitleKey.Sort.monthAttribute,
-                selection: $viewModel.monthSortAttributeSelection
+                selection: $screenModel.monthSortAttributeSelection
             ) {
                 ForEach(SpendMonthSortAttribute.allCases) { option in
-                    Text(viewModel.monthAttributeSortDisplayValue(option))
+                    Text(screenModel.monthAttributeSortDisplayValue(option))
                         .foregroundStyle(.foregroundPrimary)
                 }
             }
             
             Picker(
                 TitleKey.Sort.order,
-                selection: $viewModel.sortOrderSelection
+                selection: $screenModel.sortOrderSelection
             ) {
                 let options: [SortOrder] = [
                     .forward,
                     .reverse
                 ]
                 ForEach(options, id: \.self) { option in
-                    Text(viewModel.sortOrderDisplayValue(option))
+                    Text(screenModel.sortOrderDisplayValue(option))
                         .foregroundStyle(.foregroundPrimary)
                 }
             }
@@ -72,12 +72,12 @@ struct SpendHistoryView: View {
     
     var contentView: some View {
         Group {
-            if viewModel.error != nil {
+            if screenModel.error != nil {
                 VStack {
                     errorView
                     Spacer() // to push everything to the top
                 }
-            } else if viewModel.listItemViewModels.isEmpty {
+            } else if screenModel.listItemViewModels.isEmpty {
                 VStack {
                     emptyView
                     Spacer() // to push everything to the top
@@ -100,7 +100,7 @@ struct SpendHistoryView: View {
                 TitleKey.Button.reload,
                 systemImage: SystemImage.arrowClockwise,
                 action: {
-                    viewModel.reloadData()
+                    screenModel.reloadData()
                 }
             )
             .buttonStyle(.circleSystemImage)
@@ -119,7 +119,7 @@ struct SpendHistoryView: View {
                 alignment: .leading,
                 spacing: Spacing.1
             ) {
-                ForEach(viewModel.listItemViewModels) { listItemViewModel in
+                ForEach(screenModel.listItemViewModels) { listItemViewModel in
                     SpendHistoryItemView(
                         viewModel: listItemViewModel
                     )
@@ -130,8 +130,8 @@ struct SpendHistoryView: View {
 }
 
 #Preview("Light Mode") {
-    SpendHistoryView(
-        viewModel: SpendHistoryViewModel(
+    SpendHistoryScreen(
+        screenModel: SpendHistoryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )
@@ -140,8 +140,8 @@ struct SpendHistoryView: View {
 }
 
 #Preview("Dark Mode") {
-    SpendHistoryView(
-        viewModel: SpendHistoryViewModel(
+    SpendHistoryScreen(
+        screenModel: SpendHistoryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )

@@ -1,5 +1,5 @@
 //
-//  BudgetSummaryViewModel.swift
+//  SpendSummaryViewModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/22/25.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class BudgetSummaryViewModel {
+class SpendSummaryViewModel {
     // Instance vars
     private let settingsService: SettingsServiceable
     private let calendarService: CalendarServiceable
@@ -44,7 +44,7 @@ class BudgetSummaryViewModel {
 }
 
 // MARK: Public interface
-extension BudgetSummaryViewModel {
+extension SpendSummaryViewModel {
     func reloadData() {
         spendTrendsViewModel.reloadData()
         calendarViewModel.reloadData()
@@ -56,9 +56,9 @@ extension BudgetSummaryViewModel {
 }
 
 // MARK: - Mocks
-extension BudgetSummaryViewModel {
-    static func mock() -> BudgetSummaryViewModel {
-        BudgetSummaryViewModel(
+extension SpendSummaryViewModel {
+    static func mock() -> SpendSummaryViewModel {
+        SpendSummaryViewModel(
             settingsService: MockSettingsService(),
             calendarService: MockCalendarService(),
             spendRepository: MockSpendRepository(),

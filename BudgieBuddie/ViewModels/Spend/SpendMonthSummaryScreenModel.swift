@@ -1,5 +1,5 @@
 //
-//  SpendMonthSummaryViewModel.swift
+//  SpendMonthSummaryScreenModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/17/26.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class SpendMonthSummaryViewModel {
+class SpendMonthSummaryScreenModel {
     // Instance vars
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
@@ -30,7 +30,7 @@ class SpendMonthSummaryViewModel {
 }
 
 // MARK: Public interface
-extension SpendMonthSummaryViewModel {
+extension SpendMonthSummaryScreenModel {
     func reloadData() {
         do {
             spendMonth = try spendRepository.getMonth(
@@ -86,9 +86,9 @@ extension SpendMonthSummaryViewModel {
 }
 
 // MARK: - Mocks
-extension SpendMonthSummaryViewModel {
-    static func mock() -> SpendMonthSummaryViewModel {
-        SpendMonthSummaryViewModel(
+extension SpendMonthSummaryScreenModel {
+    static func mock() -> SpendMonthSummaryScreenModel {
+        SpendMonthSummaryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter(),
             date: Date()

@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingsScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 12/23/25.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct SettingsScreen: View {
     // Instance vars
-    private let viewModel: SettingsViewModel
+    private let screenModel: SettingsScreenModel
     @State var monthlyAllowance: Decimal = 0.0
     @State var warningThreshold: Double = 0.0
     
     // Constructors
     init(
-        viewModel: SettingsViewModel
+        viewModel: SettingsScreenModel
     ) {
-        self.viewModel = viewModel
+        self.screenModel = viewModel
     }
     
     var body: some View {
@@ -32,8 +32,8 @@ struct SettingsView: View {
         }
         .padding(Padding.2)
         .onAppear {
-            monthlyAllowance = viewModel.monthlyAllowance
-            warningThreshold = viewModel.warningThreshold
+            monthlyAllowance = screenModel.monthlyAllowance
+            warningThreshold = screenModel.warningThreshold
         }
     }
     
@@ -59,15 +59,15 @@ struct SettingsView: View {
             TextField(
                 Copy.monthlyAllowanceTitleKey,
                 value: $monthlyAllowance,
-                format: viewModel.currencyFormatter.decimalFormatStyle
+                format: screenModel.currencyFormatter.decimalFormatStyle
             )
             .textFieldStyle(.roundedBorder)
             .keyboardType(.decimalPad)
             .onChange(of: monthlyAllowance, { oldValue, newValue in
-                viewModel.setMonthlyAllowance(monthlyAllowance)
+                screenModel.setMonthlyAllowance(monthlyAllowance)
             })
             .onSubmit {
-                viewModel.setMonthlyAllowance(monthlyAllowance)
+                screenModel.setMonthlyAllowance(monthlyAllowance)
             }
         }
         .foregroundStyle(.foregroundPrimary)
@@ -94,7 +94,7 @@ struct SettingsView: View {
                 },
                 onEditingChanged: { editing in
                     if editing == false { // only set when editing finishes
-                        viewModel.setWarningThreshold(warningThreshold)
+                        screenModel.setWarningThreshold(warningThreshold)
                     }
                 }
             )
@@ -108,14 +108,14 @@ struct SettingsView: View {
 }
 
 #Preview("Light Mode") {
-    SettingsView(
+    SettingsScreen(
         viewModel: .mock()
     )
     .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    SettingsView(
+    SettingsScreen(
         viewModel: .mock()
     )
     .preferredColorScheme(.dark)
