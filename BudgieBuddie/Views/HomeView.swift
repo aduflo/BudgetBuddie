@@ -151,8 +151,16 @@ struct HomeView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     HomeView(
         viewModel: .mock()
     )
+    .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    HomeView(
+        viewModel: .mock()
+    )
+    .preferredColorScheme(.dark)
 }

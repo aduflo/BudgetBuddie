@@ -74,36 +74,6 @@ private extension SpendTrendViewModel {
 
 // MARK: - Mocks
 extension SpendTrendViewModel {
-    static func mockDaily() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.daily,
-            currentSpend: 13.37,
-            maxSpend: 1337
-        )
-    }
-    
-    static func mockMtd() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.monthToDate,
-            currentSpend: 13.37,
-            maxSpend: 7331.00
-        )
-    }
-    
-    static func mockMonthly() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: MockSettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.monthly,
-            currentSpend: 9001.00,
-            maxSpend: 9000.00
-        )
-    }
-    
     static func mockAcceptable() -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: MockSettingsService(),

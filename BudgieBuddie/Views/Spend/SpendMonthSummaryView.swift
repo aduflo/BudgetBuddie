@@ -112,6 +112,20 @@ struct SpendMonthSummaryView: View {
     }
 }
 
+#Preview("Light Mode") {
+    SpendMonthSummaryView(
+        viewModel: .mock()
+    )
+    .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SpendMonthSummaryView(
+        viewModel: .mock()
+    )
+    .preferredColorScheme(.dark)
+}
+
 #Preview("Happy State; Underspent") {
     SpendMonthSummaryView(
         viewModel: SpendMonthSummaryViewModel(

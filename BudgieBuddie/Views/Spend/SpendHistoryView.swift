@@ -129,11 +129,22 @@ struct SpendHistoryView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     SpendHistoryView(
         viewModel: SpendHistoryViewModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )
     )
+    .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SpendHistoryView(
+        viewModel: SpendHistoryViewModel(
+            spendRepository: MockSpendRepository(),
+            currencyFormatter: CurrencyFormatter()
+        )
+    )
+    .preferredColorScheme(.dark)
 }

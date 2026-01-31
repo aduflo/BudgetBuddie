@@ -107,8 +107,16 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     SettingsView(
         viewModel: .mock()
     )
+    .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SettingsView(
+        viewModel: .mock()
+    )
+    .preferredColorScheme(.dark)
 }

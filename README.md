@@ -1,13 +1,5 @@
 ### TODO:
 Before RC:
-- fix up for dark mode
-  - audit every screen
-    - onboarding view
-    - home view
-    - month summary view
-    - history view
-    - settings view
-    - spend item view
 - adjust textfields with decimal values, give placeholder of nil instead of 0.0
   - monthly allowance
   - spend item amount

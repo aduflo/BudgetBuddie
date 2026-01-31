@@ -84,3 +84,14 @@ extension SpendMonthSummaryViewModel {
         return currencyFormatter.stringAmount(difference)
     }
 }
+
+// MARK: - Mocks
+extension SpendMonthSummaryViewModel {
+    static func mock() -> SpendMonthSummaryViewModel {
+        SpendMonthSummaryViewModel(
+            spendRepository: MockSpendRepository(),
+            currencyFormatter: CurrencyFormatter(),
+            date: Date()
+        )
+    }
+}

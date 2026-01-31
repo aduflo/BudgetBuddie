@@ -153,8 +153,16 @@ struct SpendItemView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     SpendItemView(
         viewModel: .mock()
     )
+    .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    SpendItemView(
+        viewModel: .mock()
+    )
+    .preferredColorScheme(.dark)
 }

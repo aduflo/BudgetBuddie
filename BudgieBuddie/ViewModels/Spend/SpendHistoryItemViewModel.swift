@@ -52,8 +52,8 @@ extension SpendHistoryItemViewModel {
 
 // MARK: - Mocks
 extension SpendHistoryItemViewModel {
-    static func mock() -> Self {
-        Self(
+    static func mock() -> SpendHistoryItemViewModel {
+        SpendHistoryItemViewModel(
             currencyFormatter: CurrencyFormatter(),
             spendMonth: .mock()
         )
