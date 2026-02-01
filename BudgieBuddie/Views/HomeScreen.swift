@@ -28,74 +28,14 @@ struct HomeScreen: View {
             VStack(
                 spacing: Spacing.2
             ) {
-                Text(Copy.appName)
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
-                    .foregroundStyle(.appPrimary)
-                
-                SpendSummaryView(
-                    viewModel: screenModel.spendSummaryViewModel
-                )
-                .sheet(isPresented: $presentSettings) {
-                    SettingsScreen(
-                        viewModel: SettingsScreenModel(
-                            settingsService: screenModel.settingsService,
-                            currencyFormatter: screenModel.currencyFormatter
-                        )
-                    )
-                    .presentationDetents([.fraction(1/2)])
-                }
-                
-                SpendListView(
-                    viewModel: screenModel.spendListViewModel
-                )
-                .sheet(isPresented: $presentSpendItem) {
-                    SpendItemScreen(
-                        screenModel: SpendItemScreenModel(
-                            calendarService: screenModel.calendarService,
-                            spendRepository: screenModel.spendRepository,
-                            currencyFormatter: screenModel.currencyFormatter,
-                            mode: {
-                                if let spendItem = screenModel.spendItemToPresent {
-                                    .existing(spendItem)
-                                } else {
-                                    .new
-                                }
-                            }()
-                        )
-                    )
-                    .presentationDetents([.fraction(1/2)])
-                }
-                
-                Button {
-                    presentSpendHistory.toggle()
-                } label: {
-                    HStack(
-                        spacing: Spacing.half
-                    ) {
-                        Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
-                        Text(Copy.historyButton)
-                    }
-                    .foregroundStyle(.foregroundPrimary)
-                    .padding(Padding.1)
-                    .roundedRectangleBackground(
-                        cornerRadius: CornerRadius.1,
-                        color: .backgroundSecondary
-                    )
-                }
-                .sheet(isPresented: $presentSpendHistory) {
-                    SpendHistoryScreen(
-                        screenModel: SpendHistoryScreenModel(
-                            spendRepository: screenModel.spendRepository,
-                            currencyFormatter: screenModel.currencyFormatter
-                        )
-                    )
-                    .presentationDetents([.fraction(3/4)])
-                }
+                headerView
+                summaryView
+                listView
+                footerView
             }
         }
-        .padding(.top, Padding.2)
-        .padding(.horizontal, Padding.2)
+        .padding(Padding.2)
+        .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             // flip onboarding presentation if need be
             presentOnboarding = screenModel.didOnboardOnce == false
@@ -152,6 +92,79 @@ struct HomeScreen: View {
                 )
                 .presentationDetents([.fraction(1/3)])
             } else { EmptyView() }
+        }
+    }
+    
+    var headerView: some View {
+        Text(Copy.appName)
+            .font(.largeTitle)
+            .fontWeight(.heavy)
+            .foregroundStyle(.appPrimary)
+    }
+    
+    var summaryView: some View {
+        SpendSummaryView(
+            viewModel: screenModel.spendSummaryViewModel
+        )
+        .sheet(isPresented: $presentSettings) {
+            SettingsScreen(
+                viewModel: SettingsScreenModel(
+                    settingsService: screenModel.settingsService,
+                    currencyFormatter: screenModel.currencyFormatter
+                )
+            )
+            .presentationDetents([.fraction(1/2)])
+        }
+    }
+    
+    var listView: some View {
+        SpendListView(
+            viewModel: screenModel.spendListViewModel
+        )
+        .sheet(isPresented: $presentSpendItem) {
+            SpendItemScreen(
+                screenModel: SpendItemScreenModel(
+                    calendarService: screenModel.calendarService,
+                    spendRepository: screenModel.spendRepository,
+                    currencyFormatter: screenModel.currencyFormatter,
+                    mode: {
+                        if let spendItem = screenModel.spendItemToPresent {
+                            .existing(spendItem)
+                        } else {
+                            .new
+                        }
+                    }()
+                )
+            )
+            .presentationDetents([.fraction(1/2)])
+        }
+    }
+    
+    var footerView: some View {
+        Button {
+            presentSpendHistory.toggle()
+        } label: {
+            HStack(
+                spacing: Spacing.half
+            ) {
+                Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
+                Text(Copy.historyButton)
+            }
+            .foregroundStyle(.foregroundPrimary)
+            .padding(Padding.1)
+            .roundedRectangleBackground(
+                cornerRadius: CornerRadius.1,
+                color: .backgroundSecondary
+            )
+        }
+        .sheet(isPresented: $presentSpendHistory) {
+            SpendHistoryScreen(
+                screenModel: SpendHistoryScreenModel(
+                    spendRepository: screenModel.spendRepository,
+                    currencyFormatter: screenModel.currencyFormatter
+                )
+            )
+            .presentationDetents([.fraction(3/4)])
         }
     }
 }
