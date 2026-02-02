@@ -193,8 +193,8 @@ class SwiftDataSpendStore: SpendStoreable {
     func deleteStagedMonthData() throws {
         do {
             // deleting all instances of SpendDay_SwiftData within context
-            // due to [the aforementioned] relationship with SpendItem_SwiftData, all [SpendItem_SwiftData] instances
-            // will also be deleted given presence of relational delete rule: cascading
+            // due to relationship (delete rule: cascading) with SpendItem_SwiftData
+            // all associated [SpendItem_SwiftData] instances will also be delected
             try context?.transaction {
                 try context?.delete(
                     model: SpendDay_SwiftData.self
