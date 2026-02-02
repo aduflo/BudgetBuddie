@@ -21,7 +21,7 @@ struct CalendarDayView: View {
             .fontWeight(.semibold)
             .foregroundStyle(viewModel.isToday ? .foregroundSecondary : .foregroundPrimary)
             .frame(
-                width: 48.0,
+                width: 56.0,
                 height: 32.0
             )
             .padding(Padding.1)

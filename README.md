@@ -1,6 +1,5 @@
 ### TODO:
 Before RC:
-- fix layout for calendar day; day's being truncated (eg. 02/04 / 05/09)
 - fix layout on spend history; diff number, when biggg and negative, dropped newline
 - fix bug where no selected day on initial load :(
 - think about extending SpendRepositoryError usage in SpendRepo, given bunch of SpendStoreError's will bubble up; no do/catch around trys
