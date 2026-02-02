@@ -1,7 +1,5 @@
 ### TODO:
 Before RC:
-- fix layout on spend history; diff number, when biggg and negative, dropped newline
-- fix bug where no selected day on initial load :(
 - think about extending SpendRepositoryError usage in SpendRepo, given bunch of SpendStoreError's will bubble up; no do/catch around trys
 - tend to TODOs
 - test additions
@@ -24,6 +22,7 @@ Feature backlog:
 - https://developer.apple.com/documentation/WidgetKit
 - https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension
 - https://developer.apple.com/documentation/widgetkit/building_widgets_using_widgetkit_and_swiftui
+- https://www.google.com/search?q=ios+widget+swiftdata&ie=UTF-8&oe=UTF-8&hl=en-us&client=safari
 
 // app icon
 - https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
@@ -32,3 +31,4 @@ Feature backlog:
 // misc.
 - https://developer.apple.com/design/human-interface-guidelines/typography
 - https://stackoverflow.com/questions/57988687/how-to-use-dark-mode-in-ios-simulator
+- https://developer.apple.com/documentation/swiftdata/syncing-model-data-across-a-persons-devices

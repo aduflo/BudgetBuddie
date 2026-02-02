@@ -20,6 +20,10 @@ extension Date {
         formatted(.dateTime.day(.twoDigits).month(.twoDigits).year(.defaultDigits))
     }
     
+    var monthYearString: String {
+        formatted(.dateTime.month(.wide).year(.defaultDigits))
+    }
+    
     var monthLongString: String {
         formatted(.dateTime.month(.wide))
     }

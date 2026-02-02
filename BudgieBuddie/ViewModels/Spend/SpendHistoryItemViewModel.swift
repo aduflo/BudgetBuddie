@@ -29,7 +29,7 @@ struct SpendHistoryItemViewModel: Identifiable {
 // MARK: Public interface
 extension SpendHistoryItemViewModel {
     var displayDate: String {
-        spendMonth.date.monthDayYearString
+        spendMonth.date.monthYearString
     }
     
     var displaySpend: String {

@@ -20,10 +20,8 @@ struct SpendHistoryItemView: View {
     
     var body: some View {
         VStack(
-            alignment: .leading,
             spacing: Spacing.half
         ) {
-            headerView
             contentView
         }
         .padding(.vertical, Padding.2)
@@ -34,34 +32,33 @@ struct SpendHistoryItemView: View {
         )
     }
     
-    var headerView: some View {
-        Text(viewModel.displayDate)
-            .font(.headline)
-            .foregroundStyle(.foregroundPrimary)
-    }
-    
     var contentView: some View {
         HStack(
-            alignment: .bottom,
-            spacing: Spacing.2
+            spacing: Spacing.zero
         ) {
             VStack(
                 alignment: .leading,
-                spacing: Spacing.half
+                spacing: Spacing.zero
             ) {
-                Text(Copy.spend)
-                    .font(.subheadline)
-                Text(viewModel.displaySpend)
-            }
-            .foregroundStyle(.foregroundPrimary)
-            
-            VStack(
-                alignment: .leading,
-                spacing: Spacing.half
-            ) {
-                Text(Copy.allowance)
-                    .font(.subheadline)
-                Text(viewModel.displayAllowance)
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.half
+                ) {
+                    Text(Copy.spend)
+                        .font(.subheadline)
+                    Text(viewModel.displaySpend)
+                }
+                
+                Spacer()
+                
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.half
+                ) {
+                    Text(Copy.allowance)
+                        .font(.subheadline)
+                    Text(viewModel.displayAllowance)
+                }
             }
             .foregroundStyle(.foregroundPrimary)
             
@@ -69,33 +66,63 @@ struct SpendHistoryItemView: View {
             
             VStack(
                 alignment: .trailing,
-                spacing: Spacing.half
+                spacing: Spacing.zero
             ) {
-                Image(systemName: {
+                Text(viewModel.displayDate)
+                    .font(.title3)
+                    .foregroundStyle(.foregroundPrimary)
+                
+                Spacer()
+                
+                VStack(
+                    alignment: .trailing,
+                    spacing: Spacing.half
+                ) {
+                    Image(systemName: {
+                        if viewModel.isSpendWithinBudget {
+                            SystemImage.chartLineUptrendXyaxis
+                        } else {
+                            SystemImage.chartLineDowntrendXyaxis
+                        }
+                    }())
+                    Text(viewModel.displaySpendDifference)
+                }
+                .foregroundStyle({
                     if viewModel.isSpendWithinBudget {
-                        SystemImage.chartLineUptrendXyaxis
+                        Color.green
                     } else {
-                        SystemImage.chartLineDowntrendXyaxis
+                        Color.red
                     }
                 }())
-                Text(viewModel.displaySpendDifference)
             }
-            .foregroundStyle({
-                if viewModel.isSpendWithinBudget {
-                    Color.green
-                } else {
-                    Color.red
-                }
-            }())
         }
     }
 }
 
-#Preview {
+#Preview("Big Savings") {
     SpendHistoryItemView(
         viewModel: SpendHistoryItemViewModel(
             currencyFormatter: CurrencyFormatter(),
-            spendMonth: .mock()
+            spendMonth: SpendMonth(
+                date: Date(),
+                spend: 2000,
+                allowance: 55_432
+            )
         )
     )
+    .frame(height: 120.0)
+}
+
+#Preview("Big Deficit") {
+    SpendHistoryItemView(
+        viewModel: SpendHistoryItemViewModel(
+            currencyFormatter: CurrencyFormatter(),
+            spendMonth: SpendMonth(
+                date: Date(),
+                spend: 55_432,
+                allowance: 2000
+            )
+        )
+    )
+    .frame(height: 120.0)
 }

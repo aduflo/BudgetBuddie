@@ -13,6 +13,9 @@ struct MonthDay {
     let date: Date
 }
 
+// MARK: Equatable
+extension MonthDay: Equatable {}
+
 // MARK: - Mocks
 extension MonthDay {    
     static func mockPast() -> MonthDay {

@@ -23,56 +23,56 @@ struct CalendarView: View {
             alignment: .leading,
             spacing: Spacing.1
         ) {
-            Text(Copy.days)
-                .font(.headline)
-                .foregroundStyle(.foregroundPrimary)
-            ScrollViewReader { proxy in
-                ScrollView(.vertical) {
-                    VStack(
-                        alignment: .leading,
-                        spacing: Spacing.1
-                    ) {
-                        ForEach(viewModel.dayViewModels) { dayViewModel in
-                            CalendarDayView(
-                                viewModel: dayViewModel
-                            )
-                            .id(dayViewModel.monthDay.day)
-                            .onTapGesture {
-                                if let selectedDayViewModel = viewModel.selectedDayViewModel {
-                                    if selectedDayViewModel.monthDay.day == dayViewModel.monthDay.day {
-                                        return // selecting same day, abort
-                                    } else {
-                                        // untoggle previously selected
-                                        selectedDayViewModel.setSelected(false)
-                                    }
-                                }
-                                
-                                // toggle new selection and persist day vm
-                                dayViewModel.setSelected(true)
-                                viewModel.setSelectedDayViewModel(dayViewModel)
-                                
-                                // update selected date
-                                viewModel.updateSelectedDate(dayViewModel.monthDay.date)
-                            }
-                        }
-                        .onAppear {
-                            guard let currentDayViewModel = viewModel.currentDayViewModel else {
-                                return
-                            }
-                            
-                            currentDayViewModel.setSelected(true)
-                            viewModel.setSelectedDayViewModel(currentDayViewModel)
-                            proxy.scrollTo(
-                                currentDayViewModel.monthDay.day,
-                                anchor: .center
-                            )
-                        }
-                    }
-                }
-            }
+            headerView
+            listView
         }
         .onAppear {
             viewModel.reloadData()
+        }
+    }
+    
+    var headerView: some View {
+        Text(Copy.days)
+            .font(.headline)
+            .foregroundStyle(.foregroundPrimary)
+    }
+    
+    var listView: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.vertical) {
+                VStack(
+                    alignment: .leading,
+                    spacing: Spacing.1
+                ) {
+                    ForEach(viewModel.dayViewModels) { dayViewModel in
+                        CalendarDayView(
+                            viewModel: dayViewModel
+                        )
+                        .id(dayViewModel.monthDay.day)
+                        .onTapGesture {
+                            if let selectedDayViewModel = viewModel.selectedDayViewModel {
+                                if selectedDayViewModel.monthDay.day == dayViewModel.monthDay.day {
+                                    return // abort; selecting same day
+                                }
+                            }
+                            
+                            // toggle new selection and persist day vm
+                            viewModel.setSelectedDayViewModel(dayViewModel)
+                        }
+                    }
+                    .onAppear {
+                        guard let currentDayViewModel = viewModel.currentDayViewModel else {
+                            return
+                        }
+                        
+                        viewModel.setSelectedDayViewModel(currentDayViewModel)
+                        proxy.scrollTo(
+                            currentDayViewModel.monthDay.day,
+                            anchor: .center
+                        )
+                    }
+                }
+            }
         }
     }
 }

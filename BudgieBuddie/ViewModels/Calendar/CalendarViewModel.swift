@@ -26,8 +26,13 @@ class CalendarViewModel {
 // MARK: Public interface
 extension CalendarViewModel {
     func reloadData() {
+        // rebuild dayViewModels
         dayViewModels = dayViewModelsBuilder()
-        selectedDayViewModel = nil
+        
+        // null out selectedDayViewModel if not contained in dayViewModels
+        if dayViewModels.contains(where: { $0 == selectedDayViewModel }) == false {
+            selectedDayViewModel = nil
+        }
     }
     
     var currentDayViewModel: CalendarDayViewModel? {
@@ -40,12 +45,16 @@ extension CalendarViewModel {
         )
     }
     
-    func updateSelectedDate(_ date: Date) {
-        calendarService.updateSelectedDate(date)
-    }
-    
     func setSelectedDayViewModel(_ viewModel: CalendarDayViewModel) {
+        // untoggle previously selected VM, if needed
+        if let selectedDayViewModel {
+            selectedDayViewModel.setSelected(false)
+        }
+        
+        // toggle newly-to-be-selected VM, assign value, and update calendarService
+        viewModel.setSelected(true)
         selectedDayViewModel = viewModel
+        calendarService.updateSelectedDate(viewModel.monthDay.date)
     }
 }
 
