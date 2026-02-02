@@ -20,6 +20,7 @@ protocol SpendStoreable {
     func saveItem(_ item: SpendItem_Data) throws
     func deleteItem(_ item: SpendItem_Data) throws
     func getDay(date: Date) throws -> SpendDay_Data
+    func getDay(id: UUID) throws -> SpendDay_Data
     func getAllMonths() throws -> [SpendMonth_Data]
     func getMonth(date: Date) throws -> SpendMonth_Data
     func saveMonth(_ month: SpendMonth_Data) throws

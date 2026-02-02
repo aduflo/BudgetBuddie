@@ -13,9 +13,9 @@ class MockSpendStore: SpendStoreable {
         return (0..<20).map { idx in
             SpendItem_Data(
                 id: UUID(),
+                dayId: UUID(),
                 amount: Decimal(idx),
                 note: (idx % 2 == 0) ? "Item #: \(idx)" : nil,
-                date: date,
                 createdAt: date
             )
         }
@@ -25,9 +25,9 @@ class MockSpendStore: SpendStoreable {
         (0..<10).map { idx in
             SpendItem_Data(
                 id: UUID(),
+                dayId: UUID(),
                 amount: Decimal(idx),
                 note: (idx % 2 == 0) ? "Item #: \(idx)" : nil,
-                date: date,
                 createdAt: Date()
             )
         }
@@ -42,9 +42,9 @@ class MockSpendStore: SpendStoreable {
             
             return SpendItem_Data(
                 id: UUID(),
+                dayId: UUID(),
                 amount: Decimal(day),
                 note: (day % 2 == 0) ? "Day #: \(day)" : nil,
-                date: date,
                 createdAt: date
             )
         }
@@ -65,6 +65,14 @@ class MockSpendStore: SpendStoreable {
             id: UUID(),
             date: date,
             items: try getItems(date: date)
+        )
+    }
+    
+    func getDay(id: UUID) throws -> SpendDay_Data {
+        SpendDay_Data(
+            id: id,
+            date: Date(),
+            items: try getItems(date: Date())
         )
     }
     

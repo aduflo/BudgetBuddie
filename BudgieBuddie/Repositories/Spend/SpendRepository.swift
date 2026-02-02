@@ -117,10 +117,14 @@ private extension SpendRepository {
         // extract items from staging environment
         let items = try store.getAllItems()
         
-        // extract first items date, for reference
-        guard let referenceDate = items.first?.date else {
+        // get reference date
+        guard let firstDay = items.first else {
             throw SpendRepositoryError.unableToCommitStagedMonth
         }
+        let day = try store.getDay(
+            id: firstDay.dayId
+        )
+        let referenceDate = day.date
         
         // compose arguments
         let calendar = Calendar.current
@@ -156,7 +160,7 @@ private extension SpendRepository {
         try store.stageMonthData(date)
         
         // lastly, post notification
-        postNotificatioSpendRepositoryDidStageNewMonth()
+        postNotificatioSpendRepositoryDidStageNewMonth() // TODO: don't think this worked
     }
     
     // Notifications

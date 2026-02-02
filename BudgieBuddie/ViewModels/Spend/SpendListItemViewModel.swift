@@ -38,13 +38,13 @@ extension SpendListItemViewModel {
 
 // MARK: - Mocks
 extension SpendListItemViewModel {
-    static func mock() -> Self {
-        Self(
+    static func mock() -> SpendListItemViewModel {
+        SpendListItemViewModel(
             currencyFormatter: CurrencyFormatter(),
             spendItem: SpendItem(
+                dayId: UUID(),
                 amount: 13.37,
-                note: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil,
-                date: Date()
+                note: (([1, 2].randomElement() ?? 0) % 2 == 0) ? "yar" : nil
             )
         )
     }

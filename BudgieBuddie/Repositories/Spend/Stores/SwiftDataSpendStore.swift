@@ -68,34 +68,32 @@ class SwiftDataSpendStore: SpendStoreable {
     
     func saveItem(_ item: SpendItem_Data) throws {
         do {
-            // get day associated with item.date
-            let day = try getSpendDay_SwiftData(
-                date: item.date
-            )
+            // get day associated with item
+            let day_swiftData = try getDay_swiftData(id: item.dayId)
             
             // transform into SwiftData model
             let item_swiftData = SpendItemMapper.toSwiftDataObject(item)
             
             // save item to items
-            var items = day.items
-            var oldItem: SpendItem_SwiftData? // need to hold onto old model object
-            if let matchingIdx = items.firstIndex(
+            var items_swiftData = day_swiftData.items
+            var oldItem_swiftData: SpendItem_SwiftData? // need to hold reference for old model object
+            if let matchingIdx = items_swiftData.firstIndex(
                 where: { $0.id == item_swiftData.id }
             ) {
-                oldItem = items.remove(at: matchingIdx)
-                items.insert(item_swiftData, at: matchingIdx)
+                oldItem_swiftData = items_swiftData.remove(at: matchingIdx)
+                items_swiftData.insert(item_swiftData, at: matchingIdx)
             } else {
-                items.append(item_swiftData)
+                items_swiftData.append(item_swiftData)
             }
             
             // update context
             try context?.transaction {
-                if let oldItem {
+                if let oldItem_swiftData {
                     // delete old model object to prevent .id collision
                     // given items are bound to .id
-                    context?.delete(oldItem)
+                    context?.delete(oldItem_swiftData)
                 }
-                day.setItems(items)
+                day_swiftData.setItems(items_swiftData)
             }
         } catch {
             throw SpendStoreError.unableToSaveItem
@@ -104,23 +102,12 @@ class SwiftDataSpendStore: SpendStoreable {
     
     func deleteItem(_ item: SpendItem_Data) throws {
         do {
-            // get day associated with item.date
-            let day = try getSpendDay_SwiftData(
-                date: item.date
-            )
-            
-            // delete item to items
-            var items = day.items
-            if let matchingIdx = items.firstIndex(
-                where: { $0.id == item.id
-                }
-            ) {
-                items.remove(at: matchingIdx)
-            }
+            // get swiftData reference for item
+            let item_swiftData = try getItem_swiftData(id: item.id)
             
             // update context
             try context?.transaction {
-                day.setItems(items)
+                context?.delete(item_swiftData)
             }
         } catch {
             throw SpendStoreError.unableToDeleteItem
@@ -128,11 +115,31 @@ class SwiftDataSpendStore: SpendStoreable {
     }
     
     func getDay(date: Date) throws -> SpendDay_Data {
-        let day_swiftData = try getSpendDay_SwiftData(
-            date: date
+        let key = SpendDayKey(date).value
+        let descriptor = FetchDescriptor<SpendDay_SwiftData>(
+            predicate: #Predicate { $0.key == key }
         )
-        let day_data = SpendDayMapper.toDataObject(day_swiftData)
-        return day_data
+        let days = try context?.fetch(descriptor)
+        
+        guard let firstDay = days?.first else {
+            throw SpendStoreError.dayNotFound
+        }
+        
+        return SpendDayMapper.toDataObject(firstDay)
+    }
+    
+    func getDay(id: UUID) throws -> SpendDay_Data {
+        let days = try context?.fetch(
+            FetchDescriptor<SpendDay_SwiftData>(
+                predicate: #Predicate { $0.id == id }
+            )
+        )
+        
+        guard let firstDay = days?.first else {
+            throw SpendStoreError.dayNotFound
+        }
+        
+        return SpendDayMapper.toDataObject(firstDay)
     }
     
     func getAllMonths() throws -> [SpendMonth_Data] {
@@ -223,20 +230,31 @@ class SwiftDataSpendStore: SpendStoreable {
 
 // MARK: Private interface
 private extension SwiftDataSpendStore {
-    func getSpendDay_SwiftData(date: Date) throws -> SpendDay_SwiftData {
-        let key = SpendDayKey(date).value
-        let predicate: Predicate<SpendDay_SwiftData> = #Predicate { spendDay in
-            spendDay.key == key
-        }
-        let descriptor = FetchDescriptor(
-            predicate: predicate
+    func getItem_swiftData(id: UUID) throws -> SpendItem_SwiftData {
+        let items = try context?.fetch(
+            FetchDescriptor<SpendItem_SwiftData>(
+                predicate: #Predicate { $0.id == id }
+            )
         )
-        let spendDays = try context?.fetch(descriptor)
         
-        guard let firstDay = spendDays?.first else {
+        guard let item_swiftData = items?.first else {
+            throw SpendStoreError.itemNotFound
+        }
+        
+        return item_swiftData
+    }
+    
+    func getDay_swiftData(id: UUID) throws -> SpendDay_SwiftData {
+        let days = try context?.fetch(
+            FetchDescriptor<SpendDay_SwiftData>(
+                predicate: #Predicate { $0.id == id }
+            )
+        )
+        
+        guard let day_swiftData = days?.first else {
             throw SpendStoreError.dayNotFound
         }
         
-        return firstDay
+        return day_swiftData
     }
 }

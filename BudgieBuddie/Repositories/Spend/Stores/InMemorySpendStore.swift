@@ -55,11 +55,9 @@ class InMemorySpendStore: SpendStoreable {
     
     func saveItem(_ item: SpendItem_Data) throws {
         do {
-            let date = item.date
-            
-            // get day associated with date
+            // get day
             let day = try getDay(
-                date: date
+                id: item.dayId
             )
             
             // save item to items
@@ -78,7 +76,7 @@ class InMemorySpendStore: SpendStoreable {
                 items: items
             )
             daysDict.withLock { daysDict in
-                daysDict[spendDayKey(date)] = newDay
+                daysDict[spendDayKey(day.date)] = newDay
             }
         } catch {
             throw SpendStoreError.unableToSaveItem
@@ -87,11 +85,9 @@ class InMemorySpendStore: SpendStoreable {
     
     func deleteItem(_ item: SpendItem_Data) throws {
         do {
-            let date = item.date
-            
             // get day
             let day = try getDay(
-                date: date
+                id: item.dayId
             )
             
             // delete item to items
@@ -107,7 +103,7 @@ class InMemorySpendStore: SpendStoreable {
                 items: items
             )
             daysDict.withLock { daysDict in
-                daysDict[spendDayKey(date)] = newDay
+                daysDict[spendDayKey(day.date)] = newDay
             }
         } catch {
             throw SpendStoreError.unableToDeleteItem
@@ -117,6 +113,18 @@ class InMemorySpendStore: SpendStoreable {
     func getDay(date: Date) throws -> SpendDay_Data {
         try daysDict.withLock { daysDict in
             guard let day = daysDict[spendDayKey(date)] else {
+                throw SpendStoreError.dayNotFound
+            }
+            
+            return day
+        }
+    }
+    
+    func getDay(id: UUID) throws -> SpendDay_Data {
+        try daysDict.withLock { daysDict in
+            guard let day = daysDict.values.first(
+                where: { $0.id == id }
+            ) else {
                 throw SpendStoreError.dayNotFound
             }
             

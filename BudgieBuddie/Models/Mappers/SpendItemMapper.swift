@@ -13,9 +13,9 @@ enum SpendItemMapper {
     ) -> SpendItem {
         SpendItem(
             id: data.id,
+            dayId: data.dayId,
             amount: data.amount,
             note: data.note,
-            date: data.date,
             createdAt: data.createdAt
         )
     }
@@ -25,9 +25,9 @@ enum SpendItemMapper {
     ) -> SpendItem_Data {
         SpendItem_Data(
             id: domain.id,
+            dayId: domain.dayId,
             amount: domain.amount,
             note: domain.note,
-            date: domain.date,
             createdAt: domain.createdAt
         )
     }
@@ -37,9 +37,9 @@ enum SpendItemMapper {
     ) -> SpendItem_Data {
         SpendItem_Data(
             id: swiftData.id,
+            dayId: swiftData.dayId,
             amount: swiftData.amount,
             note: swiftData.note,
-            date: swiftData.date,
             createdAt: swiftData.createdAt
         )
     }
@@ -49,9 +49,9 @@ enum SpendItemMapper {
     ) -> SpendItem_SwiftData {
         SpendItem_SwiftData(
             id: data.id,
+            dayId: data.dayId,
             amount: data.amount,
             note: data.note,
-            date: data.date,
             createdAt: data.createdAt
         )
     }

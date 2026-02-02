@@ -10,23 +10,23 @@ import Foundation
 class SpendItem_Data {
     // Instance vars
     let id: UUID
+    let dayId: UUID
     let amount: Decimal
     let note: String?
-    let date: Date
     let createdAt: Date
     
     // Constructors
     init(
         id: UUID,
+        dayId: UUID,
         amount: Decimal,
         note: String?,
-        date: Date,
         createdAt: Date
     ) {
         self.id = id
+        self.dayId = dayId
         self.amount = amount
         self.note = note
-        self.date = date
         self.createdAt = createdAt
     }
 }

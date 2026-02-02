@@ -19,6 +19,16 @@ enum SpendDayMapper {
     }
     
     static func toDataObject(
+        _ domain: SpendDay
+    ) -> SpendDay_Data {
+        SpendDay_Data(
+            id: domain.id,
+            date: domain.date,
+            items: domain.items.map { SpendItemMapper.toDataObject($0) }
+        )
+    }
+    
+    static func toDataObject(
         _ swiftData: SpendDay_SwiftData
     ) -> SpendDay_Data {
         SpendDay_Data(

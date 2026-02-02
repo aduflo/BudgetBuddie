@@ -9,6 +9,7 @@ import Foundation
 
 enum SpendStoreError: LocalizedError {
     case dayNotFound
+    case itemNotFound
     case itemsNotFound
     case monthsNotFound
     case monthNotFound
@@ -22,6 +23,7 @@ enum SpendStoreError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .dayNotFound: "Could not find day."
+        case .itemNotFound: "Could not find item."
         case .itemsNotFound: "Could not find items."
         case .monthsNotFound: "Could not find months."
         case .monthNotFound: "Could not find month."

@@ -98,11 +98,14 @@ extension SpendItemScreenModel {
         do {
             switch mode {
             case .new:
+                let day = try spendRepository.getDay(
+                    date: calendarService.selectedDate
+                )
                 try spendRepository.saveItem(
                     SpendItem(
+                        dayId: day.id,
                         amount: amount,
-                        note: note,
-                        date: calendarService.selectedDate
+                        note: note
                     )
                 )
             case .existing(let spendItem):

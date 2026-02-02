@@ -10,23 +10,23 @@ import Foundation
 class SpendItem {
     // Instance vars
     let id: UUID
+    let dayId: UUID
     let amount: Decimal
     let note: String?
-    let date: Date // intended to be the date this object maps to; can be any date
-    let createdAt: Date // intended to be the date this object was initialized
+    let createdAt: Date // intended to be the date this object was initialized; diff from day.date
     
     // Constructors
     init(
         id: UUID,
+        dayId: UUID,
         amount: Decimal,
         note: String?,
-        date: Date,
         createdAt: Date
     ) {
         self.id = id
+        self.dayId = dayId
         self.amount = amount
         self.note = note
-        self.date = date
         self.createdAt = createdAt
     }
 }
@@ -34,15 +34,15 @@ class SpendItem {
 // MARK: Public interface
 extension SpendItem {
     convenience init(
+        dayId: UUID,
         amount: Decimal,
-        note: String?,
-        date: Date
+        note: String?
     ) {
         self.init(
             id: UUID(),
+            dayId: dayId,
             amount: amount,
             note: note,
-            date: date,
             createdAt: Date()
         )
     }
@@ -53,9 +53,9 @@ extension SpendItem {
     ) -> SpendItem {
         SpendItem(
             id: id,
+            dayId: dayId,
             amount: amount,
             note: note,
-            date: date,
             createdAt: createdAt
         )
     }
@@ -65,9 +65,9 @@ extension SpendItem {
 extension SpendItem {
     static func mock() -> SpendItem {
         SpendItem(
+            dayId: UUID(),
             amount: 13.37,
-            note: "Leet purchase",
-            date: Date()
+            note: "Leet purchase"
         )
     }
 }
