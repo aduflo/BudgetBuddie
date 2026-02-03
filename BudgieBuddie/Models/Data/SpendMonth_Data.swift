@@ -33,3 +33,17 @@ class SpendMonth_Data {
         self.allowance = allowance
     }
 }
+
+// MARK: - Mocks
+extension SpendMonth_Data {
+    static func mock() -> SpendMonth_Data {
+        SpendMonth_Data(
+            id: UUID(),
+            date: Date(),
+            month: 02,
+            year: 2026,
+            spend: 13.37,
+            allowance: 1337.00
+        )
+    }
+}

@@ -133,11 +133,11 @@ class InMemorySpendStore: SpendStoreable {
     }
     
     func getAllMonths() throws -> [SpendMonth_Data] {
-        throw notImplementedError(functionName: #function)
+        [.mock()]
     }
     
     func getMonth(date: Date) throws -> SpendMonth_Data {
-        throw notImplementedError(functionName: #function)
+        .mock()
     }
     
     func saveMonth(_ month: SpendMonth_Data) throws {
