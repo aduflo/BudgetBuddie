@@ -1,6 +1,5 @@
 ### TODO:
 Before RC:
-- tend to TODOs
 - test additions
 - QA + find bugs
 - cut 1.0 RC

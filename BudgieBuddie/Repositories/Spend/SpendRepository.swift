@@ -196,7 +196,7 @@ private extension SpendRepository {
         try store.stageMonthData(date)
         
         // lastly, post notification
-        postNotificatioSpendRepositoryDidStageNewMonth() // TODO: not sure if this worked
+        postNotificatioSpendRepositoryDidStageNewMonth()
     }
     
     // Notifications
