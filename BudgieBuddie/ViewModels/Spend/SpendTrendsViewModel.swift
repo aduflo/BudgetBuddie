@@ -120,14 +120,21 @@ private extension SpendTrendsViewModel {
     }
     
     var mtdCurrentSpend: Decimal {
-        cumulativeCurrentSpend
+        do {
+            let selectedDate = calendarService.selectedDate
+            let monthDates = Calendar.current.monthDates(selectedDate)
+            let day = Calendar.current.dayInDate(selectedDate)
+            let monthDatesUpToSelectedDate = Array(monthDates.prefix(upTo: day))
+            let items = try spendRepository.getItems(
+                dates: monthDatesUpToSelectedDate
+            )
+            return items.reduce(0, { $0 + $1.amount })
+        } catch {
+            return 0
+        }
     }
     
     var monthlyCurrentSpend: Decimal {
-        cumulativeCurrentSpend
-    }
-    
-    var cumulativeCurrentSpend: Decimal {
         do {
             let monthDates = Calendar.current.monthDates(calendarService.selectedDate)
             let items = try spendRepository.getItems(
