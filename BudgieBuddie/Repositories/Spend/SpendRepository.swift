@@ -19,78 +19,112 @@ class SpendRepository: SpendRepositable {
         )
     }
     
-    func setup(settingsService: any SettingsServiceable) {
-        if didSetupOnce {
-            standardSetup(
-                settingsService: settingsService
-            )
-        } else {
-            initialSetup()
+    func setup(settingsService: any SettingsServiceable) throws {
+        do {
+            if didSetupOnce {
+                try standardSetup(
+                    settingsService: settingsService
+                )
+            } else {
+                try initialSetup()
+            }
+        } catch {
+            throw SpendRepositoryError.setupFailed
         }
     }
 
     // SpendRepositable
     func getItems(date: Date) throws -> [SpendItem] {
-        let items_data = try store.getItems(date: date)
-        let items = items_data.map { SpendItemMapper.toDomainObject($0) }
-        return items
+        do {
+            let items_data = try store.getItems(date: date)
+            let items = items_data.map { SpendItemMapper.toDomainObject($0) }
+            return items
+        } catch {
+            throw SpendRepositoryError.getItemsFailed
+        }
     }
     
     func getItems(dates: [Date]) throws -> [SpendItem] {
-        let items_data = try store.getItems(
-            dates: dates
-        )
-        let items = items_data.map { SpendItemMapper.toDomainObject($0) }
-        return items
+        do {
+            let items_data = try store.getItems(
+                dates: dates
+            )
+            let items = items_data.map { SpendItemMapper.toDomainObject($0) }
+            return items
+        } catch {
+            throw SpendRepositoryError.getItemsFailed
+        }
     }
     
     func saveItem(_ item: SpendItem) throws {
-        let item_data = SpendItemMapper.toDataObject(item)
-        try store.saveItem(item_data)
-        postNotificationSpendRepositoryDidUpdateItem()
+        do {
+            let item_data = SpendItemMapper.toDataObject(item)
+            try store.saveItem(item_data)
+            postNotificationSpendRepositoryDidUpdateItem()
+        } catch {
+            throw SpendRepositoryError.saveItemFailed
+        }
     }
     
     func deleteItem(_ item: SpendItem) throws {
-        let item_data = SpendItemMapper.toDataObject(item)
-        try store.deleteItem(item_data)
-        postNotificationSpendRepositoryDidUpdateItem()
+        do {
+            let item_data = SpendItemMapper.toDataObject(item)
+            try store.deleteItem(item_data)
+            postNotificationSpendRepositoryDidUpdateItem()
+        } catch {
+            throw SpendRepositoryError.deleteItemFailed
+        }
     }
     
     func getDay(date: Date) throws -> SpendDay {
-        let day_data = try store.getDay(date: date)
-        let day = SpendDayMapper.toDomainObject(day_data)
-        return day
+        do {
+            let day_data = try store.getDay(date: date)
+            let day = SpendDayMapper.toDomainObject(day_data)
+            return day
+        } catch {
+            throw SpendRepositoryError.getDayFailed
+        }
     }
     
     func getAllMonths() throws -> [SpendMonth] {
-        let months_data = try store.getAllMonths()
-        let months = months_data.map { SpendMonthMapper.toDomainObject($0) }
-        return months
+        do {
+            let months_data = try store.getAllMonths()
+            let months = months_data.map { SpendMonthMapper.toDomainObject($0) }
+            return months
+        } catch {
+            throw SpendRepositoryError.getAllMonthsFailed
+        }
     }
     
     func getMonth(date: Date) throws -> SpendMonth {
-        let month_data = try store.getMonth(
-            date: date
-        )
-        let month = SpendMonthMapper.toDomainObject(month_data)
-        return month
+        do {
+            let month_data = try store.getMonth(
+                date: date
+            )
+            let month = SpendMonthMapper.toDomainObject(month_data)
+            return month
+        } catch {
+            throw SpendRepositoryError.getMonthFailed
+        }
     }
 }
 
 // MARK: Private interface
 private extension SpendRepository {
     // Setup
-    func initialSetup() {
+    func initialSetup() throws {
         do {
             try stageNewMonth(Date())
             UserDefaults.standard.set(
                 true,
                 forKey: UserDefaults.Key.SpendRepository.didSetupOnce
             )
-        } catch {}
+        } catch {
+            throw SpendRepositoryError.initialSetupFailed
+        }
     }
     
-    func standardSetup(settingsService: any SettingsServiceable) {
+    func standardSetup(settingsService: any SettingsServiceable) throws {
         let date = Date()
         do {
             _ = try getDay(date: date)
@@ -107,7 +141,9 @@ private extension SpendRepository {
                         settingsService: settingsService
                     )
                     try stageNewMonth(date)
-                } catch {}
+                } catch {
+                    throw SpendRepositoryError.standardSetupFailed
+                }
             }
         }
     }
@@ -119,7 +155,7 @@ private extension SpendRepository {
         
         // get reference date
         guard let firstDay = items.first else {
-            throw SpendRepositoryError.unableToCommitStagedMonth
+            throw SpendRepositoryError.commitStagedMonthFailed
         }
         let day = try store.getDay(
             id: firstDay.dayId

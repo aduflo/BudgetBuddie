@@ -1,6 +1,5 @@
 ### TODO:
 Before RC:
-- think about extending SpendRepositoryError usage in SpendRepo, given bunch of SpendStoreError's will bubble up; no do/catch around trys
 - tend to TODOs
 - test additions
 - QA + find bugs

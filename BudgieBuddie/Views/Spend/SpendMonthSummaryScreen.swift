@@ -173,7 +173,7 @@ struct SpendMonthSummaryScreen: View {
         screenModel: SpendMonthSummaryScreenModel(
             spendRepository: {
                 let spendRepository = MockSpendRepository()
-                spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.unableToCommitStagedMonth)
+                spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
                 return spendRepository
             }(),
             currencyFormatter: CurrencyFormatter(),

@@ -34,9 +34,11 @@ struct BudgieBuddieApp: App {
             )
             .onChange(of: scenePhase) { _, newValue in
                 if newValue == .active {
-                    spendRepository.setup(
-                        settingsService: settingsService
-                    )
+                    do {
+                        try spendRepository.setup(
+                            settingsService: settingsService
+                        )
+                    } catch {}
                 }
             }
         }

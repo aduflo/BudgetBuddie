@@ -8,11 +8,29 @@
 import Foundation
 
 enum SpendRepositoryError: LocalizedError {
-    case unableToCommitStagedMonth
+    case setupFailed
+    case initialSetupFailed
+    case standardSetupFailed
+    case getItemsFailed
+    case saveItemFailed
+    case deleteItemFailed
+    case getDayFailed
+    case getAllMonthsFailed
+    case getMonthFailed
+    case commitStagedMonthFailed
     
     var errorDescription: String? {
         switch self {
-        case .unableToCommitStagedMonth: "Could not commit staged month."
+        case .setupFailed: "Could not complete setup."
+        case .initialSetupFailed: "Could not complete initial setup."
+        case .standardSetupFailed: "Could not complete standard setup."
+        case .getItemsFailed: "Could not get items."
+        case .saveItemFailed: "Could not save item."
+        case .deleteItemFailed: "Could not delete item."
+        case .getDayFailed: "Could not get day."
+        case .getAllMonthsFailed: "Could not get all months."
+        case .getMonthFailed: "Could not get month."
+        case .commitStagedMonthFailed: "Could not commit staged month."
         }
     }
 }

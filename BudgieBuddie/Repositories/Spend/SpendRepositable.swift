@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SpendRepositable {
-    func setup(settingsService: any SettingsServiceable)
+    func setup(settingsService: any SettingsServiceable) throws
     /// Get a collection of items for a specific date.
     /// - Returns: An array of `SpendItem`.
     func getItems(date: Date) throws -> [SpendItem]

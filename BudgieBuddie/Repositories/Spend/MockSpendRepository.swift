@@ -9,7 +9,7 @@ import Foundation
 
 class MockSpendRepository: SpendRepositable {
     // SpendRepositable
-    func setup(settingsService: any SettingsServiceable) {}
+    func setup(settingsService: any SettingsServiceable) throws {}
     
     func getItems(date: Date) throws -> [SpendItem] {
         [.mock()]
