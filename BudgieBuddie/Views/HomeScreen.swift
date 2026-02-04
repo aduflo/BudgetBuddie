@@ -26,6 +26,7 @@ struct HomeScreen: View {
     var body: some View {
         ScrollView {
             VStack(
+                alignment: .center,
                 spacing: Spacing.2
             ) {
                 headerView
@@ -113,7 +114,7 @@ struct HomeScreen: View {
                     currencyFormatter: screenModel.currencyFormatter
                 )
             )
-            .presentationDetents([.fraction(1/2)])
+            .presentationDetents([.fraction(2/3)])
         }
     }
     

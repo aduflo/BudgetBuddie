@@ -39,6 +39,12 @@ extension SettingsScreenModel {
     func setWarningThreshold(_ warningThreshold: Double) {
         settingsService.setWarningThreshold(warningThreshold)
     }
+    
+    var versionDisplayString: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? Copy.notAvailabile
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? Copy.notAvailabile
+        return "\(Copy.appName) v\(version) (\(build))"
+    }
 }
 
 // MARK: - Mocks

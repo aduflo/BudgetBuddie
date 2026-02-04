@@ -28,7 +28,8 @@ struct SettingsScreen: View {
             headerView
             monthlyAllowanceView
             warningThresholdView
-            Spacer() // to push everything to the top
+            Spacer()
+            versionView
         }
         .padding(Padding.2)
         .onAppear {
@@ -106,6 +107,13 @@ struct SettingsScreen: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(.foregroundPrimary)
+    }
+    
+    var versionView: some View {
+        Text(screenModel.versionDisplayString)
+            .font(.caption)
+            .foregroundStyle(.foregroundPrimary)
+            .frame(maxWidth: .infinity)
     }
 }
 

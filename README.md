@@ -1,6 +1,5 @@
 ### TODO:
 Before RC:
-- add info (footer on home, or on settings) to say what version and build# is in use
 - test additions
 - QA + find bugs
 - cut 1.0 RC March, if greenlight
