@@ -10,6 +10,8 @@ import Foundation
 @Observable
 class CalendarDayViewModel: Identifiable {
     // Instance vars
+    private let calendarService: CalendarServiceable
+    
     let monthDay: MonthDay
     private(set) var isSelected: Bool
     
@@ -18,9 +20,11 @@ class CalendarDayViewModel: Identifiable {
     
     // Constructors
     init(
+        calendarService: CalendarServiceable,
         monthDay: MonthDay,
         isSelected: Bool
     ) {
+        self.calendarService = calendarService
         self.monthDay = monthDay
         self.isSelected = isSelected
     }
@@ -44,6 +48,9 @@ extension CalendarDayViewModel {
     }
     
     var isToday: Bool {
-        Calendar.current.isDateInToday(monthDay.date)
+        Calendar.current.isDate(
+            monthDay.date,
+            inSameDayAs: calendarService.todayDate
+        )
     }
 }

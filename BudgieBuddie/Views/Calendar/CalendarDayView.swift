@@ -37,6 +37,7 @@ struct CalendarDayView: View {
 #Preview("Selected") {
     CalendarDayView(
         viewModel: CalendarDayViewModel(
+            calendarService: MockCalendarService(),
             monthDay: .mockPast(),
             isSelected: true
         )
@@ -46,6 +47,7 @@ struct CalendarDayView: View {
 #Preview("Not selected") {
     CalendarDayView(
         viewModel: CalendarDayViewModel(
+            calendarService: MockCalendarService(),
             monthDay: .mockFuture(),
             isSelected: false
         )
@@ -53,18 +55,26 @@ struct CalendarDayView: View {
 }
 
 #Preview("Today selected") {
-    CalendarDayView(
+    let monthDay: MonthDay = .mockPresent()
+    let calendarService = MockCalendarService()
+    calendarService.updateTodayDate(monthDay.date)
+    return CalendarDayView(
         viewModel: CalendarDayViewModel(
-            monthDay: .mockPresent(),
+            calendarService: calendarService,
+            monthDay: monthDay,
             isSelected: true
         )
     )
 }
 
 #Preview("Today not selected") {
-    CalendarDayView(
+    let monthDay: MonthDay = .mockPresent()
+    let calendarService = MockCalendarService()
+    calendarService.updateTodayDate(monthDay.date)
+    return CalendarDayView(
         viewModel: CalendarDayViewModel(
-            monthDay: .mockPresent(),
+            calendarService: calendarService,
+            monthDay: monthDay,
             isSelected: false
         )
     )

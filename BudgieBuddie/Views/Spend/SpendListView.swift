@@ -36,7 +36,7 @@ struct SpendListView: View {
         }
         .onReceive(
             Publishers.Merge(
-                NotificationCenter.default.publisher(for: .SelectedDateDidUpdate),
+                NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateSelectedDate),
                 NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem)
             ),
             perform: { _ in

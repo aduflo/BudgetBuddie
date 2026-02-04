@@ -19,14 +19,20 @@ class SpendRepository: SpendRepositable {
         )
     }
     
-    func setup(settingsService: any SettingsServiceable) throws {
+    func setup(
+        calendarService: any CalendarServiceable,
+        settingsService: any SettingsServiceable
+    ) throws {
         do {
             if didSetupOnce {
                 try standardSetup(
+                    calendarService: calendarService,
                     settingsService: settingsService
                 )
             } else {
-                try initialSetup()
+                try initialSetup(
+                    calendarService: calendarService
+                )
             }
         } catch {
             throw SpendRepositoryError.setupFailed
@@ -112,9 +118,10 @@ class SpendRepository: SpendRepositable {
 // MARK: Private interface
 private extension SpendRepository {
     // Setup
-    func initialSetup() throws {
+    func initialSetup(calendarService: any CalendarServiceable) throws {
         do {
-            try stageNewMonth(Date())
+            let todayDate = calendarService.todayDate
+            try stageNewMonth(todayDate)
             UserDefaults.standard.set(
                 true,
                 forKey: UserDefaults.Key.SpendRepository.didSetupOnce
@@ -124,10 +131,15 @@ private extension SpendRepository {
         }
     }
     
-    func standardSetup(settingsService: any SettingsServiceable) throws {
-        let date = Date()
+    func standardSetup(
+        calendarService: any CalendarServiceable,
+        settingsService: any SettingsServiceable
+    ) throws {
+        let todayDate = calendarService.todayDate
         do {
-            _ = try getDay(date: date)
+            _ = try getDay(
+                date: todayDate
+            )
         } catch {
             if case .dayNotFound = error as? SpendStoreError {
                 // if we cannot find a SpendDay associated with today's date
@@ -140,7 +152,7 @@ private extension SpendRepository {
                     try commitStagedMonth(
                         settingsService: settingsService
                     )
-                    try stageNewMonth(date)
+                    try stageNewMonth(todayDate)
                 } catch {
                     throw SpendRepositoryError.standardSetupFailed
                 }

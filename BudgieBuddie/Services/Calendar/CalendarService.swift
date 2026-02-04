@@ -8,10 +8,25 @@
 import Foundation
 
 class CalendarService: CalendarServiceable {
-    // CalendarServiceable    
+    // CalendarServiceable
+    private(set) var todayDate: Date = Date() {
+        didSet {
+            postNotificationDidUpdateTodayDate()
+        }
+    }
+    
+    func updateTodayDate(_ date: Date) {
+        let isSameDay = Calendar.current.isDate(date, inSameDayAs: todayDate)
+        guard isSameDay == false else {
+            return
+        }
+        
+        todayDate = date
+    }
+    
     private(set) var selectedDate: Date = Date() {
         didSet {
-            postNotificationSelectedDateUpdated()
+            postNotificationDidUpdateSelectedDate()
         }
     }
     
@@ -22,7 +37,11 @@ class CalendarService: CalendarServiceable {
 
 // MARK: Private interface
 private extension CalendarService {
-    func postNotificationSelectedDateUpdated() {
-        NotificationCenter.default.post(.SelectedDateDidUpdate)
+    func postNotificationDidUpdateTodayDate() {
+        NotificationCenter.default.post(.CalendarServiceDidUpdateTodayDate)
+    }
+    
+    func postNotificationDidUpdateSelectedDate() {
+        NotificationCenter.default.post(.CalendarServiceDidUpdateSelectedDate)
     }
 }

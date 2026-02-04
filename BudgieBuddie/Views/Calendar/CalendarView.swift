@@ -29,6 +29,14 @@ struct CalendarView: View {
         .onAppear {
             viewModel.reloadData()
         }
+        .onReceive(
+            NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateTodayDate),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.reloadData()
+                }}
+            }
+        )
     }
     
     var headerView: some View {

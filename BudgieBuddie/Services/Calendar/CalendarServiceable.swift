@@ -8,6 +8,8 @@
 import Foundation
 
 protocol CalendarServiceable {
+    var todayDate: Date { get }
+    func updateTodayDate(_ date: Date)
     var selectedDate: Date { get }
     func updateSelectedDate(_ date: Date)
 }

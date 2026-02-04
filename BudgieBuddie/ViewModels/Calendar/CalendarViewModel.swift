@@ -80,6 +80,7 @@ private extension CalendarViewModel {
     func dayViewModelsBuilder() -> [CalendarDayViewModel] {
         monthDays.map { monthDay in
             CalendarDayViewModel(
+                calendarService: calendarService,
                 monthDay: monthDay,
                 isSelected: false
             )
