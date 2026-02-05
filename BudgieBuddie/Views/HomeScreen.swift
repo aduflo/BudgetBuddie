@@ -35,7 +35,9 @@ struct HomeScreen: View {
                 footerView
             }
         }
-        .padding(Padding.2)
+        .padding(.top, Padding.2)
+        .padding(.horizontal, Padding.2)
+        .padding(.bottom, Padding.3)
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             // flip onboarding presentation if need be
