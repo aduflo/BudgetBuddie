@@ -29,8 +29,8 @@ extension Copy {
     
     // Misc.
     static let spendTrends = "Spend trends"
-    static let current = "Current"
-    static let max = "Max"
+    static let spend = "Spend"
+    static let allowance = "Allowance"
     static let spendItems = "Spend items"
     static let summary = "Summary"
     static let days = "Days"
@@ -57,9 +57,7 @@ extension Copy {
     static let errorPleaseTryAgain = "Error! Please try again."
     static let errorSomethingWentWrong = "Error! Something went wrong."
     static let notAvailabile = "N/A"
-    static let spend = "Spend"
     static let date = "Date"
-    static let allowance = "Allowance"
     static let newest = "Newest"
     static let oldest = "Oldest"
     static let lessSpend = "$"
@@ -75,13 +73,13 @@ extension Copy {
 extension Copy {
     // MARK: AttributedString
     static let warningThresholdFootnote: AttributedString = {
-        let current = Copy.current
+        let spend = Copy.spend
         let spendTrends = Copy.spendTrends
         let green = "green"
         let orange = "orange"
-        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending allotment. When you've exceeded your comfortable spending allotment, the \(current) amounts under \(spendTrends) will change from \(green) to \(orange).")
+        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending allotment. When you've exceeded your comfortable spending allotment, the \(spend) amounts under \(spendTrends) will change from \(green) to \(orange).")
         
-        if let currentRange = attributedString.range(of: current) {
+        if let currentRange = attributedString.range(of: spend) {
             attributedString[currentRange].inlinePresentationIntent = .stronglyEmphasized
         }
         if let spendingTrendsRange = attributedString.range(of: spendTrends) {

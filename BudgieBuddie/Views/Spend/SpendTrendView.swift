@@ -32,7 +32,7 @@ struct SpendTrendView: View {
                     alignment: .leading,
                     spacing: Spacing.half
                 ) {
-                    Text(Copy.current)
+                    Text(Copy.spend)
                         .foregroundStyle(.foregroundPrimary)
                     Text(viewModel.displayCurrentSpend)
                         .foregroundStyle(viewModel.dailySpendColor)
@@ -42,7 +42,7 @@ struct SpendTrendView: View {
                     alignment: .leading,
                     spacing: Spacing.half
                 ) {
-                    Text(Copy.max)
+                    Text(Copy.allowance)
                     Text(viewModel.displayMaxSpend)
                 }
                 .foregroundStyle(.foregroundPrimary)
