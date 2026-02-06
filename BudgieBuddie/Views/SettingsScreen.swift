@@ -110,7 +110,7 @@ struct SettingsScreen: View {
     }
     
     var versionView: some View {
-        Text(screenModel.versionDisplayString)
+        Text(screenModel.displayVersion)
             .font(.caption)
             .foregroundStyle(.foregroundPrimary)
             .frame(maxWidth: .infinity)

@@ -29,17 +29,10 @@ struct SpendListItemView: View {
                 Text(viewModel.displayAmount)
                     .font(.headline)
                 
-                VStack(
-                    alignment: .leading,
-                    spacing: Spacing.half
-                ) {
-                    Text(Copy.note)
-                        .font(.subheadline)
-                    Text(viewModel.displayNote)
-                        .font(.caption)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                }
+                Text(viewModel.displayNote)
+                    .font(.caption)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
             }
             .foregroundStyle(.foregroundPrimary)
             

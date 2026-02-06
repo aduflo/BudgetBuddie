@@ -32,7 +32,7 @@ extension SpendListItemViewModel {
     }
     
     var displayNote: String {
-        spendItem.note ?? Copy.notAvailabile
+        spendItem.note ?? Copy.noNoteProvided
     }
 }
 
