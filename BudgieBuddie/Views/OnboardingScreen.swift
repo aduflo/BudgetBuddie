@@ -22,7 +22,7 @@ struct OnboardingScreen: View {
                     .font(.body)
                     .foregroundStyle(.foregroundPrimary)
             }
-            .scrollIndicators(.automatic)
+            .scrollIndicators(.hidden)
         }
         .frame(
             maxWidth: .infinity,

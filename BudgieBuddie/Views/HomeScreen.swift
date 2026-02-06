@@ -24,7 +24,7 @@ struct HomeScreen: View {
     }
     
     var body: some View {
-        ScrollView {
+        ScrollView(.vertical) {
             VStack(
                 alignment: .center,
                 spacing: Spacing.2
@@ -35,6 +35,7 @@ struct HomeScreen: View {
                 footerView
             }
         }
+        .scrollIndicators(.hidden)
         .padding(.top, Padding.2)
         .padding(.horizontal, Padding.2)
         .padding(.bottom, Padding.3)

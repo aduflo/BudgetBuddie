@@ -81,6 +81,7 @@ struct CalendarView: View {
                     }
                 }
             }
+            .scrollIndicators(.hidden)
         }
     }
 }

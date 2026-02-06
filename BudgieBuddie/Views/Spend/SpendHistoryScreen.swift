@@ -114,7 +114,7 @@ struct SpendHistoryScreen: View {
     }
     
     var listView: some View {
-        ScrollView {
+        ScrollView(.vertical) {
             VStack(
                 alignment: .leading,
                 spacing: Spacing.1
@@ -126,6 +126,7 @@ struct SpendHistoryScreen: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 
