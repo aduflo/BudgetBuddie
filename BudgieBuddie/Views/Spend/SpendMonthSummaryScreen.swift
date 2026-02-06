@@ -20,9 +20,6 @@ struct SpendMonthSummaryScreen: View {
             Spacer() // to push everything to the top
         }
         .padding(Padding.2)
-        .onAppear {
-            screenModel.reloadData()
-        }
     }
     
     var headerView: some View {

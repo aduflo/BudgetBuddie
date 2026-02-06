@@ -16,8 +16,7 @@ class CalendarService: CalendarServiceable {
     }
     
     func updateTodayDate(_ date: Date) {
-        let isSameDay = Calendar.current.isDate(date, inSameDayAs: todayDate)
-        guard isSameDay == false else {
+        guard date.isSameDayAs(todayDate) == false else {
             return
         }
         

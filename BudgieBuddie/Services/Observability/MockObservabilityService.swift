@@ -8,11 +8,6 @@
 import Foundation
 
 struct MockObservabilityService: ObservabilityServiceable {
-    static func start() {
-        print("\(String(describing: Self.self)).\(#function)")
-    }
-    
-    static func forceCrash() {
-        print("\(String(describing: Self.self)).\(#function)")
-    }
+    static func start() {}
+    static func forceCrash() {}
 }

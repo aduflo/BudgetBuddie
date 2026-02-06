@@ -14,7 +14,11 @@ struct MonthDay {
 }
 
 // MARK: Equatable
-extension MonthDay: Equatable {}
+extension MonthDay: Equatable {
+    static func == (lhs: MonthDay, rhs: MonthDay) -> Bool {
+        lhs.day == rhs.day && lhs.date.isSameDayAs(rhs.date)
+    }
+}
 
 // MARK: - Mocks
 extension MonthDay {    

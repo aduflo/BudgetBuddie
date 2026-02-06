@@ -14,8 +14,8 @@ class SpendMonthSummaryScreenModel {
     private let currencyFormatter: CurrencyFormatter
     private let date: Date
     
-    private(set) var spendMonth: SpendMonth?
-    private(set) var error: Error? = nil
+    private let spendMonth: SpendMonth?
+    let error: Error?
     
     // Constructors
     init(
@@ -26,12 +26,7 @@ class SpendMonthSummaryScreenModel {
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
         self.date = date
-    }
-}
-
-// MARK: Public interface
-extension SpendMonthSummaryScreenModel {
-    func reloadData() {
+        
         do {
             spendMonth = try spendRepository.getMonth(
                 date: date
@@ -42,7 +37,10 @@ extension SpendMonthSummaryScreenModel {
             self.error = error
         }
     }
-    
+}
+
+// MARK: Public interface
+extension SpendMonthSummaryScreenModel {
     var displayMonth: String {
         guard let date = spendMonth?.date else {
             return ""

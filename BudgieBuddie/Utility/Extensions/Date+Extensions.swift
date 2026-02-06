@@ -27,4 +27,8 @@ extension Date {
     var monthLongString: String {
         formatted(.dateTime.month(.wide))
     }
+    
+    func isSameDayAs(_ date: Date) -> Bool {
+        Calendar.current.isDate(self, inSameDayAs: date)
+    }
 }

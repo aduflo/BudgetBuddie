@@ -29,19 +29,23 @@ extension CalendarViewModel {
         // rebuild dayViewModels
         dayViewModels = dayViewModelsBuilder()
         
-        // null out selectedDayViewModel if not contained in dayViewModels
-        if dayViewModels.contains(where: { $0 == selectedDayViewModel }) == false {
-            selectedDayViewModel = nil
+        // if selectedDayViewModel not contained in dayViewModels
+        // can assume we're viewing a new month
+        // thus call setSelectedDayViewModel() w/ todayDayViewModel
+        if let selectedDayViewModel,
+           dayViewModels.contains(selectedDayViewModel) == false,
+           let todayDayViewModel {
+            setSelectedDayViewModel(todayDayViewModel)
         }
     }
     
-    var currentDayViewModel: CalendarDayViewModel? {
-        guard let currentMonthDay = currentMonthDay else {
+    var todayDayViewModel: CalendarDayViewModel? {
+        guard let todayMonthDay else {
             return nil
         }
         
         return dayViewModels.first(
-            where: { $0.monthDay.day == currentMonthDay.day }
+            where: { $0.monthDay.day == todayMonthDay.day }
         )
     }
     
@@ -62,7 +66,7 @@ extension CalendarViewModel {
 private extension CalendarViewModel {
     var monthDays: [MonthDay] {
         let dates = Calendar.current.monthDates(
-            calendarService.selectedDate
+            calendarService.todayDate
         )
         return dates.map {
             MonthDay(
@@ -72,8 +76,8 @@ private extension CalendarViewModel {
         }
     }
     
-    var currentMonthDay: MonthDay? {
-        let dayInMonth = Calendar.current.dayInDate(calendarService.selectedDate)
+    var todayMonthDay: MonthDay? {
+        let dayInMonth = Calendar.current.dayInDate(calendarService.todayDate)
         return monthDays.first { $0.day == dayInMonth }
     }
     

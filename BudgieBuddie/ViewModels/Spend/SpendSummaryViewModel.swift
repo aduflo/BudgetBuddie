@@ -44,12 +44,7 @@ class SpendSummaryViewModel {
 }
 
 // MARK: Public interface
-extension SpendSummaryViewModel {
-    func reloadData() {
-        spendTrendsViewModel.reloadData()
-        calendarViewModel.reloadData()
-    }
-    
+extension SpendSummaryViewModel {    
     func settingsTapped() {
         onSettingsTapped()
     }

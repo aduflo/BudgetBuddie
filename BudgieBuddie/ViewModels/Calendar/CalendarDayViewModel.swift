@@ -48,9 +48,6 @@ extension CalendarDayViewModel {
     }
     
     var isToday: Bool {
-        Calendar.current.isDate(
-            monthDay.date,
-            inSameDayAs: calendarService.todayDate
-        )
+        monthDay.date.isSameDayAs(calendarService.todayDate)
     }
 }

@@ -56,7 +56,7 @@ struct CalendarView: View {
                         CalendarDayView(
                             viewModel: dayViewModel
                         )
-                        .id(dayViewModel.monthDay.day)
+                        .id(dayViewModel.id)
                         .onTapGesture {
                             if let selectedDayViewModel = viewModel.selectedDayViewModel {
                                 if selectedDayViewModel.monthDay.day == dayViewModel.monthDay.day {
@@ -69,13 +69,13 @@ struct CalendarView: View {
                         }
                     }
                     .onAppear {
-                        guard let currentDayViewModel = viewModel.currentDayViewModel else {
+                        guard let todayDayViewModel = viewModel.todayDayViewModel else {
                             return
                         }
                         
-                        viewModel.setSelectedDayViewModel(currentDayViewModel)
+                        viewModel.setSelectedDayViewModel(todayDayViewModel)
                         proxy.scrollTo(
-                            currentDayViewModel.monthDay.day,
+                            todayDayViewModel.id,
                             anchor: .center
                         )
                     }

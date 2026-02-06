@@ -15,8 +15,8 @@ class HomeScreenModel {
     let spendRepository: SpendRepositable
     let currencyFormatter: CurrencyFormatter
     
-    let spendSummaryViewModel: SpendSummaryViewModel
-    let spendListViewModel: SpendListViewModel
+    private(set) var spendSummaryViewModel: SpendSummaryViewModel
+    private(set) var spendListViewModel: SpendListViewModel
     
     @ObservationIgnored
     private(set) var spendItemToPresent: SpendItem? = nil
@@ -57,8 +57,22 @@ extension HomeScreenModel {
     }
     
     func reloadData() {
-        spendSummaryViewModel.reloadData()
-        spendListViewModel.reloadData()
+        // assign new values
+        // so that the view hierarchy gets totally redrawn
+        // vs just changing out some underlying values via instance defined reloadData()
+        // this is to guarantee certain expectations
+        // eg. the CalendarView being scrolled to the correct day
+        self.spendSummaryViewModel = SpendSummaryViewModel(
+            settingsService: settingsService,
+            calendarService: calendarService,
+            spendRepository: spendRepository,
+            currencyFormatter: currencyFormatter
+        )
+        self.spendListViewModel = SpendListViewModel(
+            calendarService: calendarService,
+            spendRepository: spendRepository,
+            currencyFormatter: currencyFormatter
+        )
     }
     
     func setSpendItemToPresent(_ spendItem: SpendItem?) {
