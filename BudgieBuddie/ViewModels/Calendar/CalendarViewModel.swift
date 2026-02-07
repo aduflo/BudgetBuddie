@@ -28,15 +28,6 @@ extension CalendarViewModel {
     func reloadData() {
         // rebuild dayViewModels
         dayViewModels = dayViewModelsBuilder()
-        
-        // if selectedDayViewModel not contained in dayViewModels
-        // can assume we're viewing a new month
-        // thus call setSelectedDayViewModel() w/ todayDayViewModel
-        if let selectedDayViewModel,
-           dayViewModels.contains(selectedDayViewModel) == false,
-           let todayDayViewModel {
-            setSelectedDayViewModel(todayDayViewModel)
-        }
     }
     
     var todayDayViewModel: CalendarDayViewModel? {
@@ -51,9 +42,7 @@ extension CalendarViewModel {
     
     func setSelectedDayViewModel(_ viewModel: CalendarDayViewModel) {
         // untoggle previously selected VM, if needed
-        if let selectedDayViewModel {
-            selectedDayViewModel.setSelected(false)
-        }
+        selectedDayViewModel?.setSelected(false)
         
         // toggle newly-to-be-selected VM, assign value, and update calendarService
         viewModel.setSelected(true)

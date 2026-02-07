@@ -30,13 +30,6 @@ class CalendarDayViewModel: Identifiable {
     }
 }
 
-// MARK: Equatable
-extension CalendarDayViewModel: Equatable {
-    static func == (lhs: CalendarDayViewModel, rhs: CalendarDayViewModel) -> Bool {
-        lhs.monthDay == rhs.monthDay
-    }
-}
-
 // MARK: Public interface
 extension CalendarDayViewModel {
     func setSelected(_ selected: Bool) {
