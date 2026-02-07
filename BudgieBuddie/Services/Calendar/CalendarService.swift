@@ -11,6 +11,7 @@ class CalendarService: CalendarServiceable {
     // CalendarServiceable
     private(set) var todayDate: Date = Date() {
         didSet {
+            updateSelectedDate(todayDate)
             postNotificationDidUpdateTodayDate()
         }
     }

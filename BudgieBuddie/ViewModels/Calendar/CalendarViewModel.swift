@@ -20,14 +20,20 @@ class CalendarViewModel {
         calendarService: CalendarServiceable
     ) {
         self.calendarService = calendarService
+        self.dayViewModels = dayViewModelsBuilder()
+        if let selectedDayViewModel = dayViewModels.first(where: { $0.monthDay == selectedMonthDay }) {
+            setSelectedDayViewModel(selectedDayViewModel)
+        }
     }
 }
 
 // MARK: Public interface
 extension CalendarViewModel {
     func reloadData() {
-        // rebuild dayViewModels
-        dayViewModels = dayViewModelsBuilder()
+        self.dayViewModels = dayViewModelsBuilder()
+        if let selectedDayViewModel = dayViewModels.first(where: { $0.monthDay == selectedMonthDay }) {
+            setSelectedDayViewModel(selectedDayViewModel)
+        }
     }
     
     var todayDayViewModel: CalendarDayViewModel? {
@@ -42,7 +48,9 @@ extension CalendarViewModel {
     
     func setSelectedDayViewModel(_ viewModel: CalendarDayViewModel) {
         // untoggle previously selected VM, if needed
-        selectedDayViewModel?.setSelected(false)
+        if let selectedDayViewModel {
+            selectedDayViewModel.setSelected(false)
+        }
         
         // toggle newly-to-be-selected VM, assign value, and update calendarService
         viewModel.setSelected(true)
@@ -53,6 +61,16 @@ extension CalendarViewModel {
 
 // MARK: Private interface
 private extension CalendarViewModel {
+    func dayViewModelsBuilder() -> [CalendarDayViewModel] {
+        monthDays.map { monthDay in
+            CalendarDayViewModel(
+                calendarService: calendarService,
+                monthDay: monthDay,
+                isSelected: false
+            )
+        }
+    }
+    
     var monthDays: [MonthDay] {
         let dates = Calendar.current.monthDates(
             calendarService.todayDate
@@ -66,18 +84,16 @@ private extension CalendarViewModel {
     }
     
     var todayMonthDay: MonthDay? {
-        let dayInMonth = Calendar.current.dayInDate(calendarService.todayDate)
-        return monthDays.first { $0.day == dayInMonth }
+        monthDay(for: calendarService.todayDate)
     }
     
-    func dayViewModelsBuilder() -> [CalendarDayViewModel] {
-        monthDays.map { monthDay in
-            CalendarDayViewModel(
-                calendarService: calendarService,
-                monthDay: monthDay,
-                isSelected: false
-            )
-        }
+    var selectedMonthDay: MonthDay? {
+        monthDay(for: calendarService.selectedDate)
+    }
+    
+    func monthDay(for date: Date) -> MonthDay? {
+        let dayInMonth = Calendar.current.dayInDate(date)
+        return monthDays.first { $0.day == dayInMonth }
     }
 }
 

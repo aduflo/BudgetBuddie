@@ -15,9 +15,9 @@ class SpendTrendsViewModel {
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     
-    private(set) var dailyTrendViewModel: SpendTrendViewModel = placeholderDailyTrendViewModelBuilder()
-    private(set) var mtdTrendViewModel: SpendTrendViewModel = placeholderMtdTrendViewModelBuilder()
-    private(set) var monthlyTrendViewModel: SpendTrendViewModel = placeholderMonthlyTrendViewModelBuilder()
+    private(set) var dailyTrendViewModel: SpendTrendViewModel
+    private(set) var mtdTrendViewModel: SpendTrendViewModel
+    private(set) var monthlyTrendViewModel: SpendTrendViewModel
     
     // Constructors
     init(
@@ -30,6 +30,9 @@ class SpendTrendsViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
+        dailyTrendViewModel = Self.placeholderDailyTrendViewModelBuilder()
+        mtdTrendViewModel = Self.placeholderMtdTrendViewModelBuilder()
+        monthlyTrendViewModel = Self.placeholderMonthlyTrendViewModelBuilder()
     }
 }
 

@@ -15,8 +15,8 @@ class SpendSummaryViewModel {
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     
-    let spendTrendsViewModel: SpendTrendsViewModel
-    let calendarViewModel: CalendarViewModel
+    private(set) var spendTrendsViewModel: SpendTrendsViewModel
+    private(set) var calendarViewModel: CalendarViewModel
     
     var onSettingsTapped: () -> () = {}
     
@@ -31,14 +31,14 @@ class SpendSummaryViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
-        self.calendarViewModel = CalendarViewModel(
-            calendarService: calendarService
-        )
         self.spendTrendsViewModel = SpendTrendsViewModel(
             settingsService: settingsService,
             calendarService: calendarService,
             spendRepository: spendRepository,
             currencyFormatter: currencyFormatter
+        )
+        self.calendarViewModel = CalendarViewModel(
+            calendarService: calendarService
         )
     }
 }
