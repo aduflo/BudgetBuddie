@@ -33,9 +33,6 @@ struct BudgieBuddieApp: App {
                     currencyFormatter: currencyFormatter
                 )
             )
-            .refreshable {
-                refresh()
-            }
             .onChange(of: scenePhase) { _, newValue in
                 if newValue == .active {
                     // need to call refresh() on foreground (.active),
