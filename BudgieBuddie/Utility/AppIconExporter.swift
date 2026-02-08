@@ -13,7 +13,7 @@ enum AppIconExporter {
         
         // 1: Render content
         let renderer = ImageRenderer(
-            content: AppIcon()
+            content: AppIconView()
         )
         
         // 2: Save it to our documents directory

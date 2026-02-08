@@ -15,7 +15,7 @@ struct OnboardingScreen: View {
         VStack(
             spacing: Spacing.2
         ) {
-            AppIcon()
+            AppIconView()
             
             ScrollView(.vertical) {
                 Text(Copy.onboardingDescription)

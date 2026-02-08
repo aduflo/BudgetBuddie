@@ -100,10 +100,10 @@ struct HomeScreen: View {
     }
     
     var headerView: some View {
-        Text(Copy.appName)
-            .font(.largeTitle)
-            .fontWeight(.heavy)
-            .foregroundStyle(.appPrimary)
+        AppBannerView()
+            .onTapGesture {
+                presentOnboarding = true
+            }
     }
     
     var summaryView: some View {

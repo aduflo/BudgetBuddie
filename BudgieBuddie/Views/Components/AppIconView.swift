@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppIcon: View {
+struct AppIconView: View {
     var body: some View {
         VStack(
             alignment: .leading,
@@ -29,5 +29,5 @@ struct AppIcon: View {
 }
 
 #Preview {
-    AppIcon()
+    AppIconView()
 }
