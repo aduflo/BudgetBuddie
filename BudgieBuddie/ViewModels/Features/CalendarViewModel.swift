@@ -20,10 +20,6 @@ class CalendarViewModel {
         calendarService: CalendarServiceable
     ) {
         self.calendarService = calendarService
-        self.dayViewModels = dayViewModelsBuilder()
-        if let selectedDayViewModel = dayViewModels.first(where: { $0.monthDay == selectedMonthDay }) {
-            setSelectedDayViewModel(selectedDayViewModel)
-        }
     }
 }
 

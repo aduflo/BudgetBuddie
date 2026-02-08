@@ -18,14 +18,15 @@ struct CalendarDayView: View {
     
     var body: some View {
         Text(viewModel.displayMonthDay)
+            .font(.callout)
             .fontWeight(.semibold)
             .foregroundStyle(viewModel.isSelected ? .foregroundSecondary : .foregroundPrimary)
             .underline(viewModel.isToday)
             .frame(
-                width: 56.0,
-                height: 32.0
+                width: 48.0,
             )
-            .padding(Padding.1)
+            .padding(.vertical, Padding.2)
+            .padding(.horizontal, Padding.1)
             .roundedRectangleBackground(
                 cornerRadius: CornerRadius.1,
                 color: viewModel.isSelected ? .appPrimary : .backgroundPrimary

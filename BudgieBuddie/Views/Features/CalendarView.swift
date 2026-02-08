@@ -26,6 +26,9 @@ struct CalendarView: View {
             headerView
             listView
         }
+        .onAppear {
+            viewModel.reloadData()
+        }
         .onReceive(
             NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateTodayDate),
             perform: { _ in
@@ -46,7 +49,6 @@ struct CalendarView: View {
         ScrollViewReader { proxy in
             ScrollView(.vertical) {
                 VStack(
-                    alignment: .leading,
                     spacing: Spacing.1
                 ) {
                     ForEach(viewModel.dayViewModels) { dayViewModel in
