@@ -21,6 +21,8 @@ Feature backlog:
 - https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension
 - https://developer.apple.com/documentation/widgetkit/building_widgets_using_widgetkit_and_swiftui
 - https://www.google.com/search?q=ios+widget+swiftdata&ie=UTF-8&oe=UTF-8&hl=en-us&client=safari
+- https://developer.apple.com/documentation/widgetkit/adding-interactivity-to-widgets-and-live-activities
+- https://developer.apple.com/documentation/widgetkit/animating-data-updates-in-widgets-and-live-activities
 
 // app icon
 - https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
