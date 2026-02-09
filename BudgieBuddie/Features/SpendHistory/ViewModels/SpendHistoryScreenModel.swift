@@ -16,7 +16,7 @@ class SpendHistoryScreenModel {
     private(set) var listItemViewModels: [SpendHistoryItemViewModel] = []
     private(set) var error: Error? = nil
     
-    var monthSortAttributeSelection: SpendMonthSortAttribute = .date {
+    var monthSortAttributeSelection: SpendHistorySortAttribute = .date {
         didSet {
             reloadData()
         }
@@ -49,7 +49,7 @@ extension SpendHistoryScreenModel {
         }
     }
     
-    func monthAttributeSortDisplayValue(_ monthAttribute: SpendMonthSortAttribute) -> String {
+    func monthAttributeSortDisplayValue(_ monthAttribute: SpendHistorySortAttribute) -> String {
         switch monthAttribute {
         case .date: Copy.date
         case .spend: Copy.spend

@@ -47,7 +47,7 @@ struct SpendHistoryScreen: View {
                 TitleKey.Sort.monthAttribute,
                 selection: $screenModel.monthSortAttributeSelection
             ) {
-                ForEach(SpendMonthSortAttribute.allCases) { option in
+                ForEach(SpendHistorySortAttribute.allCases) { option in
                     Text(screenModel.monthAttributeSortDisplayValue(option))
                         .foregroundStyle(.foregroundPrimary)
                 }
