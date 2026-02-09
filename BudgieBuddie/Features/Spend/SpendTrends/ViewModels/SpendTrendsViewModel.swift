@@ -80,7 +80,7 @@ private extension SpendTrendsViewModel {
             settingsService: settingsService,
             currencyFormatter: currencyFormatter,
             viewpoint: viewpoint,
-            title: Copy.monthly,
+            title: title,
             spend: spend,
             allowance: allowance,
             remaining: remaining
@@ -168,13 +168,13 @@ private extension SpendTrendsViewModel {
     }
     
     var dailyRemaining: Decimal {
-        let tentativeRemaining = dailyAllowance - dailySpend
-        return min(tentativeRemaining, monthlyRemaining)
+        let remaining = dailyAllowance - dailySpend
+        return min(remaining, monthlyRemaining)
     }
     
     var mtdRemaining: Decimal {
-        let tentativeRemaining = mtdAllowance - mtdSpend
-        return min(tentativeRemaining, monthlyRemaining)
+        let remaining = mtdAllowance - mtdSpend
+        return min(remaining, monthlyRemaining)
     }
     
     var monthlyRemaining: Decimal {
