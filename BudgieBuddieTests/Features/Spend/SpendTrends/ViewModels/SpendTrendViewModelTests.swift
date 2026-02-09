@@ -11,53 +11,76 @@ import Testing
 import SwiftUI
 
 struct SpendTrendViewModelTests {
+    // MARK: isRemainingAvailable
+    @Test func test_isRemainingAvailable_valid() async {
+        // Setup
+        let vm = await mockVM(spend: 0, allowance: 0, remaining: 100, warningThreshold: 0)
+        
+        // Scenario
+        let isRemainingAvailable = await vm.isRemainingAvailable
+        
+        // Verification
+        #expect(isRemainingAvailable == true)
+    }
+    
+    @Test func test_isRemainingAvailable_invalid() async {
+        // Setup
+        let vm = await mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
+        
+        // Scenario
+        let isRemainingAvailable = await vm.isRemainingAvailable
+        
+        // Verification
+        #expect(isRemainingAvailable == false)
+    }
 
-    // MARK: dailySpendColor
-    @Test func test_dailySpendColor_acceptable() async {
+    // MARK: evaluateBudget()
+    @Test func test_evaluateBudget_acceptable() async {
         // Setup
-        let vm1 = await mockVM(currentSpend: 0, maxSpend: 100, warningThreshold: 0.50)
-        let vm2 = await mockVM(currentSpend: 49, maxSpend: 100, warningThreshold: 0.50)
+        let vm1 = await mockVM(spend: 0, allowance: 100, remaining: 100, warningThreshold: 0.50)
+        let vm2 = await mockVM(spend: 49, allowance: 100, remaining: 51, warningThreshold: 0.50)
         
-        // Scenarios
-        let dailySpendColor1 = await vm1.dailySpendColor
-        let dailySpendColor2 = await vm2.dailySpendColor
+        // Scenario
+        let evaluation1 = await vm1.evaluateBudget()
+        let evaluation2 = await vm2.evaluateBudget()
         
-        // Verifications
-        #expect(dailySpendColor1 == .green)
-        #expect(dailySpendColor2 == .green)
+        // Verification
+        #expect(evaluation1 == .acceptable)
+        #expect(evaluation2 == .acceptable)
     }
     
-    @Test func test_dailySpendColor_encroaching() async {
+    @Test func test_evaluateBudget_encroaching() async {
         // Setup
-        let vm1 = await mockVM(currentSpend: 50, maxSpend: 100, warningThreshold: 0.50)
-        let vm2 = await mockVM(currentSpend: 99, maxSpend: 100, warningThreshold: 0.50)
+        let vm1 = await mockVM(spend: 50, allowance: 100, remaining: 50, warningThreshold: 0.50)
+        let vm2 = await mockVM(spend: 99, allowance: 100, remaining: 1, warningThreshold: 0.50)
         
-        // Scenarios
-        let dailySpendColor1 = await vm1.dailySpendColor
-        let dailySpendColor2 = await vm2.dailySpendColor
+        // Scenario
+        let evaluation1 = await vm1.evaluateBudget()
+        let evaluation2 = await vm2.evaluateBudget()
         
-        // Verifications
-        #expect(dailySpendColor1 == .orange)
-        #expect(dailySpendColor2 == .orange)
+        // Verification
+        #expect(evaluation1 == .encroaching)
+        #expect(evaluation2 == .encroaching)
     }
     
-    @Test func test_dailySpendColor_exceeded() async {
+    @Test func test_evaluateBudget_exceeded() async {
         // Setup
-        let vm = await mockVM(currentSpend: 100, maxSpend: 100, warningThreshold: 0.50)
+        let vm = await mockVM(spend: 100, allowance: 100, remaining: 0, warningThreshold: 0.50)
         
-        // Scenarios
-        let dailySpendColor = await vm.dailySpendColor
+        // Scenario
+        let evaluation = await vm.evaluateBudget()
         
-        // Verifications
-        #expect(dailySpendColor == .red)
+        // Verification
+        #expect(evaluation == .exceeded)
     }
 }
 
 fileprivate extension SpendTrendViewModelTests {
     @MainActor
     func mockVM(
-        currentSpend: Decimal,
-        maxSpend: Decimal,
+        spend: Decimal,
+        allowance: Decimal,
+        remaining: Decimal,
         warningThreshold: Double
     ) -> SpendTrendViewModel {
         SpendTrendViewModel(
@@ -67,9 +90,11 @@ fileprivate extension SpendTrendViewModelTests {
                 return settingsService
             }(),
             currencyFormatter: CurrencyFormatter(),
+            viewpoint: .spendAllowance,
             title: "",
-            currentSpend: currentSpend,
-            maxSpend: maxSpend
+            spend: spend,
+            allowance: allowance,
+            remaining: remaining
         )
     }
 }
