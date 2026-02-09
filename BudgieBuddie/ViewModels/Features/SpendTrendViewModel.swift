@@ -6,63 +6,58 @@
 //
 
 import Foundation
-import SwiftUI
 
 @Observable
 class SpendTrendViewModel {
     // Instance vars
     private let settingsService: SettingsServiceable
     private let currencyFormatter: CurrencyFormatter
+    let viewpoint: SpendTrendViewpoint
     let title: String
-    /// Amount in dollars and cents
-    let currentSpend: Decimal
-    /// Amount in dollars and cents
-    let maxSpend: Decimal
+    let spend: Decimal
+    let allowance: Decimal
+    let remaining: Decimal
     
     // Constructors
-    /// - `currentSpend` should be of dollar and cents value
-    /// - `maxSpend` should be of dollar and cents value
     init(
         settingsService: SettingsServiceable,
         currencyFormatter: CurrencyFormatter,
+        viewpoint: SpendTrendViewpoint,
         title: String,
-        currentSpend: Decimal,
-        maxSpend: Decimal
+        spend: Decimal,
+        allowance: Decimal,
+        remaining: Decimal
     ) {
-        self.title = title
-        self.currentSpend = currentSpend
-        self.maxSpend = maxSpend
         self.settingsService = settingsService
         self.currencyFormatter = currencyFormatter
+        self.viewpoint = viewpoint
+        self.title = title
+        self.spend = spend
+        self.allowance = allowance
+        self.remaining = max(remaining, 0.0)
     }
 }
 
 // MARK: Public interface
 extension SpendTrendViewModel {
-    var displayCurrentSpend: String {
-        return currencyFormatter.stringAmount(currentSpend)
+    var displaySpend: String {
+        currencyFormatter.stringAmount(spend)
     }
     
-    var displayMaxSpend: String {
-        return currencyFormatter.stringAmount(maxSpend)
+    var displayAllowance: String {
+        currencyFormatter.stringAmount(allowance)
     }
     
-    var dailySpendColor: Color {
-        return switch evaluateBudget(
-            spend: currentSpend,
-            max: maxSpend
-        ) {
-        case .acceptable: .green
-        case .encroaching: .orange
-        case .exceeded: .red
-        }
+    var displayRemaining: String {
+        currencyFormatter.stringAmount(remaining)
     }
-}
-
-// MARK: Private interface
-private extension SpendTrendViewModel {
-    func evaluateBudget(spend: Decimal, max: Decimal) -> BudgetEvaluation {
-        let percentage = spend / max
+    
+    var isRemainingAvailable: Bool {
+        (remaining > 0.0)
+    }
+    
+    func evaluateBudget() -> BudgetEvaluation {
+        let percentage = spend / allowance
         let warningThreshold = Decimal(floatLiteral: settingsService.warningThreshold)
         return switch percentage {
         case 0.0..<warningThreshold: .acceptable
@@ -74,33 +69,47 @@ private extension SpendTrendViewModel {
 
 // MARK: - Mocks
 extension SpendTrendViewModel {
-    static func mockAcceptable() -> SpendTrendViewModel {
+    static func mockAcceptable(viewpoint: SpendTrendViewpoint) -> SpendTrendViewModel {
         SpendTrendViewModel(
-            settingsService: MockSettingsService(),
+            settingsService: {
+                let settingsService = MockSettingsService()
+                settingsService.setWarningThreshold(100.0)
+                return settingsService
+            }(),
             currencyFormatter: CurrencyFormatter(),
+            viewpoint: viewpoint,
             title: Copy.budgetTrend,
-            currentSpend: 40.00,
-            maxSpend: 50.00
+            spend: 40.00,
+            allowance: 50.00,
+            remaining: 10.00
         )
     }
     
-    static func mockEncroaching() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: MockSettingsService(),
+    static func mockEncroaching(viewpoint: SpendTrendViewpoint) -> SpendTrendViewModel {
+        return SpendTrendViewModel(
+            settingsService: {
+                let settingsService = MockSettingsService()
+                settingsService.setWarningThreshold(0.0)
+                return settingsService
+            }(),
             currencyFormatter: CurrencyFormatter(),
+            viewpoint: viewpoint,
             title: Copy.budgetTrend,
-            currentSpend: 8000.00,
-            maxSpend: 9000.00
+            spend: 80.00,
+            allowance: 100.00,
+            remaining: 20.00
         )
     }
     
-    static func mockExceeded() -> SpendTrendViewModel {
+    static func mockExceeded(viewpoint: SpendTrendViewpoint) -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: MockSettingsService(),
             currencyFormatter: CurrencyFormatter(),
+            viewpoint: viewpoint,
             title: Copy.budgetTrend,
-            currentSpend: 9000.01,
-            maxSpend: 9000.00
+            spend: 9000.01,
+            allowance: 9000.00,
+            remaining: 0.0
         )
     }
 }

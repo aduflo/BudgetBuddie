@@ -50,6 +50,9 @@ struct SpendTrendsView: View {
                 color: .backgroundPrimary
             )
         }
+        .onTapGesture {
+            viewModel.toggleViewpoint()
+        }
         .onAppear {
             viewModel.reloadData()
         }

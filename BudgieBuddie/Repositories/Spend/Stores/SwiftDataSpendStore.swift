@@ -194,7 +194,7 @@ class SwiftDataSpendStore: SpendStoreable {
         do {
             // deleting all instances of SpendDay_SwiftData within context
             // due to relationship (delete rule: cascading) with SpendItem_SwiftData
-            // all associated [SpendItem_SwiftData] instances will also be delected
+            // all associated [SpendItem_SwiftData] instances will also be deleted
             try context?.transaction {
                 try context?.delete(
                     model: SpendDay_SwiftData.self

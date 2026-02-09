@@ -15,6 +15,12 @@ class SpendTrendsViewModel {
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     
+    private var viewpoint: SpendTrendViewpoint = .spendAllowance {
+        didSet {
+            reloadData()
+        }
+    }
+    
     private(set) var dailyTrendViewModel: SpendTrendViewModel
     private(set) var mtdTrendViewModel: SpendTrendViewModel
     private(set) var monthlyTrendViewModel: SpendTrendViewModel
@@ -30,14 +36,18 @@ class SpendTrendsViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
-        dailyTrendViewModel = Self.placeholderDailyTrendViewModelBuilder()
-        mtdTrendViewModel = Self.placeholderMtdTrendViewModelBuilder()
-        monthlyTrendViewModel = Self.placeholderMonthlyTrendViewModelBuilder()
+        dailyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.daily)
+        mtdTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthToDate)
+        monthlyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthly)
     }
 }
 
 // MARK: Public interface
 extension SpendTrendsViewModel {
+    func toggleViewpoint() {
+        viewpoint.toggle()
+    }
+    
     func reloadData() {
         dailyTrendViewModel = dailyTrendViewModelBuilder()
         mtdTrendViewModel = mtdTrendViewModelBuilder()
@@ -48,70 +58,64 @@ extension SpendTrendsViewModel {
 // MARK: Private interface
 private extension SpendTrendsViewModel {
     // View model builders
-    
-    static func placeholderDailyTrendViewModelBuilder() -> SpendTrendViewModel {
+    static func placeholderTrendViewModelBuilder(title: String) -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: SettingsService(),
             currencyFormatter: CurrencyFormatter(),
-            title: Copy.daily,
-            currentSpend: 0,
-            maxSpend: 0
+            viewpoint: .spendAllowance,
+            title: title,
+            spend: 0,
+            allowance: 0,
+            remaining: 0
+        )
+    }
+    
+    func trendViewModelBuilder(
+        title: String,
+        spend: Decimal,
+        allowance: Decimal,
+        remaining: Decimal
+    ) -> SpendTrendViewModel {
+        SpendTrendViewModel(
+            settingsService: settingsService,
+            currencyFormatter: currencyFormatter,
+            viewpoint: viewpoint,
+            title: Copy.monthly,
+            spend: spend,
+            allowance: allowance,
+            remaining: remaining
         )
     }
     
     func dailyTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: settingsService,
-            currencyFormatter: currencyFormatter,
+        trendViewModelBuilder(
             title: Copy.daily,
-            currentSpend: dailyCurrentSpend,
-            maxSpend: dailyMaxSpend
-        )
-    }
-    
-    static func placeholderMtdTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.monthToDate,
-            currentSpend: 0,
-            maxSpend: 0
+            spend: dailySpend,
+            allowance: dailyAllowance,
+            remaining: dailyRemaining
         )
     }
     
     func mtdTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: settingsService,
-            currencyFormatter: currencyFormatter,
+        trendViewModelBuilder(
             title: Copy.monthToDate,
-            currentSpend: mtdCurrentSpend,
-            maxSpend: mtdMaxSpend
-        )
-    }
-    
-    static func placeholderMonthlyTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: SettingsService(),
-            currencyFormatter: CurrencyFormatter(),
-            title: Copy.monthly,
-            currentSpend: 0,
-            maxSpend: 0
+            spend: mtdSpend,
+            allowance: mtdAllowance,
+            remaining: mtdRemaining
         )
     }
     
     func monthlyTrendViewModelBuilder() -> SpendTrendViewModel {
-        SpendTrendViewModel(
-            settingsService: settingsService,
-            currencyFormatter: currencyFormatter,
+        trendViewModelBuilder(
             title: Copy.monthly,
-            currentSpend: monthlyCurrentSpend,
-            maxSpend: monthlyMaxSpend
+            spend: monthlySpend,
+            allowance: monthlyAllowance,
+            remaining: monthlyRemaining
         )
     }
     
-    // Spend vars
-    
-    var dailyCurrentSpend: Decimal {
+    // spend/allowance/remaining vars
+    var dailySpend: Decimal {
         do {
             let items = try spendRepository.getItems(
                 date: calendarService.selectedDate
@@ -122,7 +126,7 @@ private extension SpendTrendsViewModel {
         }
     }
     
-    var mtdCurrentSpend: Decimal {
+    var mtdSpend: Decimal {
         do {
             let selectedDate = calendarService.selectedDate
             let monthDates = Calendar.current.monthDates(selectedDate)
@@ -137,7 +141,7 @@ private extension SpendTrendsViewModel {
         }
     }
     
-    var monthlyCurrentSpend: Decimal {
+    var monthlySpend: Decimal {
         do {
             let monthDates = Calendar.current.monthDates(calendarService.selectedDate)
             let items = try spendRepository.getItems(
@@ -149,19 +153,32 @@ private extension SpendTrendsViewModel {
         }
     }
     
-    var dailyMaxSpend: Decimal {
+    var dailyAllowance: Decimal {
         let days = Calendar.current.daysInMonthInDate(calendarService.selectedDate)
-        return monthlyMaxSpend / Decimal(days)
+        return monthlyAllowance / Decimal(days)
     }
     
-    var mtdMaxSpend: Decimal {
-        let dailyMaxSpend = dailyMaxSpend
+    var mtdAllowance: Decimal {
         let day = Calendar.current.dayInDate(calendarService.selectedDate)
-        return dailyMaxSpend * Decimal(day)
+        return dailyAllowance * Decimal(day)
     }
     
-    var monthlyMaxSpend: Decimal {
+    var monthlyAllowance: Decimal {
         settingsService.monthlyAllowance
+    }
+    
+    var dailyRemaining: Decimal {
+        let tentativeRemaining = dailyAllowance - dailySpend
+        return min(tentativeRemaining, monthlyRemaining)
+    }
+    
+    var mtdRemaining: Decimal {
+        let tentativeRemaining = mtdAllowance - mtdSpend
+        return min(tentativeRemaining, monthlyRemaining)
+    }
+    
+    var monthlyRemaining: Decimal {
+        monthlyAllowance - monthlySpend
     }
 }
 
