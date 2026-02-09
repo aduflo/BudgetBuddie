@@ -56,7 +56,7 @@ extension SpendTrendViewModel {
         (remaining > 0.0)
     }
     
-    func evaluateBudget() -> BudgetEvaluation {
+    func evaluateBudget() -> SpendTrendEvaluation {
         let percentage = spend / allowance
         let warningThreshold = Decimal(floatLiteral: settingsService.warningThreshold)
         return switch percentage {
