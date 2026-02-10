@@ -7,15 +7,18 @@
 
 import Foundation
 
-enum SpendTrendViewpoint {
+enum SpendTrendViewpoint: Int {
     case spendAllowance
     case remaining
     
-    mutating func toggle() {
-        switch self {
-        case .spendAllowance:
-            self = .remaining
-        case .remaining:
+    mutating func cycle() {
+        let currentRawValue = rawValue
+        let newRawValue = currentRawValue + 1
+        if let newValue = SpendTrendViewpoint(rawValue: newRawValue) {
+            self = newValue
+        } else if let firstCaseValue = SpendTrendViewpoint(rawValue: 0) {
+            self = firstCaseValue
+        } else {
             self = .spendAllowance
         }
     }

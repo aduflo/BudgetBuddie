@@ -24,34 +24,8 @@ struct SpendTrendsView: View {
             alignment: .leading,
             spacing: Spacing.1
         ) {
-            Text(Copy.spendTrends)
-                .font(.headline)
-                .foregroundStyle(.foregroundPrimary)
-            
-            VStack(
-                alignment: .leading,
-                spacing: Spacing.1
-            ) {
-                SpendTrendView(
-                    viewModel: viewModel.dailyTrendViewModel
-                )
-                Divider()
-                SpendTrendView(
-                    viewModel: viewModel.mtdTrendViewModel
-                )
-                Divider()
-                SpendTrendView(
-                    viewModel: viewModel.monthlyTrendViewModel
-                )
-            }
-            .padding(Padding.2)
-            .roundedRectangleBackground(
-                cornerRadius: CornerRadius.2,
-                color: .backgroundPrimary
-            )
-        }
-        .onTapGesture {
-            viewModel.toggleViewpoint()
+            headerView
+            contentView
         }
         .onAppear {
             viewModel.reloadData()
@@ -68,6 +42,59 @@ struct SpendTrendsView: View {
                 }}
             }
         )
+    }
+    
+    var headerView: some View {
+        Text(Copy.spendTrends)
+            .font(.headline)
+            .foregroundStyle(.foregroundPrimary)
+    }
+    
+    var contentView: some View {
+        ZStack(
+            alignment: .topTrailing
+        ) {
+            trendsView
+            cycleButton
+        }
+        .padding(Padding.2)
+        .roundedRectangleBackground(
+            cornerRadius: CornerRadius.2,
+            color: .backgroundPrimary
+        )
+    }
+    
+    var trendsView: some View {
+        VStack(
+            alignment: .leading,
+            spacing: Spacing.1
+        ) {
+            SpendTrendView(
+                viewModel: viewModel.dailyTrendViewModel
+            )
+            Divider()
+            SpendTrendView(
+                viewModel: viewModel.mtdTrendViewModel
+            )
+            Divider()
+            SpendTrendView(
+                viewModel: viewModel.monthlyTrendViewModel
+            )
+        }
+    }
+    
+    var cycleButton: some View {
+        Button {
+            viewModel.cycleViewpoint()
+        } label: {
+            Image(
+                systemName: SystemImage.arrowTrianglehead2ClockwiseRotate90
+            )
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 16.0)
+            .foregroundStyle(.foregroundPrimary)
+        }
     }
 }
 

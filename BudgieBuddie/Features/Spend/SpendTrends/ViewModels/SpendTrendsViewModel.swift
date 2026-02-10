@@ -44,8 +44,8 @@ class SpendTrendsViewModel {
 
 // MARK: Public interface
 extension SpendTrendsViewModel {
-    func toggleViewpoint() {
-        viewpoint.toggle()
+    func cycleViewpoint() {
+        viewpoint.cycle()
     }
     
     func reloadData() {

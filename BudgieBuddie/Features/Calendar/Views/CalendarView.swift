@@ -63,7 +63,7 @@ struct CalendarView: View {
                                 }
                             }
                             
-                            // toggle new selection and persist day vm
+                            // toggle new selection
                             viewModel.setSelectedDayViewModel(dayViewModel)
                         }
                     }
