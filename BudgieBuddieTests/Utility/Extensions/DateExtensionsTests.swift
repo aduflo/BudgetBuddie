@@ -28,7 +28,6 @@ struct DateExtensionsTests {
         )
         
         // Scenario
-        // Scenario
         guard let date1 = calendar.date(from: dateComponents1) else {
             Issue.record("could not compose date1")
             return
@@ -62,7 +61,6 @@ struct DateExtensionsTests {
             day: 10
         )
         
-        // Scenario
         // Scenario
         guard let date1 = calendar.date(from: dateComponents1) else {
             Issue.record("could not compose date1")
@@ -98,7 +96,6 @@ struct DateExtensionsTests {
         )
         
         // Scenario
-        // Scenario
         guard let date1 = calendar.date(from: dateComponents1) else {
             Issue.record("could not compose date1")
             return
@@ -132,7 +129,6 @@ struct DateExtensionsTests {
             day: 01
         )
         
-        // Scenario
         // Scenario
         guard let date1 = calendar.date(from: dateComponents1) else {
             Issue.record("could not compose date1")

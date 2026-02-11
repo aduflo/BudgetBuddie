@@ -8,30 +8,45 @@
 import Foundation
 import Testing
 @testable import BudgieBuddie
-import SwiftUI
 
 struct SpendTrendViewModelTests {
-    // MARK: - isRemainingAvailable
-    @Test func test_isRemainingAvailable_valid() async {
-        // Setup
-        let vm = await mockVM(spend: 0, allowance: 0, remaining: 100, warningThreshold: 0)
-        
-        // Scenario
-        let isRemainingAvailable = await vm.isRemainingAvailable
-        
-        // Verification
-        #expect(isRemainingAvailable == true)
-    }
-    
-    @Test func test_isRemainingAvailable_invalid() async {
+    // MARK: - spendHeadline
+    @Test func test_spendHeadline() async {
         // Setup
         let vm = await mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
         
         // Scenario
-        let isRemainingAvailable = await vm.isRemainingAvailable
+        let spendHeadline = await vm.spendHeadline
         
         // Verification
-        #expect(isRemainingAvailable == false)
+        #expect(spendHeadline == Copy.spend)
+    }
+    
+    // MARK: - allowanceHeadline
+    @Test func test_allowanceHeadline() async {
+        // Setup
+        let vm = await mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
+        
+        // Scenario
+        let allowanceHeadline = await vm.allowanceHeadline
+        
+        // Verification
+        #expect(allowanceHeadline == Copy.allowance)
+    }
+    
+    // MARK: - remainingOverspendHeadline
+    @Test func test_remainingOverspendHeadline() async {
+        // Setup
+        let vm1 = await mockVM(spend: 0, allowance: 0, remaining: 1, warningThreshold: 0)
+        let vm2 = await mockVM(spend: 0, allowance: 0, remaining: -1, warningThreshold: 0)
+        
+        // Scenario
+        let remainingOverspendHeadline1 = await vm1.remainingOverspendHeadline
+        let remainingOverspendHeadline2 = await vm2.remainingOverspendHeadline
+        
+        // Verification
+        #expect(remainingOverspendHeadline1 == Copy.remaining)
+        #expect(remainingOverspendHeadline2 == Copy.overspend)
     }
 
     // MARK: - evaluateBudget()

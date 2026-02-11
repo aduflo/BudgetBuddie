@@ -32,6 +32,7 @@ extension Copy {
     static let spend = "Spend"
     static let allowance = "Allowance"
     static let remaining = "Remaining"
+    static let overspend = "Overspend"
     static let spendItems = "Spend items"
     static let summary = "Summary"
     static let days = "Days"
@@ -75,11 +76,12 @@ extension Copy {
 extension Copy {
     // MARK: AttributedString
     static let warningThresholdFootnote: AttributedString = {
-        let spend = Copy.spend
         let spendTrends = Copy.spendTrends
         let green = "green"
         let orange = "orange"
-        var attributedString = AttributedString("The warning threshold determines when to warn that you've exceeded your comfortable spending allotment. When you've exceeded your comfortable spending allotment, the \(spend) amounts under \(spendTrends) will change from \(green) to \(orange).")
+        var attributedString = AttributedString(
+            "The warning threshold determines when to share you've exceeded your comfortable spending allotment, and are now encroaching on your allowance. To reflect this, the amounts under \(spendTrends) will change from \(green) to \(orange)."
+        )
         
         if let currentRange = attributedString.range(of: spend) {
             attributedString[currentRange].inlinePresentationIntent = .stronglyEmphasized
@@ -129,13 +131,13 @@ extension Copy {
         1) To provide a bird's-eye view of your monthly expenses
         2) To promote habit building budgeting behavior
         
-        When using **\(Copy.appName)**, you simply log your expenses day-to-day. The logged expenses are attached to whichever day is selected and assist in the compilation of a view (of your month's expenses).
+        When using **\(Copy.appName)**, you simply log your expenses day-to-day. The logged expenses are attached to whichever day is selected and assist in the compilation of your _\(Copy.spendTrends)_.
         
-        When a month concludes, you will be shown a summary. Additionally, if you'd like to see how you've tended to your budget over time, you can view that in your _History_.
+        When a month concludes, you will be shown a _\(Copy.monthSummaryTitle)_. Additionally, if you'd like to see how you've tended to your budget over time, you can view that in your _\(Copy.historyTitle)_.
         
-        Lastly, there are visual cues to suggest how you are doing with your monthly expenses. To learn more about those, see _Settings_ (via the ⚙️).
+        Lastly, there are visual cues to suggest how you are doing with your monthly expenses. To learn more about those, see _\(Copy.settingsTitle)_.
         
-        Enjoy and happy saving! 😃
+        Enjoy and happy saving!
         """
     }
 }

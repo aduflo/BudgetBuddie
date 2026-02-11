@@ -34,12 +34,28 @@ class SpendTrendViewModel {
         self.title = title
         self.spend = spend
         self.allowance = allowance
-        self.remaining = max(remaining, 0.0)
+        self.remaining = remaining
     }
 }
 
 // MARK: Public interface
 extension SpendTrendViewModel {
+    var spendHeadline: String {
+        Copy.spend
+    }
+    
+    var allowanceHeadline: String {
+        Copy.allowance
+    }
+    
+    var remainingOverspendHeadline: String {
+        if (remaining > 0.0) {
+            Copy.remaining
+        } else {
+            Copy.overspend
+        }
+    }
+    
     var displaySpend: String {
         currencyFormatter.stringAmount(spend)
     }
@@ -48,12 +64,8 @@ extension SpendTrendViewModel {
         currencyFormatter.stringAmount(allowance)
     }
     
-    var displayRemaining: String {
+    var displayRemainingOverspend: String {
         currencyFormatter.stringAmount(remaining)
-    }
-    
-    var isRemainingAvailable: Bool {
-        (remaining > 0.0)
     }
     
     func evaluateBudget() -> SpendTrendEvaluation {
@@ -109,7 +121,7 @@ extension SpendTrendViewModel {
             title: Copy.budgetTrend,
             spend: 9000.01,
             allowance: 9000.00,
-            remaining: 0.0
+            remaining: -0.01
         )
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 enum SpendTrendViewpoint: Int {
     case spendAllowance
-    case remaining
+    case remainingOverspend
     
     mutating func cycle() {
         let currentRawValue = rawValue

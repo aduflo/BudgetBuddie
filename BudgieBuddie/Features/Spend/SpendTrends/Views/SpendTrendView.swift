@@ -30,8 +30,8 @@ struct SpendTrendView: View {
             switch viewModel.viewpoint {
             case .spendAllowance:
                 spendAllowanceView
-            case .remaining:
-                remainingView
+            case .remainingOverspend:
+                remainingOverspendView
             }
         }
     }
@@ -42,44 +42,40 @@ struct SpendTrendView: View {
                 alignment: .leading,
                 spacing: Spacing.half
             ) {
-                Text(Copy.spend)
+                Text(viewModel.spendHeadline)
                     .foregroundStyle(.foregroundPrimary)
                 Text(viewModel.displaySpend)
-                    .foregroundStyle({
-                        switch viewModel.evaluateBudget() {
-                        case .acceptable: Color.green
-                        case .encroaching: Color.orange
-                        case .exceeded: Color.red
-                        }
-                    }())
+                    .foregroundStyle(budgetColor)
             }
             
             VStack(
                 alignment: .leading,
                 spacing: Spacing.half
             ) {
-                Text(Copy.allowance)
+                Text(viewModel.allowanceHeadline)
                 Text(viewModel.displayAllowance)
             }
             .foregroundStyle(.foregroundPrimary)
         }
     }
     
-    var remainingView: some View {
+    var remainingOverspendView: some View {
         VStack(
             alignment: .leading,
             spacing: Spacing.half
         ) {
-            Text(Copy.remaining)
+            Text(viewModel.remainingOverspendHeadline)
                 .foregroundStyle(.foregroundPrimary)
-            Text(viewModel.displayRemaining)
-                .foregroundStyle({
-                    if viewModel.isRemainingAvailable {
-                        Color.green
-                    } else {
-                        Color.red
-                    }
-                }())
+            Text(viewModel.displayRemainingOverspend)
+                .foregroundStyle(budgetColor)
+        }
+    }
+    
+    var budgetColor: Color {
+        switch viewModel.evaluateBudget() {
+        case .acceptable: Color.green
+        case .encroaching: Color.orange
+        case .exceeded: Color.red
         }
     }
 }
@@ -92,10 +88,10 @@ struct SpendTrendView: View {
     )
 }
 
-#Preview("Acceptable; remaining") {
+#Preview("Acceptable; remainingOverspend") {
     SpendTrendView(
         viewModel: .mockAcceptable(
-            viewpoint: .remaining
+            viewpoint: .remainingOverspend
         )
     )
 }
@@ -108,10 +104,10 @@ struct SpendTrendView: View {
     )
 }
 
-#Preview("Encroaching; remaining") {
+#Preview("Encroaching; remainingOverspend") {
     SpendTrendView(
         viewModel: .mockEncroaching(
-            viewpoint: .remaining
+            viewpoint: .remainingOverspend
         )
     )
 }
@@ -124,10 +120,10 @@ struct SpendTrendView: View {
     )
 }
 
-#Preview("Exceeded; remaining") {
+#Preview("Exceeded; remainingOverspend") {
     SpendTrendView(
         viewModel: .mockExceeded(
-            viewpoint: .remaining
+            viewpoint: .remainingOverspend
         )
     )
 }
