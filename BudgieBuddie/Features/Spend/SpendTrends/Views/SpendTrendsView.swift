@@ -88,7 +88,7 @@ struct SpendTrendsView: View {
             viewModel.cycleViewpoint()
         } label: {
             Image(
-                systemName: SystemImage.arrowTrianglehead2ClockwiseRotate90
+                systemName: SystemImage.rectangle2Swap
             )
             .resizable()
             .aspectRatio(contentMode: .fit)
