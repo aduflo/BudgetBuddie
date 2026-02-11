@@ -12,4 +12,6 @@ protocol SettingsServiceable {
     func setMonthlyAllowance(_ monthlyAllowance: Decimal)
     var warningThreshold: Double { get }
     func setWarningThreshold(_ warningThreshold: Double)
+    var defaultSpendTrendViewpoint: SpendTrendViewpoint { get }
+    func setDefaultSpendTrendViewpoint(_ defaultSpendTrendViewpoint: SpendTrendViewpoint)
 }

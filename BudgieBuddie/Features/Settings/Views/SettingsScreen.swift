@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SettingsScreen: View {
     // Instance vars
-    private let screenModel: SettingsScreenModel
-    @State var monthlyAllowance: Decimal? = nil
-    @State var warningThreshold: Double = 0.0
+    @State private var screenModel: SettingsScreenModel
+    @State private var monthlyAllowance: Decimal? = nil
+    @State private var warningThreshold: Double = 0.0
     
     // Constructors
     init(
@@ -26,6 +26,7 @@ struct SettingsScreen: View {
             spacing: Spacing.3
         ) {
             headerView
+            defaultSpendTrendViewpointPickerView
             monthlyAllowanceView
             warningThresholdView
             Spacer()
@@ -53,12 +54,39 @@ struct SettingsScreen: View {
         }
     }
     
+    var defaultSpendTrendViewpointPickerView: some View {
+        VStack(
+            alignment: .leading,
+            spacing: Spacing.1
+        ) {
+            Text(Copy.spendTrendsViewpoint)
+            
+            Picker(
+                TitleKey.Picker.spendTrendViewpoint,
+                selection: $screenModel.defaultSpendTrendViewpoint
+            ) {
+                ForEach(SpendTrendViewpoint.allCases) { viewpoint in
+                    Text(viewpoint.displayValue)
+                        .tag(viewpoint)
+                }
+            }
+            .pickerStyle(.segmented)
+            
+            Text(Copy.spendTrendsViewpointFootnote)
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .foregroundStyle(.foregroundPrimary)
+    }
+    
     var monthlyAllowanceView: some View {
         VStack(
             alignment: .leading,
             spacing: Spacing.1
         ) {
             Text(Copy.monthlyAllowance)
+            
             TextField(
                 Copy.monthlyAllowanceTitleKey,
                 value: $monthlyAllowance,
@@ -82,6 +110,7 @@ struct SettingsScreen: View {
             spacing: Spacing.1
         ) {
             Text(Copy.warningThreshold(warningThreshold.formatted(.percent)))
+            
             Slider(
                 value: $warningThreshold,
                 in: 0.0...1.0,
@@ -101,6 +130,7 @@ struct SettingsScreen: View {
                     }
                 }
             )
+            
             Text(Copy.warningThresholdFootnote)
                 .font(.footnote)
                 .multilineTextAlignment(.center)

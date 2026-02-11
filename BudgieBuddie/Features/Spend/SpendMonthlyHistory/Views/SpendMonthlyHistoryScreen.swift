@@ -44,17 +44,16 @@ struct SpendMonthlyHistoryScreen: View {
             spacing: Spacing.1
         ) {
             Picker(
-                TitleKey.Sort.monthAttribute,
+                TitleKey.Picker.monthAttribute,
                 selection: $screenModel.monthSortAttributeSelection
             ) {
                 ForEach(SpendMonthlyHistorySortAttribute.allCases) { option in
                     Text(screenModel.monthAttributeSortDisplayValue(option))
-                        .foregroundStyle(.foregroundPrimary)
                 }
             }
             
             Picker(
-                TitleKey.Sort.order,
+                TitleKey.Picker.order,
                 selection: $screenModel.sortOrderSelection
             ) {
                 let options: [SortOrder] = [
@@ -63,11 +62,11 @@ struct SpendMonthlyHistoryScreen: View {
                 ]
                 ForEach(options, id: \.self) { option in
                     Text(screenModel.sortOrderDisplayValue(option))
-                        .foregroundStyle(.foregroundPrimary)
                 }
             }
         }
         .pickerStyle(.segmented)
+        .foregroundStyle(.foregroundPrimary)
     }
     
     var contentView: some View {

@@ -19,4 +19,10 @@ class MockSettingsService: SettingsServiceable {
     func setWarningThreshold(_ warningThreshold: Double) {
         self.warningThreshold = warningThreshold
     }
+    
+    private(set) var defaultSpendTrendViewpoint: SpendTrendViewpoint = .spendAllowance
+    
+    func setDefaultSpendTrendViewpoint(_ defaultSpendTrendViewpoint: SpendTrendViewpoint) {
+        self.defaultSpendTrendViewpoint = defaultSpendTrendViewpoint
+    }
 }

@@ -117,7 +117,7 @@ struct HomeScreen: View {
                     currencyFormatter: screenModel.currencyFormatter
                 )
             )
-            .presentationDetents([.fraction(2/3)])
+            .presentationDetents([.large])
         }
     }
     

@@ -15,6 +15,7 @@ extension UserDefaults {
         enum Settings: UserDefaultsKey {
             static let monthlyAllowance = compose(key: "monthlyAllowance")
             static let warningThreshold = compose(key: "warningThreshold")
+            static let defaultSpendTrendViewpoint = compose(key: "defaultSpendTrendViewpoint")
         }
         enum SpendRepository: UserDefaultsKey {
             static let didSetupOnce = compose(key: "didSetupOnce")

@@ -24,7 +24,7 @@ class SettingsService: SettingsServiceable {
             monthlyAllowance,
             forKey: UserDefaults.Key.Settings.monthlyAllowance
         )
-        postNotificationSettingsUpdated()
+        NotificationCenter.default.post(.SettingsDidUpdateMonthlyAllowance)
     }
     
     var warningThreshold: Double {
@@ -38,13 +38,23 @@ class SettingsService: SettingsServiceable {
             warningThreshold,
             forKey: UserDefaults.Key.Settings.warningThreshold
         )
-        postNotificationSettingsUpdated()
+        NotificationCenter.default.post(.SettingsDidUpdateWarningThreshold)
     }
-}
-
-// MARK: Private interface
-private extension SettingsService {
-    func postNotificationSettingsUpdated() {
-        NotificationCenter.default.post(.SettingsDidUpdate)
+    
+    var defaultSpendTrendViewpoint: SpendTrendViewpoint {
+        let defaultSpendTrendViewpoint = userDefaults.integer(
+            forKey: UserDefaults.Key.Settings.defaultSpendTrendViewpoint
+        )
+        return SpendTrendViewpoint(
+            rawValue: defaultSpendTrendViewpoint
+        ) ?? .spendAllowance
+    }
+    
+    func setDefaultSpendTrendViewpoint(_ defaultSpendTrendViewpoint: SpendTrendViewpoint) {
+        userDefaults.set(
+            defaultSpendTrendViewpoint.rawValue,
+            forKey: UserDefaults.Key.Settings.defaultSpendTrendViewpoint
+        )
+        NotificationCenter.default.post(.SettingsDidUpdateDefaultSpendTrendViewpoint)
     }
 }

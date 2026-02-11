@@ -29,6 +29,7 @@ extension Copy {
     
     // Misc.
     static let spendTrends = "Spend trends"
+    static let spendTrendsViewpoint = "Spend trends viewpoint"
     static let spend = "Spend"
     static let allowance = "Allowance"
     static let remaining = "Remaining"
@@ -122,7 +123,7 @@ extension Copy {
 
 extension Copy {
     // MARK: Markdown
-    static var onboardingDescription: LocalizedStringKey {
+    static let onboardingDescription: LocalizedStringKey = {
         """
         Welcome!
         
@@ -139,5 +140,12 @@ extension Copy {
         
         Enjoy and happy saving!
         """
-    }
+    }()
+    static let spendTrendsViewpointFootnote: LocalizedStringKey = {
+        """
+        The spend trends viewpoint dictates the information shown in **\(Copy.spendTrends)**.
+        
+        This selection will be considered your preferred viewpoint and will persist. If you want to see other viewpoints on the fly, simply tap the button indicating the ability to cycle through viewpoints.
+        """
+    }()
 }

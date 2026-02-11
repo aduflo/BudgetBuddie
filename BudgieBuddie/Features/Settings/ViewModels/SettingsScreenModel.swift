@@ -12,6 +12,12 @@ class SettingsScreenModel {
     private let settingsService: SettingsServiceable
     let currencyFormatter: CurrencyFormatter
     
+    var defaultSpendTrendViewpoint: SpendTrendViewpoint {
+        didSet {
+            settingsService.setDefaultSpendTrendViewpoint(defaultSpendTrendViewpoint)
+        }
+    }
+    
     // Constructors
     init(
         settingsService: SettingsServiceable,
@@ -19,6 +25,7 @@ class SettingsScreenModel {
     ) {
         self.settingsService = settingsService
         self.currencyFormatter = currencyFormatter
+        defaultSpendTrendViewpoint = settingsService.defaultSpendTrendViewpoint
     }
 }
 

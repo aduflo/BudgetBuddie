@@ -15,8 +15,9 @@ enum TitleKey {
         static let save = "button-save"
         static let delete = "button-delete"
     }
-    enum Sort {
+    enum Picker {
         static let monthAttribute = "sort-month_attribute"
         static let order = "sort-order"
+        static let spendTrendViewpoint = "spend-trend-viewpoint"
     }
 }

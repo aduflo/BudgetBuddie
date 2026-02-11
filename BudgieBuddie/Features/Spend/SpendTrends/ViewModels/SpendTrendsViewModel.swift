@@ -15,12 +15,7 @@ class SpendTrendsViewModel {
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     
-    private var viewpoint: SpendTrendViewpoint = .spendAllowance {
-        didSet {
-            reloadData()
-        }
-    }
-    
+    private(set) var viewpoint: SpendTrendViewpoint
     private(set) var dailyTrendViewModel: SpendTrendViewModel
     private(set) var mtdTrendViewModel: SpendTrendViewModel
     private(set) var monthlyTrendViewModel: SpendTrendViewModel
@@ -36,6 +31,7 @@ class SpendTrendsViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
+        viewpoint = settingsService.defaultSpendTrendViewpoint
         dailyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.daily)
         mtdTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthToDate)
         monthlyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthly)
@@ -44,6 +40,10 @@ class SpendTrendsViewModel {
 
 // MARK: Public interface
 extension SpendTrendsViewModel {
+    func useDefaultViewpoint() {
+        viewpoint = settingsService.defaultSpendTrendViewpoint
+    }
+    
     func cycleViewpoint() {
         viewpoint.cycle()
     }

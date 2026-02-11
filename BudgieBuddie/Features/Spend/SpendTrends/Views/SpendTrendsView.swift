@@ -31,8 +31,18 @@ struct SpendTrendsView: View {
             viewModel.reloadData()
         }
         .onReceive(
-            Publishers.Merge3(
-                NotificationCenter.default.publisher(for: .SettingsDidUpdate),
+            NotificationCenter.default.publisher(for: .SettingsDidUpdateDefaultSpendTrendViewpoint),
+            perform: { _ in
+                Task { await MainActor.run {
+                    viewModel.useDefaultViewpoint()
+                    viewModel.reloadData()
+                }}
+            }
+        )
+        .onReceive(
+            Publishers.Merge4(
+                NotificationCenter.default.publisher(for: .SettingsDidUpdateMonthlyAllowance),
+                NotificationCenter.default.publisher(for: .SettingsDidUpdateWarningThreshold),
                 NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateSelectedDate),
                 NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem)
             ),
@@ -86,6 +96,7 @@ struct SpendTrendsView: View {
     var cycleButton: some View {
         Button {
             viewModel.cycleViewpoint()
+            viewModel.reloadData()
         } label: {
             Image(
                 systemName: SystemImage.rectangle2Swap

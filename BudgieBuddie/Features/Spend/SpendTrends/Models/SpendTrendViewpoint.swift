@@ -22,4 +22,19 @@ enum SpendTrendViewpoint: Int {
             self = .spendAllowance
         }
     }
+    
+    var displayValue: String {
+        switch self {
+        case .spendAllowance:
+            "\(Copy.spend) / \(Copy.allowance)"
+        case .remainingOverspend:
+            "\(Copy.remaining) / \(Copy.overspend)"
+        }
+    }
 }
+
+extension SpendTrendViewpoint: Identifiable {
+    var id: Int { rawValue }
+}
+
+extension SpendTrendViewpoint: CaseIterable {}
