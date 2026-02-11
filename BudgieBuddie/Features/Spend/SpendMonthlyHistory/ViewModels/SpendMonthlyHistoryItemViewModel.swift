@@ -1,5 +1,5 @@
 //
-//  SpendHistoryItemViewModel.swift
+//  SpendMonthlyHistoryItemViewModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/18/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SpendHistoryItemViewModel: Identifiable {
+struct SpendMonthlyHistoryItemViewModel: Identifiable {
     // Instance vars
     private let currencyFormatter: CurrencyFormatter
     let spendMonth: SpendMonth
@@ -26,7 +26,7 @@ struct SpendHistoryItemViewModel: Identifiable {
 }
 
 // MARK: Public interface
-extension SpendHistoryItemViewModel {
+extension SpendMonthlyHistoryItemViewModel {
     var displayDate: String {
         spendMonth.date.monthYearString
     }
@@ -50,9 +50,9 @@ extension SpendHistoryItemViewModel {
 }
 
 // MARK: - Mocks
-extension SpendHistoryItemViewModel {
-    static func mock() -> SpendHistoryItemViewModel {
-        SpendHistoryItemViewModel(
+extension SpendMonthlyHistoryItemViewModel {
+    static func mock() -> SpendMonthlyHistoryItemViewModel {
+        SpendMonthlyHistoryItemViewModel(
             currencyFormatter: CurrencyFormatter(),
             spendMonth: .mock()
         )

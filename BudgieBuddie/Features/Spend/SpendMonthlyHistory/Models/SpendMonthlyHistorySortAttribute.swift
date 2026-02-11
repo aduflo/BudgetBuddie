@@ -1,5 +1,5 @@
 //
-//  SpendHistorySortAttribute.swift
+//  SpendMonthlyHistorySortAttribute.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/20/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SpendHistorySortAttribute: CaseIterable, Identifiable {
+enum SpendMonthlyHistorySortAttribute: CaseIterable, Identifiable {
     case date
     case spend
     

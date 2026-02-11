@@ -1,5 +1,5 @@
 //
-//  SpendHistoryItemView.swift
+//  SpendMonthlyHistoryItemView.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/18/26.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct SpendHistoryItemView: View {
+struct SpendMonthlyHistoryItemView: View {
     // Instance vars
-    private let viewModel: SpendHistoryItemViewModel
+    private let viewModel: SpendMonthlyHistoryItemViewModel
     
     // Constructors
     init(
-        viewModel: SpendHistoryItemViewModel
+        viewModel: SpendMonthlyHistoryItemViewModel
     ) {
         self.viewModel = viewModel
     }
@@ -100,8 +100,8 @@ struct SpendHistoryItemView: View {
 }
 
 #Preview("Big Savings") {
-    SpendHistoryItemView(
-        viewModel: SpendHistoryItemViewModel(
+    SpendMonthlyHistoryItemView(
+        viewModel: SpendMonthlyHistoryItemViewModel(
             currencyFormatter: CurrencyFormatter(),
             spendMonth: SpendMonth(
                 date: Date(),
@@ -114,8 +114,8 @@ struct SpendHistoryItemView: View {
 }
 
 #Preview("Big Deficit") {
-    SpendHistoryItemView(
-        viewModel: SpendHistoryItemViewModel(
+    SpendMonthlyHistoryItemView(
+        viewModel: SpendMonthlyHistoryItemViewModel(
             currencyFormatter: CurrencyFormatter(),
             spendMonth: SpendMonth(
                 date: Date(),

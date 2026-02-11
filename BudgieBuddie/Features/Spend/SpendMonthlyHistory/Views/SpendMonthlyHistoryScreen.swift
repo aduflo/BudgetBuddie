@@ -1,5 +1,5 @@
 //
-//  SpendHistoryScreen.swift
+//  SpendMonthlyHistoryScreen.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/18/26.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SpendHistoryScreen: View {
+struct SpendMonthlyHistoryScreen: View {
     // Instance vars
-    @State var screenModel: SpendHistoryScreenModel
+    @State var screenModel: SpendMonthlyHistoryScreenModel
     
     var body: some View {
         VStack(
@@ -30,7 +30,7 @@ struct SpendHistoryScreen: View {
         VStack(
             spacing: Spacing.1
         ) {
-            Text(Copy.historyTitle)
+            Text(Copy.monthlyHistoryTitle)
                 .font(.title)
                 .foregroundStyle(.foregroundPrimary)
                 .padding(Padding.1)
@@ -47,7 +47,7 @@ struct SpendHistoryScreen: View {
                 TitleKey.Sort.monthAttribute,
                 selection: $screenModel.monthSortAttributeSelection
             ) {
-                ForEach(SpendHistorySortAttribute.allCases) { option in
+                ForEach(SpendMonthlyHistorySortAttribute.allCases) { option in
                     Text(screenModel.monthAttributeSortDisplayValue(option))
                         .foregroundStyle(.foregroundPrimary)
                 }
@@ -108,9 +108,10 @@ struct SpendHistoryScreen: View {
     }
     
     var emptyView: some View {
-        Text(Copy.noRecordedHistory)
-            .font(.headline)
+        Text(Copy.emptyMonthlyHistory)
+            .font(.footnote)
             .foregroundStyle(.foregroundPrimary)
+            .multilineTextAlignment(.center)
     }
     
     var listView: some View {
@@ -120,7 +121,7 @@ struct SpendHistoryScreen: View {
                 spacing: Spacing.1
             ) {
                 ForEach(screenModel.listItemViewModels) { listItemViewModel in
-                    SpendHistoryItemView(
+                    SpendMonthlyHistoryItemView(
                         viewModel: listItemViewModel
                     )
                 }
@@ -131,8 +132,8 @@ struct SpendHistoryScreen: View {
 }
 
 #Preview("Light Mode") {
-    SpendHistoryScreen(
-        screenModel: SpendHistoryScreenModel(
+    SpendMonthlyHistoryScreen(
+        screenModel: SpendMonthlyHistoryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )
@@ -141,8 +142,8 @@ struct SpendHistoryScreen: View {
 }
 
 #Preview("Dark Mode") {
-    SpendHistoryScreen(
-        screenModel: SpendHistoryScreenModel(
+    SpendMonthlyHistoryScreen(
+        screenModel: SpendMonthlyHistoryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )

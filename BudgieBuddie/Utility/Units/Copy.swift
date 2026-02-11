@@ -21,11 +21,11 @@ extension Copy {
     static let settingsTitle = "Settings"
     static let newSpendItemTitle = "New Spend Item"
     static let editSpendItemTitle = "Edit Spend Item"
-    static let historyTitle = "History"
+    static let monthlyHistoryTitle = "Monthly History"
     static let monthSummaryTitle = "Month Summary"
     
     // Button
-    static let historyButton = "History"
+    static let monthlyHistoryButton = "Monthly History"
     
     // Misc.
     static let spendTrends = "Spend trends"
@@ -56,7 +56,6 @@ extension Copy {
     static let deleteAlertTitle = "Are you sure you want to delete this spend item?"
     static let cancel = "Cancel"
     static let delete = "Delete"
-    static let goodJobSaving = "Good job saving!"
     static let errorPleaseTryAgain = "Error! Please try again."
     static let errorSomethingWentWrong = "Error! Something went wrong."
     static let notAvailable = "N/A"
@@ -65,7 +64,8 @@ extension Copy {
     static let oldest = "Oldest"
     static let lessSpend = "$"
     static let moreSpend = "$$$$"
-    static let noRecordedHistory = "No recorded history."
+    static let emptySpendList = "Good job saving!"
+    static let emptyMonthlyHistory = "Once your first month concludes, it, and all subsequent months, will show up here."
     static func letsSeeHowWeDidThisMonth(_ month: String) -> String {
         "Let's see how we did in \(month):"
     }
@@ -133,7 +133,7 @@ extension Copy {
         
         When using **\(Copy.appName)**, you simply log your expenses day-to-day. The logged expenses are attached to whichever day is selected and assist in the compilation of your _\(Copy.spendTrends)_.
         
-        When a month concludes, you will be shown a _\(Copy.monthSummaryTitle)_. Additionally, if you'd like to see how you've tended to your budget over time, you can view that in your _\(Copy.historyTitle)_.
+        When a month concludes, you will be shown a _\(Copy.monthSummaryTitle)_. Additionally, if you'd like to see how you've tended to your budget over time, you can view that in your _\(Copy.monthlyHistoryTitle)_.
         
         Lastly, there are visual cues to suggest how you are doing with your monthly expenses. To learn more about those, see _\(Copy.settingsTitle)_.
         

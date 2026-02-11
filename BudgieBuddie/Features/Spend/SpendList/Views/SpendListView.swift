@@ -97,7 +97,7 @@ struct SpendListView: View {
     
     var emptyView: some View {
         HStack {
-            Text(Copy.goodJobSaving)
+            Text(Copy.emptySpendList)
                 .font(.headline)
                 .foregroundStyle(.foregroundPrimary)
             

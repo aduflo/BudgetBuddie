@@ -12,7 +12,7 @@ struct HomeScreen: View {
     @State private var screenModel: HomeScreenModel
     @State private var presentSettings = false
     @State private var presentSpendItem = false
-    @State private var presentSpendHistory = false
+    @State private var presentSpendMonthlyHistory = false
     @State private var presentOnboarding = false
     @State private var presentSpendMonthSummary = false
     
@@ -146,13 +146,13 @@ struct HomeScreen: View {
     
     var footerView: some View {
         Button {
-            presentSpendHistory.toggle()
+            presentSpendMonthlyHistory.toggle()
         } label: {
             HStack(
                 spacing: Spacing.half
             ) {
                 Image(systemName: SystemImage.clockArrowTriangleheadCounterclockwiseRotate90)
-                Text(Copy.historyButton)
+                Text(Copy.monthlyHistoryButton)
             }
             .foregroundStyle(.foregroundPrimary)
             .padding(Padding.1)
@@ -161,9 +161,9 @@ struct HomeScreen: View {
                 color: .backgroundSecondary
             )
         }
-        .sheet(isPresented: $presentSpendHistory) {
-            SpendHistoryScreen(
-                screenModel: SpendHistoryScreenModel(
+        .sheet(isPresented: $presentSpendMonthlyHistory) {
+            SpendMonthlyHistoryScreen(
+                screenModel: SpendMonthlyHistoryScreenModel(
                     spendRepository: screenModel.spendRepository,
                     currencyFormatter: screenModel.currencyFormatter
                 )

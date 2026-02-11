@@ -1,5 +1,5 @@
 //
-//  SpendHistoryScreenModel.swift
+//  SpendMonthlyHistoryScreenModel.swift
 //  BudgieBuddie
 //
 //  Created by Adam Duflo on 1/18/26.
@@ -8,15 +8,15 @@
 import Foundation
 
 @Observable
-class SpendHistoryScreenModel {
+class SpendMonthlyHistoryScreenModel {
     // Instance vars
     private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     
-    private(set) var listItemViewModels: [SpendHistoryItemViewModel] = []
+    private(set) var listItemViewModels: [SpendMonthlyHistoryItemViewModel] = []
     private(set) var error: Error? = nil
     
-    var monthSortAttributeSelection: SpendHistorySortAttribute = .date {
+    var monthSortAttributeSelection: SpendMonthlyHistorySortAttribute = .date {
         didSet {
             reloadData()
         }
@@ -38,7 +38,7 @@ class SpendHistoryScreenModel {
 }
 
 // MARK: Public interface
-extension SpendHistoryScreenModel {
+extension SpendMonthlyHistoryScreenModel {
     func reloadData() {
         do {
             listItemViewModels = try listItemViewModelsBuilder()
@@ -49,7 +49,7 @@ extension SpendHistoryScreenModel {
         }
     }
     
-    func monthAttributeSortDisplayValue(_ monthAttribute: SpendHistorySortAttribute) -> String {
+    func monthAttributeSortDisplayValue(_ monthAttribute: SpendMonthlyHistorySortAttribute) -> String {
         switch monthAttribute {
         case .date: Copy.date
         case .spend: Copy.spend
@@ -73,8 +73,8 @@ extension SpendHistoryScreenModel {
 }
 
 // MARK: Private interface
-private extension SpendHistoryScreenModel {
-    func listItemViewModelsBuilder() throws -> [SpendHistoryItemViewModel] {
+private extension SpendMonthlyHistoryScreenModel {
+    func listItemViewModelsBuilder() throws -> [SpendMonthlyHistoryItemViewModel] {
         // get allMonths
         let allMonths = try spendRepository.getAllMonths()
         
@@ -90,7 +90,7 @@ private extension SpendHistoryScreenModel {
         
         // map and return
         return sorted.map {
-            SpendHistoryItemViewModel(
+            SpendMonthlyHistoryItemViewModel(
                 currencyFormatter: currencyFormatter,
                 spendMonth: $0
             )
@@ -99,9 +99,9 @@ private extension SpendHistoryScreenModel {
 }
 
 // MARK: - Mocks
-extension SpendHistoryScreenModel {
-    static func mock() -> SpendHistoryScreenModel {
-        SpendHistoryScreenModel(
+extension SpendMonthlyHistoryScreenModel {
+    static func mock() -> SpendMonthlyHistoryScreenModel {
+        SpendMonthlyHistoryScreenModel(
             spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter()
         )
