@@ -11,7 +11,7 @@ import Testing
 import SwiftUI
 
 struct SpendTrendViewModelTests {
-    // MARK: isRemainingAvailable
+    // MARK: - isRemainingAvailable
     @Test func test_isRemainingAvailable_valid() async {
         // Setup
         let vm = await mockVM(spend: 0, allowance: 0, remaining: 100, warningThreshold: 0)
@@ -34,7 +34,7 @@ struct SpendTrendViewModelTests {
         #expect(isRemainingAvailable == false)
     }
 
-    // MARK: evaluateBudget()
+    // MARK: - evaluateBudget()
     @Test func test_evaluateBudget_acceptable() async {
         // Setup
         let vm1 = await mockVM(spend: 0, allowance: 100, remaining: 100, warningThreshold: 0.50)
