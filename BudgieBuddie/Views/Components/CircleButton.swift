@@ -28,7 +28,10 @@ struct CircleButton: View {
         } label: {
             ZStack {
                 Color.backgroundPrimary
-                    .frame(width: 40.0, height: 40.0)
+                    .frame(
+                        width: 40.0,
+                        height: 40.0
+                    )
                     .clipShape(
                         Circle()
                     )

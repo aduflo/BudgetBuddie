@@ -19,7 +19,10 @@ struct AppIconView: View {
         .font(.body)
         .fontWeight(.heavy)
         .foregroundStyle(.white)
-        .frame(width: 64.0, height: 64.0)
+        .frame(
+            width: 64.0,
+            height: 64.0
+        )
         .padding(Padding.1)
         .roundedRectangleBackground(
             cornerRadius: CornerRadius.2,

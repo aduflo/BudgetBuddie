@@ -70,9 +70,7 @@ struct SpendSummaryView: View {
         CalendarView(
             viewModel: viewModel.calendarViewModel
         )
-        .frame(
-            height: spendTrendsViewSize.height
-        )
+        .frame(height: spendTrendsViewSize.height)
     }
 }
 

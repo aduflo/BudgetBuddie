@@ -47,6 +47,10 @@ struct SpendTrendView: View {
                 Text(viewModel.displaySpend)
                     .foregroundStyle(budgetColor)
             }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
             
             VStack(
                 alignment: .leading,
@@ -55,6 +59,10 @@ struct SpendTrendView: View {
                 Text(viewModel.allowanceHeadline)
                 Text(viewModel.displayAllowance)
             }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
             .foregroundStyle(.foregroundPrimary)
         }
     }
