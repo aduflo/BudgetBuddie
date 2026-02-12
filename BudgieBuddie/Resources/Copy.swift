@@ -30,6 +30,7 @@ extension Copy {
     // Misc.
     static let spendTrends = "Spend trends"
     static let spendTrendsViewpoint = "Spend trends viewpoint"
+    static let defaultSpendTrendsViewpoint = "Default spend trends viewpoint"
     static let spend = "Spend"
     static let allowance = "Allowance"
     static let remaining = "Remaining"
@@ -77,14 +78,22 @@ extension Copy {
 extension Copy {
     // MARK: AttributedString
     static let warningThresholdFootnote: AttributedString = {
+        let warningThreshold = Copy.warningThreshold
         let spendTrends = Copy.spendTrends
         let green = "green"
         let orange = "orange"
         var attributedString = AttributedString(
-            "The warning threshold determines when to share you've exceeded your comfortable spending allotment, and are now encroaching on your allowance. To reflect this, the amounts under \(spendTrends) will change from \(green) to \(orange)."
+            """
+            The \(warningThreshold) determines when to share you've exceeded your comfortable spending allotment.
+            
+            This will be reflected by changing the color of the amounts under \(spendTrends) from \(green) to \(orange).
+            """
         )
         
-        if let currentRange = attributedString.range(of: spend) {
+        if let currentRange = attributedString.range(of: warningThreshold) {
+            attributedString[currentRange].inlinePresentationIntent = .stronglyEmphasized
+        }
+        if let currentRange = attributedString.range(of: spendTrends) {
             attributedString[currentRange].inlinePresentationIntent = .stronglyEmphasized
         }
         if let spendingTrendsRange = attributedString.range(of: spendTrends) {
@@ -141,11 +150,18 @@ extension Copy {
         Enjoy and happy saving!
         """
     }()
-    static let spendTrendsViewpointFootnote: LocalizedStringKey = {
+    static let defaultSpendTrendsViewpointFootnote: LocalizedStringKey = {
         """
-        The spend trends viewpoint dictates the information shown in **\(Copy.spendTrends)**.
+        The **\(Copy.spendTrendsViewpoint)** dictates the type of information shown in **\(Copy.spendTrends)**.
         
-        This selection will be considered your preferred viewpoint and will persist. If you want to see other viewpoints on the fly, simply tap the button indicating the ability to cycle through viewpoints.
+        This selection will be considered your default viewpoint. If you would like to view other viewpoints (while viewing your **\(Copy.spendTrends)**), tap the button indicating the ability to cycle through viewpoints.
+        """
+    }()
+    static let monthlyAllowanceFootnote: LocalizedStringKey = {
+        """
+        The **\(Copy.monthlyAllowance)** represents what you're comfortable spending monthly.
+        
+        This number influences all maths used to calculate amounts shown in your **\(Copy.spendTrends)**.
         """
     }()
 }

@@ -26,13 +26,12 @@ struct SettingsScreen: View {
             spacing: Spacing.3
         ) {
             headerView
-            defaultSpendTrendViewpointPickerView
-            monthlyAllowanceView
-            warningThresholdView
-            Spacer()
-            versionView
+            contentView
         }
-        .padding(Padding.2)
+        .padding(.top, Padding.2)
+        .padding(.horizontal, Padding.2)
+        .padding(.bottom, Padding.3)
+        .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             if screenModel.monthlyAllowance > 0.0 {
                 monthlyAllowance = screenModel.monthlyAllowance
@@ -54,12 +53,27 @@ struct SettingsScreen: View {
         }
     }
     
+    var contentView: some View {
+        ScrollView(.vertical) {
+            VStack(
+                alignment: .leading,
+                spacing: Spacing.4
+            ) {
+                defaultSpendTrendViewpointPickerView
+                monthlyAllowanceView
+                warningThresholdView
+                versionView
+            }
+        }
+        .scrollIndicators(.hidden)
+    }
+    
     var defaultSpendTrendViewpointPickerView: some View {
         VStack(
             alignment: .leading,
             spacing: Spacing.1
         ) {
-            Text(Copy.spendTrendsViewpoint)
+            Text(Copy.defaultSpendTrendsViewpoint)
             
             Picker(
                 TitleKey.Picker.spendTrendViewpoint,
@@ -72,9 +86,8 @@ struct SettingsScreen: View {
             }
             .pickerStyle(.segmented)
             
-            Text(Copy.spendTrendsViewpointFootnote)
+            Text(Copy.defaultSpendTrendsViewpointFootnote)
                 .font(.footnote)
-                .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(.foregroundPrimary)
@@ -100,6 +113,10 @@ struct SettingsScreen: View {
             .onSubmit {
                 screenModel.setMonthlyAllowance(monthlyAllowance)
             }
+            
+            Text(Copy.monthlyAllowanceFootnote)
+                .font(.footnote)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(.foregroundPrimary)
     }
@@ -133,7 +150,6 @@ struct SettingsScreen: View {
             
             Text(Copy.warningThresholdFootnote)
                 .font(.footnote)
-                .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(.foregroundPrimary)
