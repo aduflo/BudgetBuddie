@@ -66,7 +66,7 @@ extension Copy {
     static let lessSpend = "$"
     static let moreSpend = "$$$$"
     static let emptySpendList = "Good job saving!"
-    static let emptyMonthlyHistory = "Once your first month concludes, it, and all subsequent months, will show up here."
+    static let emptyMonthlyHistory = "Once your first month concludes, it will show up here (along with all subsequent months)."
     static func letsSeeHowWeDidThisMonth(_ month: String) -> String {
         "Let's see how we did in \(month):"
     }
