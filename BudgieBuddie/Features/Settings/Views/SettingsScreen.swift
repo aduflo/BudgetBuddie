@@ -22,15 +22,12 @@ struct SettingsScreen: View {
     
     var body: some View {
         VStack(
-            alignment: .leading,
-            spacing: Spacing.3
+            spacing: Spacing.zero
         ) {
             headerView
             contentView
         }
-        .padding(.top, Padding.2)
-        .padding(.horizontal, Padding.2)
-        .padding(.bottom, Padding.3)
+        .padding(Padding.2)
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             if screenModel.monthlyAllowance > 0.0 {
@@ -55,6 +52,7 @@ struct SettingsScreen: View {
     
     var contentView: some View {
         ScrollView(.vertical) {
+            Spacer(minLength: Spacing.3)
             VStack(
                 alignment: .leading,
                 spacing: Spacing.4
@@ -64,6 +62,7 @@ struct SettingsScreen: View {
                 warningThresholdView
                 versionView
             }
+            Spacer(minLength: Spacing.3)
         }
         .scrollIndicators(.hidden)
     }
