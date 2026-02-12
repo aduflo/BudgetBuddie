@@ -116,12 +116,10 @@ struct SpendItemScreen: View {
             Spacer()
             
             if case .existing = screenModel.mode {
-                Button(
-                    TitleKey.Button.delete,
+                CircleButton(
                     systemImage: SystemImage.trash,
                     action: { isDeleteConfirmationAlertPresented = true }
                 )
-                .buttonStyle(.circleSystemImage)
                 .alert(
                     Copy.deleteAlertTitle,
                     isPresented: $isDeleteConfirmationAlertPresented
@@ -140,8 +138,8 @@ struct SpendItemScreen: View {
                     }
                 }
             }
-            Button(
-                TitleKey.Button.save,
+            
+            CircleButton(
                 systemImage: SystemImage.checkmark,
                 action: {
                     if screenModel.saveTapped() {
@@ -149,7 +147,6 @@ struct SpendItemScreen: View {
                     }
                 }
             )
-            .buttonStyle(.circleSystemImage)
         }
         .padding(Padding.1)
     }

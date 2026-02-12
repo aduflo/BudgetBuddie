@@ -55,12 +55,10 @@ struct SpendListView: View {
             
             Spacer()
             
-            Button(
-                TitleKey.Button.newSpendItem,
+            CircleButton(
                 systemImage: SystemImage.plus,
                 action: { viewModel.newSpendItemTapped() }
             )
-            .buttonStyle(.circleSystemImage)
         }
     }
     
@@ -84,14 +82,12 @@ struct SpendListView: View {
                 .font(.headline)
                 .foregroundStyle(Color.red)
             
-            Button(
-                TitleKey.Button.reload,
+            CircleButton(
                 systemImage: SystemImage.arrowClockwise,
                 action: {
                     viewModel.reloadData()
                 }
             )
-            .buttonStyle(.circleSystemImage)
         }
     }
     

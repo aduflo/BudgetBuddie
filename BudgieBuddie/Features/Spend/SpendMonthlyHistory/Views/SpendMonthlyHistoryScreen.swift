@@ -95,14 +95,13 @@ struct SpendMonthlyHistoryScreen: View {
             Text(Copy.errorPleaseTryAgain)
                 .font(.headline)
                 .foregroundStyle(Color.red)
-            Button(
-                TitleKey.Button.reload,
+            
+            CircleButton(
                 systemImage: SystemImage.arrowClockwise,
                 action: {
                     screenModel.reloadData()
                 }
             )
-            .buttonStyle(.circleSystemImage)
         }
     }
     

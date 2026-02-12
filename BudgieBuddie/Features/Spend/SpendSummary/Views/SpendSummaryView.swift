@@ -42,12 +42,10 @@ struct SpendSummaryView: View {
             
             Spacer()
             
-            Button(
-                TitleKey.Button.settings,
+            CircleButton(
                 systemImage: SystemImage.gear,
                 action: { viewModel.settingsTapped() }
             )
-            .buttonStyle(.circleSystemImage)
         }
     }
     
