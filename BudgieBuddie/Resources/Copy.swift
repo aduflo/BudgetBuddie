@@ -86,7 +86,7 @@ extension Copy {
             """
             The \(warningThreshold) determines when to share you've exceeded your comfortable spending allotment.
             
-            This will be reflected by changing the color of the amounts under \(spendTrends) from \(green) to \(orange).
+            This will be reflected by changing the color of the amounts shown under \(spendTrends) from \(green) to \(orange).
             """
         )
         
@@ -159,9 +159,9 @@ extension Copy {
     }()
     static let monthlyAllowanceFootnote: LocalizedStringKey = {
         """
-        The **\(Copy.monthlyAllowance)** represents what you're comfortable spending monthly.
+        The **\(Copy.monthlyAllowance)** represents what you can spend monthly.
         
-        This number influences all maths used to calculate amounts shown in your **\(Copy.spendTrends)**.
+        This number influences all calculations used for the amounts shown in your **\(Copy.spendTrends)**.
         """
     }()
 }
