@@ -34,11 +34,11 @@ struct HomeScreen: View {
                 listView
                 footerView
             }
+            .padding(.bottom, Padding.4)
         }
         .scrollIndicators(.hidden)
-        .padding(.top, Padding.2)
+        .padding(.top, Padding.half)
         .padding(.horizontal, Padding.2)
-        .padding(.bottom, Padding.3)
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             // flip onboarding presentation if need be

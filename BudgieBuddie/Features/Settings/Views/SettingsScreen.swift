@@ -52,7 +52,6 @@ struct SettingsScreen: View {
     
     var contentView: some View {
         ScrollView(.vertical) {
-            Spacer(minLength: Spacing.3)
             VStack(
                 alignment: .leading,
                 spacing: Spacing.4
@@ -62,7 +61,7 @@ struct SettingsScreen: View {
                 warningThresholdView
                 versionView
             }
-            Spacer(minLength: Spacing.3)
+            .padding(.vertical, Padding.3)
         }
         .scrollIndicators(.hidden)
     }

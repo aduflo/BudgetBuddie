@@ -10,8 +10,8 @@ import Foundation
 enum Spacing {
     static let zero = 0.0
     static let half = 4.0
-    static let `1` = 8.0
-    static let `2` = 16.0
-    static let `3` = 32.0
-    static let `4` = 64.0
+    static let `1` = half * 2
+    static let `2` = `1` * 2
+    static let `3` = `2` * 2
+    static let `4` = `3` * 2
 }
