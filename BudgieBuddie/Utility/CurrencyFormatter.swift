@@ -23,6 +23,6 @@ extension CurrencyFormatter {
     }
     
     func stringAmount(_ amount: Decimal) -> String {
-        return amount.formatted(.currency(code: code))
+        return amount.formatted(decimalFormatStyle)
     }
 }

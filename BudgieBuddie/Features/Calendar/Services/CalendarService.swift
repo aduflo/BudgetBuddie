@@ -9,7 +9,7 @@ import Foundation
 
 class CalendarService: CalendarServiceable {
     // CalendarServiceable
-    private(set) var todayDate: Date = Date() {
+    private(set) var todayDate: Date {
         didSet {
             updateSelectedDate(todayDate)
             postNotificationDidUpdateTodayDate()
@@ -24,7 +24,7 @@ class CalendarService: CalendarServiceable {
         todayDate = date
     }
     
-    private(set) var selectedDate: Date = Date() {
+    private(set) var selectedDate: Date {
         didSet {
             postNotificationDidUpdateSelectedDate()
         }
@@ -32,6 +32,15 @@ class CalendarService: CalendarServiceable {
     
     func updateSelectedDate(_ date: Date) {
         selectedDate = date
+    }
+    
+    // Constructors
+    init(
+        todayDate: Date,
+        selectedDate: Date
+    ) {
+        self.todayDate = todayDate
+        self.selectedDate = selectedDate
     }
 }
 

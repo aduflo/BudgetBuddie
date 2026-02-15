@@ -11,7 +11,10 @@ import SwiftUI
 struct BudgieBuddieApp: App {
     // Instance vars
     let settingsService: SettingsServiceable = SettingsService()
-    let calendarService: CalendarServiceable = CalendarService()
+    let calendarService: CalendarServiceable = CalendarService(
+        todayDate: Date(),
+        selectedDate: Date()
+    )
     let currencyFormatter: CurrencyFormatter = CurrencyFormatter()
     let spendRepository: SpendRepositable = SpendRepository()
     
