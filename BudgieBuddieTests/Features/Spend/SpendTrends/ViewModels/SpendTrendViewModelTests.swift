@@ -9,40 +9,41 @@ import Foundation
 import Testing
 @testable import BudgieBuddie
 
+@MainActor
 struct SpendTrendViewModelTests {
     // MARK: - spendHeadline
-    @Test func test_spendHeadline() async {
+    @Test func test_spendHeadline() {
         // Setup
-        let vm = await mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
+        let vm =  mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
         
         // Scenario
-        let spendHeadline = await vm.spendHeadline
+        let spendHeadline =  vm.spendHeadline
         
         // Verification
         #expect(spendHeadline == Copy.spend)
     }
     
     // MARK: - allowanceHeadline
-    @Test func test_allowanceHeadline() async {
+    @Test func test_allowanceHeadline() {
         // Setup
-        let vm = await mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
+        let vm =  mockVM(spend: 0, allowance: 0, remaining: 0, warningThreshold: 0)
         
         // Scenario
-        let allowanceHeadline = await vm.allowanceHeadline
+        let allowanceHeadline =  vm.allowanceHeadline
         
         // Verification
         #expect(allowanceHeadline == Copy.allowance)
     }
     
     // MARK: - remainingOverspendHeadline
-    @Test func test_remainingOverspendHeadline() async {
+    @Test func test_remainingOverspendHeadline() {
         // Setup
-        let vm1 = await mockVM(spend: 0, allowance: 0, remaining: 1, warningThreshold: 0)
-        let vm2 = await mockVM(spend: 0, allowance: 0, remaining: -1, warningThreshold: 0)
+        let vm1 =  mockVM(spend: 0, allowance: 0, remaining: 1, warningThreshold: 0)
+        let vm2 =  mockVM(spend: 0, allowance: 0, remaining: -1, warningThreshold: 0)
         
         // Scenario
-        let remainingOverspendHeadline1 = await vm1.remainingOverspendHeadline
-        let remainingOverspendHeadline2 = await vm2.remainingOverspendHeadline
+        let remainingOverspendHeadline1 =  vm1.remainingOverspendHeadline
+        let remainingOverspendHeadline2 =  vm2.remainingOverspendHeadline
         
         // Verification
         #expect(remainingOverspendHeadline1 == Copy.remaining)
@@ -50,40 +51,40 @@ struct SpendTrendViewModelTests {
     }
 
     // MARK: - evaluateBudget()
-    @Test func test_evaluateBudget_acceptable() async {
+    @Test func test_evaluateBudget_acceptable() {
         // Setup
-        let vm1 = await mockVM(spend: 0, allowance: 100, remaining: 100, warningThreshold: 0.50)
-        let vm2 = await mockVM(spend: 49, allowance: 100, remaining: 51, warningThreshold: 0.50)
+        let vm1 =  mockVM(spend: 0, allowance: 100, remaining: 100, warningThreshold: 0.50)
+        let vm2 =  mockVM(spend: 49, allowance: 100, remaining: 51, warningThreshold: 0.50)
         
         // Scenario
-        let evaluation1 = await vm1.evaluateBudget()
-        let evaluation2 = await vm2.evaluateBudget()
+        let evaluation1 =  vm1.evaluateBudget()
+        let evaluation2 =  vm2.evaluateBudget()
         
         // Verification
         #expect(evaluation1 == .acceptable)
         #expect(evaluation2 == .acceptable)
     }
     
-    @Test func test_evaluateBudget_encroaching() async {
+    @Test func test_evaluateBudget_encroaching() {
         // Setup
-        let vm1 = await mockVM(spend: 50, allowance: 100, remaining: 50, warningThreshold: 0.50)
-        let vm2 = await mockVM(spend: 99, allowance: 100, remaining: 1, warningThreshold: 0.50)
+        let vm1 =  mockVM(spend: 50, allowance: 100, remaining: 50, warningThreshold: 0.50)
+        let vm2 =  mockVM(spend: 99, allowance: 100, remaining: 1, warningThreshold: 0.50)
         
         // Scenario
-        let evaluation1 = await vm1.evaluateBudget()
-        let evaluation2 = await vm2.evaluateBudget()
+        let evaluation1 =  vm1.evaluateBudget()
+        let evaluation2 =  vm2.evaluateBudget()
         
         // Verification
         #expect(evaluation1 == .encroaching)
         #expect(evaluation2 == .encroaching)
     }
     
-    @Test func test_evaluateBudget_exceeded() async {
+    @Test func test_evaluateBudget_exceeded() {
         // Setup
-        let vm = await mockVM(spend: 100, allowance: 100, remaining: 0, warningThreshold: 0.50)
+        let vm =  mockVM(spend: 100, allowance: 100, remaining: 0, warningThreshold: 0.50)
         
         // Scenario
-        let evaluation = await vm.evaluateBudget()
+        let evaluation =  vm.evaluateBudget()
         
         // Verification
         #expect(evaluation == .exceeded)
