@@ -11,35 +11,35 @@ import Testing
 
 @MainActor
 struct CalendarDayViewModelTests {
-    // MARK: - setSelected
+    // MARK: - setSelected()
     @Test func test_setSelected() {
         // Setup
-        let viewModel = CalendarDayViewModel(
+        let vm = CalendarDayViewModel(
             calendarService: MockCalendarService(),
             monthDay: .mockPast(),
             isSelected: false
         )
         
         // Pre-verification
-        #expect(viewModel.isSelected == false)
+        #expect(vm.isSelected == false)
         
         // Scenario
-        viewModel.setSelected(true)
+        vm.setSelected(true)
         
         // Verification
-        #expect(viewModel.isSelected == true)
+        #expect(vm.isSelected == true)
     }
     
     // MARK: - displayMonthDay
     @Test func test_displayMonthDay() {
         // Setup
-        let viewModel = CalendarDayViewModel(
+        let vm = CalendarDayViewModel(
             calendarService: MockCalendarService(),
             monthDay: .mockPast(),
             isSelected: false
         )
         // Scenario
-        let displayMonthDay = viewModel.displayMonthDay
+        let displayMonthDay = vm.displayMonthDay
         
         // Verification
         #expect(displayMonthDay == "12/31")
@@ -48,14 +48,14 @@ struct CalendarDayViewModelTests {
     // MARK: - isToday
     @Test func test_isToday_true() {
         // Setup
-        let viewModel = CalendarDayViewModel(
+        let vm = CalendarDayViewModel(
             calendarService: MockCalendarService(),
             monthDay: .mockPresent(),
             isSelected: false
         )
         
         // Scenario
-        let isToday = viewModel.isToday
+        let isToday = vm.isToday
         
         // Verification
         #expect(isToday == true)
@@ -63,14 +63,14 @@ struct CalendarDayViewModelTests {
     
     @Test func test_isToday_false() {
         // Setup
-        let viewModel = CalendarDayViewModel(
+        let vm = CalendarDayViewModel(
             calendarService: MockCalendarService(),
             monthDay: .mockPast(),
             isSelected: false
         )
         
         // Scenario
-        let isToday = viewModel.isToday
+        let isToday = vm.isToday
         
         // Verification
         #expect(isToday == false)

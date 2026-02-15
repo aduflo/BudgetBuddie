@@ -11,7 +11,7 @@ import Testing
 
 @MainActor
 struct CalendarServiceTests {
-    // MARK: - updateTodayDate
+    // MARK: - updateTodayDate()
     @Test func test_updateTodayDate() {
         // Setup
         let date = Date.distantPast
@@ -62,7 +62,7 @@ struct CalendarServiceTests {
         #expect(notification != nil)
     }
     
-    // MARK: - updateSelectedDate
+    // MARK: - updateSelectedDate()
     @Test func test_updateSelectedDate() {
         // Setup
         let date = Date.distantPast
