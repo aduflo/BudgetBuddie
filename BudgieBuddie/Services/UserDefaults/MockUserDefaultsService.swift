@@ -19,7 +19,15 @@ class MockUserDefaultsService: UserDefaultsServiceable {
     }
     
     func double(forKey key: UserDefaultsKey) -> Double {
-        sourceDict[key.value] as? Double ?? 0.0
+        if let value = sourceDict[key.value] {
+            if let doubleValue = value as? Double {
+                return doubleValue
+            } else if let decimalValue = value as? Decimal {
+                return Double(truncating: decimalValue as NSNumber)
+            }
+        }
+        
+        return 0.0
     }
     
     func integer(forKey key: UserDefaultsKey) -> Int {
