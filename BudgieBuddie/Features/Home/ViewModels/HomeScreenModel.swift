@@ -10,6 +10,7 @@ import Foundation
 @Observable
 class HomeScreenModel {
     // Instance vars
+    let userDefaults: UserDefaultsServiceable
     let settingsService: SettingsServiceable
     let calendarService: CalendarServiceable
     let spendRepository: SpendRepositable
@@ -25,11 +26,13 @@ class HomeScreenModel {
     
     // Constructors
     init(
+        userDefaults: UserDefaultsServiceable,
         settingsService: SettingsServiceable,
         calendarService: CalendarServiceable,
         spendRepository: SpendRepositable,
         currencyFormatter: CurrencyFormatter
     ) {
+        self.userDefaults = userDefaults
         self.settingsService = settingsService
         self.calendarService = calendarService
         self.spendRepository = spendRepository
@@ -51,8 +54,8 @@ class HomeScreenModel {
 // MARK: Public interface
 extension HomeScreenModel {
     var didOnboardOnce: Bool {
-        UserDefaults.standard.bool(
-            forKey: UserDefaults.Key.App.didOnboardOnce
+        userDefaults.bool(
+            forKey: UserDefaultsKey.App.didOnboardOnce
         )
     }
     
@@ -90,6 +93,7 @@ extension HomeScreenModel {
 extension HomeScreenModel {
     static func mock() -> HomeScreenModel {
         HomeScreenModel(
+            userDefaults: MockUserDefaultsService(),
             settingsService: MockSettingsService(),
             calendarService: MockCalendarService(),
             spendRepository: MockSpendRepository(),

@@ -10,26 +10,39 @@ import SwiftUI
 @main
 struct BudgieBuddieApp: App {
     // Instance vars
-    let settingsService: SettingsServiceable = SettingsService()
-    let calendarService: CalendarServiceable = CalendarService(
-        todayDate: Date(),
-        selectedDate: Date()
-    )
-    let currencyFormatter: CurrencyFormatter = CurrencyFormatter()
-    let spendRepository: SpendRepositable = SpendRepository()
+    let userDefaults: UserDefaultsServiceable
+    let settingsService: SettingsServiceable
+    let calendarService: CalendarServiceable
+    let currencyFormatter: CurrencyFormatter
+    let spendRepository: SpendRepositable
     
     @Environment(\.scenePhase) private var scenePhase
     
     // Constructors
     init() {
-        startDependencies()
-        refresh()
+        // initialize instance vars
+        userDefaults = UserDefaultsService()
+        settingsService = SettingsService(
+            userDefaults: userDefaults
+        )
+        calendarService = CalendarService(
+            todayDate: Date(),
+            selectedDate: Date()
+        )
+        currencyFormatter = CurrencyFormatter()
+        spendRepository = SpendRepository(
+            userDefaults: userDefaults
+        )
+        
+        // start things up
+        start()
     }
     
     var body: some Scene {
         WindowGroup {
             HomeScreen(
                 screenModel: HomeScreenModel(
+                    userDefaults: userDefaults,
                     settingsService: settingsService,
                     calendarService: calendarService,
                     spendRepository: spendRepository,
@@ -51,6 +64,11 @@ struct BudgieBuddieApp: App {
 
 // MARK: Private interface
 private extension BudgieBuddieApp {
+    func start() {
+        startDependencies()
+        refresh()
+    }
+    
     func startDependencies() {
         ObservabilityService.start()
     }

@@ -82,8 +82,12 @@ struct HomeScreen: View {
             }
         )
         .sheet(isPresented: $presentOnboarding) {
-            OnboardingScreen()
-                .presentationDetents([.large])
+            OnboardingScreen(
+                screenModel: OnboardingScreenModel(
+                    userDefaults: screenModel.userDefaults
+                )
+            )
+            .presentationDetents([.large])
         }
         .sheet(isPresented: $presentSpendMonthSummary) {
             if let date = screenModel.spendMonthSummaryDateToPresent {

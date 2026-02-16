@@ -9,15 +9,26 @@ import Foundation
 
 class SpendRepository: SpendRepositable {
     // Instance vars
+    let userDefaults: UserDefaultsServiceable
+    
     private let store: SpendStoreable = {
         SwiftDataSpendStore()
 //        InMemorySpendStore()
     }()
     private var didSetupOnce: Bool {
-        UserDefaults.standard.bool(
-            forKey: UserDefaults.Key.SpendRepository.didSetupOnce
+        userDefaults.bool(
+            forKey: UserDefaultsKey.SpendRepository.didSetupOnce
         )
     }
+    
+    // Constructors
+    init(
+        userDefaults: UserDefaultsServiceable
+    ) {
+        self.userDefaults = userDefaults
+    }
+    
+    // SpendRepositable
     
     func setup(
         calendarService: any CalendarServiceable,
@@ -39,7 +50,6 @@ class SpendRepository: SpendRepositable {
         }
     }
 
-    // SpendRepositable
     func getItems(date: Date) throws -> [SpendItem] {
         do {
             let items_data = try store.getItems(date: date)
@@ -122,9 +132,9 @@ private extension SpendRepository {
         do {
             let todayDate = calendarService.todayDate
             try stageNewMonth(todayDate)
-            UserDefaults.standard.set(
+            userDefaults.set(
                 true,
-                forKey: UserDefaults.Key.SpendRepository.didSetupOnce
+                forKey: UserDefaultsKey.SpendRepository.didSetupOnce
             )
         } catch {
             throw SpendRepositoryError.initialSetupFailed

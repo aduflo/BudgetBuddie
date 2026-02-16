@@ -7,14 +7,17 @@
 
 import Foundation
 
-struct OnboardingScreenModel {}
+struct OnboardingScreenModel {
+    // Instances vars
+    let userDefaults: UserDefaultsServiceable
+}
 
 // MARK: Public interface
 extension OnboardingScreenModel {    
     func setDidOnboardOnce() {
-        UserDefaults.standard.set(
+        userDefaults.set(
             true,
-            forKey: UserDefaults.Key.App.didOnboardOnce
+            forKey: UserDefaultsKey.App.didOnboardOnce
         )
     }
 }

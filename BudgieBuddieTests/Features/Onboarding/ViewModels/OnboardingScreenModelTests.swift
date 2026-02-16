@@ -14,28 +14,18 @@ struct OnboardingScreenModelTests {
     // MARK: - setDidOnboardOnce()
     @Test func test_setDidOnboardOnce() {
         // Setup
-        func resetDidOnboardOnce() {
-            UserDefaults.standard.set(
-                nil,
-                forKey: UserDefaults.Key.App.didOnboardOnce
-            )
-        }
-        func didOnboardOnce() -> Bool {
-            UserDefaults.standard.bool(forKey: UserDefaults.Key.App.didOnboardOnce)
-        }
-        resetDidOnboardOnce()
-        let vm = OnboardingScreenModel()
+        let userDefaults = MockUserDefaultsService()
+        let vm = OnboardingScreenModel(
+            userDefaults: userDefaults
+        )
         
         // Pre-verification
-        #expect(didOnboardOnce() == false)
+        #expect(userDefaults.bool(forKey: UserDefaultsKey.App.didOnboardOnce) == false)
         
         // Scenario
         vm.setDidOnboardOnce()
         
         // Post-verification
-        #expect(didOnboardOnce() == true)
-        
-        // Teardown
-        resetDidOnboardOnce()
+        #expect(userDefaults.bool(forKey: UserDefaultsKey.App.didOnboardOnce) == true)
     }
 }

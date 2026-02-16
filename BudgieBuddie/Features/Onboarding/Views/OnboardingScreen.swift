@@ -9,7 +9,14 @@ import SwiftUI
 
 struct OnboardingScreen: View {
     // Instance vars
-    private let screenModel = OnboardingScreenModel()
+    private let screenModel: OnboardingScreenModel
+    
+    // Constructors
+    init(
+        screenModel: OnboardingScreenModel
+    ) {
+        self.screenModel = screenModel
+    }
     
     var body: some View {
         VStack(
@@ -36,11 +43,19 @@ struct OnboardingScreen: View {
 }
 
 #Preview("Light Mode") {
-    OnboardingScreen()
-        .preferredColorScheme(.light)
+    OnboardingScreen(
+        screenModel: OnboardingScreenModel(
+            userDefaults: MockUserDefaultsService()
+        )
+    )
+    .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    OnboardingScreen()
-        .preferredColorScheme(.dark)
+    OnboardingScreen(
+        screenModel: OnboardingScreenModel(
+            userDefaults: MockUserDefaultsService()
+        )
+    )
+    .preferredColorScheme(.dark)
 }

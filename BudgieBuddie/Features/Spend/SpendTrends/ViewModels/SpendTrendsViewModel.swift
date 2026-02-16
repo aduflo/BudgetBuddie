@@ -60,7 +60,7 @@ private extension SpendTrendsViewModel {
     // View model builders
     static func placeholderTrendViewModelBuilder(title: String) -> SpendTrendViewModel {
         SpendTrendViewModel(
-            settingsService: SettingsService(),
+            settingsService: SettingsService(userDefaults: UserDefaultsService()),
             currencyFormatter: CurrencyFormatter(),
             viewpoint: .spendAllowance,
             title: title,
