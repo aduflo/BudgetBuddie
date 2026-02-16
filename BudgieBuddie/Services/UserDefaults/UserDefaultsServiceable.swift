@@ -8,8 +8,8 @@
 import Foundation
 
 protocol UserDefaultsServiceable {
-    func set(_ value: Any?, forKey key: String)
-    func bool(forKey key: String) -> Bool
-    func double(forKey key: String) -> Double
-    func integer(forKey key: String) -> Int
+    func set(_ value: Any?, forKey key: UserDefaultsKey)
+    func bool(forKey key: UserDefaultsKey) -> Bool
+    func double(forKey key: UserDefaultsKey) -> Double
+    func integer(forKey key: UserDefaultsKey) -> Int
 }

@@ -20,12 +20,12 @@ struct OnboardingScreenModelTests {
         )
         
         // Pre-verification
-        #expect(userDefaults.bool(forKey: UserDefaultsKey.App.didOnboardOnce) == false)
+        #expect(userDefaults.bool(forKey: .didOnboardOnce) == false)
         
         // Scenario
         vm.setDidOnboardOnce()
         
         // Post-verification
-        #expect(userDefaults.bool(forKey: UserDefaultsKey.App.didOnboardOnce) == true)
+        #expect(userDefaults.bool(forKey: .didOnboardOnce) == true)
     }
 }

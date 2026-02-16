@@ -7,22 +7,32 @@
 
 import Foundation
 
-enum UserDefaultsKey {
-    enum App {
-        static let didOnboardOnce = compose(key: "didOnboardOnce")
-    }
-    enum Settings {
-        static let monthlyAllowance = compose(key: "monthlyAllowance")
-        static let warningThreshold = compose(key: "warningThreshold")
-        static let defaultSpendTrendViewpoint = compose(key: "defaultSpendTrendViewpoint")
-    }
-    enum SpendRepository {
-        static let didSetupOnce = compose(key: "didSetupOnce")
+enum UserDefaultsKey: String {
+    case didOnboardOnce
+    case monthlyAllowance
+    case warningThreshold
+    case defaultSpendTrendViewpoint
+    case didSetupOnce
+    
+    var value: String {
+        switch self {
+        case .didOnboardOnce: compose(nameSpace: .app)
+        case .monthlyAllowance: compose(nameSpace: .settings)
+        case .warningThreshold: compose(nameSpace: .settings)
+        case .defaultSpendTrendViewpoint: compose(nameSpace: .settings)
+        case .didSetupOnce: compose(nameSpace: .spendRepository)
+        }
     }
 }
 
 fileprivate extension UserDefaultsKey {
-    static func compose(key: String) -> String {
-        "\(String(describing: Self.self)).\(key)"
+    enum NameSpace: String {
+        case app
+        case settings
+        case spendRepository
+    }
+    
+    func compose(nameSpace: NameSpace) -> String {
+        "\(nameSpace.rawValue).\(rawValue)"
     }
 }

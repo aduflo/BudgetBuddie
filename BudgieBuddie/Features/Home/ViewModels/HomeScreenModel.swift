@@ -55,7 +55,7 @@ class HomeScreenModel {
 extension HomeScreenModel {
     var didOnboardOnce: Bool {
         userDefaults.bool(
-            forKey: UserDefaultsKey.App.didOnboardOnce
+            forKey: .didOnboardOnce
         )
     }
     

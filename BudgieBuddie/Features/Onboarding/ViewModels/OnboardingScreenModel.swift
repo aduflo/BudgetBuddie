@@ -17,7 +17,7 @@ extension OnboardingScreenModel {
     func setDidOnboardOnce() {
         userDefaults.set(
             true,
-            forKey: UserDefaultsKey.App.didOnboardOnce
+            forKey: .didOnboardOnce
         )
     }
 }

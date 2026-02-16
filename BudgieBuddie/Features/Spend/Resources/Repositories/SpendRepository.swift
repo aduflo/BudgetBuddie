@@ -17,7 +17,7 @@ class SpendRepository: SpendRepositable {
     }()
     private var didSetupOnce: Bool {
         userDefaults.bool(
-            forKey: UserDefaultsKey.SpendRepository.didSetupOnce
+            forKey: .didSetupOnce
         )
     }
     
@@ -134,7 +134,7 @@ private extension SpendRepository {
             try stageNewMonth(todayDate)
             userDefaults.set(
                 true,
-                forKey: UserDefaultsKey.SpendRepository.didSetupOnce
+                forKey: .didSetupOnce
             )
         } catch {
             throw SpendRepositoryError.initialSetupFailed

@@ -21,7 +21,7 @@ class SettingsService: SettingsServiceable {
     // SettingsServiceable
     var monthlyAllowance: Decimal {
         let monthlyAllowance = userDefaults.double(
-            forKey: UserDefaultsKey.Settings.monthlyAllowance
+            forKey: .monthlyAllowance
         )
         return Decimal(floatLiteral: monthlyAllowance)
     }
@@ -29,28 +29,28 @@ class SettingsService: SettingsServiceable {
     func setMonthlyAllowance(_ monthlyAllowance: Decimal) {
         userDefaults.set(
             monthlyAllowance,
-            forKey: UserDefaultsKey.Settings.monthlyAllowance
+            forKey: .monthlyAllowance
         )
         NotificationCenter.default.post(.SettingsDidUpdateMonthlyAllowance)
     }
     
     var warningThreshold: Double {
         userDefaults.double(
-            forKey: UserDefaultsKey.Settings.warningThreshold
+            forKey: .warningThreshold
         )
     }
     
     func setWarningThreshold(_ warningThreshold: Double) {
         userDefaults.set(
             warningThreshold,
-            forKey: UserDefaultsKey.Settings.warningThreshold
+            forKey: .warningThreshold
         )
         NotificationCenter.default.post(.SettingsDidUpdateWarningThreshold)
     }
     
     var defaultSpendTrendViewpoint: SpendTrendViewpoint {
         let defaultSpendTrendViewpoint = userDefaults.integer(
-            forKey: UserDefaultsKey.Settings.defaultSpendTrendViewpoint
+            forKey: .defaultSpendTrendViewpoint
         )
         return SpendTrendViewpoint(
             rawValue: defaultSpendTrendViewpoint
@@ -60,7 +60,7 @@ class SettingsService: SettingsServiceable {
     func setDefaultSpendTrendViewpoint(_ defaultSpendTrendViewpoint: SpendTrendViewpoint) {
         userDefaults.set(
             defaultSpendTrendViewpoint.rawValue,
-            forKey: UserDefaultsKey.Settings.defaultSpendTrendViewpoint
+            forKey: .defaultSpendTrendViewpoint
         )
         NotificationCenter.default.post(.SettingsDidUpdateDefaultSpendTrendViewpoint)
     }

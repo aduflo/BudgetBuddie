@@ -10,19 +10,19 @@ import Foundation
 class MockUserDefaultsService: UserDefaultsServiceable {
     private var sourceDict: [String: Any] = [:]
     
-    func set(_ value: Any?, forKey key: String) {
-        sourceDict[key] = value
+    func set(_ value: Any?, forKey key: UserDefaultsKey) {
+        sourceDict[key.value] = value
     }
     
-    func bool(forKey key: String) -> Bool {
-        sourceDict[key] as? Bool ?? false
+    func bool(forKey key: UserDefaultsKey) -> Bool {
+        sourceDict[key.value] as? Bool ?? false
     }
     
-    func double(forKey key: String) -> Double {
-        sourceDict[key] as? Double ?? 0.0
+    func double(forKey key: UserDefaultsKey) -> Double {
+        sourceDict[key.value] as? Double ?? 0.0
     }
     
-    func integer(forKey key: String) -> Int {
-        sourceDict[key] as? Int ?? 0
+    func integer(forKey key: UserDefaultsKey) -> Int {
+        sourceDict[key.value] as? Int ?? 0
     }
 }

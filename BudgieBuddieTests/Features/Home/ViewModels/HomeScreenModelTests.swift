@@ -27,7 +27,7 @@ struct HomeScreenModelTests {
         #expect(vm.didOnboardOnce == false)
         
         // Scenario
-        userDefaults.set(true, forKey: UserDefaultsKey.App.didOnboardOnce)
+        userDefaults.set(true, forKey: .didOnboardOnce)
         
         // Post-verification
         #expect(vm.didOnboardOnce == true)
