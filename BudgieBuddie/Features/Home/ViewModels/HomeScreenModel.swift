@@ -58,10 +58,11 @@ extension HomeScreenModel {
     
     func reloadData() {
         // assign new values
-        // so that the view hierarchy gets totally redrawn
-        // vs just changing out some underlying values via instance defined reloadData()
+        // so that the view hierarchy gets entirely redrawn
+        // vs just changing out some underlying values via instance defined reloadData() funcs
         // this is to guarantee certain expectations
         // eg. the CalendarView being scrolled to the correct day
+        // and reduce the potential for state malformation
         self.spendSummaryViewModel = SpendSummaryViewModel(
             settingsService: settingsService,
             calendarService: calendarService,

@@ -31,6 +31,17 @@ class SpendItem {
     }
 }
 
+// MARK: Equatable
+extension SpendItem: Equatable {
+    static func == (lhs: SpendItem, rhs: SpendItem) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.dayId == rhs.dayId &&
+        lhs.amount == rhs.amount &&
+        lhs.note == rhs.note &&
+        lhs.createdAt == rhs.createdAt
+    }
+}
+
 // MARK: Public interface
 extension SpendItem {
     convenience init(
