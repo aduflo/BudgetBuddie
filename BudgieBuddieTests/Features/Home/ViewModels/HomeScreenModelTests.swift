@@ -33,6 +33,27 @@ struct HomeScreenModelTests {
         #expect(vm.didOnboardOnce == true)
     }
     
+    // MARK: - reloadData()
+    @Test func test_reloadData() {
+        // Setup
+        let vm = HomeScreenModel(
+            userDefaults: MockUserDefaultsService(),
+            settingsService: MockSettingsService(),
+            calendarService: MockCalendarService(),
+            spendRepository: MockSpendRepository(),
+            currencyFormatter: CurrencyFormatter()
+        )
+        let spendSummaryViewModel = vm.spendSummaryViewModel
+        let spendListViewModel = vm.spendListViewModel
+        
+        // Scenario
+        vm.reloadData()
+        
+        // Verification
+        #expect(vm.spendSummaryViewModel !== spendSummaryViewModel)
+        #expect(vm.spendListViewModel !== spendListViewModel)
+    }
+    
     // MARK: - setSpendItemToPresent()
     @Test func test_setSpendItemToPresent() {
         // Setup
