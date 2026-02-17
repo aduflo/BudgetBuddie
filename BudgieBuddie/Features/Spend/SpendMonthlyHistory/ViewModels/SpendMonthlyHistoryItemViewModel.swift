@@ -39,13 +39,12 @@ extension SpendMonthlyHistoryItemViewModel {
         currencyFormatter.stringAmount(spendMonth.allowance)
     }
     
-    var isSpendWithinBudget: Bool {
-        spendMonth.spend <= spendMonth.allowance
+    var isWithinBudget: Bool {
+        spendMonth.isWithinBudget
     }
     
-    var displaySpendDifference: String {
-        let difference = spendMonth.allowance - spendMonth.spend
-        return currencyFormatter.stringAmount(difference)
+    var displayBudgetDifference: String {
+        currencyFormatter.stringAmount(spendMonth.budgetDifference)
     }
 }
 

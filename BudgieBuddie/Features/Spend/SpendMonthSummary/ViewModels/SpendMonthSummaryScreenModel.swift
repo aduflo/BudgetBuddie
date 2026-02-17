@@ -65,21 +65,20 @@ extension SpendMonthSummaryScreenModel {
         return currencyFormatter.stringAmount(allowance)
     }
     
-    var isSpendWithinBudget: Bool {
+    var isWithinBudget: Bool {
         guard let spendMonth else {
             return false
         }
         
-        return spendMonth.spend <= spendMonth.allowance
+        return spendMonth.isWithinBudget
     }
     
-    var displaySpendDifference: String {
+    var displayBudgetDifference: String {
         guard let spendMonth else {
             return ""
         }
         
-        let difference = spendMonth.allowance - spendMonth.spend
-        return currencyFormatter.stringAmount(difference)
+        return currencyFormatter.stringAmount(spendMonth.budgetDifference)
     }
 }
 

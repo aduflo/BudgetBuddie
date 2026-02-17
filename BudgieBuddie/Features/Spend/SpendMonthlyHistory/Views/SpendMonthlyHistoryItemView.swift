@@ -79,16 +79,16 @@ struct SpendMonthlyHistoryItemView: View {
                     spacing: Spacing.half
                 ) {
                     Image(systemName: {
-                        if viewModel.isSpendWithinBudget {
+                        if viewModel.isWithinBudget {
                             SystemImage.chartLineUptrendXyaxis
                         } else {
                             SystemImage.chartLineDowntrendXyaxis
                         }
                     }())
-                    Text(viewModel.displaySpendDifference)
+                    Text(viewModel.displayBudgetDifference)
                 }
                 .foregroundStyle({
-                    if viewModel.isSpendWithinBudget {
+                    if viewModel.isWithinBudget {
                         Color.green
                     } else {
                         Color.red

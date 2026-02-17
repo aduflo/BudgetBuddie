@@ -149,8 +149,8 @@ struct SpendMonthSummaryScreenModelTests {
         #expect(displayAllowance.isEmpty == true)
     }
     
-    // MARK: - isSpendWithinBudget
-    @Test func test_isSpendWithinBudget_true() {
+    // MARK: - isWithinBudget
+    @Test func test_isWithinBudget_true() {
         // Setup
         let spendRepository = MockSpendRepository()
         let spendMonth = SpendMonth(
@@ -166,13 +166,13 @@ struct SpendMonthSummaryScreenModelTests {
         )
         
         // Scenario
-        let isSpendWithinBudget = vm.isSpendWithinBudget
+        let isWithinBudget = vm.isWithinBudget
         
         // Verification
-        #expect(isSpendWithinBudget == true)
+        #expect(isWithinBudget == true)
     }
     
-    @Test func test_isSpendWithinBudget_false() {
+    @Test func test_isWithinBudget_false() {
         // Setup
         let spendRepository = MockSpendRepository()
         let spendMonth = SpendMonth(
@@ -188,13 +188,13 @@ struct SpendMonthSummaryScreenModelTests {
         )
         
         // Scenario
-        let isSpendWithinBudget = vm.isSpendWithinBudget
+        let isWithinBudget = vm.isWithinBudget
         
         // Verification
-        #expect(isSpendWithinBudget == false)
+        #expect(isWithinBudget == false)
     }
     
-    @Test func test_isSpendWithinBudget_invalid() {
+    @Test func test_isWithinBudget_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
         spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
@@ -205,14 +205,14 @@ struct SpendMonthSummaryScreenModelTests {
         )
         
         // Scenario
-        let isSpendWithinBudget = vm.isSpendWithinBudget
+        let isWithinBudget = vm.isWithinBudget
         
         // Verification
-        #expect(isSpendWithinBudget == false)
+        #expect(isWithinBudget == false)
     }
     
-    // MARK: - displaySpendDifference
-    @Test func test_displaySpendDifference_valid() {
+    // MARK: - displayBudgetDifference
+    @Test func test_displayBudgetDifference_valid() {
         // Setup
         let spendRepository = MockSpendRepository()
         spendRepository.getMonth_returnValue = (.mock(), nil)
@@ -223,13 +223,13 @@ struct SpendMonthSummaryScreenModelTests {
         )
         
         // Scenario
-        let displayAllowance = vm.displayAllowance
+        let displayBudgetDifference = vm.displayBudgetDifference
         
         // Verification
-        #expect(displayAllowance.isEmpty == false)
+        #expect(displayBudgetDifference.isEmpty == false)
     }
     
-    @Test func test_displaySpendDifference_invalid() {
+    @Test func test_displayBudgetDifference_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
         spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
@@ -240,9 +240,9 @@ struct SpendMonthSummaryScreenModelTests {
         )
         
         // Scenario
-        let displayAllowance = vm.displayAllowance
+        let displayBudgetDifference = vm.displayBudgetDifference
         
         // Verification
-        #expect(displayAllowance.isEmpty == true)
+        #expect(displayBudgetDifference.isEmpty == true)
     }
 }

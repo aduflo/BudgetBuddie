@@ -62,10 +62,10 @@ struct SpendMonthSummaryScreen: View {
                     .font(.headline)
                     .foregroundStyle(.foregroundPrimary)
                 
-                Text(screenModel.displaySpendDifference)
+                Text(screenModel.displayBudgetDifference)
                     .font(.largeTitle)
                     .foregroundStyle({
-                        if screenModel.isSpendWithinBudget {
+                        if screenModel.isWithinBudget {
                             Color.green
                         } else {
                             Color.red
@@ -97,7 +97,7 @@ struct SpendMonthSummaryScreen: View {
             }
             
             Group {
-                if screenModel.isSpendWithinBudget {
+                if screenModel.isWithinBudget {
                     Text(Copy.greatJobLetsKeepItUp)
                 } else {
                     Text(Copy.letsDoBetterThisMonth)

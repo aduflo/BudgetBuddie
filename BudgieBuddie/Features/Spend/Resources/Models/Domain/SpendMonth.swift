@@ -42,6 +42,14 @@ extension SpendMonth {
             allowance: allowance
         )
     }
+    
+    var isWithinBudget: Bool {
+        spend <= allowance
+    }
+    
+    var budgetDifference: Decimal {
+        return allowance - spend
+    }
 }
 
 // MARK: - Mocks
