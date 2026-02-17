@@ -28,7 +28,7 @@ struct CalendarServiceTests {
         #expect(calendarService.todayDate == newDate)
     }
     
-    @Test func test_updateTodayDate_also_sets_selectedDate() {
+    @Test func test_updateTodayDate_triggersSideEffectOf_updateSelectedDate() {
         // Setup
         let date = Date.distantPast
         let calendarService = CalendarService(
@@ -44,7 +44,7 @@ struct CalendarServiceTests {
         #expect(calendarService.selectedDate == newDate)
     }
     
-    @Test(.timeLimit(.minutes(1))) func test_todayDate_newValue_posts_notification() async {
+    @Test(.timeLimit(.minutes(1))) func test_todayDate_newValue_triggersSideEffectOf_postsNotification() async {
         // Setup
         let date = Date.distantPast
         let calendarService = CalendarService(

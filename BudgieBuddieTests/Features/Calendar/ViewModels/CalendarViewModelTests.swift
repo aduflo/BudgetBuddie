@@ -25,7 +25,7 @@ struct CalendarViewModelTests {
         #expect(vm.dayViewModels.count > 0)
     }
     
-    @Test func test_reloadData_triggers_setSelectedDayViewModel_when_selectedDay_within_month() {
+    @Test func test_reloadData_triggersSideEffectOf_setSelectedDayViewModel_when_selectedDay_within_month() {
         // Setup
         let calendarService = MockCalendarService()
         let vm = CalendarViewModel(
@@ -45,7 +45,7 @@ struct CalendarViewModelTests {
         #expect(vm.selectedDayViewModel != nil)
     }
     
-    @Test func test_reloadData_doesNot_trigger_setSelectedDayViewModel_when_selectedDay_not_within_month() {
+    @Test func test_reloadData_doesNot_triggersSideEffectOf_setSelectedDayViewModel_when_selectedDay_not_within_month() {
         // Setup
         let calendarService = MockCalendarService()
         let vm = CalendarViewModel(

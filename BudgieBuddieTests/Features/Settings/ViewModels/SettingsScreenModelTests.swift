@@ -12,7 +12,7 @@ import Testing
 @MainActor
 struct SettingsScreenModelTests {
     // MARK: - defaultSpendTrendViewpoint
-    @Test func test_defaultSpendTrendViewpoint_update_alsoUpdates_settingsService() {
+    @Test func test_defaultSpendTrendViewpoint_triggersSideEffectOf_interactionWith_settingsService() {
         // Setup
         let settingsService = MockSettingsService()
         let vm = SettingsScreenModel(
