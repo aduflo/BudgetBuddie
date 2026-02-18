@@ -59,7 +59,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displayMonth = vm.displayMonth
         
         // Verification
-        #expect(displayMonth.isEmpty == false)
+        #expect(displayMonth == "February")
     }
     
     @Test func test_displayMonth_invalid() {
@@ -76,7 +76,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displayMonth = vm.displayMonth
         
         // Verification
-        #expect(displayMonth.isEmpty == true)
+        #expect(displayMonth.isEmpty)
     }
     
     // MARK: - displaySpend
@@ -94,7 +94,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displaySpend = vm.displaySpend
         
         // Verification
-        #expect(displaySpend.isEmpty == false)
+        #expect(displaySpend == "$9,001.00")
     }
     
     @Test func test_displaySpend_invalid() {
@@ -111,7 +111,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displaySpend = vm.displaySpend
         
         // Verification
-        #expect(displaySpend.isEmpty == true)
+        #expect(displaySpend.isEmpty)
     }
     
     // MARK: - displayAllowance
@@ -129,7 +129,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displayAllowance = vm.displayAllowance
         
         // Verification
-        #expect(displayAllowance.isEmpty == false)
+        #expect(displayAllowance == "$9,000.00")
     }
     
     @Test func test_displayAllowance_invalid() {
@@ -146,7 +146,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displayAllowance = vm.displayAllowance
         
         // Verification
-        #expect(displayAllowance.isEmpty == true)
+        #expect(displayAllowance.isEmpty)
     }
     
     // MARK: - isWithinBudget
@@ -226,7 +226,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displayBudgetDifference = vm.displayBudgetDifference
         
         // Verification
-        #expect(displayBudgetDifference.isEmpty == false)
+        #expect(displayBudgetDifference == "-$1.00")
     }
     
     @Test func test_displayBudgetDifference_invalid() {
@@ -243,6 +243,6 @@ struct SpendMonthSummaryScreenModelTests {
         let displayBudgetDifference = vm.displayBudgetDifference
         
         // Verification
-        #expect(displayBudgetDifference.isEmpty == true)
+        #expect(displayBudgetDifference.isEmpty)
     }
 }
