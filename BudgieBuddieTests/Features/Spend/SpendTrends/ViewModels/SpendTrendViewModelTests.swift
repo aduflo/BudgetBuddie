@@ -20,7 +20,7 @@ struct SpendTrendViewModelTests {
         let spendHeadline =  vm.spendHeadline
         
         // Verification
-        #expect(spendHeadline == Copy.spend)
+        #expect(spendHeadline == "Spend")
     }
     
     // MARK: - allowanceHeadline
@@ -32,7 +32,7 @@ struct SpendTrendViewModelTests {
         let allowanceHeadline =  vm.allowanceHeadline
         
         // Verification
-        #expect(allowanceHeadline == Copy.allowance)
+        #expect(allowanceHeadline == "Allowance")
     }
     
     // MARK: - remainingOverspendHeadline
@@ -46,8 +46,8 @@ struct SpendTrendViewModelTests {
         let remainingOverspendHeadline2 =  vm2.remainingOverspendHeadline
         
         // Verification
-        #expect(remainingOverspendHeadline1 == Copy.remaining)
-        #expect(remainingOverspendHeadline2 == Copy.overspend)
+        #expect(remainingOverspendHeadline1 == "Remaining")
+        #expect(remainingOverspendHeadline2 == "Overspend")
     }
 
     // MARK: - evaluateBudget()

@@ -11,8 +11,15 @@ class MockSpendRepository: SpendRepositable {
     // SpendRepositable
     func setup(calendarService: any CalendarServiceable, settingsService: any SettingsServiceable) throws {}
     
+    var getItems_returnValue: (items: [SpendItem]?, error: Error?)? = nil
     func getItems(date: Date) throws -> [SpendItem] {
-        [.mock()]
+        let returnValue = getItems_returnValue
+        if let items = returnValue?.items {
+            return items
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        return [.mock()]
     }
     
     func getItems(dates: [Date]) throws -> [SpendItem] {
