@@ -15,7 +15,7 @@ struct SpendListViewModelTests {
     @Test func test_reloadData_happyPath() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getItems_returnValue = ([.mock()], nil)
+        spendRepository.getItemsForDate_returnValue = ([.mock()], nil)
         let vm = SpendListViewModel(
             calendarService: MockCalendarService(),
             spendRepository: spendRepository,
@@ -39,7 +39,7 @@ struct SpendListViewModelTests {
     @Test func test_reloadData_sadPath() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getItems_returnValue = (nil, SpendRepositoryError.getItemsFailed)
+        spendRepository.getItemsForDate_returnValue = (nil, SpendRepositoryError.getItemsFailed)
         let vm = SpendListViewModel(
             calendarService: MockCalendarService(),
             spendRepository: spendRepository,

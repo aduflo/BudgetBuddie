@@ -35,21 +35,6 @@ class SpendItemScreenModel {
         self.mode = mode
         setInitialDisplayValues()
     }
-    
-    func setInitialDisplayValues() {
-        title = switch mode {
-        case .new: Copy.newSpendItemTitle
-        case .existing: Copy.editSpendItemTitle
-        }
-        amount = switch mode {
-        case .new: 0.0
-        case .existing(let spendItem): spendItem.amount
-        }
-        note = switch mode {
-        case .new: ""
-        case .existing(let spendItem): spendItem.note ?? ""
-        }
-    }
 }
 
 // MARK: Public interface
@@ -67,8 +52,8 @@ extension SpendItemScreenModel {
         self.note = note
     }
     
-    func deleteTapped() -> Bool {
-        error = nil
+    func delete() -> Bool {
+        resetSadState()
         
         guard case .existing(let spendItem) = mode else {
             return false
@@ -84,9 +69,8 @@ extension SpendItemScreenModel {
     }
     
     /// - Returns: Flag value indicating if save succeeded, or not.
-    func saveTapped() -> Bool {
-        requiredFieldWarningText = nil
-        self.error = nil
+    func save() -> Bool {
+        resetSadState()
         
         guard amount > 0.0 else {
             requiredFieldWarningText = Copy.requiredFieldWarningAmount
@@ -121,6 +105,29 @@ extension SpendItemScreenModel {
             return false
         }
         return true
+    }
+}
+
+// MARK: Private interface
+private extension SpendItemScreenModel {
+    func setInitialDisplayValues() {
+        title = switch mode {
+        case .new: Copy.newSpendItemTitle
+        case .existing: Copy.editSpendItemTitle
+        }
+        amount = switch mode {
+        case .new: 0.0
+        case .existing(let spendItem): spendItem.amount
+        }
+        note = switch mode {
+        case .new: ""
+        case .existing(let spendItem): spendItem.note ?? ""
+        }
+    }
+    
+    func resetSadState() {
+        requiredFieldWarningText = nil
+        error = nil
     }
 }
 

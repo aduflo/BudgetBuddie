@@ -132,7 +132,7 @@ struct SpendItemScreen: View {
                         Copy.delete,
                         role: .destructive
                     ) {
-                        if screenModel.deleteTapped() {
+                        if screenModel.delete() {
                             dismiss()
                         }
                     }
@@ -142,7 +142,7 @@ struct SpendItemScreen: View {
             CircleButton(
                 systemImage: SystemImage.checkmark,
                 action: {
-                    if screenModel.saveTapped() {
+                    if screenModel.save() {
                         dismiss()
                     }
                 }

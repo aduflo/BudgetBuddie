@@ -11,9 +11,9 @@ class MockSpendRepository: SpendRepositable {
     // SpendRepositable
     func setup(calendarService: any CalendarServiceable, settingsService: any SettingsServiceable) throws {}
     
-    var getItems_returnValue: (items: [SpendItem]?, error: Error?)? = nil
+    var getItemsForDate_returnValue: (items: [SpendItem]?, error: Error?)? = nil
     func getItems(date: Date) throws -> [SpendItem] {
-        let returnValue = getItems_returnValue
+        let returnValue = getItemsForDate_returnValue
         if let items = returnValue?.items {
             return items
         } else if let error = returnValue?.error {
@@ -22,22 +22,47 @@ class MockSpendRepository: SpendRepositable {
         return [.mock()]
     }
     
+    var getItemsForDates_returnValue: (items: [SpendItem]?, error: Error?)? = nil
     func getItems(dates: [Date]) throws -> [SpendItem] {
-        [.mock()]
+        let returnValue = getItemsForDates_returnValue
+        if let items = returnValue?.items {
+            return items
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        return [.mock()]
     }
     
+    var saveItem_throwValue: Error? = nil
     private(set) var saveItem_value: SpendItem? = nil
     func saveItem(_ item: SpendItem) throws {
+        if let saveItem_throwValue {
+            throw saveItem_throwValue
+        }
+        
         saveItem_value = item
     }
     
+    var deleteItem_throwValue: Error? = nil
     private(set) var deleteItem_value: SpendItem? = nil
     func deleteItem(_ item: SpendItem) throws {
+        if let deleteItem_throwValue {
+            throw deleteItem_throwValue
+        }
+        
         deleteItem_value = item
     }
     
+    var getDay_returnValue: (day: SpendDay?, error: Error?)? = nil
     func getDay(date: Date) throws -> SpendDay {
-        .mock()
+        let returnValue = getDay_returnValue
+        if let day = returnValue?.day {
+            return day
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return .mock()
     }
     
     var getAllMonths_returnValue: (months: [SpendMonth]?, error: Error?)? = nil
