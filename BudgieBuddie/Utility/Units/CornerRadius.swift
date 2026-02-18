@@ -9,5 +9,5 @@ import Foundation
 
 enum CornerRadius {
     static let `1` = 8.0
-    static let `2` = 16.0
+    static let `2` = `1` * 2
 }

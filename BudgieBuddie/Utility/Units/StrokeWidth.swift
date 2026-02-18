@@ -9,5 +9,5 @@ import Foundation
 
 enum StrokeWidth {
     static let `1` = 1.0
-    static let `2` = 2.0
+    static let `2` = `1` * 2
 }
