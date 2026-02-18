@@ -49,13 +49,6 @@ extension SpendMonthlyHistoryScreenModel {
         }
     }
     
-    func monthAttributeSortDisplayValue(_ monthAttribute: SpendMonthlyHistorySortAttribute) -> String {
-        switch monthAttribute {
-        case .date: Copy.date
-        case .spend: Copy.spend
-        }
-    }
-    
     func sortOrderDisplayValue(_ sortOrder: SortOrder) -> String {
         switch monthSortAttributeSelection {
         case .date:

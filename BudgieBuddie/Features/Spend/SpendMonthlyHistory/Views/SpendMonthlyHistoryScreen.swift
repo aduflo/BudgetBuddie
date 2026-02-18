@@ -48,7 +48,7 @@ struct SpendMonthlyHistoryScreen: View {
                 selection: $screenModel.monthSortAttributeSelection
             ) {
                 ForEach(SpendMonthlyHistorySortAttribute.allCases) { option in
-                    Text(screenModel.monthAttributeSortDisplayValue(option))
+                    Text(option.displayValue)
                 }
             }
             

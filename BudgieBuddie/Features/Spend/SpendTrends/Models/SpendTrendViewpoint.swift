@@ -10,7 +10,10 @@ import Foundation
 enum SpendTrendViewpoint: Int {
     case spendAllowance
     case remainingOverspend
-    
+}
+
+// MARK: Public interface
+extension SpendTrendViewpoint {
     mutating func cycle() {
         let currentRawValue = rawValue
         let newRawValue = currentRawValue + 1
@@ -36,5 +39,4 @@ enum SpendTrendViewpoint: Int {
 extension SpendTrendViewpoint: Identifiable {
     var id: Int { rawValue }
 }
-
 extension SpendTrendViewpoint: CaseIterable {}

@@ -14,3 +14,13 @@ enum SpendMonthlyHistorySortAttribute: CaseIterable, Identifiable {
     // Identifiable
     var id: Self { self }
 }
+
+// MARK: Public interface
+extension SpendMonthlyHistorySortAttribute {
+    var displayValue: String {
+        switch self {
+        case .date: Copy.date
+        case .spend: Copy.spend
+        }
+    }
+}
