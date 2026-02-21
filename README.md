@@ -1,7 +1,6 @@
 ### TODO:
 Before RC:
-- test additions <--------
-- get rid of InMemorySpendStore; obsolete now
+- finish SpendRepositoryTests
 - QA + find bugs
 - cut 1.0 RC March, if greenlight
 
