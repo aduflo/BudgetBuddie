@@ -20,6 +20,7 @@ class CalendarViewModel {
         calendarService: CalendarServiceable
     ) {
         self.calendarService = calendarService
+        reloadData()
     }
 }
 
@@ -38,7 +39,7 @@ extension CalendarViewModel {
         }
         
         return dayViewModels.first(
-            where: { $0.monthDay.day == todayMonthDay.day }
+            where: { $0.monthDay.date == todayMonthDay.date }
         )
     }
     

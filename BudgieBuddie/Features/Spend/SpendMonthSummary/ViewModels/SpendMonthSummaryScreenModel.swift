@@ -50,7 +50,7 @@ extension SpendMonthSummaryScreenModel {
     }
     
     var displaySpend: String {
-        guard let spend = spendMonth?.spend else {
+        guard let spend else {
             return ""
         }
         
@@ -58,7 +58,7 @@ extension SpendMonthSummaryScreenModel {
     }
     
     var displayAllowance: String {
-        guard let allowance = spendMonth?.allowance else {
+        guard let allowance else {
             return ""
         }
         
@@ -66,19 +66,42 @@ extension SpendMonthSummaryScreenModel {
     }
     
     var isWithinBudget: Bool {
-        guard let spendMonth else {
+        guard let spend, let allowance else {
             return false
         }
         
-        return spendMonth.isWithinBudget
+        return spend <= allowance
     }
     
     var displayBudgetDifference: String {
-        guard let spendMonth else {
+        guard let spend, let allowance else {
             return ""
         }
         
-        return currencyFormatter.stringAmount(spendMonth.budgetDifference)
+        let budgetDifference = allowance - spend
+        return currencyFormatter.stringAmount(budgetDifference)
+    }
+}
+
+// MARK: Private interface
+private extension SpendMonthSummaryScreenModel {
+    var spend: Decimal? {
+        guard let spendMonth else {
+            return nil
+        }
+        
+        do {
+            return try MonthSpendCalculator.calculateSpend(
+                month: spendMonth,
+                spendRepository: spendRepository
+            )
+        } catch {
+            return 0.0
+        }
+    }
+    
+    var allowance: Decimal? {
+        spendMonth?.allowance ?? nil
     }
 }
 

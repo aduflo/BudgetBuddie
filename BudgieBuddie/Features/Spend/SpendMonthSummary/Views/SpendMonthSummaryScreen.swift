@@ -131,7 +131,7 @@ struct SpendMonthSummaryScreen: View {
                 spendRepository.getMonth_returnValue = (
                     SpendMonth(
                         date: .distantPast,
-                        spend: 13.37,
+                        dayIds: [UUID()],
                         allowance: 1337
                     ),
                     nil
@@ -152,7 +152,7 @@ struct SpendMonthSummaryScreen: View {
                 spendRepository.getMonth_returnValue = (
                     SpendMonth(
                         date: .distantFuture,
-                        spend: 9001,
+                        dayIds: [UUID()],
                         allowance: 9000
                     ),
                     nil

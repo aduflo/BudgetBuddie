@@ -53,9 +53,21 @@ class MockSpendRepository: SpendRepositable {
         deleteItem_value = item
     }
     
-    var getDay_returnValue: (day: SpendDay?, error: Error?)? = nil
+    var getDayForDate_returnValue: (day: SpendDay?, error: Error?)? = nil
     func getDay(date: Date) throws -> SpendDay {
-        let returnValue = getDay_returnValue
+        let returnValue = getDayForDate_returnValue
+        if let day = returnValue?.day {
+            return day
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return .mock()
+    }
+    
+    var getDayForId_returnValue: (day: SpendDay?, error: Error?)? = nil
+    func getDay(id: UUID) throws -> SpendDay {
+        let returnValue = getDayForId_returnValue
         if let day = returnValue?.day {
             return day
         } else if let error = returnValue?.error {

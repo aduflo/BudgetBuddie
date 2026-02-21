@@ -12,16 +12,19 @@ class SpendDay {
     let id: UUID
     let date: Date
     let items: [SpendItem]
+    let isCommitted: Bool
     
     // Constructors
     init(
         id: UUID,
         date: Date,
-        items: [SpendItem]
+        items: [SpendItem],
+        isCommitted: Bool
     ) {
         self.id = id
         self.date = date
         self.items = items
+        self.isCommitted = isCommitted
     }
 }
 
@@ -29,12 +32,14 @@ class SpendDay {
 extension SpendDay {
     convenience init(
         date: Date,
-        items: [SpendItem]
+        items: [SpendItem],
+        isCommitted: Bool
     ) {
         self.init(
             id: UUID(),
             date: date,
-            items: items
+            items: items,
+            isCommitted: isCommitted
         )
     }
 }
@@ -44,7 +49,8 @@ extension SpendDay {
     static func mock() -> SpendDay {
         SpendDay(
             date: Date(),
-            items: []
+            items: [],
+            isCommitted: false
         )
     }
 }

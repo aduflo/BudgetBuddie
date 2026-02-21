@@ -21,9 +21,6 @@ struct SpendMonthlyHistoryScreen: View {
         }
         .padding(.top, Padding.2)
         .padding(.horizontal, Padding.2)
-        .onAppear {
-            screenModel.reloadData()
-        }
     }
     
     var headerView: some View {

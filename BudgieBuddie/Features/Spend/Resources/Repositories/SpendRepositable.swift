@@ -18,6 +18,7 @@ protocol SpendRepositable {
     func saveItem(_ item: SpendItem) throws
     func deleteItem(_ item: SpendItem) throws
     func getDay(date: Date) throws -> SpendDay
+    func getDay(id: UUID) throws -> SpendDay
     func getAllMonths() throws -> [SpendMonth]
     func getMonth(date: Date) throws -> SpendMonth
 }

@@ -31,9 +31,6 @@ struct SpendListView: View {
             cornerRadius: CornerRadius.2,
             color: .backgroundSecondary
         )
-        .onAppear {
-            viewModel.reloadData()
-        }
         .onReceive(
             Publishers.Merge(
                 NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateSelectedDate),

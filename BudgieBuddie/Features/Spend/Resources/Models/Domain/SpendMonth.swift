@@ -11,19 +11,19 @@ class SpendMonth {
     // Instance vars
     let id: UUID
     let date: Date
-    let spend: Decimal
+    let dayIds: [UUID]
     let allowance: Decimal
     
     // Constructors
     init(
         id: UUID,
         date: Date,
-        spend: Decimal,
+        dayIds: [UUID],
         allowance: Decimal
     ) {
         self.id = id
         self.date = date
-        self.spend = spend
+        self.dayIds = dayIds
         self.allowance = allowance
     }
 }
@@ -32,23 +32,15 @@ class SpendMonth {
 extension SpendMonth {
     convenience init(
         date: Date,
-        spend: Decimal,
+        dayIds: [UUID],
         allowance: Decimal
     ) {
         self.init(
             id: UUID(),
             date: date,
-            spend: spend,
+            dayIds: dayIds,
             allowance: allowance
         )
-    }
-    
-    var isWithinBudget: Bool {
-        spend <= allowance
-    }
-    
-    var budgetDifference: Decimal {
-        return allowance - spend
     }
 }
 
@@ -57,7 +49,7 @@ extension SpendMonth {
     static func mock() -> SpendMonth {
         SpendMonth(
             date: Date(),
-            spend: 9001.00,
+            dayIds: [UUID()],
             allowance: 9000.00
         )
     }

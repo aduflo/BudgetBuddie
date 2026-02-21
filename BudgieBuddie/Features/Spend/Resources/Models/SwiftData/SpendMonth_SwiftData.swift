@@ -15,7 +15,7 @@ class SpendMonth_SwiftData {
     private(set) var date: Date
     private(set) var month: Int
     private(set) var year: Int
-    private(set) var spend: Decimal
+    private(set) var dayIds: [UUID]
     private(set) var allowance: Decimal
     
     // Constructors
@@ -24,14 +24,14 @@ class SpendMonth_SwiftData {
         date: Date,
         month: Int,
         year: Int,
-        spend: Decimal,
+        dayIds: [UUID],
         allowance: Decimal
     ) {
         self.id = id
         self.date = date
         self.month = month
         self.year = year
-        self.spend = spend
+        self.dayIds = dayIds
         self.allowance = allowance
     }
 }

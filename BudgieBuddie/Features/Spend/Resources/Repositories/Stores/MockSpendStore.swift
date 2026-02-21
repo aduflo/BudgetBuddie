@@ -7,20 +7,8 @@
 
 import Foundation
 
-class MockSpendStore: SpendStoreable {    
-    func getAllItems() throws -> [SpendItem_Data] {
-        let date = Date()
-        return (0..<20).map { idx in
-            SpendItem_Data(
-                id: UUID(),
-                dayId: UUID(),
-                amount: Decimal(idx),
-                note: (idx % 2 == 0) ? "Item #: \(idx)" : nil,
-                createdAt: date
-            )
-        }
-    }
-    
+class MockSpendStore: SpendStoreable {
+    // SpendStoreable
     func getItems(date: Date) throws -> [SpendItem_Data] {
         (0..<10).map { idx in
             SpendItem_Data(
@@ -64,7 +52,8 @@ class MockSpendStore: SpendStoreable {
         SpendDay_Data(
             id: UUID(),
             date: date,
-            items: try getItems(date: date)
+            items: try getItems(date: date),
+            isCommitted: false
         )
     }
     
@@ -72,42 +61,26 @@ class MockSpendStore: SpendStoreable {
         SpendDay_Data(
             id: id,
             date: Date(),
-            items: try getItems(date: Date())
+            items: try getItems(date: Date()),
+            isCommitted: false
         )
+    }
+    
+    func getUncommittedDays() throws -> [SpendDay_Data] {
+        [.mock()]
     }
     
     func getAllMonths() throws -> [SpendMonth_Data] {
-        (0..<20).map { idx in
-            SpendMonth_Data(
-                id: UUID(),
-                date: .distantPast,
-                month: 01,
-                year: 2026,
-                spend: Decimal(idx),
-                allowance: 1337.00
-            )
-        }
+        [.mock()]
     }
     
     func getMonth(date: Date) throws -> SpendMonth_Data {
-        SpendMonth_Data(
-            id: UUID(),
-            date: date,
-            month: Calendar.current.monthInDate(date),
-            year: Calendar.current.yearInDate(date),
-            spend: 9001.00,
-            allowance: 9000.00
-        )
+        .mock()
     }
     
     private(set) var saveMonth_value: SpendMonth_Data? = nil
     func saveMonth(_ month: SpendMonth_Data) throws {
         saveMonth_value = month
-    }
-    
-    private(set) var deleteStagedMonthData_flag: Bool = false
-    func deleteStagedMonthData() {
-        deleteStagedMonthData_flag = true
     }
     
     private(set) var stageMonthData_flag: Bool = false

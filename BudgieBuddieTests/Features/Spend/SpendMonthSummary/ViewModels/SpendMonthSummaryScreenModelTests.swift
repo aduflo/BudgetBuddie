@@ -47,8 +47,13 @@ struct SpendMonthSummaryScreenModelTests {
     // MARK: - displayMonth
     @Test func test_displayMonth_valid() {
         // Setup
+        let spendMonth = SpendMonth(
+            date: .distantPast,
+            dayIds: [],
+            allowance: 0
+        )
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (.mock(), nil)
+        spendRepository.getMonth_returnValue = (spendMonth, nil)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -59,7 +64,7 @@ struct SpendMonthSummaryScreenModelTests {
         let displayMonth = vm.displayMonth
         
         // Verification
-        #expect(displayMonth == "February")
+        #expect(displayMonth == "December")
     }
     
     @Test func test_displayMonth_invalid() {
@@ -82,8 +87,24 @@ struct SpendMonthSummaryScreenModelTests {
     // MARK: - displaySpend
     @Test func test_displaySpend_valid() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (.mock(), nil)
+        let spendRepository: SpendRepositable = {
+            let dayId = UUID()
+            let day = SpendDay(
+                id: dayId,
+                date: Date(),
+                items: [
+                    SpendItem(
+                        dayId: dayId,
+                        amount: 9001,
+                        note: nil
+                    )
+                ],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            return spendRepository
+        }()
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -117,8 +138,13 @@ struct SpendMonthSummaryScreenModelTests {
     // MARK: - displayAllowance
     @Test func test_displayAllowance_valid() {
         // Setup
+        let spendMonth = SpendMonth(
+            date: Date(),
+            dayIds: [],
+            allowance: 9000
+        )
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (.mock(), nil)
+        spendRepository.getMonth_returnValue = (spendMonth, nil)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -152,17 +178,35 @@ struct SpendMonthSummaryScreenModelTests {
     // MARK: - isWithinBudget
     @Test func test_isWithinBudget_true() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        let spendMonth = SpendMonth(
-            date: Date(),
-            spend: 10,
-            allowance: 20
-        )
-        spendRepository.getMonth_returnValue = (spendMonth, nil)
+        let date = Date()
+        let spendRepository: SpendRepositable = {
+            let dayId = UUID()
+            let day = SpendDay(
+                id: dayId,
+                date: date,
+                items: [
+                    SpendItem(
+                        dayId: dayId,
+                        amount: 10,
+                        note: nil
+                    )
+                ],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            let spendMonth = SpendMonth(
+                date: date,
+                dayIds: [dayId],
+                allowance: 20
+            )
+            spendRepository.getMonth_returnValue = (spendMonth, nil)
+            return spendRepository
+        }()
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
-            date: Date()
+            date: date
         )
         
         // Scenario
@@ -174,17 +218,35 @@ struct SpendMonthSummaryScreenModelTests {
     
     @Test func test_isWithinBudget_false() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        let spendMonth = SpendMonth(
-            date: Date(),
-            spend: 20,
-            allowance: 10
-        )
-        spendRepository.getMonth_returnValue = (spendMonth, nil)
+        let date = Date()
+        let spendRepository: SpendRepositable = {
+            let dayId = UUID()
+            let day = SpendDay(
+                id: dayId,
+                date: date,
+                items: [
+                    SpendItem(
+                        dayId: dayId,
+                        amount: 20,
+                        note: nil
+                    )
+                ],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            let spendMonth = SpendMonth(
+                date: date,
+                dayIds: [dayId],
+                allowance: 10
+            )
+            spendRepository.getMonth_returnValue = (spendMonth, nil)
+            return spendRepository
+        }()
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
-            date: Date()
+            date: date
         )
         
         // Scenario
@@ -212,14 +274,77 @@ struct SpendMonthSummaryScreenModelTests {
     }
     
     // MARK: - displayBudgetDifference
-    @Test func test_displayBudgetDifference_valid() {
+    @Test func test_displayBudgetDifference_positive() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (.mock(), nil)
+        let date = Date()
+        let spendRepository: SpendRepositable = {
+            let dayId = UUID()
+            let day = SpendDay(
+                id: dayId,
+                date: date,
+                items: [
+                    SpendItem(
+                        dayId: dayId,
+                        amount: 1,
+                        note: nil
+                    )
+                ],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            let spendMonth = SpendMonth(
+                date: date,
+                dayIds: [dayId],
+                allowance: 2
+            )
+            spendRepository.getMonth_returnValue = (spendMonth, nil)
+            return spendRepository
+        }()
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
-            date: Date()
+            date: date
+        )
+        
+        // Scenario
+        let displayBudgetDifference = vm.displayBudgetDifference
+        
+        // Verification
+        #expect(displayBudgetDifference == "$1.00")
+    }
+    
+    @Test func test_displayBudgetDifference_negative() {
+        // Setup
+        let date = Date()
+        let spendRepository: SpendRepositable = {
+            let dayId = UUID()
+            let day = SpendDay(
+                id: dayId,
+                date: date,
+                items: [
+                    SpendItem(
+                        dayId: dayId,
+                        amount: 1,
+                        note: nil
+                    )
+                ],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            let spendMonth = SpendMonth(
+                date: date,
+                dayIds: [dayId],
+                allowance: 0
+            )
+            spendRepository.getMonth_returnValue = (spendMonth, nil)
+            return spendRepository
+        }()
+        let vm = SpendMonthSummaryScreenModel(
+            spendRepository: spendRepository,
+            currencyFormatter: CurrencyFormatter(),
+            date: date
         )
         
         // Scenario

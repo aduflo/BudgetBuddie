@@ -17,8 +17,8 @@ struct SpendMonthMapperTests {
             id: UUID(),
             date: Date(),
             month: 01,
-            year: 20,
-            spend: 1.0,
+            year: 2026,
+            dayIds: [UUID()],
             allowance: 2.0
         )
         
@@ -28,7 +28,7 @@ struct SpendMonthMapperTests {
         // Verification
         #expect(month_domain.id == month_data.id)
         #expect(month_domain.date == month_data.date)
-        #expect(month_domain.spend == month_data.spend)
+        #expect(month_domain.dayIds == month_data.dayIds)
         #expect(month_domain.allowance == month_data.allowance)
     }
     
@@ -39,8 +39,8 @@ struct SpendMonthMapperTests {
             id: UUID(),
             date: Date(),
             month: 01,
-            year: 20,
-            spend: 1.0,
+            year: 2026,
+            dayIds: [UUID()],
             allowance: 2.0
         )
         
@@ -52,7 +52,7 @@ struct SpendMonthMapperTests {
         #expect(month_data.date == month_swiftData.date)
         #expect(month_data.month == month_swiftData.month)
         #expect(month_data.year == month_swiftData.year)
-        #expect(month_data.spend == month_swiftData.spend)
+        #expect(month_data.dayIds == month_swiftData.dayIds)
         #expect(month_data.allowance == month_swiftData.allowance)
     }
     
@@ -63,8 +63,8 @@ struct SpendMonthMapperTests {
             id: UUID(),
             date: Date(),
             month: 01,
-            year: 20,
-            spend: 1.0,
+            year: 2026,
+            dayIds: [UUID()],
             allowance: 2.0
         )
         
@@ -76,7 +76,7 @@ struct SpendMonthMapperTests {
         #expect(month_swiftData.date == month_data.date)
         #expect(month_swiftData.month == month_data.month)
         #expect(month_swiftData.year == month_data.year)
-        #expect(month_swiftData.spend == month_data.spend)
+        #expect(month_swiftData.dayIds == month_data.dayIds)
         #expect(month_swiftData.allowance == month_data.allowance)
     }
 }

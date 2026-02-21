@@ -35,6 +35,7 @@ class SpendTrendsViewModel {
         dailyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.daily)
         mtdTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthToDate)
         monthlyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthly)
+        reloadData()
     }
 }
 

@@ -12,20 +12,7 @@ class InMemorySpendStore: SpendStoreable {
     // Instance vars
     private let daysDict = Mutex<[String: SpendDay_Data]>([:])
     
-    // SpendStoreable
-    func getAllItems() throws -> [SpendItem_Data] {
-        let days_data = daysDict.withLock { daysDict in
-            daysDict.values
-        }
-        var items_data: [SpendItem_Data] = []
-        for day_data in days_data {
-            items_data.append(
-                contentsOf: day_data.items
-            )
-        }
-        return items_data
-    }
-    
+    // SpendStoreable    
     func getItems(date: Date) throws -> [SpendItem_Data] {
         do {
             let day = try getDay(
@@ -73,7 +60,8 @@ class InMemorySpendStore: SpendStoreable {
             let newDay = SpendDay_Data(
                 id: day.id,
                 date: day.date,
-                items: items
+                items: items,
+                isCommitted: false
             )
             daysDict.withLock { daysDict in
                 daysDict[spendDayKey(day.date)] = newDay
@@ -100,7 +88,8 @@ class InMemorySpendStore: SpendStoreable {
             let newDay = SpendDay_Data(
                 id: day.id,
                 date: day.date,
-                items: items
+                items: items,
+                isCommitted: false
             )
             daysDict.withLock { daysDict in
                 daysDict[spendDayKey(day.date)] = newDay
@@ -132,6 +121,10 @@ class InMemorySpendStore: SpendStoreable {
         }
     }
     
+    func getUncommittedDays() throws -> [SpendDay_Data] {
+        [.mock()]
+    }
+    
     func getAllMonths() throws -> [SpendMonth_Data] {
         [.mock()]
     }
@@ -144,10 +137,6 @@ class InMemorySpendStore: SpendStoreable {
         throw notImplementedError(functionName: #function)
     }
     
-    func deleteStagedMonthData() throws {
-        daysDict.withLock { $0 = [:] }
-    }
-    
     func stageMonthData(_ date: Date) throws {
         let dates = Calendar.current.monthDates(
             date
@@ -157,7 +146,8 @@ class InMemorySpendStore: SpendStoreable {
                 daysDict[spendDayKey(date)] = SpendDay_Data(
                     id: UUID(),
                     date: date,
-                    items: []
+                    items: [],
+                    isCommitted: false
                 )
             }
         }

@@ -14,22 +14,47 @@ struct SpendMonthlyHistoryItemViewModelTests {
     // MARK: - displayDate
     @Test func test_displayDate() {
         // Setup
+        let spendMonth = SpendMonth(
+            date: .distantPast,
+            dayIds: [],
+            allowance: 0
+        )
         let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter(),
-            spendMonth: .mock()
+            spendMonth: spendMonth
         )
         
         // Scenario
         let displayDate = vm.displayDate
         
         // Verification
-        #expect(displayDate == "February 2026")
+        #expect(displayDate == "December 1")
     }
     
     // MARK: - displaySpend
-    @Test func test_displaySpend_valid() {
+    @Test func test_displaySpend() {
         // Setup
+        let spendRepository: SpendRepositable = {
+            let dayId = UUID()
+            let day = SpendDay(
+                id: dayId,
+                date: Date(),
+                items: [
+                    SpendItem(
+                        dayId: dayId,
+                        amount: 9001,
+                        note: nil
+                    )
+                ],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            return spendRepository
+        }()
         let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
             spendMonth: .mock()
         )
@@ -44,9 +69,15 @@ struct SpendMonthlyHistoryItemViewModelTests {
     // MARK: - displayAllowance
     @Test func test_displayAllowance() {
         // Setup
+        let spendMonth = SpendMonth(
+            date: Date(),
+            dayIds: [],
+            allowance: 9000
+        )
         let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter(),
-            spendMonth: .mock()
+            spendMonth: spendMonth
         )
         
         // Scenario
@@ -59,12 +90,27 @@ struct SpendMonthlyHistoryItemViewModelTests {
     // MARK: - isWithinBudget
     @Test func test_isWithinBudget_true() {
         // Setup
+        let spendRepository: SpendRepositable = {
+            let day = SpendDay(
+                date: Date(),
+                items: [SpendItem(
+                    dayId: UUID(),
+                    amount: 10,
+                    note: nil
+                )],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            return spendRepository
+        }()
         let spendMonth = SpendMonth(
             date: Date(),
-            spend: 10,
+            dayIds: [UUID()],
             allowance: 20
         )
         let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
             spendMonth: spendMonth
         )
@@ -78,12 +124,27 @@ struct SpendMonthlyHistoryItemViewModelTests {
     
     @Test func test_isWithinBudget_false() {
         // Setup
+        let spendRepository: SpendRepositable = {
+            let day = SpendDay(
+                date: Date(),
+                items: [SpendItem(
+                    dayId: UUID(),
+                    amount: 20,
+                    note: nil
+                )],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            return spendRepository
+        }()
         let spendMonth = SpendMonth(
             date: Date(),
-            spend: 20,
+            dayIds: [UUID()],
             allowance: 10
         )
         let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
             spendMonth: spendMonth
         )
@@ -96,13 +157,65 @@ struct SpendMonthlyHistoryItemViewModelTests {
     }
     
     // MARK: - displayBudgetDifference
-    @Test func test_displayBudgetDifference() {
+    @Test func test_displayBudgetDifference_positive() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (.mock(), nil)
+        let spendRepository: SpendRepositable = {
+            let day = SpendDay(
+                date: Date(),
+                items: [SpendItem(
+                    dayId: UUID(),
+                    amount: 1,
+                    note: nil
+                )],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            return spendRepository
+        }()
+        let spendMonth = SpendMonth(
+            date: Date(),
+            dayIds: [UUID()],
+            allowance: 2
+        )
         let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
-            spendMonth: .mock()
+            spendMonth: spendMonth
+        )
+        
+        // Scenario
+        let displayBudgetDifference = vm.displayBudgetDifference
+        
+        // Verification
+        #expect(displayBudgetDifference == "$1.00")
+    }
+    
+    @Test func test_displayBudgetDifference_negative() {
+        // Setup
+        let spendRepository: SpendRepositable = {
+            let day = SpendDay(
+                date: Date(),
+                items: [SpendItem(
+                    dayId: UUID(),
+                    amount: 1,
+                    note: nil
+                )],
+                isCommitted: false
+            )
+            let spendRepository = MockSpendRepository()
+            spendRepository.getDayForId_returnValue = (day, nil)
+            return spendRepository
+        }()
+        let spendMonth = SpendMonth(
+            date: Date(),
+            dayIds: [UUID()],
+            allowance: 0
+        )
+        let vm = SpendMonthlyHistoryItemViewModel(
+            spendRepository: spendRepository,
+            currencyFormatter: CurrencyFormatter(),
+            spendMonth: spendMonth
         )
         
         // Scenario

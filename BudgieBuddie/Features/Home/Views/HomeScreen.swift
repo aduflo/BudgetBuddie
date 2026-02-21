@@ -41,21 +41,7 @@ struct HomeScreen: View {
         .padding(.horizontal, Padding.2)
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
-            // flip onboarding presentation if need be
-            presentOnboarding = screenModel.didOnboardOnce == false
-            
-            // assign closures to facilitate presentables
-            screenModel.spendSummaryViewModel.onSettingsTapped = {
-                presentSettings.toggle()
-            }
-            screenModel.spendListViewModel.onNewSpendItemTapped = {
-                screenModel.setSpendItemToPresent(nil)
-                presentSpendItem.toggle()
-            }
-            screenModel.spendListViewModel.onSpendItemTapped = { spendItem in
-                screenModel.setSpendItemToPresent(spendItem)
-                presentSpendItem.toggle()
-            }
+            setupHandlers()
         }
         .onReceive(
             NotificationCenter.default.publisher(for: .SpendRepositoryDidCommitStagedMonth),
@@ -78,6 +64,7 @@ struct HomeScreen: View {
             perform: { _ in
                 Task { await MainActor.run {
                     screenModel.reloadData()
+                    setupHandlers()
                 }}
             }
         )
@@ -173,6 +160,27 @@ struct HomeScreen: View {
                 )
             )
             .presentationDetents([.fraction(3/4)])
+        }
+    }
+}
+
+// MARK: Private interface
+private extension HomeScreen {
+    func setupHandlers() {
+        // flip onboarding presentation if need be
+        presentOnboarding = screenModel.didOnboardOnce == false
+        
+        // assign closures to facilitate presentables
+        screenModel.spendSummaryViewModel.onSettingsTapped = {
+            presentSettings.toggle()
+        }
+        screenModel.spendListViewModel.onNewSpendItemTapped = {
+            screenModel.setSpendItemToPresent(nil)
+            presentSpendItem.toggle()
+        }
+        screenModel.spendListViewModel.onSpendItemTapped = { spendItem in
+            screenModel.setSpendItemToPresent(spendItem)
+            presentSpendItem.toggle()
         }
     }
 }

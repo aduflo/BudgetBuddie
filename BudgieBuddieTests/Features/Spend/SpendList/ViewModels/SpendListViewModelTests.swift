@@ -14,48 +14,54 @@ struct SpendListViewModelTests {
     // MARK: - reloadData()
     @Test func test_reloadData_happyPath() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getItemsForDate_returnValue = ([.mock()], nil)
+        let calendarService: CalendarServiceable = {
+            let calendarService = MockCalendarService()
+            calendarService.updateSelectedDate(.distantPast)
+            return calendarService
+        }()
+        let spendRepository: SpendRepositable = {
+            let spendRepository = MockSpendRepository()
+            spendRepository.getItemsForDate_returnValue = ([.mock()], nil)
+            return spendRepository
+        }()
         let vm = SpendListViewModel(
-            calendarService: MockCalendarService(),
+            calendarService: calendarService,
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter()
         )
         
-        // Pre-verification
-        #expect(vm.title == "")
-        #expect(vm.listItemViewModels.isEmpty == true)
-        #expect(vm.error == nil)
-        
         // Scenario
         vm.reloadData()
         
-        // Post-verification
-        #expect(vm.title == "02/18")
+        // Verification
+        #expect(vm.title == "12/31")
         #expect(vm.listItemViewModels.isEmpty == false)
         #expect(vm.error == nil)
     }
     
     @Test func test_reloadData_sadPath() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getItemsForDate_returnValue = (nil, SpendRepositoryError.getItemsFailed)
+        let calendarService: CalendarServiceable = {
+            let calendarService = MockCalendarService()
+            calendarService.updateSelectedDate(.distantPast)
+            return calendarService
+        }()
+        let spendRepository: SpendRepositable = {
+            let spendRepository = MockSpendRepository()
+            spendRepository.getItemsForDate_returnValue = (nil, SpendRepositoryError.getItemsFailed)
+            return spendRepository
+        }()
         let vm = SpendListViewModel(
-            calendarService: MockCalendarService(),
+            calendarService: calendarService,
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter()
         )
         
-        // Pre-verification
-        #expect(vm.title == "")
-        #expect(vm.listItemViewModels.isEmpty == true)
-        #expect(vm.error == nil)
-        
         // Scenario
         vm.reloadData()
         
-        // Post-verification
-        #expect(vm.title == "02/18")
+        // Verification
+        #expect(vm.title == "12/31")
         #expect(vm.listItemViewModels.isEmpty == true)
         #expect(vm.error != nil)
     }

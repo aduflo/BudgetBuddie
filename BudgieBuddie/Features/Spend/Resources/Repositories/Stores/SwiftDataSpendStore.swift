@@ -22,23 +22,7 @@ class SwiftDataSpendStore: SpendStoreable {
         container?.mainContext
     }
     
-    // SpendStoreable
-    func getAllItems() throws -> [SpendItem_Data] {
-        do {
-            let fetchDescriptor = FetchDescriptor<SpendItem_SwiftData>()
-            guard let items_swiftData = try context?.fetch(fetchDescriptor) else {
-                throw SpendStoreError.itemsNotFound
-            }
-            
-            let items_data = items_swiftData.map {
-                SpendItemMapper.toDataObject($0)
-            }
-            return items_data
-        } catch {
-            throw SpendStoreError.itemsNotFound
-        }
-    }
-    
+    // SpendStoreable    
     func getItems(date: Date) throws -> [SpendItem_Data] {
         do {
             let day = try getDay(
@@ -129,17 +113,22 @@ class SwiftDataSpendStore: SpendStoreable {
     }
     
     func getDay(id: UUID) throws -> SpendDay_Data {
+        let day_swiftData = try getDay_swiftData(id: id)
+        return SpendDayMapper.toDataObject(day_swiftData)
+    }
+    
+    func getUncommittedDays() throws -> [SpendDay_Data] {
         let days = try context?.fetch(
             FetchDescriptor<SpendDay_SwiftData>(
-                predicate: #Predicate { $0.id == id }
+                predicate: #Predicate { $0.isCommitted == false }
             )
         )
         
-        guard let firstDay = days?.first else {
-            throw SpendStoreError.dayNotFound
+        guard let days else {
+            throw SpendStoreError.daysNotFound
         }
         
-        return SpendDayMapper.toDataObject(firstDay)
+        return days.map { SpendDayMapper.toDataObject($0) }
     }
     
     func getAllMonths() throws -> [SpendMonth_Data] {
@@ -184,24 +173,13 @@ class SwiftDataSpendStore: SpendStoreable {
             let month_swiftData = SpendMonthMapper.toSwiftDataObject(month)
             try context?.transaction {
                 context?.insert(month_swiftData)
+                try month_swiftData.dayIds.forEach { id in
+                    let day_swiftData = try getDay_swiftData(id: id)
+                    day_swiftData.setIsCommitted(true)
+                }
             }
         } catch {
             throw SpendStoreError.unableToSaveMonth
-        }
-    }
-    
-    func deleteStagedMonthData() throws {
-        do {
-            // deleting all instances of SpendDay_SwiftData within context
-            // due to relationship (delete rule: cascading) with SpendItem_SwiftData
-            // all associated [SpendItem_SwiftData] instances will also be deleted
-            try context?.transaction {
-                try context?.delete(
-                    model: SpendDay_SwiftData.self
-                )
-            }
-        } catch {
-            throw SpendStoreError.unableToDeleteStagedMonthData
         }
     }
     
@@ -217,7 +195,8 @@ class SwiftDataSpendStore: SpendStoreable {
                             id: UUID(),
                             date: date,
                             key: SpendDayKey(date).value,
-                            items: []
+                            items: [],
+                            isCommitted: false
                         )
                     )
                 }

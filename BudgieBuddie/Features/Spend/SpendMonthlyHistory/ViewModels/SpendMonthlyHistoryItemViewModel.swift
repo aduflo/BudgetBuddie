@@ -9,6 +9,7 @@ import Foundation
 
 struct SpendMonthlyHistoryItemViewModel: Identifiable {
     // Instance vars
+    private let spendRepository: SpendRepositable
     private let currencyFormatter: CurrencyFormatter
     let spendMonth: SpendMonth
     
@@ -17,9 +18,11 @@ struct SpendMonthlyHistoryItemViewModel: Identifiable {
     
     // Constructors
     init(
+        spendRepository: SpendRepositable,
         currencyFormatter: CurrencyFormatter,
         spendMonth: SpendMonth
     ) {
+        self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
         self.spendMonth = spendMonth
     }
@@ -32,19 +35,38 @@ extension SpendMonthlyHistoryItemViewModel {
     }
     
     var displaySpend: String {
-        currencyFormatter.stringAmount(spendMonth.spend)
+        currencyFormatter.stringAmount(spend)
     }
     
     var displayAllowance: String {
-        currencyFormatter.stringAmount(spendMonth.allowance)
+        currencyFormatter.stringAmount(allowance)
     }
     
     var isWithinBudget: Bool {
-        spendMonth.isWithinBudget
+        spend <= allowance
     }
     
     var displayBudgetDifference: String {
-        currencyFormatter.stringAmount(spendMonth.budgetDifference)
+        let budgetDifference = allowance - spend
+        return currencyFormatter.stringAmount(budgetDifference)
+    }
+}
+
+// MARK: Private interface
+private extension SpendMonthlyHistoryItemViewModel {
+    var spend: Decimal {
+        do {
+            return try MonthSpendCalculator.calculateSpend(
+                month: spendMonth,
+                spendRepository: spendRepository
+            )
+        } catch {
+            return 0.0
+        }
+    }
+    
+    var allowance: Decimal {
+        spendMonth.allowance
     }
 }
 
@@ -52,6 +74,7 @@ extension SpendMonthlyHistoryItemViewModel {
 extension SpendMonthlyHistoryItemViewModel {
     static func mock() -> SpendMonthlyHistoryItemViewModel {
         SpendMonthlyHistoryItemViewModel(
+            spendRepository: MockSpendRepository(),
             currencyFormatter: CurrencyFormatter(),
             spendMonth: .mock()
         )

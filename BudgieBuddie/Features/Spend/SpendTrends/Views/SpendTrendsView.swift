@@ -27,9 +27,6 @@ struct SpendTrendsView: View {
             headerView
             contentView
         }
-        .onAppear {
-            viewModel.reloadData()
-        }
         .onReceive(
             NotificationCenter.default.publisher(for: .SettingsDidUpdateDefaultSpendTrendViewpoint),
             perform: { _ in
@@ -40,9 +37,10 @@ struct SpendTrendsView: View {
             }
         )
         .onReceive(
-            Publishers.Merge4(
+            Publishers.Merge5(
                 NotificationCenter.default.publisher(for: .SettingsDidUpdateMonthlyAllowance),
                 NotificationCenter.default.publisher(for: .SettingsDidUpdateWarningThreshold),
+                NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateTodayDate),
                 NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateSelectedDate),
                 NotificationCenter.default.publisher(for: .SpendRepositoryDidUpdateItem)
             ),

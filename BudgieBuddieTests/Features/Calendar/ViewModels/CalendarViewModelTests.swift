@@ -27,7 +27,13 @@ struct CalendarViewModelTests {
     
     @Test func test_reloadData_triggersSideEffectOf_setSelectedDayViewModel_when_selectedDay_within_month() {
         // Setup
-        let calendarService = MockCalendarService()
+        let date = Date()
+        let calendarService: CalendarServiceable = {
+            let calendarService = MockCalendarService()
+            calendarService.updateTodayDate(date)
+            calendarService.updateSelectedDate(.distantFuture)
+            return calendarService
+        }()
         let vm = CalendarViewModel(
             calendarService: calendarService
         )
@@ -36,18 +42,21 @@ struct CalendarViewModelTests {
         #expect(vm.selectedDayViewModel == nil)
         
         // Scenario
-        let date = Date()
-        calendarService.updateTodayDate(date)
         calendarService.updateSelectedDate(date)
         vm.reloadData()
         
-        // Post-verification
+        // Post-Verification
         #expect(vm.selectedDayViewModel != nil)
     }
     
     @Test func test_reloadData_doesNot_triggersSideEffectOf_setSelectedDayViewModel_when_selectedDay_not_within_month() {
         // Setup
-        let calendarService = MockCalendarService()
+        let calendarService: CalendarServiceable = {
+            let calendarService = MockCalendarService()
+            calendarService.updateTodayDate(Date())
+            calendarService.updateSelectedDate(.distantFuture)
+            return calendarService
+        }()
         let vm = CalendarViewModel(
             calendarService: calendarService
         )
@@ -56,8 +65,6 @@ struct CalendarViewModelTests {
         #expect(vm.selectedDayViewModel == nil)
         
         // Scenario
-        calendarService.updateTodayDate(Date())
-        calendarService.updateSelectedDate(.distantPast)
         vm.reloadData()
         
         // Post-verification
@@ -65,10 +72,16 @@ struct CalendarViewModelTests {
     }
     
     // MARK: - todayDayViewModel
-    @Test func test_todayDayViewModel_valid() {
+    @Test func test_todayDayViewModel() {
         // Setup
+        let todayDate = Date()
+        let calendarService: CalendarServiceable = {
+            let calendarService = MockCalendarService()
+            calendarService.updateTodayDate(todayDate)
+            return calendarService
+        }()
         let vm = CalendarViewModel(
-            calendarService: MockCalendarService()
+            calendarService: calendarService
         )
         vm.reloadData()
         
@@ -76,20 +89,11 @@ struct CalendarViewModelTests {
         let todayDayViewModel = vm.todayDayViewModel
         
         // Verification
-        #expect(todayDayViewModel != nil)
-    }
-    
-    @Test func test_todayDayViewModel_invalid() {
-        // Setup
-        let vm = CalendarViewModel(
-            calendarService: MockCalendarService()
-        )
-        
-        // Scenario
-        let todayDayViewModel = vm.todayDayViewModel
-        
-        // Verification
-        #expect(todayDayViewModel == nil)
+        guard let todayDayViewModel else {
+            Issue.record("could not access todayDayViewModel")
+            return
+        }
+        #expect(todayDayViewModel.monthDay.date.isSameDayAs(todayDate))
     }
     
     // MARK: - setSelectedDayViewModel()
@@ -101,7 +105,7 @@ struct CalendarViewModelTests {
             calendarService: calendarService
         )
         let dayVm = CalendarDayViewModel(
-            calendarService: MockCalendarService(),
+            calendarService: calendarService,
             monthDay: .mockPresent(),
             isSelected: false
         )

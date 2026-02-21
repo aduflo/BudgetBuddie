@@ -24,7 +24,8 @@ struct SpendDayMapperTests {
                     note: nil,
                     createdAt: Date()
                 )
-            ]
+            ],
+            isCommitted: true
         )
         
         // Scenario
@@ -34,6 +35,7 @@ struct SpendDayMapperTests {
         #expect(day_domain.id == day_data.id)
         #expect(day_domain.date == day_data.date)
         #expect(day_domain.items.count == day_data.items.count)
+        #expect(day_domain.isCommitted == day_data.isCommitted)
     }
     
     // MARK: toDataObject(domain:)
@@ -42,7 +44,8 @@ struct SpendDayMapperTests {
         let day_domain = SpendDay(
             id: UUID(),
             date: Date(),
-            items: [.mock()]
+            items: [.mock()],
+            isCommitted: true
         )
         
         // Scenario
@@ -52,6 +55,7 @@ struct SpendDayMapperTests {
         #expect(day_data.id == day_domain.id)
         #expect(day_data.date == day_domain.date)
         #expect(day_data.items.count == day_domain.items.count)
+        #expect(day_data.isCommitted == day_domain.isCommitted)
     }
     
     // MARK: toDataObject(swiftData:)
@@ -69,7 +73,8 @@ struct SpendDayMapperTests {
                     note: nil,
                     createdAt: Date()
                 )
-            ]
+            ],
+            isCommitted: true
         )
         
         // Scenario
@@ -79,6 +84,7 @@ struct SpendDayMapperTests {
         #expect(day_data.id == day_swiftData.id)
         #expect(day_data.date == day_swiftData.date)
         #expect(day_data.items.count == day_swiftData.items.count)
+        #expect(day_data.isCommitted == day_swiftData.isCommitted)
     }
     
     // MARK: toSwiftDataObject()
@@ -95,7 +101,8 @@ struct SpendDayMapperTests {
                     note: nil,
                     createdAt: Date()
                 )
-            ]
+            ],
+            isCommitted: true
         )
         
         // Scenario
@@ -105,5 +112,6 @@ struct SpendDayMapperTests {
         #expect(day_swiftData.id == day_data.id)
         #expect(day_swiftData.date == day_data.date)
         #expect(day_swiftData.items.count == day_data.items.count)
+        #expect(day_swiftData.isCommitted == day_data.isCommitted)
     }
 }

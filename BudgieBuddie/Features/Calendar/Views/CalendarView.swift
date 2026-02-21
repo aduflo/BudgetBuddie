@@ -26,9 +26,6 @@ struct CalendarView: View {
             headerView
             listView
         }
-        .onAppear {
-            viewModel.reloadData()
-        }
         .onReceive(
             NotificationCenter.default.publisher(for: .CalendarServiceDidUpdateTodayDate),
             perform: { _ in

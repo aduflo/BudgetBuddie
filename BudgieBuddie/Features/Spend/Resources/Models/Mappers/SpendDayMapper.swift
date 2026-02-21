@@ -14,7 +14,8 @@ enum SpendDayMapper {
         SpendDay(
             id: data.id,
             date: data.date,
-            items: data.items.map { SpendItemMapper.toDomainObject($0) }
+            items: data.items.map { SpendItemMapper.toDomainObject($0) },
+            isCommitted: data.isCommitted
         )
     }
     
@@ -24,7 +25,8 @@ enum SpendDayMapper {
         SpendDay_Data(
             id: domain.id,
             date: domain.date,
-            items: domain.items.map { SpendItemMapper.toDataObject($0) }
+            items: domain.items.map { SpendItemMapper.toDataObject($0) },
+            isCommitted: domain.isCommitted
         )
     }
     
@@ -34,7 +36,8 @@ enum SpendDayMapper {
         SpendDay_Data(
             id: swiftData.id,
             date: swiftData.date,
-            items: swiftData.items.map { SpendItemMapper.toDataObject($0) }
+            items: swiftData.items.map { SpendItemMapper.toDataObject($0) },
+            isCommitted: swiftData.isCommitted
         )
     }
     
@@ -47,7 +50,8 @@ enum SpendDayMapper {
             id: data.id,
             date: date,
             key: key,
-            items: data.items.map { SpendItemMapper.toSwiftDataObject($0) }
+            items: data.items.map { SpendItemMapper.toSwiftDataObject($0) },
+            isCommitted: data.isCommitted
         )
     }
 }

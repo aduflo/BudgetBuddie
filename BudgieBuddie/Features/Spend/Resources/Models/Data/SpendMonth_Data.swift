@@ -13,7 +13,7 @@ class SpendMonth_Data {
     let date: Date
     let month: Int
     let year: Int
-    let spend: Decimal
+    let dayIds: [UUID]
     let allowance: Decimal
     
     // Constructors
@@ -22,14 +22,14 @@ class SpendMonth_Data {
         date: Date,
         month: Int,
         year: Int,
-        spend: Decimal,
+        dayIds: [UUID],
         allowance: Decimal
     ) {
         self.id = id
         self.date = date
         self.month = month
         self.year = year
-        self.spend = spend
+        self.dayIds = dayIds
         self.allowance = allowance
     }
 }
@@ -42,7 +42,7 @@ extension SpendMonth_Data {
             date: Date(),
             month: 02,
             year: 2026,
-            spend: 13.37,
+            dayIds: [UUID()],
             allowance: 1337.00
         )
     }

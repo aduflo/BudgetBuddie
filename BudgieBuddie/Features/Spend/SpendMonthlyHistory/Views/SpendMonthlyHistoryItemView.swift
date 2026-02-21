@@ -102,10 +102,26 @@ struct SpendMonthlyHistoryItemView: View {
 #Preview("Big Savings") {
     SpendMonthlyHistoryItemView(
         viewModel: SpendMonthlyHistoryItemViewModel(
+            spendRepository: {
+                let dayId = UUID()
+                let day = SpendDay(
+                    id: dayId,
+                    date: Date(),
+                    items: [SpendItem(
+                        dayId: dayId,
+                        amount: 2_000,
+                        note: nil
+                    )],
+                    isCommitted: false
+                )
+                let spendRepository = MockSpendRepository()
+                spendRepository.getDayForId_returnValue = (day, nil)
+                return spendRepository
+            }(),
             currencyFormatter: CurrencyFormatter(),
             spendMonth: SpendMonth(
                 date: Date(),
-                spend: 2000,
+                dayIds: [UUID()],
                 allowance: 55_432
             )
         )
@@ -116,11 +132,27 @@ struct SpendMonthlyHistoryItemView: View {
 #Preview("Big Deficit") {
     SpendMonthlyHistoryItemView(
         viewModel: SpendMonthlyHistoryItemViewModel(
+            spendRepository: {
+                let dayId = UUID()
+                let day = SpendDay(
+                    id: dayId,
+                    date: Date(),
+                    items: [SpendItem(
+                        dayId: dayId,
+                        amount: 55_432,
+                        note: nil
+                    )],
+                    isCommitted: false
+                )
+                let spendRepository = MockSpendRepository()
+                spendRepository.getDayForId_returnValue = (day, nil)
+                return spendRepository
+            }(),
             currencyFormatter: CurrencyFormatter(),
             spendMonth: SpendMonth(
                 date: Date(),
-                spend: 55_432,
-                allowance: 2000
+                dayIds: [UUID()],
+                allowance: 2_000
             )
         )
     )

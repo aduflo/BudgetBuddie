@@ -14,8 +14,13 @@ struct SpendMonthlyHistoryScreenModelTests {
     // MARK: - monthSortAttributeSelection
     @Test func test_monthSortAttributeSelection_newValue_triggersSideEffectOf_reloadData() {
         // Setup
+        let spendRepository: SpendRepositable = {
+            let spendRepository = MockSpendRepository()
+            spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+            return spendRepository
+        }()
         let vm = SpendMonthlyHistoryScreenModel(
-            spendRepository: MockSpendRepository(),
+            spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter()
         )
         
@@ -23,6 +28,7 @@ struct SpendMonthlyHistoryScreenModelTests {
         #expect(vm.listItemViewModels.isEmpty == true)
         
         // Scenario
+        (spendRepository as? MockSpendRepository)?.getAllMonths_returnValue = ([.mock()], nil)
         vm.monthSortAttributeSelection = .date
         
         // Verification
@@ -32,8 +38,13 @@ struct SpendMonthlyHistoryScreenModelTests {
     // MARK: - sortOrderSelection
     @Test func test_sortOrderSelection_newValue_triggersSideEffectOf_reloadData() {
         // Setup
+        let spendRepository: SpendRepositable = {
+            let spendRepository = MockSpendRepository()
+            spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+            return spendRepository
+        }()
         let vm = SpendMonthlyHistoryScreenModel(
-            spendRepository: MockSpendRepository(),
+            spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter()
         )
         
@@ -41,6 +52,7 @@ struct SpendMonthlyHistoryScreenModelTests {
         #expect(vm.listItemViewModels.isEmpty == true)
         
         // Scenario
+        (spendRepository as? MockSpendRepository)?.getAllMonths_returnValue = ([.mock()], nil)
         vm.sortOrderSelection = .forward
         
         // Verification
@@ -50,16 +62,15 @@ struct SpendMonthlyHistoryScreenModelTests {
     // MARK: - reloadData
     @Test func test_reloadData_happyPath() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getAllMonths_returnValue = ([.mock()], nil)
+        let spendRepository: SpendRepositable = {
+            let spendRepository = MockSpendRepository()
+            spendRepository.getAllMonths_returnValue = ([.mock()], nil)
+            return spendRepository
+        }()
         let vm = SpendMonthlyHistoryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter()
         )
-        
-        // Pre-verification
-        #expect(vm.listItemViewModels.isEmpty == true)
-        #expect(vm.error == nil)
         
         // Scenario
         vm.reloadData()
@@ -71,16 +82,15 @@ struct SpendMonthlyHistoryScreenModelTests {
     
     @Test func test_reloadData_sadPath() {
         // Setup
-        let spendRepository = MockSpendRepository()
-        spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+        let spendRepository: SpendRepositable = {
+            let spendRepository = MockSpendRepository()
+            spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+            return spendRepository
+        }()
         let vm = SpendMonthlyHistoryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter()
         )
-        
-        // Pre-verification
-        #expect(vm.listItemViewModels.isEmpty == true)
-        #expect(vm.error == nil)
         
         // Scenario
         vm.reloadData()

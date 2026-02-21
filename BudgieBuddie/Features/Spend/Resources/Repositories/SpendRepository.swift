@@ -102,6 +102,16 @@ class SpendRepository: SpendRepositable {
         }
     }
     
+    func getDay(id: UUID) throws -> SpendDay {
+        do {
+            let day_data = try store.getDay(id: id)
+            let day = SpendDayMapper.toDomainObject(day_data)
+            return day
+        } catch {
+            throw SpendRepositoryError.getDayFailed
+        }
+    }
+    
     func getAllMonths() throws -> [SpendMonth] {
         do {
             let months_data = try store.getAllMonths()
@@ -151,7 +161,7 @@ private extension SpendRepository {
                 date: todayDate
             )
         } catch {
-            if case .dayNotFound = error as? SpendStoreError {
+            if case .getDayFailed = error as? SpendRepositoryError {
                 // if we cannot find a SpendDay associated with today's date
                 // we can conclude we are in a different month
                 // because no SpendDay stored has a `date` value that overlaps with today's date
@@ -171,53 +181,66 @@ private extension SpendRepository {
     }
     
     // Stage/commit month
-    func commitStagedMonth(settingsService: SettingsServiceable) throws {
-        // extract items from staging environment
-        let items = try store.getAllItems()
+    func commitStagedMonth(settingsService: SettingsServiceable) throws {        
+        // extract days that are not yet committed
+        let days_data = try store.getUncommittedDays()
+            
+        // sort from first-to-last
+        let sortedDays_data = days_data.sorted(by: { $0.date < $1.date })
         
-        // get reference date
-        guard let firstDay = items.first else {
-            throw SpendRepositoryError.commitStagedMonthFailed
+        // group days into months, in case multiple months have passed since last open
+        var monthDaysDict: [Int: [SpendDay_Data]] = [:]
+        for day_data in sortedDays_data {
+            let month = Calendar.current.monthInDate(day_data.date)
+            if var days = monthDaysDict[month] {
+                days.append(day_data)
+                monthDaysDict[month] = days
+            } else {
+                monthDaysDict[month] = [day_data]
+            }
         }
-        let day = try store.getDay(
-            id: firstDay.dayId
-        )
-        let referenceDate = day.date
         
-        // compose arguments
-        let calendar = Calendar.current
-        let month = calendar.monthInDate(referenceDate)
-        let year = calendar.yearInDate(referenceDate)
-        let spend = items.reduce(0.0, { $0 + $1.amount })
-        let allowance = settingsService.monthlyAllowance
-        
-        // compose month_data
-        let month_data = SpendMonth_Data(
-            id: UUID(),
-            date: referenceDate,
-            month: month,
-            year: year,
-            spend: spend,
-            allowance: allowance
-        )
-        
-        // save month_data
-        try store.saveMonth(month_data)
+        var referenceDate: Date?
+        for monthDays in monthDaysDict.values {
+            // get reference date (date of the first day of last month)
+            guard let date = monthDays.first?.date else {
+                throw SpendRepositoryError.commitStagedMonthFailed
+            }
+            if referenceDate == nil {
+                // none set so far; auto-assign referenceDate
+                referenceDate = date
+            } else if let refDate = referenceDate, date > refDate {
+                // date is a later date than refDate; re-assign referenceDate
+                referenceDate = date
+            }
+            
+            // compose month_data
+            let month_data = SpendMonth_Data(
+                id: UUID(),
+                date: date,
+                month: Calendar.current.monthInDate(date),
+                year: Calendar.current.yearInDate(date),
+                dayIds: monthDays.map { $0.id },
+                allowance: settingsService.monthlyAllowance
+            )
+            
+            // save month_data
+            try store.saveMonth(month_data)
+        }
         
         // post notification
-        postNotificationSpendRepositoryDidCommitStagedMonth(
-            date: referenceDate
-        )
+        if let referenceDate {
+            postNotificationSpendRepositoryDidCommitStagedMonth(
+                date: referenceDate
+            )
+        }
     }
     
     func stageNewMonth(_ date: Date) throws {
-        // firstly, delete staged month data
-        try store.deleteStagedMonthData()
-        
-        // secondly, have store stage data for month matching date
+        // have store stage data for month matching date
         try store.stageMonthData(date)
         
-        // lastly, post notification
+        // post notification
         postNotificatioSpendRepositoryDidStageNewMonth()
     }
     

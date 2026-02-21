@@ -29,6 +29,7 @@ class SpendListViewModel {
         self.calendarService = calendarService
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
+        reloadData()
     }
 }
 

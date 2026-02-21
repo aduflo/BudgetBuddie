@@ -34,6 +34,7 @@ class SpendMonthlyHistoryScreenModel {
     ) {
         self.spendRepository = spendRepository
         self.currencyFormatter = currencyFormatter
+        reloadData()
     }
 }
 
@@ -72,22 +73,53 @@ private extension SpendMonthlyHistoryScreenModel {
         let allMonths = try spendRepository.getAllMonths()
         
         // sort
-        var sortDescriptors: [SortDescriptor<SpendMonth>] = []
-        switch monthSortAttributeSelection {
+        let sorted = switch monthSortAttributeSelection {
         case .date:
-            sortDescriptors.append(SortDescriptor<SpendMonth>(\.date, order: sortOrderSelection))
+            sortByDate(allMonths)
         case .spend:
-            sortDescriptors.append(SortDescriptor<SpendMonth>(\.spend, order: sortOrderSelection))
+            sortBySpend(allMonths)
         }
-        let sorted = allMonths.sorted(using: sortDescriptors)
         
         // map and return
         return sorted.map {
             SpendMonthlyHistoryItemViewModel(
+                spendRepository: spendRepository,
                 currencyFormatter: currencyFormatter,
                 spendMonth: $0
             )
         }
+    }
+    
+    func sortByDate(_ months: [SpendMonth]) -> [SpendMonth] {
+        months.sorted(
+            using: SortDescriptor<SpendMonth>(\.date, order: sortOrderSelection)
+        )
+    }
+    
+    func sortBySpend(_ months: [SpendMonth]) -> [SpendMonth] {
+        typealias MonthSpendDuo = (id: UUID, spend: Decimal)
+        var monthSpendDuos: [MonthSpendDuo] = []
+        for month in months {
+            do {
+                let spend = try MonthSpendCalculator.calculateSpend(
+                    month: month,
+                    spendRepository: spendRepository
+                )
+                monthSpendDuos.append((
+                    id: month.id,
+                    spend: spend
+                ))
+            } catch {}
+        }
+        let sortedMonthSpendDuos = monthSpendDuos.sorted(
+            using: SortDescriptor<MonthSpendDuo>(\.spend, order: sortOrderSelection)
+        )
+        let sortedMonths = sortedMonthSpendDuos.compactMap { duo in
+            months.first { month in
+                month.id == duo.id
+            }
+        }
+        return sortedMonths
     }
 }
 
