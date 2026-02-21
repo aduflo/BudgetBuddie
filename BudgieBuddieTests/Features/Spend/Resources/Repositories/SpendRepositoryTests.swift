@@ -21,7 +21,8 @@ struct SpendRepositoryTests {
     // MARK: - getItems(dates:)
     // MARK: - saveItem()
     // MARK: - deleteItem()
-    // MARK: - getDay()
+    // MARK: - getDay(date:)
+    // MARK: - getDay(id:)
     // MARK: - getAllMonths()
     // MARK: - getMonth()
 }

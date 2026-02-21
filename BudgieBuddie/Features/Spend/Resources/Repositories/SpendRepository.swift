@@ -13,7 +13,6 @@ class SpendRepository: SpendRepositable {
     
     private let store: SpendStoreable = {
         SwiftDataSpendStore()
-//        InMemorySpendStore()
     }()
     private var didSetupOnce: Bool {
         userDefaults.bool(
