@@ -1,5 +1,6 @@
 ### TODO:
 Before RC:
+- introduce versioning to Swift Data models
 - finish SpendRepositoryTests
 - QA + find bugs
 - cut 1.0 RC March, if greenlight
@@ -20,7 +21,6 @@ Feature backlog:
 - https://developer.apple.com/documentation/WidgetKit
 - https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension
 - https://developer.apple.com/documentation/widgetkit/building_widgets_using_widgetkit_and_swiftui
-- https://www.google.com/search?q=ios+widget+swiftdata&ie=UTF-8&oe=UTF-8&hl=en-us&client=safari
 - https://developer.apple.com/documentation/widgetkit/adding-interactivity-to-widgets-and-live-activities
 - https://developer.apple.com/documentation/widgetkit/animating-data-updates-in-widgets-and-live-activities
 
@@ -28,7 +28,11 @@ Feature backlog:
 - https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
 - https://developer.apple.com/documentation/xcode/creating-your-app-icon-using-icon-composer/
 
+// swift data
+- https://developer.apple.com/documentation/swiftdata/syncing-model-data-across-a-persons-devices
+- https://www.donnywals.com/a-deep-dive-into-swiftdata-migrations/
+- https://medium.com/@tungvt.it.01/%EF%B8%8F-migrating-swiftdata-models-how-to-handle-complex-changes-safely-00a28b2859c1
+
 // misc.
 - https://developer.apple.com/design/human-interface-guidelines/typography
 - https://stackoverflow.com/questions/57988687/how-to-use-dark-mode-in-ios-simulator
-- https://developer.apple.com/documentation/swiftdata/syncing-model-data-across-a-persons-devices
