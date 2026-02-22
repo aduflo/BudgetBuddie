@@ -8,27 +8,34 @@
 import Foundation
 import SwiftData
 
-@Model
-class SpendItem_SwiftData {
-    // Instance vars
-    @Attribute(.unique) private(set) var id: UUID
-    private(set) var dayId: UUID
-    private(set) var amount: Decimal
-    private(set) var note: String?
-    private(set) var createdAt: Date
+typealias SpendItem_SwiftData = SpendItemSchemaV1.SpendItem
+
+enum SpendItemSchemaV1: VersionedSchema {
+    static let versionIdentifier: Schema.Version = .init(1, 0, 0)
+    static let models: [any PersistentModel.Type] = [SpendItem.self]
     
-    // Constructors
-    init(
-        id: UUID,
-        dayId: UUID,
-        amount: Decimal,
-        note: String?,
-        createdAt: Date
-    ) {
-        self.id = id
-        self.dayId = dayId
-        self.amount = amount
-        self.note = note
-        self.createdAt = createdAt
+    @Model
+    class SpendItem {
+        // Instance vars
+        @Attribute(.unique) private(set) var id: UUID
+        private(set) var dayId: UUID
+        private(set) var amount: Decimal
+        private(set) var note: String?
+        private(set) var createdAt: Date
+        
+        // Constructors
+        init(
+            id: UUID,
+            dayId: UUID,
+            amount: Decimal,
+            note: String?,
+            createdAt: Date
+        ) {
+            self.id = id
+            self.dayId = dayId
+            self.amount = amount
+            self.note = note
+            self.createdAt = createdAt
+        }
     }
 }

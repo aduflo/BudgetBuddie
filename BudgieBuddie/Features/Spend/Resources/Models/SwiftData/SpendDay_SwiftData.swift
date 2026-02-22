@@ -8,38 +8,43 @@
 import Foundation
 import SwiftData
 
-@Model
-class SpendDay_SwiftData {
-    // Instance vars
-    @Attribute(.unique) private(set) var id: UUID
-    private(set) var date: Date
-    private(set) var key: String
-    @Relationship private(set) var items: [SpendItem_SwiftData]
-    private(set) var isCommitted: Bool = false // FIXME: faux migration; remove when cutting v1 RC
-    
-    // Constructors
-    init(
-        id: UUID,
-        date: Date,
-        key: String,
-        items: [SpendItem_SwiftData],
-        isCommitted: Bool
-    ) {
-        self.id = id
-        self.date = date
-        self.key = key
-        self.items = items
-        self.isCommitted = isCommitted
-    }
-}
+typealias SpendDay_SwiftData = SpendDaySchemaV1.SpendDay
 
-// MARK: Public interface
-extension SpendDay_SwiftData {    
-    func setItems(_ items: [SpendItem_SwiftData]) {
-        self.items = items
-    }
+enum SpendDaySchemaV1: VersionedSchema {
+    static let versionIdentifier: Schema.Version = .init(1, 0, 0)
+    static let models: [any PersistentModel.Type] = [SpendDay.self]
     
-    func setIsCommitted(_ isCommitted: Bool) {
-        self.isCommitted = isCommitted
+    @Model
+    class SpendDay {
+        // Instance vars
+        @Attribute(.unique) private(set) var id: UUID
+        private(set) var date: Date
+        private(set) var key: String
+        @Relationship private(set) var items: [SpendItem_SwiftData]
+        private(set) var isCommitted: Bool
+        
+        // Constructors
+        init(
+            id: UUID,
+            date: Date,
+            key: String,
+            items: [SpendItem_SwiftData],
+            isCommitted: Bool
+        ) {
+            self.id = id
+            self.date = date
+            self.key = key
+            self.items = items
+            self.isCommitted = isCommitted
+        }
+        
+        // MARK: Public interface
+        func setItems(_ items: [SpendItem_SwiftData]) {
+            self.items = items
+        }
+        
+        func setIsCommitted(_ isCommitted: Bool) {
+            self.isCommitted = isCommitted
+        }
     }
 }
