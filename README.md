@@ -1,6 +1,5 @@
 ### TODO:
 Before RC:
-- finish SpendRepositoryTests
 - QA + find bugs
 - cut 1.0 RC March, if greenlight
 
