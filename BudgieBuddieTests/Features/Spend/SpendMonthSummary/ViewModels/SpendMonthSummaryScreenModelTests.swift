@@ -31,7 +31,7 @@ struct SpendMonthSummaryScreenModelTests {
     @Test func test_init_sadPath() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
+        spendRepository.getMonth_returnValue = (nil, .getMonthFailed)
         
         // Scenario
         let vm = SpendMonthSummaryScreenModel(
@@ -70,7 +70,7 @@ struct SpendMonthSummaryScreenModelTests {
     @Test func test_displayMonth_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
+        spendRepository.getMonth_returnValue = (nil, .getMonthFailed)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -121,7 +121,7 @@ struct SpendMonthSummaryScreenModelTests {
     @Test func test_displaySpend_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
+        spendRepository.getMonth_returnValue = (nil, .getMonthFailed)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -161,7 +161,7 @@ struct SpendMonthSummaryScreenModelTests {
     @Test func test_displayAllowance_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
+        spendRepository.getMonth_returnValue = (nil, .getMonthFailed)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -259,7 +259,7 @@ struct SpendMonthSummaryScreenModelTests {
     @Test func test_isWithinBudget_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
+        spendRepository.getMonth_returnValue = (nil, .getMonthFailed)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),
@@ -357,7 +357,7 @@ struct SpendMonthSummaryScreenModelTests {
     @Test func test_displayBudgetDifference_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.getMonth_returnValue = (nil, SpendRepositoryError.getMonthFailed)
+        spendRepository.getMonth_returnValue = (nil, .getMonthFailed)
         let vm = SpendMonthSummaryScreenModel(
             spendRepository: spendRepository,
             currencyFormatter: CurrencyFormatter(),

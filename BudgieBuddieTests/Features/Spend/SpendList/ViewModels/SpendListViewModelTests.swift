@@ -48,7 +48,7 @@ struct SpendListViewModelTests {
         }()
         let spendRepository: SpendRepositable = {
             let spendRepository = MockSpendRepository()
-            spendRepository.getItemsForDate_returnValue = (nil, SpendRepositoryError.getItemsFailed)
+            spendRepository.getItemsForDate_returnValue = (nil, .getItemsFailed)
             return spendRepository
         }()
         let vm = SpendListViewModel(

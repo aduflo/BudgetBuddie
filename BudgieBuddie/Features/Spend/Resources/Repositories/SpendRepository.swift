@@ -11,10 +11,8 @@ class SpendRepository: SpendRepositable {
     // Instance vars
     let userDefaults: UserDefaultsServiceable
     
-    private let store: SpendStoreable = {
-        SwiftDataSpendStore()
-    }()
-    private var didSetupOnce: Bool {
+    private let store: SpendStoreable
+    var didSetupOnce: Bool {
         userDefaults.bool(
             forKey: .didSetupOnce
         )
@@ -22,9 +20,11 @@ class SpendRepository: SpendRepositable {
     
     // Constructors
     init(
-        userDefaults: UserDefaultsServiceable
+        userDefaults: any UserDefaultsServiceable,
+        store: any SpendStoreable
     ) {
         self.userDefaults = userDefaults
+        self.store = store
     }
     
     // SpendRepositable
@@ -33,19 +33,15 @@ class SpendRepository: SpendRepositable {
         calendarService: any CalendarServiceable,
         settingsService: any SettingsServiceable
     ) throws {
-        do {
-            if didSetupOnce {
-                try standardSetup(
-                    calendarService: calendarService,
-                    settingsService: settingsService
-                )
-            } else {
-                try initialSetup(
-                    calendarService: calendarService
-                )
-            }
-        } catch {
-            throw SpendRepositoryError.setupFailed
+        if didSetupOnce {
+            try standardSetup(
+                calendarService: calendarService,
+                settingsService: settingsService
+            )
+        } else {
+            try initialSetup(
+                calendarService: calendarService
+            )
         }
     }
 
@@ -75,7 +71,9 @@ class SpendRepository: SpendRepositable {
         do {
             let item_data = SpendItemMapper.toDataObject(item)
             try store.saveItem(item_data)
-            postNotificationSpendRepositoryDidUpdateItem()
+            
+            // post notification
+            NotificationCenter.default.post(.SpendRepositoryDidUpdateItem)
         } catch {
             throw SpendRepositoryError.saveItemFailed
         }
@@ -85,7 +83,9 @@ class SpendRepository: SpendRepositable {
         do {
             let item_data = SpendItemMapper.toDataObject(item)
             try store.deleteItem(item_data)
-            postNotificationSpendRepositoryDidUpdateItem()
+            
+            // post notification
+            NotificationCenter.default.post(.SpendRepositoryDidUpdateItem)
         } catch {
             throw SpendRepositoryError.deleteItemFailed
         }
@@ -141,6 +141,8 @@ private extension SpendRepository {
         do {
             let todayDate = calendarService.todayDate
             try stageNewMonth(todayDate)
+            
+            // Toggle UserDefaults.didSetupOnce
             userDefaults.set(
                 true,
                 forKey: .didSetupOnce
@@ -175,6 +177,8 @@ private extension SpendRepository {
                 } catch {
                     throw SpendRepositoryError.standardSetupFailed
                 }
+            } else {
+                throw SpendRepositoryError.standardSetupFailed
             }
         }
     }
@@ -223,14 +227,18 @@ private extension SpendRepository {
                 allowance: settingsService.monthlyAllowance
             )
             
-            // save month_data
-            try store.saveMonth(month_data)
+            // commit month_data
+            try store.commitMonth(month_data)
         }
         
         // post notification
         if let referenceDate {
-            postNotificationSpendRepositoryDidCommitStagedMonth(
-                date: referenceDate
+            NotificationCenter.default.post(
+                name: .SpendRepositoryDidCommitStagedMonth,
+                object: nil,
+                userInfo: [
+                    Notification.UserInfoKey.date: referenceDate
+                ]
             )
         }
     }
@@ -240,25 +248,6 @@ private extension SpendRepository {
         try store.stageMonthData(date)
         
         // post notification
-        postNotificatioSpendRepositoryDidStageNewMonth()
-    }
-    
-    // Notifications
-    func postNotificationSpendRepositoryDidUpdateItem() {
-        NotificationCenter.default.post(.SpendRepositoryDidUpdateItem)
-    }
-    
-    func postNotificatioSpendRepositoryDidStageNewMonth() {
         NotificationCenter.default.post(.SpendRepositoryDidStageNewMonth)
-    }
-    
-    func postNotificationSpendRepositoryDidCommitStagedMonth(date: Date) {
-        NotificationCenter.default.post(
-            name: .SpendRepositoryDidCommitStagedMonth,
-            object: nil,
-            userInfo: [
-                Notification.UserInfoKey.date: date
-            ]
-        )
     }
 }

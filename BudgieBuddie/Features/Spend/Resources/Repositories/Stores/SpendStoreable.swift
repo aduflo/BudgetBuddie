@@ -21,6 +21,6 @@ protocol SpendStoreable {
     func getUncommittedDays() throws -> [SpendDay_Data]
     func getAllMonths() throws -> [SpendMonth_Data]
     func getMonth(date: Date) throws -> SpendMonth_Data
-    func saveMonth(_ month: SpendMonth_Data) throws
+    func commitMonth(_ month: SpendMonth_Data) throws
     func stageMonthData(_ date: Date) throws
 }

@@ -31,7 +31,8 @@ struct BudgieBuddieApp: App {
         )
         currencyFormatter = CurrencyFormatter()
         spendRepository = SpendRepository(
-            userDefaults: userDefaults
+            userDefaults: userDefaults,
+            store: SwiftDataSpendStore()
         )
         
         // start things up

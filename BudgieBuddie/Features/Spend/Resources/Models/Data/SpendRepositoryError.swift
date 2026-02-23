@@ -8,7 +8,6 @@
 import Foundation
 
 enum SpendRepositoryError: LocalizedError {
-    case setupFailed
     case initialSetupFailed
     case standardSetupFailed
     case getItemsFailed
@@ -21,7 +20,6 @@ enum SpendRepositoryError: LocalizedError {
     
     var errorDescription: String? {
         switch self {
-        case .setupFailed: "Could not complete setup."
         case .initialSetupFailed: "Could not complete initial setup."
         case .standardSetupFailed: "Could not complete standard setup."
         case .getItemsFailed: "Could not get items."

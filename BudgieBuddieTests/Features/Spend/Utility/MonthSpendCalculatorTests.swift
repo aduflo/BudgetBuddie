@@ -53,7 +53,7 @@ struct MonthSpendCalculatorTests {
         // Setup
         let spendRepository: SpendRepositable = {
             let spendRepository = MockSpendRepository()
-            spendRepository.getDayForId_returnValue = (nil, SpendRepositoryError.getDayFailed)
+            spendRepository.getDayForId_returnValue = (nil, .getDayFailed)
             return spendRepository
         }()
         

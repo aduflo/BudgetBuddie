@@ -168,7 +168,7 @@ class SwiftDataSpendStore: SpendStoreable {
         }
     }
     
-    func saveMonth(_ month: SpendMonth_Data) throws {
+    func commitMonth(_ month: SpendMonth_Data) throws {
         do {
             let month_swiftData = SpendMonthMapper.toSwiftDataObject(month)
             try context?.transaction {

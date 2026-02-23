@@ -16,7 +16,7 @@ struct SpendMonthlyHistoryScreenModelTests {
         // Setup
         let spendRepository: SpendRepositable = {
             let spendRepository = MockSpendRepository()
-            spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+            spendRepository.getAllMonths_returnValue = (nil, .getAllMonthsFailed)
             return spendRepository
         }()
         let vm = SpendMonthlyHistoryScreenModel(
@@ -40,7 +40,7 @@ struct SpendMonthlyHistoryScreenModelTests {
         // Setup
         let spendRepository: SpendRepositable = {
             let spendRepository = MockSpendRepository()
-            spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+            spendRepository.getAllMonths_returnValue = (nil, .getAllMonthsFailed)
             return spendRepository
         }()
         let vm = SpendMonthlyHistoryScreenModel(
@@ -84,7 +84,7 @@ struct SpendMonthlyHistoryScreenModelTests {
         // Setup
         let spendRepository: SpendRepositable = {
             let spendRepository = MockSpendRepository()
-            spendRepository.getAllMonths_returnValue = (nil, SpendRepositoryError.getAllMonthsFailed)
+            spendRepository.getAllMonths_returnValue = (nil, .getAllMonthsFailed)
             return spendRepository
         }()
         let vm = SpendMonthlyHistoryScreenModel(

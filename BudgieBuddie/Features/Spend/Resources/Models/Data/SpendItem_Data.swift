@@ -30,3 +30,16 @@ class SpendItem_Data {
         self.createdAt = createdAt
     }
 }
+
+// MARK: - Mocks
+extension SpendItem_Data {
+    static func mock() -> SpendItem_Data {
+        SpendItem_Data(
+            id: UUID(),
+            dayId: UUID(),
+            amount: 13.37,
+            note: "leet",
+            createdAt: Date()
+        )
+    }
+}

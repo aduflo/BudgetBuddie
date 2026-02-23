@@ -9,8 +9,16 @@ import Foundation
 
 class MockSpendStore: SpendStoreable {
     // SpendStoreable
+    var getItemsDayForDate_returnValue: (items: [SpendItem_Data]?, error: SpendStoreError?)? = nil
     func getItems(date: Date) throws -> [SpendItem_Data] {
-        (0..<10).map { idx in
+        let returnValue = getItemsDayForDate_returnValue
+        if let items = returnValue?.items {
+            return items
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return (0..<10).map { idx in
             SpendItem_Data(
                 id: UUID(),
                 dayId: UUID(),
@@ -21,7 +29,15 @@ class MockSpendStore: SpendStoreable {
         }
     }
     
+    var getItemsDayForDates_returnValue: (items: [SpendItem_Data]?, error: SpendStoreError?)? = nil
     func getItems(dates: [Date]) throws -> [SpendItem_Data] {
+        let returnValue = getItemsDayForDates_returnValue
+        if let items = returnValue?.items {
+            return items
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
         return dates.compactMap { date in
             let dayString = date.formatted(.dateTime.day(.twoDigits))
             guard let day = Int(dayString) else {
@@ -48,39 +64,69 @@ class MockSpendStore: SpendStoreable {
         deleteItem_value = item
     }
     
+    var getDayForDate_returnValue: (day: SpendDay_Data?, error: SpendStoreError?)? = nil
     func getDay(date: Date) throws -> SpendDay_Data {
-        SpendDay_Data(
-            id: UUID(),
-            date: date,
-            items: try getItems(date: date),
-            isCommitted: false
-        )
+        let returnValue = getDayForDate_returnValue
+        if let day = returnValue?.day {
+            return day
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return .mock()
     }
     
+    var getDayForId_returnValue: (day: SpendDay_Data?, error: SpendStoreError?)? = nil
     func getDay(id: UUID) throws -> SpendDay_Data {
-        SpendDay_Data(
-            id: id,
-            date: Date(),
-            items: try getItems(date: Date()),
-            isCommitted: false
-        )
+        let returnValue = getDayForId_returnValue
+        if let day = returnValue?.day {
+            return day
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return .mock()
     }
     
+    var getUncommittedDays_returnValue: (days: [SpendDay_Data]?, error: SpendStoreError?)? = nil
     func getUncommittedDays() throws -> [SpendDay_Data] {
-        [.mock()]
+        let returnValue = getUncommittedDays_returnValue
+        if let days = returnValue?.days {
+            return days
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return [.mock()]
     }
     
+    var getAllMonths_returnValue: (months: [SpendMonth_Data]?, error: SpendStoreError?)? = nil
     func getAllMonths() throws -> [SpendMonth_Data] {
-        [.mock()]
+        let returnValue = getAllMonths_returnValue
+        if let months = returnValue?.months {
+            return months
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return [.mock()]
     }
     
+    var getMonth_returnValue: (month: SpendMonth_Data?, error: SpendStoreError?)? = nil
     func getMonth(date: Date) throws -> SpendMonth_Data {
-        .mock()
+        let returnValue = getMonth_returnValue
+        if let month = returnValue?.month {
+            return month
+        } else if let error = returnValue?.error {
+            throw error
+        }
+        
+        return .mock()
     }
     
-    private(set) var saveMonth_value: SpendMonth_Data? = nil
-    func saveMonth(_ month: SpendMonth_Data) throws {
-        saveMonth_value = month
+    private(set) var commitMonth_value: SpendMonth_Data? = nil
+    func commitMonth(_ month: SpendMonth_Data) throws {
+        commitMonth_value = month
     }
     
     private(set) var stageMonthData_flag: Bool = false

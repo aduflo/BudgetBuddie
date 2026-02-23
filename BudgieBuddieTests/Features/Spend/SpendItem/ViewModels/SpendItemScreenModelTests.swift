@@ -162,7 +162,7 @@ struct SpendItemScreenModelTests {
     @Test func test_delete_withMode_existing_invalid() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.deleteItem_throwValue = SpendRepositoryError.deleteItemFailed
+        spendRepository.deleteItem_throwValue = .deleteItemFailed
         let vm = SpendItemScreenModel(
             calendarService: MockCalendarService(),
             spendRepository: spendRepository,
@@ -312,7 +312,7 @@ struct SpendItemScreenModelTests {
     @Test func test_save_invalid_errored() {
         // Setup
         let spendRepository = MockSpendRepository()
-        spendRepository.saveItem_throwValue = SpendRepositoryError.saveItemFailed
+        spendRepository.saveItem_throwValue = .saveItemFailed
         let vm = SpendItemScreenModel(
             calendarService: MockCalendarService(),
             spendRepository: spendRepository,

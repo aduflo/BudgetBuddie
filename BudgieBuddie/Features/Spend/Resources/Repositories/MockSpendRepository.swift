@@ -11,7 +11,7 @@ class MockSpendRepository: SpendRepositable {
     // SpendRepositable
     func setup(calendarService: any CalendarServiceable, settingsService: any SettingsServiceable) throws {}
     
-    var getItemsForDate_returnValue: (items: [SpendItem]?, error: Error?)? = nil
+    var getItemsForDate_returnValue: (items: [SpendItem]?, error: SpendRepositoryError?)? = nil
     func getItems(date: Date) throws -> [SpendItem] {
         let returnValue = getItemsForDate_returnValue
         if let items = returnValue?.items {
@@ -22,7 +22,7 @@ class MockSpendRepository: SpendRepositable {
         return [.mock()]
     }
     
-    var getItemsForDates_returnValue: (items: [SpendItem]?, error: Error?)? = nil
+    var getItemsForDates_returnValue: (items: [SpendItem]?, error: SpendRepositoryError?)? = nil
     func getItems(dates: [Date]) throws -> [SpendItem] {
         let returnValue = getItemsForDates_returnValue
         if let items = returnValue?.items {
@@ -33,7 +33,7 @@ class MockSpendRepository: SpendRepositable {
         return [.mock()]
     }
     
-    var saveItem_throwValue: Error? = nil
+    var saveItem_throwValue: SpendRepositoryError? = nil
     private(set) var saveItem_value: SpendItem? = nil
     func saveItem(_ item: SpendItem) throws {
         if let saveItem_throwValue {
@@ -43,7 +43,7 @@ class MockSpendRepository: SpendRepositable {
         saveItem_value = item
     }
     
-    var deleteItem_throwValue: Error? = nil
+    var deleteItem_throwValue: SpendRepositoryError? = nil
     private(set) var deleteItem_value: SpendItem? = nil
     func deleteItem(_ item: SpendItem) throws {
         if let deleteItem_throwValue {
@@ -53,7 +53,7 @@ class MockSpendRepository: SpendRepositable {
         deleteItem_value = item
     }
     
-    var getDayForDate_returnValue: (day: SpendDay?, error: Error?)? = nil
+    var getDayForDate_returnValue: (day: SpendDay?, error: SpendRepositoryError?)? = nil
     func getDay(date: Date) throws -> SpendDay {
         let returnValue = getDayForDate_returnValue
         if let day = returnValue?.day {
@@ -65,7 +65,7 @@ class MockSpendRepository: SpendRepositable {
         return .mock()
     }
     
-    var getDayForId_returnValue: (day: SpendDay?, error: Error?)? = nil
+    var getDayForId_returnValue: (day: SpendDay?, error: SpendRepositoryError?)? = nil
     func getDay(id: UUID) throws -> SpendDay {
         let returnValue = getDayForId_returnValue
         if let day = returnValue?.day {
@@ -77,7 +77,7 @@ class MockSpendRepository: SpendRepositable {
         return .mock()
     }
     
-    var getAllMonths_returnValue: (months: [SpendMonth]?, error: Error?)? = nil
+    var getAllMonths_returnValue: (months: [SpendMonth]?, error: SpendRepositoryError?)? = nil
     func getAllMonths() throws -> [SpendMonth] {
         let returnValue = getAllMonths_returnValue
         if let months = returnValue?.months {
@@ -88,7 +88,7 @@ class MockSpendRepository: SpendRepositable {
         return [.mock()]
     }
     
-    var getMonth_returnValue: (spendMonth: SpendMonth?, error: Error?)? = nil
+    var getMonth_returnValue: (spendMonth: SpendMonth?, error: SpendRepositoryError?)? = nil
     func getMonth(date: Date) throws -> SpendMonth {
         let returnValue = getMonth_returnValue
         if let spendMonth = returnValue?.spendMonth {
