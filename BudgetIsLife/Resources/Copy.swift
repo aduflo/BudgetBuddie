@@ -135,16 +135,18 @@ extension Copy {
         """
         Welcome!
         
-        **\(Copy.appName)** is a simple budgeting app with two primary intents:
+        **\(Copy.appName)**, aka **\(Copy.appNameAcronym)**, is a simple budgeting app with two primary intents:
         
         1) To provide a bird's-eye view of your monthly expenses and savings
         2) To promote habit building budgeting behavior
         
         When using **\(Copy.appName)**, you simply log your expenses day-to-day. The logged expenses are attached to whichever day is selected and assist in the compilation of your _\(Copy.spendTrends)_.
         
-        When a month concludes, you will be shown a _\(Copy.monthSummaryTitle)_. Additionally, if you'd like to see how you've tended to your budget over time, you can view that in your _\(Copy.monthlyHistoryTitle)_.
+        When a month concludes, you will be shown a _\(Copy.monthSummaryTitle)_. If you'd like to see how you've tended to your budget over time, you can view that in your _\(Copy.monthlyHistoryTitle)_.
         
-        Lastly, there are visual cues to suggest how you are doing with your monthly expenses. To learn more about those, see _\(Copy.settingsTitle)_.
+        Additionally, there are visual cues to suggest how you are doing with your monthly expenses. To learn more about those, see _\(Copy.settingsTitle)_.
+        
+        By keeping the focus on manual entry, it is hoped a more intimate connection (with your spending) will be fostered.
         
         Enjoy and happy saving!
         """

@@ -28,6 +28,7 @@ struct OnboardingScreen: View {
                 Text(Copy.onboardingDescription)
                     .font(.body)
                     .foregroundStyle(.foregroundPrimary)
+                    .padding(.bottom, Padding.4)
             }
             .scrollIndicators(.hidden)
         }
@@ -35,7 +36,9 @@ struct OnboardingScreen: View {
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .padding(Padding.3)
+        .padding(.top, Padding.3)
+        .padding(.horizontal, Padding.3)
+        .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             screenModel.setDidOnboardOnce()
         }
