@@ -17,4 +17,5 @@ enum SystemImage {
     static let chartLineDowntrendXyaxis = "chart.line.downtrend.xyaxis"
     static let clockArrowTriangleheadCounterclockwiseRotate90 = "clock.arrow.trianglehead.counterclockwise.rotate.90"
     static let rectangle2Swap = "rectangle.2.swap"
+    static let keyboardChevronCompactDownFill = "keyboard.chevron.compact.down.fill"
 }

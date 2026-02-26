@@ -14,6 +14,9 @@ struct SpendItemScreen: View {
     @State private var note: String = ""
     @State private var isDeleteConfirmationAlertPresented: Bool = false
     
+    @FocusState private var isAmountFieldFocused: Bool
+    @FocusState private var isNoteFieldFocused: Bool
+    
     @Environment(\.dismiss) var dismiss
     
     // Constructors
@@ -69,12 +72,10 @@ struct SpendItemScreen: View {
             )
             .textFieldStyle(.roundedBorder)
             .keyboardType(.decimalPad)
+            .dismissingKeyboardToolbar(isFocused: $isAmountFieldFocused)
             .onChange(of: amount, { _, newValue in
                 screenModel.setAmount(newValue)
             })
-            .onSubmit {
-                screenModel.setAmount(amount)
-            }
         }
         .foregroundStyle(.foregroundPrimary)
     }
@@ -90,12 +91,10 @@ struct SpendItemScreen: View {
                 text: $note
             )
             .textFieldStyle(.roundedBorder)
+            .dismissingKeyboardToolbar(isFocused: $isNoteFieldFocused)
             .onChange(of: note, { _, newValue in
                 screenModel.setNote(newValue)
             })
-            .onSubmit {
-                screenModel.setNote(note)
-            }
         }
         .foregroundStyle(.foregroundPrimary)
     }

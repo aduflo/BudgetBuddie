@@ -1,9 +1,4 @@
-### TODO:
-Before RC:
-- QA + find bugs
-- cut 1.0 RC March, if greenlight
-
-Feature backlog:
+### Feature backlog:
 - widget
   - shows daily trends
   - has buttons for quick amounts ($5, $10, $20) and checkmark to save

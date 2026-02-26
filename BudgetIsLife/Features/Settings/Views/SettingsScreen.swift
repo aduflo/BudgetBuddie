@@ -13,6 +13,8 @@ struct SettingsScreen: View {
     @State private var monthlyAllowance: Decimal? = nil
     @State private var warningThreshold: Double = 0.0
     
+    @FocusState private var isMonthlyAllowanceFieldFocused: Bool
+    
     // Constructors
     init(
         viewModel: SettingsScreenModel
@@ -105,12 +107,10 @@ struct SettingsScreen: View {
             )
             .textFieldStyle(.roundedBorder)
             .keyboardType(.decimalPad)
-            .onChange(of: monthlyAllowance, { oldValue, newValue in
-                screenModel.setMonthlyAllowance(monthlyAllowance)
+            .dismissingKeyboardToolbar(isFocused: $isMonthlyAllowanceFieldFocused)
+            .onChange(of: monthlyAllowance, { _, newValue in
+                screenModel.setMonthlyAllowance(newValue)
             })
-            .onSubmit {
-                screenModel.setMonthlyAllowance(monthlyAllowance)
-            }
             
             Text(Copy.monthlyAllowanceFootnote)
                 .font(.footnote)

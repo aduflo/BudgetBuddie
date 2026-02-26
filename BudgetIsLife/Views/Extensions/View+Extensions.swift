@@ -25,4 +25,23 @@ extension View {
             )
         )
     }
+    
+    func dismissingKeyboardToolbar(
+        isFocused: FocusState<Bool>.Binding
+    ) -> some View {
+        focused(isFocused)
+        .toolbar {
+            ToolbarItem(
+                placement: .keyboard
+            ) {
+                if isFocused.wrappedValue {
+                    Button(
+                        TitleKey.Button.dismissKeyboard,
+                        systemImage: SystemImage.keyboardChevronCompactDownFill,
+                        action: { isFocused.wrappedValue = false }
+                    )
+                }
+            }
+        }
+    }
 }
