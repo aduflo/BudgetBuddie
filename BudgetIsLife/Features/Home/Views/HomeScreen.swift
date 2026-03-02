@@ -34,11 +34,10 @@ struct HomeScreen: View {
                 listView
                 footerView
             }
+            .padding(.top, Padding.half)
             .padding(.bottom, Padding.4)
+            .padding(.horizontal, Padding.2)
         }
-        .scrollIndicators(.hidden)
-        .padding(.top, Padding.half)
-        .padding(.horizontal, Padding.2)
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             setupHandlers()

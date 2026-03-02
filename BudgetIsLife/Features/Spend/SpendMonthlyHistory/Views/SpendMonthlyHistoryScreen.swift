@@ -20,7 +20,6 @@ struct SpendMonthlyHistoryScreen: View {
             contentView
         }
         .padding(.top, Padding.2)
-        .padding(.horizontal, Padding.2)
     }
     
     var headerView: some View {
@@ -62,6 +61,7 @@ struct SpendMonthlyHistoryScreen: View {
                 }
             }
         }
+        .padding(.horizontal, Padding.2)
         .pickerStyle(.segmented)
         .foregroundStyle(.foregroundPrimary)
     }
@@ -107,6 +107,7 @@ struct SpendMonthlyHistoryScreen: View {
             .font(.footnote)
             .foregroundStyle(.foregroundPrimary)
             .multilineTextAlignment(.center)
+            .padding(.horizontal, Padding.2)
     }
     
     var listView: some View {
@@ -121,8 +122,8 @@ struct SpendMonthlyHistoryScreen: View {
                     )
                 }
             }
+            .padding(.horizontal, Padding.2)
         }
-        .scrollIndicators(.hidden)
     }
 }
 

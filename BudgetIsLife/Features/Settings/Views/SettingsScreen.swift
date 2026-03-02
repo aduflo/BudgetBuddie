@@ -29,7 +29,7 @@ struct SettingsScreen: View {
             headerView
             contentView
         }
-        .padding(Padding.2)
+        .padding(.vertical, Padding.2)
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             if screenModel.monthlyAllowance > 0.0 {
@@ -64,8 +64,8 @@ struct SettingsScreen: View {
                 versionView
             }
             .padding(.vertical, Padding.3)
+            .padding(.horizontal, Padding.2)
         }
-        .scrollIndicators(.hidden)
     }
     
     var defaultSpendTrendViewpointPickerView: some View {

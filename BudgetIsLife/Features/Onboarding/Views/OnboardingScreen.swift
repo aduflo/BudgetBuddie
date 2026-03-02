@@ -19,26 +19,25 @@ struct OnboardingScreen: View {
     }
     
     var body: some View {
-        VStack(
-            spacing: Spacing.2
-        ) {
-            AppIconView()
-            
-            ScrollView(.vertical) {
+        ScrollView(.vertical) {
+            VStack(
+                spacing: Spacing.2
+            ) {
+                AppIconView()
+                
                 Text(Copy.onboardingDescription)
                     .font(.body)
                     .foregroundStyle(.foregroundPrimary)
-                    .padding(.bottom, Padding.4)
             }
-            .scrollIndicators(.hidden)
+            .padding(.top, Padding.3)
+            .padding(.horizontal, Padding.3)
+            .padding(.bottom, Padding.4)
         }
+        .ignoresSafeArea(.container, edges: .bottom)
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .padding(.top, Padding.3)
-        .padding(.horizontal, Padding.3)
-        .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             screenModel.setDidOnboardOnce()
         }
