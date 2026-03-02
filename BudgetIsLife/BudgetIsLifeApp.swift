@@ -16,8 +16,6 @@ struct BudgetIsLifeApp: App {
     let currencyFormatter: CurrencyFormatter
     let spendRepository: SpendRepositable
     
-    @Environment(\.scenePhase) private var scenePhase
-    
     // Constructors
     init() {
         // initialize instance vars
