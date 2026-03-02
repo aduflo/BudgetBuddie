@@ -34,10 +34,10 @@ struct HomeScreen: View {
                 listView
                 footerView
             }
-            .padding(.top, Padding.half)
             .padding(.bottom, Padding.4)
             .padding(.horizontal, Padding.2)
         }
+        .padding(.top, Padding.half) // inclusion of top padding (here) enforces white space around status bar / Dynamic Island
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             setupHandlers()
