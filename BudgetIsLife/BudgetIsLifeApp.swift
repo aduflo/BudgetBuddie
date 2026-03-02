@@ -50,15 +50,21 @@ struct BudgetIsLifeApp: App {
                     currencyFormatter: currencyFormatter
                 )
             )
-            .onChange(of: scenePhase) { _, newValue in
-                if newValue == .active {
-                    // need to call refresh() on foreground (.active),
-                    // in case we had app in background on previous day
-                    // and re-opened app on new day (which also could be first day of new month),
-                    // so that UI can reflect most up-to-date data
-                    refresh()
-                }
+            .onAppear {
+                reloadData()
             }
+            .onReceive(
+                NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification),
+                perform: { _ in
+                    Task { await MainActor.run {
+                        // need to call reloadData() on foreground,
+                        // in case we had app in background on previous day
+                        // and re-opened app on new day
+                        // so that UI can reflect most up-to-date data
+                        reloadData()
+                    }}
+                }
+            )
         }
     }
 }
@@ -67,14 +73,13 @@ struct BudgetIsLifeApp: App {
 private extension BudgetIsLifeApp {
     func start() {
         startDependencies()
-        refresh()
     }
     
     func startDependencies() {
         ObservabilityService.start()
     }
     
-    func refresh() {
+    func reloadData() {
         do {
             calendarService.updateTodayDate(Date())
             try spendRepository.setup(
