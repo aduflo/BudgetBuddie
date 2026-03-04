@@ -1,7 +1,7 @@
 ### Feature backlog:
 - widget
-  - shows daily trends
-  - has buttons for quick amounts ($5, $10, $20) and checkmark to save
+  - trends (daily, mtd, monthly) as a collective large variant, or small variants for each
+  - interactable variant: has buttons for quick amounts ($5, $10, $20) and checkmark to save
 - currency dropdown; USD, CAD…
   - Need to add notification and have appropriate views react
 - add notion of Category to SpendItem
