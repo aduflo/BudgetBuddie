@@ -16,6 +16,7 @@
 - https://developer.apple.com/documentation/widgetkit/building_widgets_using_widgetkit_and_swiftui
 - https://developer.apple.com/documentation/widgetkit/adding-interactivity-to-widgets-and-live-activities
 - https://developer.apple.com/documentation/widgetkit/animating-data-updates-in-widgets-and-live-activities
+- https://www.hackingwithswift.com/quick-start/swiftdata/how-to-access-a-swiftdata-container-from-widgets
 
 // app icon
 - https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
