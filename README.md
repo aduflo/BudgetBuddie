@@ -18,14 +18,14 @@
 - https://developer.apple.com/documentation/widgetkit/animating-data-updates-in-widgets-and-live-activities
 - https://www.hackingwithswift.com/quick-start/swiftdata/how-to-access-a-swiftdata-container-from-widgets
 
-// app icon
-- https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
-- https://developer.apple.com/documentation/xcode/creating-your-app-icon-using-icon-composer/
-
 // swift data
 - https://developer.apple.com/documentation/swiftdata/syncing-model-data-across-a-persons-devices
 - https://www.donnywals.com/a-deep-dive-into-swiftdata-migrations/
 - https://medium.com/@tungvt.it.01/%EF%B8%8F-migrating-swiftdata-models-how-to-handle-complex-changes-safely-00a28b2859c1
+
+// app icon
+- https://developer.apple.com/design/human-interface-guidelines/app-icons#Specifications
+- https://developer.apple.com/documentation/xcode/creating-your-app-icon-using-icon-composer/
 
 // misc.
 - https://developer.apple.com/design/human-interface-guidelines/typography
