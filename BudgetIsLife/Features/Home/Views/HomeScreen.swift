@@ -41,6 +41,7 @@ struct HomeScreen: View {
         .ignoresSafeArea(.container, edges: .bottom)
         .onAppear {
             setupHandlers()
+            presentOnboardingIfNeeded()
         }
         .onReceive(
             NotificationCenter.default.publisher(for: .SpendRepositoryDidCommitStagedMonth),
@@ -165,10 +166,12 @@ struct HomeScreen: View {
 
 // MARK: Private interface
 private extension HomeScreen {
-    func setupHandlers() {
+    func presentOnboardingIfNeeded() {
         // flip onboarding presentation if need be
         presentOnboarding = screenModel.didOnboardOnce == false
-        
+    }
+    
+    func setupHandlers() {
         // assign closures to facilitate presentables
         screenModel.spendSummaryViewModel.onSettingsTapped = {
             presentSettings.toggle()
