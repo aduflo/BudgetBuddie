@@ -89,8 +89,7 @@ private extension CalendarViewModel {
     }
     
     func monthDay(for date: Date) -> MonthDay? {
-        let dayInMonth = Calendar.current.dayInDate(date)
-        return monthDays.first { $0.day == dayInMonth }
+        monthDays.first { $0.date.isSameDayAs(date) }
     }
 }
 

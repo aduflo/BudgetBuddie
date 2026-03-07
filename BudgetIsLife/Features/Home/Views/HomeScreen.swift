@@ -167,7 +167,6 @@ struct HomeScreen: View {
 // MARK: Private interface
 private extension HomeScreen {
     func presentOnboardingIfNeeded() {
-        // flip onboarding presentation if need be
         presentOnboarding = screenModel.didOnboardOnce == false
     }
     
