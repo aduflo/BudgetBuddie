@@ -66,16 +66,14 @@ private extension SpendTrendsViewModel {
             viewpoint: .spendAllowance,
             title: title,
             spend: 0,
-            allowance: 0,
-            remaining: 0
+            allowance: 0
         )
     }
     
     func trendViewModelBuilder(
         title: String,
         spend: Decimal,
-        allowance: Decimal,
-        remaining: Decimal
+        allowance: Decimal
     ) -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: settingsService,
@@ -83,8 +81,7 @@ private extension SpendTrendsViewModel {
             viewpoint: viewpoint,
             title: title,
             spend: spend,
-            allowance: allowance,
-            remaining: remaining
+            allowance: allowance
         )
     }
     
@@ -92,8 +89,7 @@ private extension SpendTrendsViewModel {
         trendViewModelBuilder(
             title: Copy.daily,
             spend: dailySpend,
-            allowance: dailyAllowance,
-            remaining: dailyRemaining
+            allowance: dailyAllowance
         )
     }
     
@@ -101,8 +97,7 @@ private extension SpendTrendsViewModel {
         trendViewModelBuilder(
             title: Copy.monthToDate,
             spend: mtdSpend,
-            allowance: mtdAllowance,
-            remaining: mtdRemaining
+            allowance: mtdAllowance
         )
     }
     
@@ -110,12 +105,11 @@ private extension SpendTrendsViewModel {
         trendViewModelBuilder(
             title: Copy.monthly,
             spend: monthlySpend,
-            allowance: monthlyAllowance,
-            remaining: monthlyRemaining
+            allowance: monthlyAllowance
         )
     }
     
-    // spend/allowance/remaining vars
+    // spend/allowance vars
     var dailySpend: Decimal {
         do {
             let items = try spendRepository.getItems(
@@ -166,20 +160,6 @@ private extension SpendTrendsViewModel {
     
     var monthlyAllowance: Decimal {
         settingsService.monthlyAllowance
-    }
-    
-    var dailyRemaining: Decimal {
-        let remaining = dailyAllowance - dailySpend
-        return min(remaining, monthlyRemaining)
-    }
-    
-    var mtdRemaining: Decimal {
-        let remaining = mtdAllowance - mtdSpend
-        return min(remaining, monthlyRemaining)
-    }
-    
-    var monthlyRemaining: Decimal {
-        monthlyAllowance - monthlySpend
     }
 }
 

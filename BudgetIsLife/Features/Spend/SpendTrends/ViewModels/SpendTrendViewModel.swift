@@ -16,7 +16,6 @@ class SpendTrendViewModel {
     let title: String
     let spend: Decimal
     let allowance: Decimal
-    let remaining: Decimal
     
     // Constructors
     init(
@@ -25,8 +24,7 @@ class SpendTrendViewModel {
         viewpoint: SpendTrendViewpoint,
         title: String,
         spend: Decimal,
-        allowance: Decimal,
-        remaining: Decimal
+        allowance: Decimal
     ) {
         self.settingsService = settingsService
         self.currencyFormatter = currencyFormatter
@@ -34,7 +32,6 @@ class SpendTrendViewModel {
         self.title = title
         self.spend = spend
         self.allowance = allowance
-        self.remaining = remaining
     }
 }
 
@@ -69,13 +66,20 @@ extension SpendTrendViewModel {
     }
     
     func evaluateBudget() -> SpendTrendEvaluation {
-        let percentage = spend / allowance
+        let spendPercentage = spend / allowance
         let warningThreshold = Decimal(floatLiteral: settingsService.warningThreshold)
-        return switch percentage {
+        return switch spendPercentage {
         case 0.0..<warningThreshold: .acceptable
         case warningThreshold..<1.0: .encroaching
         default: .exceeded
         }
+    }
+}
+
+// MARK: Private interface
+private extension SpendTrendViewModel {
+    var remaining: Decimal {
+        allowance - spend
     }
 }
 
@@ -92,8 +96,7 @@ extension SpendTrendViewModel {
             viewpoint: viewpoint,
             title: Copy.budgetTrend,
             spend: 40.00,
-            allowance: 50.00,
-            remaining: 10.00
+            allowance: 50.00
         )
     }
     
@@ -108,8 +111,7 @@ extension SpendTrendViewModel {
             viewpoint: viewpoint,
             title: Copy.budgetTrend,
             spend: 80.00,
-            allowance: 100.00,
-            remaining: 20.00
+            allowance: 100.00
         )
     }
     
@@ -120,8 +122,7 @@ extension SpendTrendViewModel {
             viewpoint: viewpoint,
             title: Copy.budgetTrend,
             spend: 9000.01,
-            allowance: 9000.00,
-            remaining: -0.01
+            allowance: 9000.00
         )
     }
 }
