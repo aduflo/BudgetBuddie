@@ -122,7 +122,7 @@ private extension SpendTrendsViewModel {
         )
     }
     
-    // spend/allowance vars
+    // spend/allowance/surplus vars
     var dailySpend: Decimal {
         do {
             let items = try spendRepository.getItems(
