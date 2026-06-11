@@ -47,20 +47,59 @@ extension Calendar {
     }
     
     /// Get all dates associated with the month
-    /// - Returns: All month days, represented as `Date`
+    /// - Returns: Days represented as `Date`
     func monthDates(_ date: Date) -> [Date] {
-        let dayRange = range(
+        guard let dayRange = range(
             of: .day,
             in: .month,
             for: date
-        )
+        ) else { return [] }
+        
         var dateComponents = dateComponents(
             [.day, .month, .year],
             from: date
         )
-        return dayRange?.compactMap {
+        return dayRange.compactMap {
             dateComponents.day = $0
             return self.date(from: dateComponents)
-        } ?? []
+        }
+    }
+    
+    /// Get all dates associated with the month, up to and including the provided date
+    /// - Returns: Days represented as `Date`
+    func monthDatesUpTo(_ date: Date) -> [Date] {
+        let startOfMonthComponents = dateComponents([.year, .month], from: date)
+        guard let startOfMonth = self.date(from: startOfMonthComponents) else {
+            return []
+        }
+        
+        let dayRange = dayInDate(startOfMonth)...dayInDate(date)
+        var dateComponents = dateComponents(
+            [.day, .month, .year],
+            from: date
+        )
+        return dayRange.compactMap {
+            dateComponents.day = $0
+            return self.date(from: dateComponents)
+        }
+    }
+    
+    /// Get all dates associated with the month, up to but _not_ including the provided date
+    /// - Returns: Days represented as `Date`
+    func monthDatesPriorTo(_ date: Date) -> [Date] {
+        let startOfMonthComponents = dateComponents([.year, .month], from: date)
+        guard let startOfMonth = self.date(from: startOfMonthComponents) else {
+            return []
+        }
+        
+        let dayRange = dayInDate(startOfMonth)..<dayInDate(date)
+        var dateComponents = dateComponents(
+            [.day, .month, .year],
+            from: date
+        )
+        return dayRange.compactMap {
+            dateComponents.day = $0
+            return self.date(from: dateComponents)
+        }
     }
 }

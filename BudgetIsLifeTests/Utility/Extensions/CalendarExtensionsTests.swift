@@ -185,4 +185,72 @@ struct CalendarExtensionsTests {
         #expect(monthDates1.count == 31)
         #expect(monthDates2.count == 28)
     }
+    
+    // MARK: - monthDatesUpTo()
+    @Test func test_monthDatesUpTo() throws {
+        // Setup
+        let calendar = Calendar.current
+        let dateComponents1 = DateComponents(
+            timeZone: calendar.timeZone,
+            year: 01,
+            month: 01,
+            day: 01
+        )
+        let dateComponents2 = DateComponents(
+            timeZone: calendar.timeZone,
+            year: 01,
+            month: 01,
+            day: 10
+        )
+        
+        // Scenario
+        guard let date1 = calendar.date(from: dateComponents1) else {
+            Issue.record("could not compose date1")
+            return
+        }
+        guard let date2 = calendar.date(from: dateComponents2) else {
+            Issue.record("could not compose date1")
+            return
+        }
+        let monthDates1 = Calendar.current.monthDatesUpTo(date1)
+        let monthDates2 = Calendar.current.monthDatesUpTo(date2)
+        
+        // Verification
+        #expect(monthDates1.count == 1)
+        #expect(monthDates2.count == 10)
+    }
+    
+    // MARK: - monthDatesPriorTo()
+    @Test func test_monthDatesPriorTo() throws {
+        // Setup
+        let calendar = Calendar.current
+        let dateComponents1 = DateComponents(
+            timeZone: calendar.timeZone,
+            year: 01,
+            month: 01,
+            day: 01
+        )
+        let dateComponents2 = DateComponents(
+            timeZone: calendar.timeZone,
+            year: 01,
+            month: 01,
+            day: 10
+        )
+        
+        // Scenario
+        guard let date1 = calendar.date(from: dateComponents1) else {
+            Issue.record("could not compose date1")
+            return
+        }
+        guard let date2 = calendar.date(from: dateComponents2) else {
+            Issue.record("could not compose date1")
+            return
+        }
+        let monthDates1 = Calendar.current.monthDatesPriorTo(date1)
+        let monthDates2 = Calendar.current.monthDatesPriorTo(date2)
+        
+        // Verification
+        #expect(monthDates1.count == 0)
+        #expect(monthDates2.count == 9)
+    }
 }

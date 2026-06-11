@@ -19,6 +19,7 @@ class SpendTrendsViewModel {
     private(set) var dailyTrendViewModel: SpendTrendViewModel
     private(set) var mtdTrendViewModel: SpendTrendViewModel
     private(set) var monthlyTrendViewModel: SpendTrendViewModel
+    private(set) var surplusTrendViewModel: SpendTrendViewModel
     
     // Constructors
     init(
@@ -35,6 +36,7 @@ class SpendTrendsViewModel {
         dailyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.daily)
         mtdTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthToDate)
         monthlyTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthly)
+        surplusTrendViewModel = Self.placeholderTrendViewModelBuilder(title: Copy.monthly)
         reloadData()
     }
 }
@@ -53,6 +55,7 @@ extension SpendTrendsViewModel {
         dailyTrendViewModel = dailyTrendViewModelBuilder()
         mtdTrendViewModel = mtdTrendViewModelBuilder()
         monthlyTrendViewModel = monthlyTrendViewModelBuilder()
+        surplusTrendViewModel = surplusTrendViewModelBuilder()
     }
 }
 
@@ -66,14 +69,16 @@ private extension SpendTrendsViewModel {
             viewpoint: .spendAllowance,
             title: title,
             spend: 0,
-            allowance: 0
+            allowance: 0,
+            surplus: 0
         )
     }
     
     func trendViewModelBuilder(
         title: String,
-        spend: Decimal,
-        allowance: Decimal
+        spend: Decimal = 0,
+        allowance: Decimal = 0,
+        surplus: Decimal = 0
     ) -> SpendTrendViewModel {
         SpendTrendViewModel(
             settingsService: settingsService,
@@ -81,7 +86,8 @@ private extension SpendTrendsViewModel {
             viewpoint: viewpoint,
             title: title,
             spend: spend,
-            allowance: allowance
+            allowance: allowance,
+            surplus: surplus
         )
     }
     
@@ -106,6 +112,13 @@ private extension SpendTrendsViewModel {
             title: Copy.monthly,
             spend: monthlySpend,
             allowance: monthlyAllowance
+        )
+    }
+    
+    func surplusTrendViewModelBuilder() -> SpendTrendViewModel {
+        trendViewModelBuilder(
+            title: Copy.monthly,
+            surplus: surplus
         )
     }
     
@@ -160,6 +173,20 @@ private extension SpendTrendsViewModel {
     
     var monthlyAllowance: Decimal {
         settingsService.monthlyAllowance
+    }
+    
+    var surplus: Decimal {
+        do {
+            let monthDates = Calendar.current.monthDatesPriorTo(calendarService.todayDate)
+            let spend = try spendRepository
+                .getItems(dates: Array(monthDates))
+                .reduce(0, { $0 + $1.amount })
+            let allowance = dailyAllowance * Decimal(monthDates.count)
+            let difference = allowance - spend
+            return max(difference, 0)
+        } catch {
+            return 0
+        }
     }
 }
 

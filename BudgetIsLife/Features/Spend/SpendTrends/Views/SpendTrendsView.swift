@@ -77,17 +77,24 @@ struct SpendTrendsView: View {
             alignment: .leading,
             spacing: Spacing.1
         ) {
-            SpendTrendView(
-                viewModel: viewModel.dailyTrendViewModel
-            )
-            Divider()
-            SpendTrendView(
-                viewModel: viewModel.mtdTrendViewModel
-            )
-            Divider()
-            SpendTrendView(
-                viewModel: viewModel.monthlyTrendViewModel
-            )
+            if viewModel.viewpoint == .surplus {
+                SpendTrendView(
+                    viewModel: viewModel.surplusTrendViewModel
+                )
+                Spacer()
+            } else {
+                SpendTrendView(
+                    viewModel: viewModel.dailyTrendViewModel
+                )
+                Divider()
+                SpendTrendView(
+                    viewModel: viewModel.mtdTrendViewModel
+                )
+                Divider()
+                SpendTrendView(
+                    viewModel: viewModel.monthlyTrendViewModel
+                )
+            }
         }
     }
     
@@ -107,8 +114,50 @@ struct SpendTrendsView: View {
     }
 }
 
-#Preview {
+#Preview("viewpoint: .spendAllowance") {
     SpendTrendsView(
-        viewModel: .mock()
+        viewModel: {
+            let settingsService = MockSettingsService()
+            settingsService.setDefaultSpendTrendViewpoint(.spendAllowance)
+            let vm = SpendTrendsViewModel(
+                settingsService: settingsService,
+                calendarService: MockCalendarService(),
+                spendRepository: MockSpendRepository(),
+                currencyFormatter: CurrencyFormatter()
+            )
+            return vm
+        }()
+    )
+}
+
+#Preview("viewpoint: .remainingOverspend") {
+    SpendTrendsView(
+        viewModel: {
+            let settingsService = MockSettingsService()
+            settingsService.setDefaultSpendTrendViewpoint(.remainingOverspend)
+            let vm = SpendTrendsViewModel(
+                settingsService: settingsService,
+                calendarService: MockCalendarService(),
+                spendRepository: MockSpendRepository(),
+                currencyFormatter: CurrencyFormatter()
+            )
+            return vm
+        }()
+    )
+}
+
+#Preview("viewpoint: .surplus") {
+    SpendTrendsView(
+        viewModel: {
+            let settingsService = MockSettingsService()
+            settingsService.setDefaultSpendTrendViewpoint(.surplus)
+            let vm = SpendTrendsViewModel(
+                settingsService: settingsService,
+                calendarService: MockCalendarService(),
+                spendRepository: MockSpendRepository(),
+                currencyFormatter: CurrencyFormatter()
+            )
+            return vm
+        }()
     )
 }

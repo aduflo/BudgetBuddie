@@ -16,6 +16,7 @@ class SpendTrendViewModel {
     let title: String
     let spend: Decimal
     let allowance: Decimal
+    let surplus: Decimal
     
     // Constructors
     init(
@@ -24,7 +25,8 @@ class SpendTrendViewModel {
         viewpoint: SpendTrendViewpoint,
         title: String,
         spend: Decimal,
-        allowance: Decimal
+        allowance: Decimal,
+        surplus: Decimal
     ) {
         self.settingsService = settingsService
         self.currencyFormatter = currencyFormatter
@@ -32,6 +34,7 @@ class SpendTrendViewModel {
         self.title = title
         self.spend = spend
         self.allowance = allowance
+        self.surplus = surplus
     }
 }
 
@@ -53,6 +56,10 @@ extension SpendTrendViewModel {
         }
     }
     
+    var surplusHeadline: String {
+        Copy.surplus
+    }
+    
     var displaySpend: String {
         currencyFormatter.stringAmount(spend)
     }
@@ -65,6 +72,10 @@ extension SpendTrendViewModel {
         currencyFormatter.stringAmount(remaining)
     }
     
+    var displaySurplus: String {
+        currencyFormatter.stringAmount(surplus)
+    }
+    
     func evaluateBudget() -> SpendTrendEvaluation {
         let spendPercentage = spend / allowance
         let warningThreshold = Decimal(floatLiteral: settingsService.warningThreshold)
@@ -73,6 +84,10 @@ extension SpendTrendViewModel {
         case warningThreshold..<1.0: .encroaching
         default: .exceeded
         }
+    }
+    
+    var isSurplusAvailable: Bool {
+        surplus > 0
     }
 }
 
@@ -96,7 +111,8 @@ extension SpendTrendViewModel {
             viewpoint: viewpoint,
             title: Copy.budgetTrend,
             spend: 40.00,
-            allowance: 50.00
+            allowance: 50.00,
+            surplus: 10.00
         )
     }
     
@@ -111,7 +127,8 @@ extension SpendTrendViewModel {
             viewpoint: viewpoint,
             title: Copy.budgetTrend,
             spend: 80.00,
-            allowance: 100.00
+            allowance: 100.00,
+            surplus: 20.00
         )
     }
     
@@ -122,7 +139,8 @@ extension SpendTrendViewModel {
             viewpoint: viewpoint,
             title: Copy.budgetTrend,
             spend: 9000.01,
-            allowance: 9000.00
+            allowance: 9000.00,
+            surplus: 0.00
         )
     }
 }

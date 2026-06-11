@@ -34,6 +34,7 @@ extension Copy {
     static let allowance = "Allowance"
     static let remaining = "Remaining"
     static let overspend = "Overspend"
+    static let surplus = "Surplus"
     static let spendItems = "Spend items"
     static let summary = "Summary"
     static let days = "Days"

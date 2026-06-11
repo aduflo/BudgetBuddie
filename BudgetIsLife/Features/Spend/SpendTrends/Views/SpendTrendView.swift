@@ -32,6 +32,8 @@ struct SpendTrendView: View {
                 spendAllowanceView
             case .remainingOverspend:
                 remainingOverspendView
+            case .surplus:
+                surplusView
             }
         }
     }
@@ -77,6 +79,26 @@ struct SpendTrendView: View {
             Text(viewModel.displayRemainingOverspend)
                 .foregroundStyle(budgetColor)
         }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+    }
+    
+    var surplusView: some View {
+        VStack(
+            alignment: .leading,
+            spacing: Spacing.half
+        ) {
+            Text(viewModel.surplusHeadline)
+                .foregroundStyle(.foregroundPrimary)
+            Text(viewModel.displaySurplus)
+                .foregroundStyle(surplusColor)
+        }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
     }
     
     var budgetColor: Color {
@@ -84,6 +106,14 @@ struct SpendTrendView: View {
         case .acceptable: Color.green
         case .encroaching: Color.orange
         case .exceeded: Color.red
+        }
+    }
+    
+    var surplusColor: Color {
+        if viewModel.isSurplusAvailable {
+            Color.green
+        } else {
+            Color.red
         }
     }
 }
@@ -104,6 +134,14 @@ struct SpendTrendView: View {
     )
 }
 
+#Preview("Acceptable; surplus") {
+    SpendTrendView(
+        viewModel: .mockAcceptable(
+            viewpoint: .surplus
+        )
+    )
+}
+
 #Preview("Encroaching; spendAllowance") {
     SpendTrendView(
         viewModel: .mockEncroaching(
@@ -120,6 +158,14 @@ struct SpendTrendView: View {
     )
 }
 
+#Preview("Encroaching; surplus") {
+    SpendTrendView(
+        viewModel: .mockEncroaching(
+            viewpoint: .surplus
+        )
+    )
+}
+
 #Preview("Exceeded; spendAllowance") {
     SpendTrendView(
         viewModel: .mockExceeded(
@@ -132,6 +178,14 @@ struct SpendTrendView: View {
     SpendTrendView(
         viewModel: .mockExceeded(
             viewpoint: .remainingOverspend
+        )
+    )
+}
+
+#Preview("Exceeded; surplus") {
+    SpendTrendView(
+        viewModel: .mockExceeded(
+            viewpoint: .surplus
         )
     )
 }

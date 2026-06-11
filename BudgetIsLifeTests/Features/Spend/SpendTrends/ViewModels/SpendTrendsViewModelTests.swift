@@ -66,6 +66,7 @@ struct SpendTrendsViewModelTests {
         let dailyTrendViewModel = vm.dailyTrendViewModel
         let mtdTrendViewModel = vm.mtdTrendViewModel
         let monthlyTrendViewModel = vm.monthlyTrendViewModel
+        let surplusTrendViewModel = vm.surplusTrendViewModel
         
         // Scenario
         vm.reloadData()
@@ -74,5 +75,6 @@ struct SpendTrendsViewModelTests {
         #expect(vm.dailyTrendViewModel !== dailyTrendViewModel)
         #expect(vm.mtdTrendViewModel !== mtdTrendViewModel)
         #expect(vm.monthlyTrendViewModel !== monthlyTrendViewModel)
+        #expect(vm.surplusTrendViewModel !== surplusTrendViewModel)
     }
 }

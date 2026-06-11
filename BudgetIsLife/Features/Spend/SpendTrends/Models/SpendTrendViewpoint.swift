@@ -10,28 +10,35 @@ import Foundation
 enum SpendTrendViewpoint: Int {
     case spendAllowance
     case remainingOverspend
+    case surplus
 }
 
 // MARK: Public interface
 extension SpendTrendViewpoint {
     mutating func cycle() {
-        let currentRawValue = rawValue
-        let newRawValue = currentRawValue + 1
-        if let newValue = SpendTrendViewpoint(rawValue: newRawValue) {
-            self = newValue
-        } else if let firstCaseValue = SpendTrendViewpoint(rawValue: 0) {
-            self = firstCaseValue
+        let newValue: Self? = if let nextValue = Self(rawValue: rawValue + 1) {
+            nextValue
+        } else if let firstValue = Self(rawValue: 0) {
+            firstValue
         } else {
-            self = .spendAllowance
+            nil // initialization failed
         }
+        
+        guard let newValue else {
+            return
+        }
+        
+        self = newValue
     }
     
     var displayValue: String {
         switch self {
         case .spendAllowance:
-            "\(Copy.spend) / \(Copy.allowance)"
+            Copy.spend
         case .remainingOverspend:
-            "\(Copy.remaining) / \(Copy.overspend)"
+            Copy.remaining
+        case .surplus:
+            Copy.surplus
         }
     }
 }

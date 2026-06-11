@@ -15,20 +15,24 @@ struct SpendTrendViewpointTests {
         // Setup
         var viewpoint1: SpendTrendViewpoint = .spendAllowance
         var viewpoint2: SpendTrendViewpoint = .remainingOverspend
+        var viewpoint3: SpendTrendViewpoint = .surplus
         
         // Scenario
         viewpoint1.cycle()
         viewpoint2.cycle()
+        viewpoint3.cycle()
         
         // Verification
         #expect(viewpoint1 == .remainingOverspend)
-        #expect(viewpoint2 == .spendAllowance)
+        #expect(viewpoint2 == .surplus)
+        #expect(viewpoint3 == .spendAllowance)
     }
     
     // MARK: - displayValue
     @Test func test_displayValue() {
         // Verification
-        #expect(SpendTrendViewpoint.spendAllowance.displayValue == "Spend / Allowance")
-        #expect(SpendTrendViewpoint.remainingOverspend.displayValue == "Remaining / Overspend")
+        #expect(SpendTrendViewpoint.spendAllowance.displayValue == "Spend")
+        #expect(SpendTrendViewpoint.remainingOverspend.displayValue == "Remaining")
+        #expect(SpendTrendViewpoint.surplus.displayValue == "Surplus")
     }
 }
