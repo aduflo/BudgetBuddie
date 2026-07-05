@@ -92,10 +92,11 @@ private extension SpendTrendsViewModel {
     }
     
     func dailyTrendViewModelBuilder() -> SpendTrendViewModel {
-        trendViewModelBuilder(
+        let date = calendarService.selectedDate
+        return trendViewModelBuilder(
             title: Copy.daily,
-            spend: dailySpend,
-            allowance: dailyAllowance
+            spend: dailySpend(date: date),
+            allowance: dailyAllowance(date: date)
         )
     }
     
@@ -122,11 +123,11 @@ private extension SpendTrendsViewModel {
         )
     }
     
-    // spend/allowance/surplus vars
-    var dailySpend: Decimal {
+    // spend/allowance/surplus
+    func dailySpend(date: Date) -> Decimal {
         do {
             let items = try spendRepository.getItems(
-                date: calendarService.selectedDate
+                date: date
             )
             return items.reduce(0, { $0 + $1.amount})
         } catch {
@@ -161,14 +162,15 @@ private extension SpendTrendsViewModel {
         }
     }
     
-    var dailyAllowance: Decimal {
-        let days = Calendar.current.daysInMonthInDate(calendarService.selectedDate)
+    func dailyAllowance(date: Date) -> Decimal {
+        let days = Calendar.current.daysInMonthInDate(date)
         return monthlyAllowance / Decimal(days)
     }
     
     var mtdAllowance: Decimal {
-        let day = Calendar.current.dayInDate(calendarService.selectedDate)
-        return dailyAllowance * Decimal(day)
+        let date = calendarService.selectedDate
+        let day = Calendar.current.dayInDate(date)
+        return dailyAllowance(date: date) * Decimal(day)
     }
     
     var monthlyAllowance: Decimal {
@@ -177,12 +179,25 @@ private extension SpendTrendsViewModel {
     
     var surplus: Decimal {
         do {
-            let monthDates = Calendar.current.monthDatesPriorTo(calendarService.todayDate)
-            let spend = try spendRepository
-                .getItems(dates: Array(monthDates))
+            let todayDate = calendarService.todayDate
+            let datesUpToToday = Calendar.current.monthDatesPriorTo(todayDate)
+            let spendUpToToday = try spendRepository
+                .getItems(dates: Array(datesUpToToday))
                 .reduce(0, { $0 + $1.amount })
-            let allowance = dailyAllowance * Decimal(monthDates.count)
-            let difference = allowance - spend
+            let allowanceToday = dailyAllowance(date: todayDate)
+            let allowanceUpToToday = allowanceToday * Decimal(datesUpToToday.count)
+            let differenceUpToToday = allowanceUpToToday - spendUpToToday
+            let spendToday = dailySpend(date: todayDate)
+            let differenceToday = min(allowanceToday - spendToday, 0)
+            let difference = if differenceToday < 0 {
+                // we only want to include `differenceToday` if is negative
+                // meaning, we have overspent today
+                // thus we add the negative value to surplus
+                // to get a more accurate representation of surplus
+                differenceUpToToday + differenceToday
+            } else {
+                differenceUpToToday
+            }
             return max(difference, 0)
         } catch {
             return 0
